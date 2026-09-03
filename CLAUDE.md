@@ -123,22 +123,33 @@ dans ce mode.
 
 `index.html` porte du contenu qui n'existe **nulle part ailleurs** dans le
 code : le `<title>`, la `<meta name="description">`, le `<link
-rel="canonical">`, le bloc Open Graph, le JSON-LD, et le texte français figé à
-l'intérieur de l'eyebrow, du `<h1>`, de la tagline et des deux `<h2>`.
+rel="canonical">`, les blocs Open Graph et Twitter Card, le JSON-LD, et le
+texte français figé à l'intérieur de l'eyebrow, du `<h1>`, de la tagline, des
+deux `<h2>`, du `<h3>` de l'aperçu et de la section « À propos ».
 
 **Pourquoi le texte est dupliqué.** Tout élément `data-i18n` est vide tant que
 `main.ts` n'a pas tourné (`applyStaticTranslations()`, `src/ui/dom.ts`). Un
 navigateur normal comble ce vide en quelques millisecondes, mais les robots qui
 lisent le HTML brut sans exécuter de JavaScript — la plupart des bots de
 prévisualisation sociale (Facebook, LinkedIn, Discord…) et certains outils
-d'audit SEO — voient la coquille vide. On donne donc à ces cinq éléments
-(eyebrow, h1, tagline, les deux h2) un texte français par défaut écrit en dur
-dans `index.html`, en plus de leur `data-i18n` qui continue à les retraduire
-normalement au chargement. **Règle : si on change `app.eyebrow`,
-`app.heading`, `app.tagline`, `section.plan` ou `section.library` dans
-`fr.ts`, il faut répercuter le même texte dans `index.html`.** Le reste du
-chrome interactif (boutons, labels, listes) n'a pas ce double, volontairement
-— il n'a aucune valeur pour un robot puisqu'il ne fait rien sans JS.
+d'audit SEO — voient la coquille vide. On donne donc aux éléments porteurs de
+sens un texte français par défaut écrit en dur dans `index.html`, en plus de
+leur `data-i18n` qui continue à les retraduire normalement au chargement.
+
+**Règle : si on change l'une de ces clés dans `fr.ts`, il faut répercuter le
+même texte dans `index.html`** — `app.eyebrow`, `app.heading`, `app.tagline`,
+`app.sourceCode`, `section.plan`, `section.library`, `preview.title` et les
+quatre clés `about.*`. Même logique pour l'`aria-label="Langue"` statique du
+sélecteur de langue, que `applyStaticTranslations()` écrase ensuite.
+
+Le reste du chrome interactif (boutons, labels de formulaire, listes) n'a pas
+ce double, volontairement — il n'a aucune valeur pour un robot puisqu'il ne
+fait rien sans JS.
+
+Un test de non-régression couvre tout cela : il charge `dist/index.html` dans
+jsdom **sans jamais exécuter le JS de l'app** et vérifie qu'aucun titre n'est
+vide, que les balises sont présentes et que le contenu indexable reste
+substantiel.
 
 Les balises `og:*`, `canonical` et le JSON-LD ne servent que ces robots-là (le
 JS ne les touche jamais) et portent donc une URL absolue figée :
@@ -157,14 +168,44 @@ python3 -m venv .venv && .venv/bin/pip install Pillow
 .venv/bin/python scripts/generate-og-image.py
 ```
 
-**Deux limites de plateforme, non actionnables depuis ce dépôt** — inutile
-d'y revenir :
+**Police d'affichage — piège vérifié.** `--disp` doit demander `'Archivo'`,
+**pas** `'Archivo Expanded'` : cette famille n'existe pas sur Google Fonts et
+la requête renvoie **HTTP 400**. Pire, combinée à une famille valide, Google
+sert silencieusement un 200 en ignorant l'invalide — le bug est donc muet et
+tout l'affichage retombe sur le sans-serif du navigateur (c'était le cas depuis
+le monolithe d'origine). La chasse large passe par l'axe de largeur dans l'URL,
+`family=Archivo:wdth,wght@125,600;125,700;125,800`, et **chaque règle utilisant
+`var(--disp)` doit poser `font-stretch: 125%`** (12 règles aujourd'hui).
+
+**Section « À propos ».** Elle porte l'essentiel du contenu indexable (206 mots
+sur ~240 ; sans elle le ratio texte/code retombe à 2,7 %). Elle est livrée avec
+l'attribut `open` — sans JavaScript elle reste dépliée partout — et `ui/app.ts`
+la replie sous 760 px. **Le même HTML est servi à tout le monde** : le contenu
+d'un `<details>` est dans le DOM quel que soit son état. Ne jamais transformer
+ce motif en affichage conditionnel côté serveur ou en masquage réservé aux
+robots : ce serait du cloaking, sanctionné par une pénalité manuelle, et sans
+effet utile puisque Google indexe en mobile-first.
+
+**Images.** `scripts/generate-og-image.py` produit `og-image.png`,
+`apple-touch-icon.png` et `favicon.ico`. `favicon.svg` est écrit à la main.
+
+**Sitemap.** `public/sitemap.xml` est à soumettre dans la Search Console : le
+`robots.txt` de la racine du domaine appartient à un autre projet et ne le
+référence pas. Inutile d'ajouter un `public/robots.txt` — seul celui de la
+racine du domaine fait autorité, un fichier sous `/SRCR/` serait ignoré.
+
+**Limites connues, inutile d'y revenir :**
+- *`hreflang`* : les 5 langues partagent une seule URL. Le faire correctement
+  demanderait des URL indexables par locale (`/en/`, `/es/`…) générées au
+  build — un changement structurel, pas une balise à ajouter.
 - *Redirection www ↔ non-www* : sans objet pour un sous-domaine
   `*.github.io` ; ne s'applique qu'à un domaine personnalisé avec apex + www.
-- *En-têtes `Cache-Control`/`Expires` personnalisés* : GitHub Pages ne permet
-  aucun en-tête HTTP personnalisé (pas de `.htaccess`, pas d'équivalent au
-  fichier `_headers` de Netlify). Un changement d'hébergeur serait nécessaire
-  pour agir dessus.
+- *En-têtes `Cache-Control`/`Expires`* : contrairement à ce que rapportait
+  l'audit AIOSEO, GitHub Pages **envoie bien** ces en-têtes
+  (`Cache-Control: max-age=600`) sur toutes les ressources, image comprise. Ce
+  qu'on ne peut pas faire, c'est les *ajuster* : 600 s reste court pour des
+  fichiers au nom déjà versionné qui pourraient être mis en cache un an. Il
+  faudrait changer d'hébergeur pour y toucher.
 
 ## Déploiement
 

@@ -14,6 +14,16 @@ export const en: Translations = {
     label: 'Language',
   },
 
+  about: {
+    title: 'About Séance',
+    intro:
+      'Séance is a bodyweight workout planner and timer, built for easing back into training without equipment. You build your running order from a library of exercises — incline push-ups, chair squats, wall sits, planks, dead bugs, standing calf raises, external shoulder rotations, walking — then set the sets, the reps or durations, and the rest periods.',
+    modes:
+      'Two ways to chain the sets. In classic mode, you complete every set of one exercise before moving to the next, with the rest set on each row. In circuit mode, sets alternate muscle groups and a break only appears when two efforts from the same group unavoidably follow each other — the preview shows the computed sequence before you start.',
+    privacy:
+      'During the session, a full-screen player shows the timer, the progress ring and the execution cue, keeps the screen awake and signals the end of each interval. No account, no server, no data sent: your session and history are stored in the browser. The interface is available in French, English, Spanish, German and Italian.',
+  },
+
   mode: {
     classic: 'Classic',
     circuit: 'Circuit',

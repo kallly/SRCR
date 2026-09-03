@@ -10,6 +10,13 @@
   --mint: #7fe0b0;
   --coral: #ff5a3c;
   --radius: 6px;
-  --disp: 'Archivo Expanded', sans-serif;
+  /*
+    Archivo en chasse large (wdth 125), demandee via l'axe de largeur dans
+    l'URL Google Fonts. « Archivo Expanded » n'existe pas comme famille : la
+    demander renvoie HTTP 400 et fait retomber tout l'affichage sur le
+    sans-serif du navigateur. Voir CLAUDE.md, section « SEO & partage social ».
+    Les regles qui utilisent --disp doivent aussi poser font-stretch: 125%.
+  */
+  --disp: 'Archivo', sans-serif;
   --sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
 }

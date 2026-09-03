@@ -14,6 +14,16 @@ export const de: Translations = {
     label: 'Sprache',
   },
 
+  about: {
+    title: 'Über Séance',
+    intro:
+      'Séance ist ein Planer und Timer für das Training mit dem eigenen Körpergewicht, gedacht für den Wiedereinstieg ohne Geräte. Du stellst deinen Ablauf aus einer Übungsbibliothek zusammen — erhöhte Liegestütze, Kniebeuge zum Stuhl, Wandsitz, Unterarmstütz, Dead Bug, Wadenheben, Außenrotation der Schulter, Gehen — und legst dann Sätze, Wiederholungen oder Dauer sowie die Pausen fest.',
+    modes:
+      'Zwei Arten, die Sätze aneinanderzureihen. Im klassischen Modus absolvierst du alle Sätze einer Übung, bevor die nächste folgt, mit der Pause aus der jeweiligen Zeile. Im Zirkelmodus wechseln die Sätze die Muskelgruppen, und eine Pause erscheint nur, wenn zwei Belastungen derselben Gruppe zwangsläufig aufeinanderfolgen — die Vorschau zeigt die berechnete Abfolge vor dem Start.',
+    privacy:
+      'Während der Einheit zeigt ein Vollbild-Player die Uhr, den Fortschrittsring und den Ausführungshinweis, hält den Bildschirm wach und meldet das Ende jedes Intervalls. Kein Konto, kein Server, keine gesendeten Daten: Einheit und Verlauf werden im Browser gespeichert. Die Oberfläche gibt es auf Französisch, Englisch, Spanisch, Deutsch und Italienisch.',
+  },
+
   mode: {
     classic: 'Klassisch',
     circuit: 'Zirkel',

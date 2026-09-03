@@ -21,6 +21,16 @@ export const fr = {
     label: 'Langue',
   },
 
+  about: {
+    title: 'À propos de Séance',
+    intro:
+      'Séance est un planificateur et un minuteur d’entraînement au poids du corps, pensé pour une reprise sans matériel. On compose son déroulé à partir d’une bibliothèque d’exercices — pompes inclinées, squat sur chaise, wall sit, planche, dead bug, mollets debout, rotation externe d’épaule, marche — puis on règle les séries, les répétitions ou les durées, et les temps de repos.',
+    modes:
+      'Deux façons d’enchaîner les séries. En mode classique, on fait toutes les séries d’un exercice avant de passer au suivant, avec le repos réglé sur chaque ligne. En mode circuit, les séries alternent les groupes musculaires et une pause n’apparaît que lorsque deux efforts du même groupe doivent forcément se suivre — l’aperçu affiche l’enchaînement calculé avant de commencer.',
+    privacy:
+      'Pendant la séance, un lecteur plein écran affiche le chrono, l’anneau de progression et la consigne d’exécution, garde l’écran allumé et signale la fin de chaque temps. Aucun compte, aucun serveur, aucune donnée envoyée : la séance et l’historique sont enregistrés dans le navigateur. L’interface existe en français, anglais, espagnol, allemand et italien.',
+  },
+
   mode: {
     classic: 'Classique',
     circuit: 'Circuit',

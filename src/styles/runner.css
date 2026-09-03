@@ -76,6 +76,7 @@
 
 .rlabel {
   font-family: var(--disp);
+  font-stretch: 125%;
   font-size: 12.5px;
   letter-spacing: 0.1em;
   color: var(--lime);
@@ -98,6 +99,7 @@
 
 .rname {
   font-family: var(--disp);
+  font-stretch: 125%;
   font-weight: 800;
   font-size: 32px;
   letter-spacing: -0.01em;
@@ -210,6 +212,7 @@
 
 .big {
   font-family: var(--disp);
+  font-stretch: 125%;
   font-weight: 800;
   font-size: 56px;
   letter-spacing: -0.02em;
@@ -220,6 +223,7 @@
 
 .repsbig {
   font-family: var(--disp);
+  font-stretch: 125%;
   font-weight: 800;
   font-size: 64px;
   letter-spacing: -0.02em;
@@ -270,4 +274,5 @@
   border-color: var(--lime);
   flex: 2;
   font-family: var(--disp);
+  font-stretch: 125%;
 }

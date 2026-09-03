@@ -14,6 +14,16 @@ export const it: Translations = {
     label: 'Lingua',
   },
 
+  about: {
+    title: 'Informazioni su Séance',
+    intro:
+      'Séance è un pianificatore e un cronometro per l’allenamento a corpo libero, pensato per riprendere senza attrezzi. Componi il tuo svolgimento a partire da una libreria di esercizi — piegamenti inclinati, squat sulla sedia, wall sit, plank, dead bug, polpacci in piedi, rotazione esterna di spalla, camminata — poi regoli serie, ripetizioni o durate e i tempi di recupero.',
+    modes:
+      'Due modi di concatenare le serie. In modalità classica esegui tutte le serie di un esercizio prima di passare al successivo, con il recupero impostato su ogni riga. In modalità circuito le serie alternano i gruppi muscolari e una pausa compare solo quando due sforzi dello stesso gruppo devono per forza susseguirsi — l’anteprima mostra la sequenza calcolata prima di iniziare.',
+    privacy:
+      'Durante la seduta, un lettore a schermo intero mostra il cronometro, l’anello di avanzamento e l’indicazione di esecuzione, mantiene lo schermo acceso e segnala la fine di ogni intervallo. Nessun account, nessun server, nessun dato inviato: seduta e cronologia sono salvate nel browser. L’interfaccia è disponibile in francese, inglese, spagnolo, tedesco e italiano.',
+  },
+
   mode: {
     classic: 'Classico',
     circuit: 'Circuito',

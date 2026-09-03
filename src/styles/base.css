@@ -59,6 +59,7 @@ input[type='number'] {
 
 .eyebrow {
   font-family: var(--disp);
+  font-stretch: 125%;
   font-weight: 700;
   font-size: 12.5px;
   letter-spacing: 0.08em;
@@ -68,6 +69,7 @@ input[type='number'] {
 
 h1 {
   font-family: var(--disp);
+  font-stretch: 125%;
   font-weight: 800;
   font-size: 34px;
   letter-spacing: -0.02em;
@@ -145,6 +147,51 @@ h2::after {
 .quicknav a:hover {
   color: var(--lime);
   border-color: var(--lime);
+}
+
+/* section « A propos » : depliee sur grand ecran, repliee sur mobile */
+.about {
+  margin-top: 30px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  color: var(--paper-dim);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.about summary {
+  font-family: var(--disp);
+  font-stretch: 125%;
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--paper-dim);
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  list-style: none;
+}
+
+.about summary::-webkit-details-marker {
+  display: none;
+}
+
+.about summary::before {
+  content: '▸';
+  display: inline-block;
+  margin-right: 7px;
+  transition: transform 0.15s;
+}
+
+.about[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.about summary:hover {
+  color: var(--lime);
+}
+
+.about p {
+  margin: 12px 0 0;
+  max-width: 62ch;
 }
 
 /* lien de pied de page vers le depot */

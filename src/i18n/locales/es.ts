@@ -14,6 +14,16 @@ export const es: Translations = {
     label: 'Idioma',
   },
 
+  about: {
+    title: 'Acerca de Séance',
+    intro:
+      'Séance es un planificador y cronómetro de entrenamiento con el peso corporal, pensado para retomar la actividad sin material. Compones tu sesión a partir de una biblioteca de ejercicios — flexiones inclinadas, sentadillas a la silla, sentadilla isométrica en pared, plancha, dead bug, elevación de gemelos, rotación externa de hombro, caminata — y luego ajustas las series, las repeticiones o las duraciones, y los descansos.',
+    modes:
+      'Dos formas de encadenar las series. En modo clásico, haces todas las series de un ejercicio antes de pasar al siguiente, con el descanso ajustado en cada línea. En modo circuito, las series alternan los grupos musculares y solo aparece una pausa cuando dos esfuerzos del mismo grupo tienen que seguirse forzosamente — la vista previa muestra la secuencia calculada antes de empezar.',
+    privacy:
+      'Durante la sesión, un reproductor a pantalla completa muestra el cronómetro, el anillo de progreso y la indicación de ejecución, mantiene la pantalla encendida y avisa del final de cada intervalo. Sin cuenta, sin servidor, sin datos enviados: la sesión y el historial se guardan en el navegador. La interfaz está disponible en francés, inglés, español, alemán e italiano.',
+  },
+
   mode: {
     classic: 'Clásico',
     circuit: 'Circuito',

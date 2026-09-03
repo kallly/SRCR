@@ -16,6 +16,9 @@ const SAVED_TOAST_MS = 1600;
 /** Duree par defaut d'une pause ajoutee manuellement, en secondes. */
 const DEFAULT_REST_SECONDS = 120;
 
+/** En dessous, la section « A propos » est repliee pour ne pas allonger la page. */
+const ABOUT_COLLAPSE_BELOW = '(max-width: 759px)';
+
 /**
  * Ce que les modules d'interface partagent : l'etat, la persistance et les
  * deux niveaux de rendu.
@@ -39,6 +42,15 @@ export function createApp(state: State): { render: () => void } {
   const savedNote = byId('saved');
 
   let savedTimer: number | null = null;
+
+  // La section « A propos » est livree ouverte : sans JavaScript elle reste
+  // lisible partout. Ici on la replie sur petit ecran, ou elle pousserait le
+  // contenu utile trop bas. Le contenu reste dans le DOM dans les deux cas.
+  // Appel defensif : replier une section est cosmetique et ne doit jamais
+  // pouvoir empecher l'app de demarrer la ou matchMedia manque.
+  if (window.matchMedia?.(ABOUT_COLLAPSE_BELOW).matches) {
+    byId<HTMLDetailsElement>('about').open = false;
+  }
 
   const ctx: Context = {
     state,

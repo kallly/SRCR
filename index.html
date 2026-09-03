@@ -3,13 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!-- ~155 caracteres : au-dela, Google tronque dans ses resultats. -->
     <meta
       name="description"
-      content="Planificateur et minuteur de séance au poids du corps, sans matériel. Mode classique ou circuit, en français, anglais, espagnol, allemand ou italien. Aucun compte, aucun serveur : tout reste enregistré sur votre appareil."
+      content="Planificateur et minuteur de séance au poids du corps, sans matériel. Mode classique ou circuit, en 5 langues. Sans compte : tout reste sur votre appareil."
     />
     <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0e1210" />
     <title>Séance — reprise au poids du corps sans matériel</title>
     <link rel="canonical" href="https://kallly.github.io/SRCR/" />
+
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="./favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 
     <!--
       Open Graph et JSON-LD : les bots de prévisualisation (Facebook, LinkedIn,
@@ -33,6 +39,14 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Séance — reprise au poids du corps sans matériel" />
 
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Séance — reprise au poids du corps sans matériel" />
+    <meta
+      name="twitter:description"
+      content="Planificateur et minuteur de séance au poids du corps, sans matériel. Mode classique ou circuit, en 5 langues, 100% local."
+    />
+    <meta name="twitter:image" content="https://kallly.github.io/SRCR/og-image.png" />
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -55,19 +69,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,600;125,700;125,800&family=Manrope:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
-    <div class="wrap">
+    <main class="wrap">
       <header class="head">
         <div class="titles">
           <p class="eyebrow" data-i18n="app.eyebrow">Phase 1 · sans matériel</p>
           <h1 data-i18n="app.heading">Ma séance</h1>
         </div>
         <div class="lang">
-          <select id="locale" data-i18n-aria-label="lang.label"></select>
+          <select id="locale" aria-label="Langue" data-i18n-aria-label="lang.label"></select>
         </div>
       </header>
       <p class="tagline" data-i18n="app.tagline">
@@ -103,7 +117,7 @@
       </div>
 
       <div class="preview" id="preview">
-        <h3 data-i18n="preview.title"></h3>
+        <h3 data-i18n="preview.title">Enchaînement calculé</h3>
         <p class="lead" id="previewLead"></p>
         <div class="seq" id="previewSeq"></div>
         <div class="pcount" id="previewCount"></div>
@@ -124,12 +138,44 @@
       <div class="lib" id="library"></div>
 
       <p class="done" id="history"></p>
-      <p class="credit">
+
+      <!--
+        Livree ouverte : sans JavaScript elle reste depliee partout, donc
+        accessible. src/ui/app.ts la replie sous 760 px. Le contenu d'un
+        <details> est dans le DOM quel que soit son etat : meme HTML pour les
+        visiteurs et pour les robots.
+      -->
+      <details class="about" id="about" open>
+        <summary data-i18n="about.title">À propos de Séance</summary>
+        <p data-i18n="about.intro">
+          Séance est un planificateur et un minuteur d’entraînement au poids du corps, pensé pour
+          une reprise sans matériel. On compose son déroulé à partir d’une bibliothèque d’exercices
+          — pompes inclinées, squat sur chaise, wall sit, planche, dead bug, mollets debout,
+          rotation externe d’épaule, marche — puis on règle les séries, les répétitions ou les
+          durées, et les temps de repos.
+        </p>
+        <p data-i18n="about.modes">
+          Deux façons d’enchaîner les séries. En mode classique, on fait toutes les séries d’un
+          exercice avant de passer au suivant, avec le repos réglé sur chaque ligne. En mode
+          circuit, les séries alternent les groupes musculaires et une pause n’apparaît que
+          lorsque deux efforts du même groupe doivent forcément se suivre — l’aperçu affiche
+          l’enchaînement calculé avant de commencer.
+        </p>
+        <p data-i18n="about.privacy">
+          Pendant la séance, un lecteur plein écran affiche le chrono, l’anneau de progression et
+          la consigne d’exécution, garde l’écran allumé et signale la fin de chaque temps. Aucun
+          compte, aucun serveur, aucune donnée envoyée : la séance et l’historique sont enregistrés
+          dans le navigateur. L’interface existe en français, anglais, espagnol, allemand et
+          italien.
+        </p>
+      </details>
+
+      <footer class="credit">
         <a href="https://github.com/kallly/SRCR" target="_blank" rel="noopener" data-i18n="app.sourceCode"
           >Code source</a
         >
-      </p>
-    </div>
+      </footer>
+    </main>
 
     <div class="bar">
       <div class="meta"><b id="barTitle"></b><span id="barSub"></span></div>
