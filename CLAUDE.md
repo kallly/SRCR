@@ -119,6 +119,53 @@ dans ce mode.
    incomplet. → tout texte utilisateur passe par `textContent` (`el({ text })`).
    `html` n'est réservé qu'aux figures SVG que nous produisons nous-mêmes.
 
+## SEO & partage social
+
+`index.html` porte du contenu qui n'existe **nulle part ailleurs** dans le
+code : le `<title>`, la `<meta name="description">`, le `<link
+rel="canonical">`, le bloc Open Graph, le JSON-LD, et le texte français figé à
+l'intérieur de l'eyebrow, du `<h1>`, de la tagline et des deux `<h2>`.
+
+**Pourquoi le texte est dupliqué.** Tout élément `data-i18n` est vide tant que
+`main.ts` n'a pas tourné (`applyStaticTranslations()`, `src/ui/dom.ts`). Un
+navigateur normal comble ce vide en quelques millisecondes, mais les robots qui
+lisent le HTML brut sans exécuter de JavaScript — la plupart des bots de
+prévisualisation sociale (Facebook, LinkedIn, Discord…) et certains outils
+d'audit SEO — voient la coquille vide. On donne donc à ces cinq éléments
+(eyebrow, h1, tagline, les deux h2) un texte français par défaut écrit en dur
+dans `index.html`, en plus de leur `data-i18n` qui continue à les retraduire
+normalement au chargement. **Règle : si on change `app.eyebrow`,
+`app.heading`, `app.tagline`, `section.plan` ou `section.library` dans
+`fr.ts`, il faut répercuter le même texte dans `index.html`.** Le reste du
+chrome interactif (boutons, labels, listes) n'a pas ce double, volontairement
+— il n'a aucune valeur pour un robot puisqu'il ne fait rien sans JS.
+
+Les balises `og:*`, `canonical` et le JSON-LD ne servent que ces robots-là (le
+JS ne les touche jamais) et portent donc une URL absolue figée :
+`https://kallly.github.io/SRCR/`. **Si le dépôt est renommé ou déplacé vers un
+domaine personnalisé, ces valeurs doivent être mises à jour à la main** — à la
+différence de `base: './'` dans `vite.config.ts`, qui lui reste portable
+(c'est un chemin relatif pour charger le JS/CSS, pas l'identité canonique de
+la page).
+
+**Image de partage** (`public/og-image.png`, 1200×630) : générée par
+`scripts/generate-og-image.py` (Pillow). À relancer si la charte ou le texte
+change :
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install Pillow
+.venv/bin/python scripts/generate-og-image.py
+```
+
+**Deux limites de plateforme, non actionnables depuis ce dépôt** — inutile
+d'y revenir :
+- *Redirection www ↔ non-www* : sans objet pour un sous-domaine
+  `*.github.io` ; ne s'applique qu'à un domaine personnalisé avec apex + www.
+- *En-têtes `Cache-Control`/`Expires` personnalisés* : GitHub Pages ne permet
+  aucun en-tête HTTP personnalisé (pas de `.htaccess`, pas d'équivalent au
+  fichier `_headers` de Netlify). Un changement d'hébergeur serait nécessaire
+  pour agir dessus.
+
 ## Déploiement
 
 Push sur `main` → `.github/workflows/deploy.yml` construit et publie `dist/` sur

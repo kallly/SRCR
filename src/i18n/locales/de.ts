@@ -7,6 +7,7 @@ export const de: Translations = {
     heading: 'Meine Einheit',
     tagline:
       'Stell dein Training zusammen, ordne die Übungen, leg die Pausen fest. Alles bleibt auf diesem Gerät.',
+    sourceCode: 'Quellcode',
   },
 
   lang: {

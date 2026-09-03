@@ -7,6 +7,7 @@ export const it: Translations = {
     heading: 'La mia seduta',
     tagline:
       'Costruisci il tuo allenamento, ordina gli esercizi, regola le pause. Tutto resta su questo dispositivo.',
+    sourceCode: 'Codice sorgente',
   },
 
   lang: {

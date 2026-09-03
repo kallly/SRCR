@@ -3,9 +3,55 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="description" content="Planificateur et minuteur de seance au poids du corps. Tout reste sur votre appareil." />
+    <meta
+      name="description"
+      content="Planificateur et minuteur de séance au poids du corps, sans matériel. Mode classique ou circuit, en français, anglais, espagnol, allemand ou italien. Aucun compte, aucun serveur : tout reste enregistré sur votre appareil."
+    />
     <meta name="color-scheme" content="dark" />
-    <title>Séance</title>
+    <title>Séance — reprise au poids du corps sans matériel</title>
+    <link rel="canonical" href="https://kallly.github.io/SRCR/" />
+
+    <!--
+      Open Graph et JSON-LD : les bots de prévisualisation (Facebook, LinkedIn,
+      Discord…) et la plupart des robots d'indexation ne lisent que le HTML
+      statique de cette page, sans exécuter src/main.ts. Ces balises portent
+      donc des valeurs fixes en français (langue source), indépendantes du
+      contenu retraduit dynamiquement par l'app pour un visiteur reel.
+      Voir CLAUDE.md, section « SEO & partage social ».
+    -->
+    <meta property="og:title" content="Séance — reprise au poids du corps sans matériel" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kallly.github.io/SRCR/" />
+    <meta
+      property="og:description"
+      content="Planificateur et minuteur de séance au poids du corps, sans matériel. Mode classique ou circuit, en 5 langues, 100% local."
+    />
+    <meta property="og:site_name" content="Séance" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:image" content="https://kallly.github.io/SRCR/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Séance — reprise au poids du corps sans matériel" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Séance",
+        "description": "Planificateur et minuteur de séance au poids du corps, sans matériel. Mode classique ou circuit, en 5 langues, 100% local.",
+        "url": "https://kallly.github.io/SRCR/",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Tout système avec navigateur web",
+        "inLanguage": ["fr", "en", "es", "de", "it"],
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        }
+      }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,14 +63,21 @@
     <div class="wrap">
       <header class="head">
         <div class="titles">
-          <p class="eyebrow" data-i18n="app.eyebrow"></p>
-          <h1 data-i18n="app.heading"></h1>
+          <p class="eyebrow" data-i18n="app.eyebrow">Phase 1 · sans matériel</p>
+          <h1 data-i18n="app.heading">Ma séance</h1>
         </div>
         <div class="lang">
           <select id="locale" data-i18n-aria-label="lang.label"></select>
         </div>
       </header>
-      <p class="tagline" data-i18n="app.tagline"></p>
+      <p class="tagline" data-i18n="app.tagline">
+        Construis ton entraînement, ordonne les exercices, règle les pauses. Tout reste enregistré
+        sur cet appareil.
+      </p>
+      <nav class="quicknav" aria-label="Sections">
+        <a href="#section-plan" data-i18n="section.plan">Déroulé</a>
+        <a href="#section-library" data-i18n="section.library">Bibliothèque</a>
+      </nav>
 
       <div class="modes">
         <button id="modeClassic" type="button" data-i18n="mode.classic"></button>
@@ -43,7 +96,7 @@
         </div>
       </div>
 
-      <h2 data-i18n="section.plan"></h2>
+      <h2 id="section-plan" data-i18n="section.plan">Déroulé</h2>
       <ul class="plan" id="plan"></ul>
       <div class="empty" id="empty">
         <b data-i18n="empty.title"></b><span data-i18n="empty.body"></span>
@@ -67,10 +120,15 @@
         <button class="ghost" type="button" id="clearAll" data-i18n="actions.clearAll"></button>
       </div>
 
-      <h2 data-i18n="section.library"></h2>
+      <h2 id="section-library" data-i18n="section.library">Bibliothèque</h2>
       <div class="lib" id="library"></div>
 
       <p class="done" id="history"></p>
+      <p class="credit">
+        <a href="https://github.com/kallly/SRCR" target="_blank" rel="noopener" data-i18n="app.sourceCode"
+          >Code source</a
+        >
+      </p>
     </div>
 
     <div class="bar">

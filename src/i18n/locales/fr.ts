@@ -14,6 +14,7 @@ export const fr = {
     heading: 'Ma séance',
     tagline:
       'Construis ton entraînement, ordonne les exercices, règle les pauses. Tout reste enregistré sur cet appareil.',
+    sourceCode: 'Code source',
   },
 
   lang: {
