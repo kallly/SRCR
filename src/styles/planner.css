@@ -371,6 +371,36 @@
   height: 62px;
 }
 
+/*
+  Sans ces regles, les figures de la bibliotheque restent quasi invisibles :
+  les <path> sans stroke explicite ne sont pas dessines par defaut, et les
+  <rect class="obj"> se remplissent de noir plein (fill par defaut) faute de
+  fill:none. Meme traitement que .rfig dans runner.css, pour la meme raison.
+*/
+.libcard .s,
+.libcard .obj,
+.libcard .gr {
+  stroke: var(--paper-dim);
+}
+
+.libcard .hd {
+  fill: var(--paper-dim);
+}
+
+.libcard .obj {
+  fill: none;
+}
+
+.libcard .ar {
+  stroke: var(--lime);
+  fill: none;
+}
+
+.libcard .arh {
+  fill: var(--lime);
+  stroke: none;
+}
+
 .libcard .lb {
   padding: 9px 10px 11px;
 }
