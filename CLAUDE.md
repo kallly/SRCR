@@ -194,6 +194,20 @@ effet utile puisque Google indexe en mobile-first.
 référence pas. Inutile d'ajouter un `public/robots.txt` — seul celui de la
 racine du domaine fait autorité, un fichier sous `/SRCR/` serait ignoré.
 
+**Fraîcheur (JSON-LD).** `dateModified` n'est **jamais** à modifier à la main
+dans `index.html` — le jeton `__BUILD_DATE__` est remplacé par la date réelle
+du build (`transformIndexHtml` dans `vite.config.ts`), aussi bien en dev qu'en
+prod. `datePublished` reste fixe (2026-09-03, premier commit du portage) et ne
+change plus.
+
+**`llms.txt` : délibérément absent.** Cette même compétence GEO documente que
+Google l'ignore explicitement pour la recherche (ni bonus ni pénalité) ; les
+autres moteurs IA n'y accordent pas de poids de citation avéré non plus. Et le
+problème d'autorité du domaine s'appliquerait de toute façon : la racine
+attendue (`/llms.txt`) appartient à l'autre projet, seul `/SRCR/llms.txt`
+serait à notre portée — coût pour un gain nul à négatif. Ne pas en ajouter un
+« pour faire complet ».
+
 **Limites connues, inutile d'y revenir :**
 - *`hreflang`* : les 5 langues partagent une seule URL. Le faire correctement
   demanderait des URL indexables par locale (`/en/`, `/es/`…) générées au
