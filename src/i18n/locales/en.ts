@@ -101,6 +101,7 @@ export const en: Translations = {
     calves: 'Calves',
     core: 'Core',
     cardio: 'Cardio',
+    glutes: 'Glutes',
   },
 
   duration: {
@@ -200,6 +201,86 @@ export const en: Translations = {
     walk: {
       name: 'Walking',
       cue: 'Brisk pace. Your cardio base, without the impact.',
+    },
+    kneePushup: {
+      name: 'Knee push-ups',
+      cue: 'Knees on the floor, body aligned from knees to shoulders. Lower the chest close to the floor.',
+    },
+    wallPushup: {
+      name: 'Wall push-ups',
+      cue: 'Hands shoulder-height on the wall, body leaning and braced. A great starting point.',
+    },
+    chairDips: {
+      name: 'Chair tricep dips',
+      cue: 'Hands on the chair edge, elbows pointing back. Don’t go lower than 90°.',
+    },
+    armCircles: {
+      name: 'Arm circles',
+      cue: 'Arms out at shoulder height, small steady circles. Switch direction halfway through.',
+    },
+    wallSlides: {
+      name: 'Wall slides',
+      cue: 'Back and arms against the wall, slide the arms up without the elbows lifting off.',
+    },
+    superman: {
+      name: 'Superman',
+      cue: 'Lying face down, lift arms and legs together. Look down to protect the neck.',
+    },
+    reverseSnowAngel: {
+      name: 'Reverse snow angel',
+      cue: 'Lying face down, arms out straight, sweep a wide arc down to the hips.',
+    },
+    birdDog: {
+      name: 'Bird dog',
+      cue: 'On all fours, extend one arm and the opposite leg. Keep the hips still.',
+    },
+    catCow: {
+      name: 'Cat-cow',
+      cue: 'On all fours, alternate rounding and arching the back with your breath.',
+    },
+    reverseLunge: {
+      name: 'Reverse lunge',
+      cue: 'Step one leg back, lower until the knee nearly touches the floor. Torso upright.',
+    },
+    stepUp: {
+      name: 'Chair step-up',
+      cue: 'Step one foot then the other onto a stable chair, step back down with control.',
+    },
+    lateralLunge: {
+      name: 'Lateral lunge',
+      cue: 'Big step to the side, bend the leading knee while keeping the other leg straight.',
+    },
+    gluteBridge: {
+      name: 'Glute bridge',
+      cue: 'Lying down, knees bent, push through the heels and squeeze the glutes at the top.',
+    },
+    donkeyKick: {
+      name: 'Donkey kick',
+      cue: 'On all fours, push one foot toward the ceiling with the knee bent, without arching the back.',
+    },
+    hipAbduction: {
+      name: 'Standing hip abduction',
+      cue: 'Standing, lift one straight leg out to the side without leaning the torso.',
+    },
+    sidePlank: {
+      name: 'Side plank',
+      cue: 'Resting on one forearm, body in a straight line from feet to head.',
+    },
+    standingKneeRaise: {
+      name: 'Standing knee raise',
+      cue: 'Standing, lift one knee toward the chest while keeping the back straight.',
+    },
+    crunch: {
+      name: 'Crunch',
+      cue: 'Lying down, knees bent, lift the shoulder blades while exhaling. Don’t pull on the neck.',
+    },
+    highKneeMarch: {
+      name: 'High-knee march in place',
+      cue: 'March in place, knees up to hip height, controlled pace.',
+    },
+    buttKickMarch: {
+      name: 'Butt-kick march in place',
+      cue: 'March in place, heels flicking back toward the glutes at a moderate pace.',
     },
     custom: {
       name: 'Custom exercise',

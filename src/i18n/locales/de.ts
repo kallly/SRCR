@@ -101,6 +101,7 @@ export const de: Translations = {
     calves: 'Waden',
     core: 'Rumpf',
     cardio: 'Ausdauer',
+    glutes: 'Gesäß',
   },
 
   duration: {
@@ -202,6 +203,86 @@ export const de: Translations = {
     walk: {
       name: 'Gehen',
       cue: 'Zügiges Tempo. Deine Ausdauerbasis, ohne Stoßbelastung.',
+    },
+    kneePushup: {
+      name: 'Liegestütze auf Knien',
+      cue: 'Knie am Boden, Körper von den Knien bis zu den Schultern ausgerichtet. Brust nah zum Boden senken.',
+    },
+    wallPushup: {
+      name: 'Liegestütze an der Wand',
+      cue: 'Hände auf Schulterhöhe an der Wand, Körper geneigt und angespannt. Guter Einstieg.',
+    },
+    chairDips: {
+      name: 'Trizeps-Dips am Stuhl',
+      cue: 'Hände auf der Stuhlkante, Ellbogen zeigen nach hinten. Nicht tiefer als 90° gehen.',
+    },
+    armCircles: {
+      name: 'Armkreisen',
+      cue: 'Arme auf Schulterhöhe ausgestreckt, kleine gleichmäßige Kreise. Nach der Hälfte die Richtung wechseln.',
+    },
+    wallSlides: {
+      name: 'Wandgleiten',
+      cue: 'Rücken und Arme an der Wand, Arme nach oben gleiten lassen, ohne die Ellbogen abzuheben.',
+    },
+    superman: {
+      name: 'Superman',
+      cue: 'Bauchlage, Arme und Beine gleichzeitig heben. Nach unten schauen, um den Nacken zu schonen.',
+    },
+    reverseSnowAngel: {
+      name: 'Umgekehrter Schneeengel',
+      cue: 'Bauchlage, Arme gestreckt, einen weiten Bogen bis zu den Hüften ziehen.',
+    },
+    birdDog: {
+      name: 'Vogelhund (Bird Dog)',
+      cue: 'Im Vierfüßlerstand einen Arm und das gegenüberliegende Bein ausstrecken. Becken ruhig halten.',
+    },
+    catCow: {
+      name: 'Katze-Kuh',
+      cue: 'Im Vierfüßlerstand abwechselnd den Rücken runden und durchhängen lassen, im Atemrhythmus.',
+    },
+    reverseLunge: {
+      name: 'Rückwärtsausfallschritt',
+      cue: 'Ein Bein nach hinten setzen, absenken bis das Knie fast den Boden berührt. Oberkörper aufrecht.',
+    },
+    stepUp: {
+      name: 'Aufsteigen auf den Stuhl',
+      cue: 'Einen Fuß, dann den anderen auf einen stabilen Stuhl stellen, kontrolliert zurücksteigen.',
+    },
+    lateralLunge: {
+      name: 'Seitlicher Ausfallschritt',
+      cue: 'Großer Schritt zur Seite, das Standbein beugen, das andere Bein bleibt gestreckt.',
+    },
+    gluteBridge: {
+      name: 'Gesäßbrücke',
+      cue: 'Rückenlage, Knie gebeugt, durch die Fersen drücken und die Gesäßmuskeln oben anspannen.',
+    },
+    donkeyKick: {
+      name: 'Eselstritt (Donkey Kick)',
+      cue: 'Im Vierfüßlerstand einen Fuß mit gebeugtem Knie Richtung Decke drücken, ohne den Rücken durchzuwölben.',
+    },
+    hipAbduction: {
+      name: 'Hüftabduktion im Stehen',
+      cue: 'Im Stehen ein gestrecktes Bein zur Seite heben, ohne den Oberkörper zu neigen.',
+    },
+    sidePlank: {
+      name: 'Seitstütz',
+      cue: 'Abstützen auf einem Unterarm, Körper in einer geraden Linie von den Füßen bis zum Kopf.',
+    },
+    standingKneeRaise: {
+      name: 'Knieheben im Stehen',
+      cue: 'Im Stehen ein Knie Richtung Brust heben, Rücken dabei gerade halten.',
+    },
+    crunch: {
+      name: 'Crunch',
+      cue: 'Rückenlage, Knie gebeugt, beim Ausatmen die Schulterblätter anheben. Nicht am Nacken ziehen.',
+    },
+    highKneeMarch: {
+      name: 'Kniehebelauf auf der Stelle',
+      cue: 'Auf der Stelle marschieren, Knie bis Hüfthöhe, kontrolliertes Tempo.',
+    },
+    buttKickMarch: {
+      name: 'Anfersen auf der Stelle',
+      cue: 'Auf der Stelle marschieren, Fersen im moderaten Tempo Richtung Gesäß führen.',
     },
     custom: {
       name: 'Eigene Übung',

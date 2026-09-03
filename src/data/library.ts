@@ -28,6 +28,40 @@ export const LIBRARY: readonly LibraryEntry[] = [
   { key: 'deadbug', group: 'core', mode: 'reps', sets: 3, reps: 8, seconds: 30, rest: 60 },
   { key: 'plank', group: 'core', mode: 'time', sets: 3, reps: 10, seconds: 20, rest: 60 },
   { key: 'walk', group: 'cardio', mode: 'time', sets: 1, reps: 10, seconds: 1200, rest: 0 },
+
+  // push
+  { key: 'kneePushup', group: 'push', mode: 'reps', sets: 3, reps: 10, seconds: 30, rest: 90 },
+  { key: 'wallPushup', group: 'push', mode: 'reps', sets: 3, reps: 12, seconds: 30, rest: 60 },
+  { key: 'chairDips', group: 'push', mode: 'reps', sets: 3, reps: 8, seconds: 30, rest: 90 },
+
+  // shoulders
+  { key: 'armCircles', group: 'shoulders', mode: 'time', sets: 3, reps: 10, seconds: 30, rest: 30 },
+  { key: 'wallSlides', group: 'shoulders', mode: 'reps', sets: 3, reps: 10, seconds: 30, rest: 60 },
+
+  // back
+  { key: 'superman', group: 'back', mode: 'reps', sets: 3, reps: 10, seconds: 30, rest: 60 },
+  { key: 'reverseSnowAngel', group: 'back', mode: 'reps', sets: 3, reps: 10, seconds: 30, rest: 60 },
+  { key: 'birdDog', group: 'back', mode: 'reps', sets: 3, reps: 8, seconds: 30, rest: 60 },
+  { key: 'catCow', group: 'back', mode: 'time', sets: 3, reps: 10, seconds: 30, rest: 20 },
+
+  // legs
+  { key: 'reverseLunge', group: 'legs', mode: 'reps', sets: 3, reps: 10, seconds: 30, rest: 90 },
+  { key: 'stepUp', group: 'legs', mode: 'reps', sets: 3, reps: 10, seconds: 30, rest: 90 },
+  { key: 'lateralLunge', group: 'legs', mode: 'reps', sets: 3, reps: 10, seconds: 30, rest: 90 },
+
+  // glutes
+  { key: 'gluteBridge', group: 'glutes', mode: 'reps', sets: 3, reps: 12, seconds: 30, rest: 60 },
+  { key: 'donkeyKick', group: 'glutes', mode: 'reps', sets: 3, reps: 10, seconds: 30, rest: 60 },
+  { key: 'hipAbduction', group: 'glutes', mode: 'reps', sets: 3, reps: 12, seconds: 30, rest: 60 },
+
+  // core
+  { key: 'sidePlank', group: 'core', mode: 'time', sets: 3, reps: 10, seconds: 20, rest: 60 },
+  { key: 'standingKneeRaise', group: 'core', mode: 'reps', sets: 3, reps: 10, seconds: 30, rest: 45 },
+  { key: 'crunch', group: 'core', mode: 'reps', sets: 3, reps: 15, seconds: 30, rest: 45 },
+
+  // cardio
+  { key: 'highKneeMarch', group: 'cardio', mode: 'time', sets: 2, reps: 10, seconds: 45, rest: 30 },
+  { key: 'buttKickMarch', group: 'cardio', mode: 'time', sets: 2, reps: 10, seconds: 45, rest: 30 },
 ];
 
 /** Seance type proposee par le bouton « charger la seance type ». */

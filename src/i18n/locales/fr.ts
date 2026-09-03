@@ -109,6 +109,7 @@ export const fr = {
     calves: 'Mollets',
     core: 'Gainage',
     cardio: 'Cardio',
+    glutes: 'Fessiers',
   },
 
   duration: {
@@ -209,6 +210,86 @@ export const fr = {
     walk: {
       name: 'Marche',
       cue: 'Rythme soutenu. Ta base cardio, sans impact.',
+    },
+    kneePushup: {
+      name: 'Pompes genoux',
+      cue: 'Genoux au sol, corps aligné des genoux aux épaules. Descends la poitrine près du sol.',
+    },
+    wallPushup: {
+      name: 'Pompes contre le mur',
+      cue: 'Mains à hauteur d’épaules sur le mur, corps incliné et gainé. Idéal pour débuter.',
+    },
+    chairDips: {
+      name: 'Dips triceps sur chaise',
+      cue: 'Mains sur le bord de la chaise, coudes vers l’arrière. Ne descends pas plus bas que 90°.',
+    },
+    armCircles: {
+      name: 'Moulinets de bras',
+      cue: 'Bras tendus à l’horizontale, petits cercles réguliers. Alterne le sens à mi-série.',
+    },
+    wallSlides: {
+      name: 'Glissés au mur',
+      cue: 'Dos et bras contre le mur, fais glisser les bras vers le haut sans décoller les coudes.',
+    },
+    superman: {
+      name: 'Superman',
+      cue: 'Allongé sur le ventre, lève bras et jambes ensemble. Regarde le sol pour protéger la nuque.',
+    },
+    reverseSnowAngel: {
+      name: 'Ange inversé au sol',
+      cue: 'Allongé sur le ventre, bras tendus, dessine un grand cercle jusqu’aux hanches.',
+    },
+    birdDog: {
+      name: 'Chien-oiseau',
+      cue: 'À quatre pattes, tends un bras et la jambe opposée. Garde le bassin immobile.',
+    },
+    catCow: {
+      name: 'Chat-vache',
+      cue: 'À quatre pattes, alterne dos rond et dos creux au rythme de la respiration.',
+    },
+    reverseLunge: {
+      name: 'Fente arrière',
+      cue: 'Recule une jambe, descends jusqu’à un genou proche du sol. Buste droit.',
+    },
+    stepUp: {
+      name: 'Montée sur chaise',
+      cue: 'Monte un pied puis l’autre sur une chaise stable, redescends avec contrôle.',
+    },
+    lateralLunge: {
+      name: 'Fente latérale',
+      cue: 'Grand pas sur le côté, plie la jambe d’appui en gardant l’autre tendue.',
+    },
+    gluteBridge: {
+      name: 'Pont fessier',
+      cue: 'Allongé, genoux pliés, pousse par les talons et serre les fessiers en haut.',
+    },
+    donkeyKick: {
+      name: 'Lever de jambe à 4 pattes',
+      cue: 'À quatre pattes, pousse un pied vers le plafond genou plié, sans creuser le dos.',
+    },
+    hipAbduction: {
+      name: 'Abduction de hanche debout',
+      cue: 'Debout, lève une jambe tendue sur le côté sans pencher le buste.',
+    },
+    sidePlank: {
+      name: 'Planche latérale',
+      cue: 'Appui sur un avant-bras, corps aligné en ligne droite des pieds à la tête.',
+    },
+    standingKneeRaise: {
+      name: 'Montées de genoux debout',
+      cue: 'Debout, monte un genou vers la poitrine en gardant le dos droit.',
+    },
+    crunch: {
+      name: 'Crunch',
+      cue: 'Allongé, genoux pliés, décolle les omoplates en soufflant. Ne tire pas sur la nuque.',
+    },
+    highKneeMarch: {
+      name: 'Marche genoux hauts sur place',
+      cue: 'Sur place, monte les genoux à hauteur de hanche, rythme contrôlé.',
+    },
+    buttKickMarch: {
+      name: 'Talons-fesses sur place',
+      cue: 'Sur place, ramène les talons vers les fessiers à un rythme modéré.',
     },
     custom: {
       name: 'Exercice perso',

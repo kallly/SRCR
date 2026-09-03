@@ -101,6 +101,7 @@ export const es: Translations = {
     calves: 'Gemelos',
     core: 'Core',
     cardio: 'Cardio',
+    glutes: 'Glúteos',
   },
 
   duration: {
@@ -201,6 +202,86 @@ export const es: Translations = {
     walk: {
       name: 'Caminata',
       cue: 'Ritmo vivo. Tu base cardiovascular, sin impacto.',
+    },
+    kneePushup: {
+      name: 'Flexiones de rodillas',
+      cue: 'Rodillas en el suelo, cuerpo alineado de las rodillas a los hombros. Baja el pecho cerca del suelo.',
+    },
+    wallPushup: {
+      name: 'Flexiones contra la pared',
+      cue: 'Manos a la altura de los hombros en la pared, cuerpo inclinado y firme. Ideal para empezar.',
+    },
+    chairDips: {
+      name: 'Fondos de tríceps en silla',
+      cue: 'Manos en el borde de la silla, codos hacia atrás. No bajes más allá de 90°.',
+    },
+    armCircles: {
+      name: 'Círculos de brazos',
+      cue: 'Brazos extendidos a la altura de los hombros, círculos pequeños y constantes. Cambia de sentido a mitad de la serie.',
+    },
+    wallSlides: {
+      name: 'Deslizamientos en la pared',
+      cue: 'Espalda y brazos contra la pared, desliza los brazos hacia arriba sin despegar los codos.',
+    },
+    superman: {
+      name: 'Superman',
+      cue: 'Boca abajo, levanta brazos y piernas a la vez. Mira al suelo para proteger el cuello.',
+    },
+    reverseSnowAngel: {
+      name: 'Ángel invertido en el suelo',
+      cue: 'Boca abajo, brazos extendidos, dibuja un arco amplio hasta las caderas.',
+    },
+    birdDog: {
+      name: 'Bird dog',
+      cue: 'A cuatro patas, extiende un brazo y la pierna contraria. Mantén la cadera quieta.',
+    },
+    catCow: {
+      name: 'Gato-vaca',
+      cue: 'A cuatro patas, alterna arquear y redondear la espalda al ritmo de la respiración.',
+    },
+    reverseLunge: {
+      name: 'Zancada atrás',
+      cue: 'Da un paso atrás con una pierna, baja hasta que la rodilla casi toque el suelo. Torso erguido.',
+    },
+    stepUp: {
+      name: 'Subida a la silla',
+      cue: 'Sube un pie y luego el otro a una silla estable, baja con control.',
+    },
+    lateralLunge: {
+      name: 'Zancada lateral',
+      cue: 'Paso grande hacia el lado, flexiona la pierna de apoyo manteniendo la otra recta.',
+    },
+    gluteBridge: {
+      name: 'Puente de glúteos',
+      cue: 'Tumbado, rodillas flexionadas, empuja con los talones y aprieta los glúteos arriba.',
+    },
+    donkeyKick: {
+      name: 'Patada de burro',
+      cue: 'A cuatro patas, empuja un pie hacia el techo con la rodilla flexionada, sin arquear la espalda.',
+    },
+    hipAbduction: {
+      name: 'Abducción de cadera de pie',
+      cue: 'De pie, eleva una pierna recta hacia el lado sin inclinar el torso.',
+    },
+    sidePlank: {
+      name: 'Plancha lateral',
+      cue: 'Apoyo en un antebrazo, cuerpo en línea recta de los pies a la cabeza.',
+    },
+    standingKneeRaise: {
+      name: 'Elevación de rodilla de pie',
+      cue: 'De pie, sube una rodilla hacia el pecho manteniendo la espalda recta.',
+    },
+    crunch: {
+      name: 'Crunch',
+      cue: 'Tumbado, rodillas flexionadas, levanta los omóplatos al exhalar. No tires del cuello.',
+    },
+    highKneeMarch: {
+      name: 'Marcha con rodillas altas',
+      cue: 'Marcha en el sitio, rodillas a la altura de la cadera, ritmo controlado.',
+    },
+    buttKickMarch: {
+      name: 'Marcha talón-glúteo',
+      cue: 'Marcha en el sitio, lleva los talones hacia los glúteos a ritmo moderado.',
     },
     custom: {
       name: 'Ejercicio propio',

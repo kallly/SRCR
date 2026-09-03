@@ -101,6 +101,7 @@ export const it: Translations = {
     calves: 'Polpacci',
     core: 'Core',
     cardio: 'Cardio',
+    glutes: 'Glutei',
   },
 
   duration: {
@@ -201,6 +202,86 @@ export const it: Translations = {
     walk: {
       name: 'Camminata',
       cue: 'Ritmo sostenuto. La tua base cardio, senza impatto.',
+    },
+    kneePushup: {
+      name: 'Piegamenti sulle ginocchia',
+      cue: 'Ginocchia a terra, corpo allineato dalle ginocchia alle spalle. Abbassa il petto vicino al pavimento.',
+    },
+    wallPushup: {
+      name: 'Piegamenti al muro',
+      cue: 'Mani all’altezza delle spalle sul muro, corpo inclinato e stabile. Ottimo per iniziare.',
+    },
+    chairDips: {
+      name: 'Dip tricipiti sulla sedia',
+      cue: 'Mani sul bordo della sedia, gomiti verso dietro. Non scendere oltre i 90°.',
+    },
+    armCircles: {
+      name: 'Circonduzioni delle braccia',
+      cue: 'Braccia tese all’altezza delle spalle, cerchi piccoli e regolari. Cambia senso a metà serie.',
+    },
+    wallSlides: {
+      name: 'Scivolamenti al muro',
+      cue: 'Schiena e braccia contro il muro, fai scorrere le braccia verso l’alto senza staccare i gomiti.',
+    },
+    superman: {
+      name: 'Superman',
+      cue: 'Prono a terra, solleva braccia e gambe insieme. Guarda verso il basso per proteggere il collo.',
+    },
+    reverseSnowAngel: {
+      name: 'Angelo rovesciato a terra',
+      cue: 'Prono a terra, braccia tese, disegna un ampio arco fino ai fianchi.',
+    },
+    birdDog: {
+      name: 'Bird dog',
+      cue: 'Carponi, distendi un braccio e la gamba opposta. Tieni il bacino fermo.',
+    },
+    catCow: {
+      name: 'Gatto-mucca',
+      cue: 'Carponi, alterna schiena arrotondata e incurvata seguendo il respiro.',
+    },
+    reverseLunge: {
+      name: 'Affondo indietro',
+      cue: 'Fai un passo indietro con una gamba, scendi finché il ginocchio sfiora il pavimento. Busto eretto.',
+    },
+    stepUp: {
+      name: 'Step-up sulla sedia',
+      cue: 'Sali con un piede poi l’altro su una sedia stabile, scendi con controllo.',
+    },
+    lateralLunge: {
+      name: 'Affondo laterale',
+      cue: 'Grande passo laterale, piega la gamba d’appoggio mantenendo l’altra tesa.',
+    },
+    gluteBridge: {
+      name: 'Ponte glutei',
+      cue: 'Sdraiato, ginocchia piegate, spingi sui talloni e contrai i glutei in alto.',
+    },
+    donkeyKick: {
+      name: 'Donkey kick',
+      cue: 'Carponi, spingi un piede verso il soffitto con il ginocchio piegato, senza inarcare la schiena.',
+    },
+    hipAbduction: {
+      name: 'Abduzione d’anca in piedi',
+      cue: 'In piedi, solleva una gamba tesa lateralmente senza inclinare il busto.',
+    },
+    sidePlank: {
+      name: 'Plank laterale',
+      cue: 'Appoggio su un avambraccio, corpo in linea retta dai piedi alla testa.',
+    },
+    standingKneeRaise: {
+      name: 'Sollevamento ginocchia in piedi',
+      cue: 'In piedi, solleva un ginocchio verso il petto mantenendo la schiena dritta.',
+    },
+    crunch: {
+      name: 'Crunch',
+      cue: 'Sdraiato, ginocchia piegate, solleva le scapole espirando. Non tirare il collo.',
+    },
+    highKneeMarch: {
+      name: 'Marcia sul posto ginocchia alte',
+      cue: 'Marcia sul posto, ginocchia all’altezza dell’anca, ritmo controllato.',
+    },
+    buttKickMarch: {
+      name: 'Marcia sul posto calcio ai glutei',
+      cue: 'Marcia sul posto, porta i talloni verso i glutei a ritmo moderato.',
     },
     custom: {
       name: 'Esercizio personale',
