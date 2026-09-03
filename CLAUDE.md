@@ -189,6 +189,25 @@ effet utile puisque Google indexe en mobile-first.
 **Images.** `scripts/generate-og-image.py` produit `og-image.png`,
 `apple-touch-icon.png` et `favicon.ico`. `favicon.svg` est écrit à la main.
 
+**Cibles tactiles.** Tout élément interactif vise `min-width`/`min-height:
+44px` (bonne pratique Lighthouse/Apple HIG — la norme réellement opposable,
+WCAG 2.5.8 AA, ne fixe que 24px). `min-height`/`min-width` plutôt que
+`height`/`width` : la zone tactile est garantie quelle que soit la métrique
+réelle de la police, pas déduite d'un calcul de padding. `.del` est calé sur
+`.mini` × 2 + le `gap` de `.arrows` (96px) pour garder les deux empilés
+visuellement alignés, comme dans le design d'origine. Pour un lien texte
+court (`.quicknav a`, `.credit a`), la zone cliquable s'étend par `padding`
+seul — jamais de marge négative pour « rattraper » ce padding : le `gap` du
+conteneur flex mesure l'espace entre les boîtes (`border-box`), le padding
+est à l'intérieur de la boîte de chaque lien et ne le grignote pas ; une
+marge négative, elle, mord directement sur ce `gap` et resserre les liens
+plus qu'annoncé (piège vérifié : `gap:16px` + `margin:0 -4px` de chaque
+côté ramenait l'espace visible à 8px). L'indicateur de lien utilise
+`text-decoration`, jamais `border-bottom` : un border colle au bord de la
+boîte (donc loin du texte une fois la boîte à 44px), alors que
+text-decoration reste sur la ligne de base quelle que soit la hauteur de la
+zone tactile.
+
 **Sitemap.** `public/sitemap.xml` est à soumettre dans la Search Console : le
 `robots.txt` de la racine du domaine appartient à un autre projet et ne le
 référence pas. Inutile d'ajouter un `public/robots.txt` — seul celui de la
