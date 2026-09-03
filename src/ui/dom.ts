@@ -42,6 +42,14 @@ export function dot(color: string): HTMLElement {
   return el('i', { attrs: { style: `background:${color}` } });
 }
 
+/**
+ * `field`+`itemId` sont deja uniques ensemble (un champ donne d'une ligne
+ * donnee) : ca suffit comme id DOM, pas besoin d'un compteur separe.
+ */
+function fieldId(field: string, itemId: string): string {
+  return `f-${field}-${itemId}`;
+}
+
 /** Champ numerique du deroule, identifie par l'element et le nom du champ. */
 export function numberField(
   label: string,
@@ -50,16 +58,21 @@ export function numberField(
   itemId: string,
   attrs: Record<string, string>,
 ): HTMLElement {
+  const id = fieldId(field, itemId);
   const input = el('input', {
     attrs: {
       type: 'number',
       value: String(value),
+      id,
       'data-field': field,
       'data-id': itemId,
       ...attrs,
     },
   });
-  return el('div', { className: 'f', children: [el('label', { text: label }), input] });
+  return el('div', {
+    className: 'f',
+    children: [el('label', { text: label, attrs: { for: id } }), input],
+  });
 }
 
 export function selectField(
@@ -70,13 +83,17 @@ export function selectField(
   options: { value: string; label: string }[],
   className = 'f',
 ): HTMLElement {
-  const select = el('select', { attrs: { 'data-field': field, 'data-id': itemId } });
+  const id = fieldId(field, itemId);
+  const select = el('select', { attrs: { id, 'data-field': field, 'data-id': itemId } });
   for (const option of options) {
     const node = el('option', { text: option.label, attrs: { value: option.value } });
     if (option.value === value) node.selected = true;
     select.append(node);
   }
-  return el('div', { className, children: [el('label', { text: label }), select] });
+  return el('div', {
+    className,
+    children: [el('label', { text: label, attrs: { for: id } }), select],
+  });
 }
 
 /**
