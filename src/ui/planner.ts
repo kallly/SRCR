@@ -1,7 +1,8 @@
 import { t } from '../i18n';
 import { groupColor, GROUP_IDS } from '../data/groups';
 import { exerciseCue, exerciseName, isExercise, move } from '../core/plan';
-import type { ExerciseItem, PlanItem, RestItem } from '../core/types';
+import { isLibraryKey } from '../data/library';
+import type { ExerciseItem, ExerciseKey, PlanItem, RestItem } from '../core/types';
 import type { Context } from './app';
 import { byId, dot, el, numberField, selectField } from './dom';
 
@@ -29,6 +30,16 @@ function deleteButton(id: string): HTMLElement {
     className: 'del',
     text: '×',
     attrs: { type: 'button', 'data-delete': id, 'aria-label': t('item.delete') },
+  });
+}
+
+/** Un exercice perso n'a pas de fiche (aucun contenu associe a la cle `custom`). */
+function infoButton(key: ExerciseKey): HTMLElement | null {
+  if (!isLibraryKey(key)) return null;
+  return el('button', {
+    className: 'info-btn',
+    text: 'ⓘ',
+    attrs: { type: 'button', 'data-info': key, 'aria-label': t('exerciseInfo.trigger') },
   });
 }
 
@@ -73,6 +84,7 @@ function exerciseRow(
         className: 'chip',
         children: [dot(groupColor(item.group)), document.createTextNode(t(`group.${item.group}`))],
       }),
+      infoButton(item.key),
       cue ? el('div', { className: 'cue', text: cue }) : null,
     ],
   });
@@ -130,6 +142,12 @@ export function createPlanner(ctx: Context): { render: () => void } {
     const button = (event.target as HTMLElement).closest('button');
     if (!button) return;
     const { plan } = ctx.state;
+
+    const infoKey = button.dataset['info'] as ExerciseKey | undefined;
+    if (infoKey) {
+      ctx.showExerciseInfo(infoKey);
+      return;
+    }
 
     const deleteId = button.dataset['delete'];
     if (deleteId) {

@@ -1,7 +1,9 @@
 import { onLocaleChange, t } from '../i18n';
 import { createCustom, createRest, defaultPlan } from '../core/plan';
 import { saveState, type State } from '../core/storage';
+import type { ExerciseKey } from '../core/types';
 import { applyStaticTranslations, byId } from './dom';
+import { createExerciseInfo } from './exercise-info';
 import { createHistory } from './history';
 import { createLangSwitch } from './langswitch';
 import { createLibrary } from './library';
@@ -32,6 +34,8 @@ export interface Context {
   /** Apercu et barre de statut seulement, apres une simple saisie chiffree. */
   renderDerived(): void;
   startSession(): void;
+  /** Ouvre la modal d'info sur un exercice de la bibliotheque. */
+  showExerciseInfo(key: ExerciseKey): void;
 }
 
 export function createApp(state: State): { render: () => void } {
@@ -58,6 +62,7 @@ export function createApp(state: State): { render: () => void } {
     renderAll: () => renderAll(),
     renderDerived: () => renderDerived(),
     startSession: () => runner.start(),
+    showExerciseInfo: (key) => exerciseInfo.open(key),
   };
 
   const planner = createPlanner(ctx);
@@ -67,6 +72,7 @@ export function createApp(state: State): { render: () => void } {
   const library = createLibrary(ctx);
   const langSwitch = createLangSwitch(ctx);
   const runner = createRunner(ctx);
+  const exerciseInfo = createExerciseInfo();
 
   function save(): void {
     const ok = saveState(ctx.state);

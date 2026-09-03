@@ -24,6 +24,15 @@ export const it: Translations = {
       'Durante la seduta, un lettore a schermo intero mostra il cronometro, l’anello di avanzamento e l’indicazione di esecuzione, mantiene lo schermo acceso e segnala la fine di ogni intervallo. Nessun account, nessun server, nessun dato inviato: seduta e cronologia sono salvate nel browser. L’interfaccia è disponibile in francese, inglese, spagnolo, tedesco e italiano.',
   },
 
+  exerciseInfo: {
+    trigger: 'Informazioni sull’esercizio',
+    close: 'Chiudi',
+    muscles: 'Muscoli coinvolti',
+    keyPoints: 'Punti chiave',
+    moreInfo: 'Maggiori informazioni',
+    unavailable: 'Scheda dettagliata presto disponibile in questa lingua — visualizzazione in francese.',
+  },
+
   mode: {
     classic: 'Classico',
     circuit: 'Circuito',
@@ -41,6 +50,13 @@ export const it: Translations = {
   section: {
     plan: 'Svolgimento',
     library: 'Libreria',
+  },
+
+  library: {
+    search: 'Cerca un esercizio…',
+    filterLabel: 'Filtra per gruppo muscolare',
+    filterAll: 'Tutti i gruppi',
+    noResults: 'Nessun esercizio corrisponde a questa ricerca.',
   },
 
   empty: {

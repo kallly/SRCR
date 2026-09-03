@@ -1,0 +1,280 @@
+/*
+  Feuille dediee aux pages d'exercice statiques (dist/exercises/<locale>/*.html).
+  Volontairement independante du bundle CSS de l'app (hash different a chaque
+  build, et 90% de ses classes ne servent a rien sur une page article simple) :
+  seuls les tokens de couleur et la typographie sont repris pour garder la
+  meme identite visuelle. Ecrite une fois par scripts/build-exercise-pages.ts,
+  referencee par chaque page via un chemin relatif.
+*/
+:root {
+  --bg: #0e1210;
+  --surface: #161d19;
+  --surface-2: #1d2620;
+  --line: #2b352e;
+  --line-soft: #232c26;
+  --paper: #f2f0e8;
+  --paper-dim: #a9b0a7;
+  --lime: #d7ff3f;
+  --disp: 'Archivo', sans-serif;
+  --sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--paper);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+}
+
+a {
+  color: var(--lime);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--paper-dim);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+
+.back:hover {
+  color: var(--lime);
+  text-decoration-color: var(--lime);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--paper-dim);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 4px 11px 4px 8px;
+  margin: 14px 0 0;
+}
+
+.chip i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: block;
+}
+
+h1 {
+  font-family: var(--disp);
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  margin: 10px 0 0;
+  line-height: 1.06;
+}
+
+h2 {
+  font-family: var(--disp);
+  font-stretch: 125%;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--paper-dim);
+  letter-spacing: 0.03em;
+  margin: 34px 0 12px;
+}
+
+.fig {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 0;
+  margin: 20px 0 0;
+}
+
+.fig svg {
+  display: block;
+  width: 100%;
+  height: 150px;
+}
+
+.fig svg .s,
+.fig svg .obj,
+.fig svg .gr {
+  stroke: var(--paper);
+}
+
+.fig svg .hd {
+  fill: var(--paper);
+}
+
+.fig svg .obj {
+  fill: none;
+}
+
+.fig svg .ar {
+  stroke: var(--lime);
+  fill: none;
+}
+
+.fig svg .arh {
+  fill: var(--lime);
+  stroke: none;
+}
+
+.muscles {
+  font-size: 14px;
+  color: var(--paper-dim);
+  margin: 16px 0 0;
+}
+
+.muscles b {
+  color: var(--paper);
+  font-weight: 600;
+}
+
+ol,
+ul {
+  margin: 0;
+  padding-left: 22px;
+}
+
+ol li,
+ul li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+ul.mistakes li {
+  color: var(--paper-dim);
+}
+
+/* carrousel d'exercices similaires : defilement natif, sans JS */
+.carousel {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 8px;
+  margin: 0 -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.carousel::-webkit-scrollbar {
+  height: 6px;
+}
+
+.carousel::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 3px;
+}
+
+.carousel-card {
+  flex: 0 0 200px;
+  scroll-snap-align: start;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+
+.carousel-card:hover {
+  border-color: var(--lime);
+}
+
+.carousel-card .cfig {
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.carousel-card .cfig svg {
+  display: block;
+  width: 100%;
+  height: 70px;
+}
+
+.carousel-card .cfig svg .s,
+.carousel-card .cfig svg .obj,
+.carousel-card .cfig svg .gr {
+  stroke: var(--paper-dim);
+}
+
+.carousel-card .cfig svg .hd {
+  fill: var(--paper-dim);
+}
+
+.carousel-card .cfig svg .obj {
+  fill: none;
+}
+
+.carousel-card .cfig svg .ar {
+  stroke: var(--lime);
+  fill: none;
+}
+
+.carousel-card .cfig svg .arh {
+  fill: var(--lime);
+  stroke: none;
+}
+
+.carousel-card .cb {
+  padding: 10px 12px 12px;
+}
+
+.carousel-card .cn {
+  font-weight: 700;
+  font-size: 13.5px;
+  display: block;
+}
+
+.carousel-card .cd {
+  font-size: 11.5px;
+  color: var(--paper-dim);
+  margin-top: 4px;
+}
+
+footer {
+  margin-top: 40px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 11.5px;
+  color: var(--paper-dim);
+}
+
+footer a {
+  color: var(--paper-dim);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

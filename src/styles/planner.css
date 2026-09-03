@@ -343,6 +343,49 @@
 }
 
 /* bibliotheque */
+.lib-filters {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.lib-filters input,
+.lib-filters select {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-2);
+  color: var(--paper);
+  font-size: 14px;
+  font-family: var(--sans);
+}
+
+.lib-filters input {
+  flex: 2;
+  min-width: 0;
+}
+
+.lib-filters select {
+  flex: 1;
+  min-width: 0;
+  appearance: none;
+  padding-right: 26px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23a9b0a7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.lib-empty {
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  text-align: center;
+  color: var(--paper-dim);
+  font-size: 13.5px;
+  margin: 0 0 12px;
+}
+
 .lib {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -350,18 +393,75 @@
 }
 
 .libcard {
+  position: relative;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 0;
-  text-align: left;
   overflow: hidden;
-  color: inherit;
   transition: border-color 0.15s;
 }
 
 .libcard:hover {
   border-color: var(--lime);
+}
+
+/*
+  Le clic principal (ajouter au deroule) et le bouton d'info sont deux
+  controles independants : jamais un bouton imbrique dans un autre, invalide
+  en HTML et casserait l'accessibilite. .add reprend l'apparence que portait
+  .libcard quand elle etait elle-meme le bouton.
+*/
+.libcard .add {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+}
+
+/*
+  Bouton d'info sur un exercice : bibliotheque (badge en overlay sur la
+  carte) et deroule (inline a cote du groupe musculaire) partagent la meme
+  apparence de base, seul le positionnement differe.
+
+  Volontairement en dessous du seuil de 44px du reste de l'app : c'est une
+  action secondaire (l'action principale d'une carte est de l'ajouter, celle
+  d'une ligne est de regler ses parametres), pas la cible tactile principale
+  de son contexte — voir CLAUDE.md, section « Cibles tactiles ».
+*/
+.info-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--paper-dim);
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+}
+
+.info-btn:hover {
+  border-color: var(--lime);
+  color: var(--lime);
+}
+
+.libcard .info-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: var(--surface-2);
+}
+
+.name .info-btn {
+  vertical-align: middle;
+  margin-left: 4px;
 }
 
 .libcard .fig {

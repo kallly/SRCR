@@ -24,6 +24,15 @@ export const de: Translations = {
       'Während der Einheit zeigt ein Vollbild-Player die Uhr, den Fortschrittsring und den Ausführungshinweis, hält den Bildschirm wach und meldet das Ende jedes Intervalls. Kein Konto, kein Server, keine gesendeten Daten: Einheit und Verlauf werden im Browser gespeichert. Die Oberfläche gibt es auf Französisch, Englisch, Spanisch, Deutsch und Italienisch.',
   },
 
+  exerciseInfo: {
+    trigger: 'Informationen zur Übung',
+    close: 'Schließen',
+    muscles: 'Beanspruchte Muskeln',
+    keyPoints: 'Wichtigste Punkte',
+    moreInfo: 'Mehr erfahren',
+    unavailable: 'Ausführliche Seite in dieser Sprache bald verfügbar — Anzeige auf Französisch.',
+  },
+
   mode: {
     classic: 'Klassisch',
     circuit: 'Zirkel',
@@ -41,6 +50,13 @@ export const de: Translations = {
   section: {
     plan: 'Ablauf',
     library: 'Bibliothek',
+  },
+
+  library: {
+    search: 'Übung suchen…',
+    filterLabel: 'Nach Muskelgruppe filtern',
+    filterAll: 'Alle Gruppen',
+    noResults: 'Keine Übung entspricht dieser Suche.',
   },
 
   empty: {

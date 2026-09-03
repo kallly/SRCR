@@ -24,6 +24,15 @@ export const en: Translations = {
       'During the session, a full-screen player shows the timer, the progress ring and the execution cue, keeps the screen awake and signals the end of each interval. No account, no server, no data sent: your session and history are stored in the browser. The interface is available in French, English, Spanish, German and Italian.',
   },
 
+  exerciseInfo: {
+    trigger: 'Exercise information',
+    close: 'Close',
+    muscles: 'Muscles worked',
+    keyPoints: 'Key points',
+    moreInfo: 'More information',
+    unavailable: 'Detailed page coming soon in this language — showing French.',
+  },
+
   mode: {
     classic: 'Classic',
     circuit: 'Circuit',
@@ -41,6 +50,13 @@ export const en: Translations = {
   section: {
     plan: 'Running order',
     library: 'Library',
+  },
+
+  library: {
+    search: 'Search for an exercise…',
+    filterLabel: 'Filter by muscle group',
+    filterAll: 'All groups',
+    noResults: 'No exercise matches this search.',
   },
 
   empty: {

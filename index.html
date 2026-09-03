@@ -137,6 +137,20 @@
       </div>
 
       <h2 id="section-library" data-i18n="section.library">Bibliothèque</h2>
+      <div class="lib-filters">
+        <input
+          type="search"
+          id="libSearch"
+          placeholder="Rechercher un exercice…"
+          data-i18n-placeholder="library.search"
+          aria-label="Rechercher un exercice…"
+          data-i18n-aria-label="library.search"
+        />
+        <select id="libGroupFilter" aria-label="Filtrer par groupe musculaire" data-i18n-aria-label="library.filterLabel">
+          <option value="" data-i18n="library.filterAll">Tous les groupes</option>
+        </select>
+      </div>
+      <p class="lib-empty" id="libEmpty" data-i18n="library.noResults" hidden>Aucun exercice ne correspond à cette recherche.</p>
       <div class="lib" id="library"></div>
 
       <p class="done" id="history"></p>
@@ -178,6 +192,20 @@
         >
       </footer>
     </main>
+
+    <dialog class="info" id="exerciseInfo">
+      <div class="info-head">
+        <span class="chip" id="infoChip"><i></i><span id="infoGroup"></span></span>
+        <button class="info-close" type="button" id="infoClose" data-i18n="exerciseInfo.close">Fermer</button>
+      </div>
+      <h3 id="infoName"></h3>
+      <div class="info-fig" id="infoFig"></div>
+      <p class="info-muscles"><b data-i18n="exerciseInfo.muscles"></b> <span id="infoMuscles"></span></p>
+      <p class="info-unavailable" id="infoUnavailable" data-i18n="exerciseInfo.unavailable" hidden></p>
+      <h4 data-i18n="exerciseInfo.keyPoints">Points clés</h4>
+      <ul id="infoPoints"></ul>
+      <a class="info-more" id="infoMore" target="_blank" rel="noopener" data-i18n="exerciseInfo.moreInfo">Plus d’informations</a>
+    </dialog>
 
     <div class="bar">
       <div class="meta"><b id="barTitle"></b><span id="barSub"></span></div>

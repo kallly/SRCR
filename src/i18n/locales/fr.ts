@@ -31,6 +31,15 @@ export const fr = {
       'Pendant la séance, un lecteur plein écran affiche le chrono, l’anneau de progression et la consigne d’exécution, garde l’écran allumé et signale la fin de chaque temps. Aucun compte, aucun serveur, aucune donnée envoyée : la séance et l’historique sont enregistrés dans le navigateur. L’interface existe en français, anglais, espagnol, allemand et italien.',
   },
 
+  exerciseInfo: {
+    trigger: 'Informations sur l’exercice',
+    close: 'Fermer',
+    muscles: 'Muscles sollicités',
+    keyPoints: 'Points clés',
+    moreInfo: 'Plus d’informations',
+    unavailable: 'Fiche détaillée bientôt disponible dans cette langue — affichage en français.',
+  },
+
   mode: {
     classic: 'Classique',
     circuit: 'Circuit',
@@ -48,6 +57,13 @@ export const fr = {
   section: {
     plan: 'Déroulé',
     library: 'Bibliothèque',
+  },
+
+  library: {
+    search: 'Rechercher un exercice…',
+    filterLabel: 'Filtrer par groupe musculaire',
+    filterAll: 'Tous les groupes',
+    noResults: 'Aucun exercice ne correspond à cette recherche.',
   },
 
   empty: {

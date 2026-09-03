@@ -13,7 +13,7 @@ anneau de progression + bip).
 | Commande | Effet |
 |---|---|
 | `npm run dev` | Serveur de développement sur le port 8000, exposé sur le réseau local |
-| `npm run build` | `tsc --noEmit` puis build Vite vers `dist/` |
+| `npm run build` | `tsc --noEmit`, build Vite vers `dist/`, puis génère les pages d'exercice (`scripts/build-exercise-pages.ts`) et `dist/sitemap.xml` |
 | `npm run preview` | Sert `dist/` sur le port 8000 |
 | `npm run typecheck` | Le filet du projet — il n'y a pas de suite de tests |
 
@@ -32,8 +32,11 @@ src/
     storage.ts     localStorage v4 + migration depuis la v3
   data/            donnees sans texte
     groups.ts      ids + couleurs des groupes musculaires
-    library.ts     8 exercices : reglages seulement
+    library.ts     28 exercices : reglages seulement
     figures.ts     figures SVG
+  content/
+    exercise-details/fr.ts  contenu long (etapes, muscles, prompt image) — voir plus bas
+    exercise-page.css       styles des pages d'exercice statiques
   i18n/
     index.ts       t(), pluriels via Intl.PluralRules, detection, formatDate
     locales/       fr (source) + en, es, de, it
@@ -41,6 +44,8 @@ src/
     app.ts         orchestration : etat partage, sauvegarde, cycles de rendu
     dom.ts         el(), byId(), applyStaticTranslations()
   platform/        audio.ts (bip), wakelock.ts (ecran allume)
+scripts/
+  build-exercise-pages.ts  genere dist/exercises/*, dist/sitemap.xml, docs/image-prompts.md
 ```
 
 Les modules d'interface reçoivent un `Context` (`ui/app.ts`) qui leur donne
@@ -138,9 +143,22 @@ leur `data-i18n` qui continue à les retraduire normalement au chargement.
 
 **Règle : si on change l'une de ces clés dans `fr.ts`, il faut répercuter le
 même texte dans `index.html`** — `app.eyebrow`, `app.heading`, `app.tagline`,
-`app.sourceCode`, `section.plan`, `section.library`, `preview.title` et les
-quatre clés `about.*`. Même logique pour l'`aria-label="Langue"` statique du
-sélecteur de langue, que `applyStaticTranslations()` écrase ensuite.
+`app.sourceCode`, `section.plan`, `section.library`, `preview.title`, les
+quatre clés `about.*`, `exerciseInfo.close`/`.keyPoints`/`.moreInfo` (la
+modal d'info sur un exercice), et `library.search`/`.filterLabel`/
+`.filterAll`/`.noResults` (recherche et filtre de la bibliothèque — y
+compris le `placeholder` et l'`aria-label` du champ de recherche, qui
+portent la même clé `library.search` que le texte visible). Même logique
+pour l'`aria-label="Langue"` statique du sélecteur de langue, que
+`applyStaticTranslations()` écrase
+ensuite.
+
+**`#infoName`/`#infoGroup`/`#infoMuscles`/`#infoPoints` restent vides dans le
+HTML statique, volontairement** : ce sont des valeurs par exercice, pas du
+texte de chrome — même statut que `#runName` dans le lecteur, jamais rempli
+non plus. Un `<dialog>` non ouvert est de toute façon masqué par défaut par
+le navigateur (`dialog:not([open]){display:none}`), donc invisible pour un
+crawler ou un lecteur d'écran tant qu'il n'est pas ouvert.
 
 Le reste du chrome interactif (boutons, labels de formulaire, listes) n'a pas
 ce double, volontairement — il n'a aucune valeur pour un robot puisqu'il ne
@@ -239,6 +257,131 @@ serait à notre portée — coût pour un gain nul à négatif. Ne pas en ajoute
   qu'on ne peut pas faire, c'est les *ajuster* : 600 s reste court pour des
   fichiers au nom déjà versionné qui pourraient être mis en cache un an. Il
   faudrait changer d'hébergeur pour y toucher.
+
+## Pages d'exercice (contenu long, français d'abord)
+
+**Pourquoi un fichier HTML statique par exercice, et pas une route JS.**
+Choix délibéré, pas une contrainte technique : ces 28 (bientôt plus) pages
+sont un vrai gain SEO — chacune a sa propre URL indexable individuellement
+dans le sitemap, son propre `<title>`/description/canonical, un contenu
+complet visible sans exécuter la moindre ligne de JS (donc lisible par
+n'importe quel robot, y compris ceux qui ne rendent pas le JS). Ça évite
+aussi tout le coût de rendu client (hydratation, framework de routage) que
+demanderait l'équivalent en SPA. Le "gonflement" du site en nombre de
+fichiers est le prix normal de contenu réellement crawlable, pas un
+sous-produit accidentel à minimiser.
+
+**Cette duplication est uniquement dans la SORTIE, jamais dans la SOURCE —
+point le plus important de toute cette section.** Il n'existe **qu'un seul**
+gabarit (`renderPage()` dans `scripts/build-exercise-pages.ts`) et **une
+seule** feuille de style (`src/content/exercise-page.css`) pour les 28
+pages. Les fichiers dans `dist/exercises/` ne sont **jamais** des sources :
+ils sont entièrement regénérés à chaque `npm run build`, et un `rmSync`
+efface le dossier avant de le reconstruire. **Éditer un fichier dans
+`dist/exercises/` directement est une perte de temps garantie** — le
+prochain build l'écrase sans avertissement.
+
+**Pour une modification groupée (touchant les 28 pages à la fois), un seul
+endroit à toucher selon la nature du changement :**
+
+| Ce qui change sur les 28 pages | Où éditer |
+|---|---|
+| Structure HTML, balises meta, JSON-LD, carrousel | `renderPage()` dans `scripts/build-exercise-pages.ts` |
+| Couleurs, typographie, mise en page, carrousel (CSS) | `src/content/exercise-page.css` |
+| Contenu d'un exercice précis (étapes, muscles, erreurs) | l'entrée correspondante dans `src/content/exercise-details/fr.ts` |
+| Sélection des exercices « similaires » | la fonction `similar` dans `renderPage()` |
+
+Après toute modification de l'un de ces fichiers, `npm run build` régénère
+les 28 pages en une fois — jamais besoin (et jamais correct) de modifier un
+fichier `dist/exercises/**/*.html` à la main pour propager un changement.
+
+Chaque exercice a deux niveaux de texte, dans deux systèmes différents :
+
+- **Nom + conseil court** — `i18n/locales/*.ts`, sous `exercise.<key>`. Chrome
+  d'interface (carte de la bibliothèque, ligne du déroulé) : exigé dans les
+  **5 langues** dès l'ajout d'une clé, comme tout le reste de `Translations`.
+- **Contenu long** — `src/content/exercise-details/<locale>.ts`, sous la clé
+  de l'exercice : muscles sollicités, étapes, erreurs fréquentes, prompt
+  d'image. Volontairement **hors du contrat i18n strict**
+  (`Partial<Record<ExerciseKey, ExerciseDetail>>`, pas `Translations`) — une
+  langue peut légitimement ne pas encore avoir traduit ce contenu, contrairement
+  à un bouton qui ne doit jamais être vide. Aujourd'hui, seul `fr.ts` existe.
+  Ajouter une langue : créer `exercise-details/<locale>.ts`, puis l'ajouter à
+  `DETAILS_BY_LOCALE` dans `content/exercise-details/index.ts` — **seule
+  source** de cette carte, lue à la fois par l'app (`ui/exercise-info.ts`,
+  résolution avec repli) et par le générateur de pages
+  (`scripts/build-exercise-pages.ts`, itère toutes les langues présentes).
+  Ne jamais dupliquer cette carte ailleurs — exactement le problème
+  `public/sitemap.xml` évité plus bas, appliqué ici aussi.
+
+**Les pages sont des fichiers HTML statiques, pas des routes.** Générées par
+`scripts/build-exercise-pages.ts` (lancé via `tsx` après `vite build`, voir
+`package.json`) dans `dist/exercises/<locale>/<slug>.html`. Nécessaire pour
+être crawlables sans JS et référençables individuellement dans le sitemap —
+une route client (`#/exercise/...`) ne le permettrait pas, exactement le
+problème hreflang déjà documenté plus haut pour l'app elle-même.
+
+**`dist/sitemap.xml` n'a plus qu'une seule source** : le générateur l'écrit en
+entier (page d'accueil + une entrée par page générée) à chaque build.
+`public/sitemap.xml` a été supprimé — ne pas le recréer, ce serait une
+deuxième source vouée à diverger de la première.
+
+**Image Gemini : jamais référencée avant d'exister.** Chaque `ExerciseDetail`
+porte un `imagePrompt`, consolidé par le générateur dans `docs/image-prompts.md`
+(ne pas éditer ce fichier à la main, il est régénéré à chaque build). Tant
+qu'aucune image n'a été générée et ajoutée, la page utilise la figure SVG
+existante — jamais une balise `<img>` vers un fichier qui n'existe pas.
+
+**Exercices similaires : seulement s'il y en a vraiment.** Le carrousel en
+bas de page ne liste que les exercices du même groupe musculaire ayant
+eux-mêmes une page générée ; la section entière est omise s'il n'y en a
+aucun (ex. les mollets, seul exercice de leur groupe) — jamais de remplissage
+avec des exercices non pertinents pour avoir quelque chose à afficher.
+
+**Modal d'info (`ui/exercise-info.ts`).** Un `<dialog>` natif (skeleton
+statique dans `index.html`, jamais construit en JS) : fermeture Échap et
+focus-trap gratuits. Un exercice `custom` n'a pas de bouton ⓘ —
+`isLibraryKey()` l'exclut, aucun contenu n'existe pour cette clé.
+`#infoName`/`#infoGroup`/`#infoMuscles`/`#infoPoints` restent vides dans le
+HTML statique, volontairement (contenu par exercice, pas du chrome — même
+statut que `#runName` dans le lecteur). Un `<dialog>` non ouvert est de
+toute façon masqué par défaut par le navigateur
+(`dialog:not([open]){display:none}`), donc invisible pour un crawler ou un
+lecteur d'écran tant qu'il n'est pas ouvert.
+
+Le repli français s'applique aussi ici, visiblement : si la langue active
+n'a pas encore de contenu long pour cet exercice, la modal affiche quand
+même le contenu (en français) plutôt que rien, avec la mention
+`exerciseInfo.unavailable` — jamais une modal vide sous prétexte que la
+traduction n'existe pas encore.
+
+**`.info-btn` : 32px, en dessous du seuil de 44px du reste de l'app —
+décision assumée**, pas un oubli. C'est une action secondaire (l'action
+principale d'une carte est de l'ajouter au déroulé, celle d'une ligne est
+de régler ses paramètres) dans un espace déjà dense (grille 2 colonnes,
+ligne à 4-5 champs). Un seul style de base partagé (`.info-btn`), deux
+contextes de positionnement (`.libcard .info-btn` en badge absolu,
+`.name .info-btn` en inline à côté du chip de groupe).
+
+**Recherche et filtre (`ui/library.ts`).** État local au module (`search`,
+`group`), volontairement **hors de `State`** — un filtre d'affichage n'a rien
+à faire dans ce qui est persisté en `localStorage`, et il doit repartir de
+zéro à chaque chargement de page. Il doit en revanche **survivre** aux
+appels à `renderAll()` déclenchés par autre chose (changement de langue,
+ajout d'un exercice au déroulé...) : `render()` réapplique l'état courant du
+filtre au lieu de le réinitialiser, `renderGrid()` s'en sert directement.
+
+Recherche insensible aux accents (`normalize()`, `\p{Diacritic}` sur une
+chaîne passée par `.normalize('NFD')`) : taper « epaule » doit trouver
+« Épaules ». Les options du `<select>` de groupe sont reconstruites à
+chaque `render()` — leur libellé doit suivre la langue active, comme tout
+le reste de l'interface.
+
+`src/content/exercise-page.css` est **indépendante** du bundle CSS de l'app
+(nom de fichier haché différent à chaque build, et la plupart de ses classes
+ne concernent que l'app interactive) : seuls les tokens de couleur et la
+typographie sont repris, pour la même identité visuelle sans dépendance
+fragile entre les deux étapes de build.
 
 ## Déploiement
 

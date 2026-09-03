@@ -24,6 +24,15 @@ export const es: Translations = {
       'Durante la sesión, un reproductor a pantalla completa muestra el cronómetro, el anillo de progreso y la indicación de ejecución, mantiene la pantalla encendida y avisa del final de cada intervalo. Sin cuenta, sin servidor, sin datos enviados: la sesión y el historial se guardan en el navegador. La interfaz está disponible en francés, inglés, español, alemán e italiano.',
   },
 
+  exerciseInfo: {
+    trigger: 'Información del ejercicio',
+    close: 'Cerrar',
+    muscles: 'Músculos trabajados',
+    keyPoints: 'Puntos clave',
+    moreInfo: 'Más información',
+    unavailable: 'Ficha detallada disponible próximamente en este idioma — mostrando en francés.',
+  },
+
   mode: {
     classic: 'Clásico',
     circuit: 'Circuito',
@@ -41,6 +50,13 @@ export const es: Translations = {
   section: {
     plan: 'Desarrollo',
     library: 'Biblioteca',
+  },
+
+  library: {
+    search: 'Buscar un ejercicio…',
+    filterLabel: 'Filtrar por grupo muscular',
+    filterAll: 'Todos los grupos',
+    noResults: 'Ningún ejercicio coincide con esta búsqueda.',
   },
 
   empty: {

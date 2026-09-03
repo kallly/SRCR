@@ -109,4 +109,8 @@ export function applyStaticTranslations(root: ParentNode = document): void {
     const key = node.dataset['i18nAriaLabel'];
     if (key) node.setAttribute('aria-label', t(key as TranslationKey));
   }
+  for (const node of root.querySelectorAll<HTMLInputElement>('[data-i18n-placeholder]')) {
+    const key = node.dataset['i18nPlaceholder'];
+    if (key) node.placeholder = t(key as TranslationKey);
+  }
 }
