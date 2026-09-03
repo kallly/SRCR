@@ -1,0 +1,135 @@
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--paper);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+
+.wrap {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 28px 18px 130px;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  border-radius: var(--radius);
+  -webkit-appearance: none;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+}
+
+input[type='number'] {
+  font-family: var(--sans);
+  font-variant-numeric: tabular-nums;
+}
+
+/* en-tete */
+.head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.head .titles {
+  flex: 1;
+  min-width: 0;
+}
+
+.eyebrow {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  color: var(--lime);
+  margin: 0 0 6px;
+}
+
+h1 {
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 34px;
+  letter-spacing: -0.02em;
+  margin: 0;
+  line-height: 1.02;
+}
+
+.tagline {
+  color: var(--paper-dim);
+  font-size: 14.5px;
+  margin: 8px 0 24px;
+  max-width: 38ch;
+}
+
+h2 {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--paper-dim);
+  margin: 30px 0 12px;
+  letter-spacing: 0.03em;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+h2::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* selecteur de langue */
+.lang {
+  position: relative;
+  flex: none;
+}
+
+.lang select {
+  appearance: none;
+  background: var(--surface-2);
+  color: var(--paper-dim);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 26px 7px 12px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23a9b0a7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.lang select:hover {
+  border-color: var(--lime);
+  color: var(--lime);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

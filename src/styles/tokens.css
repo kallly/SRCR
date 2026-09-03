@@ -1,0 +1,15 @@
+:root {
+  --bg: #0e1210;
+  --surface: #161d19;
+  --surface-2: #1d2620;
+  --line: #2b352e;
+  --line-soft: #232c26;
+  --paper: #f2f0e8;
+  --paper-dim: #a9b0a7;
+  --lime: #d7ff3f;
+  --mint: #7fe0b0;
+  --coral: #ff5a3c;
+  --radius: 6px;
+  --disp: 'Archivo Expanded', sans-serif;
+  --sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+}

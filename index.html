@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="Planificateur et minuteur de seance au poids du corps. Tout reste sur votre appareil." />
+    <meta name="color-scheme" content="dark" />
+    <title>Séance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="head">
+        <div class="titles">
+          <p class="eyebrow" data-i18n="app.eyebrow"></p>
+          <h1 data-i18n="app.heading"></h1>
+        </div>
+        <div class="lang">
+          <select id="locale" data-i18n-aria-label="lang.label"></select>
+        </div>
+      </header>
+      <p class="tagline" data-i18n="app.tagline"></p>
+
+      <div class="modes">
+        <button id="modeClassic" type="button" data-i18n="mode.classic"></button>
+        <button id="modeCircuit" type="button" data-i18n="mode.circuit"></button>
+      </div>
+      <p class="modehint" id="modeHint"></p>
+
+      <div class="settings" id="settings">
+        <div class="f">
+          <label for="setPause" data-i18n="settings.pause"></label>
+          <input type="number" id="setPause" min="10" max="300" step="10" />
+        </div>
+        <div class="f">
+          <label for="setTrans" data-i18n="settings.transition"></label>
+          <input type="number" id="setTrans" min="0" max="120" step="5" />
+        </div>
+      </div>
+
+      <h2 data-i18n="section.plan"></h2>
+      <ul class="plan" id="plan"></ul>
+      <div class="empty" id="empty">
+        <b data-i18n="empty.title"></b><span data-i18n="empty.body"></span>
+      </div>
+
+      <div class="preview" id="preview">
+        <h3 data-i18n="preview.title"></h3>
+        <p class="lead" id="previewLead"></p>
+        <div class="seq" id="previewSeq"></div>
+        <div class="pcount" id="previewCount"></div>
+      </div>
+
+      <p class="saved" id="saved" role="status"></p>
+
+      <div class="rowbtns">
+        <button class="ghost" type="button" id="addRest" data-i18n="actions.addRest"></button>
+        <button class="ghost" type="button" id="addCustom" data-i18n="actions.addCustom"></button>
+      </div>
+      <div class="rowbtns">
+        <button class="ghost" type="button" id="loadDefault" data-i18n="actions.loadDefault"></button>
+        <button class="ghost" type="button" id="clearAll" data-i18n="actions.clearAll"></button>
+      </div>
+
+      <h2 data-i18n="section.library"></h2>
+      <div class="lib" id="library"></div>
+
+      <p class="done" id="history"></p>
+    </div>
+
+    <div class="bar">
+      <div class="meta"><b id="barTitle"></b><span id="barSub"></span></div>
+      <button class="go" type="button" id="start" disabled data-i18n="bar.start"></button>
+    </div>
+
+    <div class="run" id="run">
+      <div class="rhead">
+        <span id="runStep"></span>
+        <button class="x" type="button" id="runQuit" data-i18n="runner.quit"></button>
+      </div>
+      <div class="prog"><i id="runProgress" style="width: 0"></i></div>
+      <div class="rbody">
+        <div class="rlabel" id="runLabel"></div>
+        <div class="rname" id="runName"></div>
+        <div class="rset" id="runSet"></div>
+        <div class="rfig" id="runFigure"></div>
+        <div class="ring" id="runRing">
+          <svg viewBox="0 0 230 230" aria-hidden="true">
+            <circle class="track" cx="115" cy="115" r="100" />
+            <circle class="fill" id="runRingFill" cx="115" cy="115" r="100" />
+          </svg>
+          <div class="big" id="runTime" role="timer" aria-live="off"></div>
+        </div>
+        <div class="repsbig" id="runReps"></div>
+        <div class="rhint" id="runHint"></div>
+        <div class="rcue" id="runCue"></div>
+        <div class="rnext" id="runNext"></div>
+      </div>
+      <div class="rfoot">
+        <button type="button" id="runSecondary"></button>
+        <button class="primary" type="button" id="runPrimary"></button>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
