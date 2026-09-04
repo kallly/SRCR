@@ -62,6 +62,12 @@ export function createPlanSwitcher(ctx: Context): { render: () => void } {
     // Desactive plutot que confirme-puis-refuse : plus clair, evite une
     // confirmation qui ne mene a rien quand il ne reste qu'une seule seance.
     deleteBtn.disabled = plans.length <= 1;
+    const shareBtn = el('button', {
+      className: 'ghost',
+      text: t('share.trigger'),
+      attrs: { type: 'button' },
+    });
+    shareBtn.addEventListener('click', () => ctx.openShareDialog());
 
     createInlineInput(newBtn, {
       label: () => t('plans.namePrompt'),
@@ -92,7 +98,7 @@ export function createPlanSwitcher(ctx: Context): { render: () => void } {
       selectField,
       el('div', {
         className: 'plan-actions',
-        children: [newBtn, duplicateBtn, renameBtn, deleteBtn],
+        children: [newBtn, duplicateBtn, renameBtn, deleteBtn, shareBtn],
       }),
     );
   }

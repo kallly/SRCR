@@ -25,6 +25,22 @@ export const de: Translations = {
     confirmDelete: 'Diese Einheit und ihren Ablauf löschen?',
   },
 
+  share: {
+    trigger: 'Teilen',
+    title: 'Diese Einheit teilen',
+    hint: 'Diesen Code mit einem Smartphone scannen oder den Link unten kopieren.',
+    qrTooLarge: 'Diese Einheit ist zu groß für einen QR-Code: verwende stattdessen den Link unten.',
+    linkLabel: 'Freigabelink',
+    copy: 'Kopieren',
+    copied: 'Link kopiert',
+    importTitle: 'Geteilte Einheit importieren',
+    importSummary: {
+      one: '„{name}“ — {count} Übung.',
+      other: '„{name}“ — {count} Übungen.',
+    },
+    importConfirm: 'Importieren',
+  },
+
   about: {
     title: 'Über Séance',
     intro:

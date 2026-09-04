@@ -229,6 +229,39 @@
       <a class="info-more" id="infoMore" href="#section-library" target="_blank" rel="noopener" data-i18n="exerciseInfo.moreInfo">Plus d’informations</a>
     </dialog>
 
+    <dialog class="info" id="sharePlan">
+      <div class="info-head">
+        <h3 data-i18n="share.title">Partager cette séance</h3>
+        <button class="info-close" type="button" id="shareClose" data-i18n="exerciseInfo.close">Fermer</button>
+      </div>
+      <div class="qr-card" id="shareQr"></div>
+      <p class="share-qr-error" id="shareQrError" data-i18n="share.qrTooLarge" hidden>Cette séance est trop grande pour un QR code : utilisez le lien ci-dessous.</p>
+      <p class="share-hint" data-i18n="share.hint">Scannez ce code avec un téléphone, ou copiez le lien ci-dessous.</p>
+      <div class="share-link-row">
+        <input
+          type="text"
+          id="shareLink"
+          readonly
+          aria-label="Lien de partage"
+          data-i18n-aria-label="share.linkLabel"
+        />
+        <button type="button" id="shareCopy" data-i18n="share.copy">Copier</button>
+      </div>
+      <p class="share-copied" id="shareCopied" role="status" hidden></p>
+    </dialog>
+
+    <dialog class="info" id="importPlan">
+      <div class="info-head">
+        <h3 data-i18n="share.importTitle">Importer une séance partagée</h3>
+        <button class="info-close" type="button" id="importClose" data-i18n="exerciseInfo.close">Fermer</button>
+      </div>
+      <p class="import-summary" id="importSummary"></p>
+      <div class="rowbtns">
+        <button class="ghost" type="button" id="importCancel" data-i18n="actions.cancel">Annuler</button>
+        <button class="go" type="button" id="importConfirm" data-i18n="share.importConfirm">Importer</button>
+      </div>
+    </dialog>
+
     <div class="bar">
       <div class="meta"><b id="barTitle"></b><span id="barSub"></span></div>
       <button class="go" type="button" id="start" disabled data-i18n="bar.start">Démarrer</button>

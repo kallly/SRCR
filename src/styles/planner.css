@@ -77,10 +77,11 @@
 /*
   Reservation approximative (formulaire construit en JS, jamais mesuree en
   reseau bride comme #plan:empty/#library:empty plus bas) : un select (44px)
-  + son label, et 4 boutons qui tiennent sur deux rangees en mobile.
+  + son label, et 5 boutons (dont Partager) qui tiennent sur trois rangees
+  de deux en mobile (`flex: 1 1 calc(50% - 4px)`).
 */
 #planSwitcher:empty {
-  min-height: 185px;
+  min-height: 237px;
 }
 
 /* formulaire inline : remplace un window.prompt() natif (ui/inline-input.ts) */
@@ -382,6 +383,12 @@
   display: flex;
   gap: 10px;
   margin-top: 12px;
+}
+
+/* Import de seance partagee (ui/share.ts) : bouton "Importer" au meme
+   gabarit que "Annuler" (.ghost, flex:1) dans la meme rangee. */
+.rowbtns .go {
+  flex: 1;
 }
 
 .ghost {

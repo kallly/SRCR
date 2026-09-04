@@ -1,7 +1,7 @@
 import { onLocaleChange, setLocale as applyLocale, t } from '../i18n';
 import { createCustom, createRest, defaultPlan, uid } from '../core/plan';
 import { DEFAULT_SESSION_CONFIG, saveLocale, saveState, type State } from '../core/storage';
-import type { ExerciseKey, Locale, PlanItem, SavedPlan, SessionMode } from '../core/types';
+import type { ExerciseKey, Locale, PlanItem, SavedPlan, SessionConfig, SessionMode } from '../core/types';
 import { applyStaticTranslations, byId } from './dom';
 import { createExerciseInfo } from './exercise-info';
 import { createGuidesIndex } from './guides-index';
@@ -13,6 +13,7 @@ import { createPlanner } from './planner';
 import { createPlanSwitcher } from './plan-switcher';
 import { createPreview } from './preview';
 import { createRunner } from './runner';
+import { createShare } from './share';
 import { createStatusBar } from './statusbar';
 import { createToast, type Toast } from './toast';
 
@@ -42,6 +43,8 @@ export interface Context {
   /** Remplace le deroule de la seance active par un autre tableau. */
   setPlanItems(items: PlanItem[]): void;
   createPlan(name: string | null): void;
+  /** Cree une seance a partir d'un lien/QR code partage (ui/share.ts). */
+  importPlan(name: string | null, items: PlanItem[], config: SessionConfig): void;
   duplicatePlan(id: string): void;
   renamePlan(id: string, name: string | null): void;
   deletePlan(id: string): void;
@@ -56,6 +59,8 @@ export interface Context {
   startSession(): void;
   /** Ouvre la modal d'info sur un exercice de la bibliotheque. */
   showExerciseInfo(key: ExerciseKey): void;
+  /** Ouvre la modal de partage (lien + QR code) de la seance active. */
+  openShareDialog(): void;
   toast: Toast;
 }
 
@@ -91,27 +96,22 @@ export function createApp(state: State): { render: () => void } {
       ctx.activePlan().items = items;
     },
     createPlan: (name) => {
-      const plan: SavedPlan = { id: uid(), name, items: [], config: { ...DEFAULT_SESSION_CONFIG } };
-      ctx.state.plans.push(plan);
-      ctx.state.activePlanId = plan.id;
-      save();
-      renderAll();
+      registerPlan({ id: uid(), name, items: [], config: { ...DEFAULT_SESSION_CONFIG } });
+    },
+    importPlan: (name, items, config) => {
+      registerPlan({ id: uid(), name, items, config });
     },
     duplicatePlan: (id) => {
       const source = ctx.state.plans.find((plan) => plan.id === id);
       if (!source) return;
-      const copy: SavedPlan = {
+      registerPlan({
         id: uid(),
         // Copie exacte, jamais un suffixe « (copie) » : ce serait du texte
         // traduit fige dans une donnee persistee (regle CLAUDE.md n°2).
         name: source.name,
         items: source.items.map((item) => ({ ...item, id: uid() })),
         config: { ...source.config },
-      };
-      ctx.state.plans.push(copy);
-      ctx.state.activePlanId = copy.id;
-      save();
-      renderAll();
+      });
     },
     renamePlan: (id, name) => {
       const plan = ctx.state.plans.find((entry) => entry.id === id);
@@ -149,6 +149,7 @@ export function createApp(state: State): { render: () => void } {
     renderDerived: () => renderDerived(),
     startSession: () => runner.start(),
     showExerciseInfo: (key) => exerciseInfo.open(key),
+    openShareDialog: () => share.openShareDialog(),
     toast,
   };
 
@@ -162,6 +163,15 @@ export function createApp(state: State): { render: () => void } {
   const runner = createRunner(ctx);
   const guidesIndex = createGuidesIndex();
   const exerciseInfo = createExerciseInfo();
+  const share = createShare(ctx);
+
+  /** Sequence commune a createPlan/importPlan/duplicatePlan : enregistrer, activer, sauvegarder, tout rafraichir. */
+  function registerPlan(plan: SavedPlan): void {
+    ctx.state.plans.push(plan);
+    ctx.state.activePlanId = plan.id;
+    save();
+    renderAll();
+  }
 
   function save(): void {
     const ok = saveState(ctx.state);
@@ -255,6 +265,10 @@ export function createApp(state: State): { render: () => void } {
 
   // Un changement de langue retraduit tout, y compris une seance en cours.
   onLocaleChange(() => renderAll());
+
+  // Une seule fois au demarrage : un lien partage ouvert directement propose
+  // son import, puis nettoie l'URL (voir ui/share.ts).
+  share.checkIncomingShare();
 
   return { render: renderAll };
 }

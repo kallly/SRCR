@@ -25,6 +25,22 @@ export const es: Translations = {
     confirmDelete: '¿Eliminar esta sesión y su plan?',
   },
 
+  share: {
+    trigger: 'Compartir',
+    title: 'Compartir esta sesión',
+    hint: 'Escanea este código con un teléfono, o copia el enlace de abajo.',
+    qrTooLarge: 'Esta sesión es demasiado grande para un código QR: usa el enlace de abajo.',
+    linkLabel: 'Enlace para compartir',
+    copy: 'Copiar',
+    copied: 'Enlace copiado',
+    importTitle: 'Importar una sesión compartida',
+    importSummary: {
+      one: '«{name}» — {count} ejercicio.',
+      other: '«{name}» — {count} ejercicios.',
+    },
+    importConfirm: 'Importar',
+  },
+
   about: {
     title: 'Acerca de Séance',
     intro:

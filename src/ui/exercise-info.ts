@@ -3,7 +3,7 @@ import { groupColor } from '../data/groups';
 import { figureSvg } from '../data/figures';
 import { LIBRARY } from '../data/library';
 import type { ExerciseKey, GroupId } from '../core/types';
-import { byId, el } from './dom';
+import { byId, el, wireDialogClose } from './dom';
 
 /** Nombre de points cles resumes dans la modal (les etapes completes sont sur la page dediee). */
 const KEY_POINTS = 3;
@@ -58,11 +58,7 @@ export function createExerciseInfo(): ExerciseInfo {
   points.insertAdjacentElement('beforebegin', loadingMsg);
   loadingMsg.insertAdjacentElement('afterend', errorMsg);
 
-  closeBtn.addEventListener('click', () => dialog.close());
-  // Clic sur le fond (en dehors du contenu, qui occupe toute la boite de dialogue) : ferme aussi.
-  dialog.addEventListener('click', (event) => {
-    if (event.target === dialog) dialog.close();
-  });
+  wireDialogClose(dialog, closeBtn);
 
   async function open(key: ExerciseKey): Promise<void> {
     const entry = LIBRARY.find((e) => e.key === key);

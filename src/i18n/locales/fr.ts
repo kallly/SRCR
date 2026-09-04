@@ -32,6 +32,22 @@ export const fr = {
     confirmDelete: 'Supprimer cette séance et son déroulé ?',
   },
 
+  share: {
+    trigger: 'Partager',
+    title: 'Partager cette séance',
+    hint: 'Scannez ce code avec un téléphone, ou copiez le lien ci-dessous.',
+    qrTooLarge: 'Cette séance est trop grande pour un QR code : utilisez le lien ci-dessous.',
+    linkLabel: 'Lien de partage',
+    copy: 'Copier',
+    copied: 'Lien copié',
+    importTitle: 'Importer une séance partagée',
+    importSummary: {
+      one: '« {name} » — {count} exercice.',
+      other: '« {name} » — {count} exercices.',
+    },
+    importConfirm: 'Importer',
+  },
+
   about: {
     title: 'À propos de Séance',
     intro:

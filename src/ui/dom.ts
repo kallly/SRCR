@@ -43,6 +43,19 @@ export function dot(color: string): HTMLElement {
 }
 
 /**
+ * Ferme un <dialog> natif au clic sur son bouton de fermeture ou sur le fond
+ * (en dehors du contenu, qui occupe toute la boite de dialogue). Partage par
+ * toutes les modals de l'app (ui/exercise-info.ts, ui/share.ts) plutot que
+ * de repeter ces deux ecouteurs a chaque fois.
+ */
+export function wireDialogClose(dialog: HTMLDialogElement, closeButton: HTMLElement): void {
+  closeButton.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+}
+
+/**
  * `field`+`itemId` sont deja uniques ensemble (un champ donne d'une ligne
  * donnee) : ca suffit comme id DOM, pas besoin d'un compteur separe.
  */

@@ -25,6 +25,22 @@ export const en: Translations = {
     confirmDelete: 'Delete this session and its plan?',
   },
 
+  share: {
+    trigger: 'Share',
+    title: 'Share this session',
+    hint: 'Scan this code with a phone, or copy the link below.',
+    qrTooLarge: 'This session is too large for a QR code: use the link below instead.',
+    linkLabel: 'Share link',
+    copy: 'Copy',
+    copied: 'Link copied',
+    importTitle: 'Import a shared session',
+    importSummary: {
+      one: '"{name}" — {count} exercise.',
+      other: '"{name}" — {count} exercises.',
+    },
+    importConfirm: 'Import',
+  },
+
   about: {
     title: 'About Séance',
     intro:

@@ -132,6 +132,78 @@ En mode circuit, la pause imposée vient du réglage global `cfg.pause`, jamais 
 `rest` de la ligne — c'est pourquoi le champ « repos entre séries » est masqué
 dans ce mode.
 
+## Partage d'une séance (`core/share.ts`, `ui/share.ts`)
+
+Fonctionnalité secondaire (pas un nouvel écran, juste deux `<dialog>`) : pas
+de backend, donc la séance entière voyage encodée dans l'URL elle-même
+(`?s=...`, décodée côté client) — un lien ou un QR code suffit, pas de
+serveur à faire tourner.
+
+**Un format à part, pas le schéma de stockage.** `core/share.ts` définit son
+propre format versionné (`v: 1` dans le payload), distinct des clés
+`seance.plans.v5` de `core/storage.ts` : une évolution du format de partage
+n'a pas à suivre le même calendrier qu'une migration de stockage, et
+inversement. Il réutilise cela dit `parsePlan()`/`parseSessionConfig()`
+(exportées depuis `storage.ts` pour l'occasion) plutôt que d'écrire une
+seconde validation : un lien partagé est un texte tiers, aussi peu fiable
+qu'une valeur lue en `localStorage`, donc mérite exactement la même
+tolérance aux données invalides/tronquées — jamais de `throw`.
+
+**Ça ne marche que grâce à la règle n°2** (aucun texte traduit dans
+`PlanItem`/`SessionConfig`) : un lien généré depuis une app en français
+s'importe correctement chez quelqu'un dont l'app est en italien, sans rien
+à traduire dans le payload. Les `id` des lignes ne sont pas encodés (le
+champ le plus lourd, le moins utile à partager) : `parsePlan()` leur en
+régénère de frais à l'import, exactement comme pour une ligne stockée sans
+id.
+
+**Le payload est volontairement dense, pas lisible.** Chaque ligne du
+déroulé est un tableau positionnel (`['e', clé, groupe, 'r'|'t', séries,
+répétitions, secondes, repos, nomPerso?]` pour un exercice, `['r',
+secondes]` pour une pause) et non un objet : aucun nom de champ répété par
+ligne. Les deux enums à deux valeurs (mode de séance, type d'effort) sont
+réduits à une lettre. `decodeSharedPlan()` reconstruit la forme `{ type,
+key, ... }` attendue par `parsePlan()` avant de la lui passer — la
+validation tolérante reste centralisée dans `storage.ts`, seul le format de
+transport change. Gain mesuré sur une séance de 7 exercices : 1120 → 430
+caractères encodés, et le QR correspondant passe de 129 à 77 modules de
+côté (bien plus confortable à scanner). Ne pas « clarifier » ce format en
+repassant à des objets à clés explicites sans mesurer l'impact sur la
+taille du lien — c'est tout l'intérêt de ce format.
+
+**QR toujours noir sur blanc, jamais suivant le thème de l'app** (`.qr-card`
+dans `base.css`) : c'est la seule combinaison fiable pour un lecteur de QR,
+contrairement au reste de l'interface qui suit `--bg`/`--paper`.
+
+**Le générateur de QR (`qrcode-generator`, seule dépendance runtime du
+projet) est chargé en `import()` dynamique**, comme le contenu long des
+exercices (`ui/exercise-info.ts`) : inutile de le faire payer à tout le
+monde au chargement pour une action que la plupart des visiteurs ne
+déclencheront jamais. Il ne sert qu'à l'export (`openShareDialog`) — jamais
+à l'import, qui n'a besoin que de décoder du JSON.
+
+**`tsconfig.json` porte `esModuleInterop: true`** depuis l'ajout de cette
+dépendance : `qrcode-generator` est un module CommonJS (`export =`), et sans
+cette option `import qrcode from 'qrcode-generator'` ne type-check pas alors
+que Vite/Rollup le bundlent très bien à l'exécution — piège vérifié
+(l'inverse aussi : `import * as qrcode` type-check mais Rollup refuse
+d'appeler un namespace en production, « Cannot call a namespace »).
+
+**Le rendu SVG est fait à la main** (`isDark(row, col)` cellule par
+cellule), pas via `qr.createSvgTag()` : cette dernière fige des dimensions
+en pixels, alors que le reste de l'app utilise des `viewBox` mis à l'échelle
+par la CSS (même convention que les figures d'exercice, `data/figures.ts`).
+
+**Niveau de correction d'erreur le plus bas (`'L'`)**, volontairement : ce
+code est affiché puis scanné immédiatement à l'écran, jamais imprimé ni
+abîmé, et la séance encodée peut être longue (plusieurs dizaines
+d'exercices) — moins de redondance donne un QR moins dense, donc plus facile
+à scanner depuis un écran de téléphone. Au-delà de la capacité maximale du
+standard (version 40), `qrcode-generator` lève une chaîne brute (pas une
+`Error`) : `qrSvg()` l'attrape et la modal bascule sur un message + le lien
+copiable reste disponible, plutôt que de casser toute la fonctionnalité pour
+une séance inhabituellement grande.
+
 ## Bugs du monolithe corrigés au portage
 
 1. `beep()` créait un `AudioContext` par appel ; les navigateurs en plafonnent le

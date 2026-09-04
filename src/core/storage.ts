@@ -97,9 +97,19 @@ function parseItem(raw: unknown): PlanItem | null {
   return item;
 }
 
-function parsePlan(raw: unknown): PlanItem[] | null {
+export function parsePlan(raw: unknown): PlanItem[] | null {
   if (!Array.isArray(raw)) return null;
-  return raw.map(parseItem).filter((item): item is PlanItem => item !== null);
+  const items = raw.map(parseItem).filter((item): item is PlanItem => item !== null);
+
+  // Un id duplique (donnee corrompue, ou lien de partage manipule a la
+  // main) ferait pointer suppression/edition d'une ligne sur la mauvaise :
+  // regenere un id frais pour tout doublon rencontre.
+  const seen = new Set<string>();
+  for (const item of items) {
+    if (seen.has(item.id)) item.id = uid();
+    seen.add(item.id);
+  }
+  return items;
 }
 
 function parseHistory(raw: unknown): number[] {
@@ -107,7 +117,7 @@ function parseHistory(raw: unknown): number[] {
   return raw.filter((entry): entry is number => typeof entry === 'number').slice(-MAX_HISTORY);
 }
 
-function parseSessionConfig(raw: unknown): SessionConfig {
+export function parseSessionConfig(raw: unknown): SessionConfig {
   const source = typeof raw === 'object' && raw !== null ? (raw as Record<string, unknown>) : {};
   return {
     mode: source['mode'] === 'circuit' ? 'circuit' : 'classic',

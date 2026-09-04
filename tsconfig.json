@@ -5,6 +5,7 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "types": ["vite/client", "node"],
+    "esModuleInterop": true,
 
     "strict": true,
     "noUnusedLocals": true,

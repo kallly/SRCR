@@ -25,6 +25,22 @@ export const it: Translations = {
     confirmDelete: 'Eliminare questa seduta e il suo programma?',
   },
 
+  share: {
+    trigger: 'Condividi',
+    title: 'Condividi questa seduta',
+    hint: 'Scansiona questo codice con uno smartphone, oppure copia il link qui sotto.',
+    qrTooLarge: 'Questa seduta è troppo grande per un codice QR: usa il link qui sotto.',
+    linkLabel: 'Link di condivisione',
+    copy: 'Copia',
+    copied: 'Link copiato',
+    importTitle: 'Importa una seduta condivisa',
+    importSummary: {
+      one: '«{name}» — {count} esercizio.',
+      other: '«{name}» — {count} esercizi.',
+    },
+    importConfirm: 'Importa',
+  },
+
   about: {
     title: 'Informazioni su Séance',
     intro:

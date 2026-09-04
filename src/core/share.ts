@@ -1,0 +1,138 @@
+import { isExercise } from './plan';
+import { parsePlan, parseSessionConfig } from './storage';
+import type { PlanItem, SavedPlan, SessionConfig } from './types';
+
+/**
+ * Partage d'une seance par lien/QR code : pas de backend, donc la seance
+ * entiere voyage encodee dans l'URL elle-meme. Ca ne marche que parce que
+ * `PlanItem`/`SessionConfig` ne contiennent deja aucun texte traduit (regle
+ * n°2 de CLAUDE.md) — un lien genere en francais s'importe donc correctement
+ * chez quelqu'un dont l'app est en italien, sans rien a traduire dedans.
+ *
+ * Format volontairement dense : des tableaux positionnels plutot que des
+ * objets (aucun nom de champ repete par ligne), et les deux enums a deux
+ * valeurs (mode de seance, type d'effort) reduits a une lettre. Un QR plus
+ * dense scanne moins bien, et l'URL est deja partagee telle quelle (SMS,
+ * presse-papier) — chaque octet compte plus ici que dans le stockage local.
+ * `v` permet de faire evoluer ce format sans casser un ancien lien.
+ */
+const SHARE_VERSION = 1;
+
+function toBase64Url(text: string): string {
+  const bytes = new TextEncoder().encode(text);
+  let binary = '';
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+function fromBase64Url(encoded: string): string {
+  const base64 = encoded.replace(/-/g, '+').replace(/_/g, '/');
+  const padded = base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), '=');
+  const binary = atob(padded);
+  const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+
+/**
+ * Une ligne encodee : `['r', secondes]` pour une pause, `['e', cle, groupe,
+ * 'r'|'t', series, repetitions, secondes, repos, nomPerso?]` pour un
+ * exercice (le dernier element n'existe que pour un exercice perso nomme).
+ */
+type WireItem = [string, ...unknown[]];
+
+function encodeItem(item: PlanItem): WireItem {
+  if (item.type === 'rest') return ['r', item.seconds];
+  const wire: WireItem = [
+    'e',
+    item.key,
+    item.group,
+    item.mode === 'time' ? 't' : 'r',
+    item.sets,
+    item.reps,
+    item.seconds,
+    item.rest,
+  ];
+  if (item.key === 'custom' && item.customName) wire.push(item.customName);
+  return wire;
+}
+
+/** Reconstruit la forme `{ type, key, ... }` attendue par `parsePlan()` (core/storage.ts). */
+function decodeItem(raw: unknown): Record<string, unknown> | null {
+  if (!Array.isArray(raw) || raw.length < 2) return null;
+  const [kind, ...rest] = raw as unknown[];
+  if (kind === 'r') {
+    return { type: 'rest', seconds: rest[0] };
+  }
+  if (kind === 'e') {
+    const [key, group, mode, sets, reps, seconds, restSeconds, customName] = rest;
+    return {
+      type: 'exercise',
+      key,
+      group,
+      mode: mode === 't' ? 'time' : 'reps',
+      sets,
+      reps,
+      seconds,
+      rest: restSeconds,
+      customName,
+    };
+  }
+  return null;
+}
+
+/**
+ * Encode une seance pour un lien de partage. Les `id` des lignes sont omis
+ * (le champ le plus lourd et le moins utile a partager) : `parsePlan()` leur
+ * en regenere de frais a l'import, exactement comme il le ferait pour une
+ * ligne stockee sans id.
+ */
+export function encodeSharedPlan(plan: SavedPlan): string {
+  const payload = {
+    v: SHARE_VERSION,
+    n: plan.name,
+    m: plan.config.mode === 'circuit' ? 'x' : 'c',
+    p: plan.config.pause,
+    t: plan.config.trans,
+    i: plan.items.map(encodeItem),
+  };
+  return toBase64Url(JSON.stringify(payload));
+}
+
+export interface SharedPlan {
+  name: string | null;
+  items: PlanItem[];
+  config: SessionConfig;
+}
+
+/**
+ * Decode un lien de partage. Ne leve jamais : ce texte vient d'un tiers (URL
+ * copiee, modifiee a la main, tronquee par un client de messagerie...), donc
+ * aussi peu fiable qu'une valeur lue en localStorage — reutilise les memes
+ * parseurs tolerants que `core/storage.ts` plutot qu'une seconde validation.
+ * Rejette un payload sans le moindre exercice (que des pauses) : ce n'est
+ * pas une seance importable.
+ */
+export function decodeSharedPlan(encoded: string): SharedPlan | null {
+  try {
+    const raw: unknown = JSON.parse(fromBase64Url(encoded));
+    if (typeof raw !== 'object' || raw === null) return null;
+    const source = raw as Record<string, unknown>;
+    if (source['v'] !== SHARE_VERSION || !Array.isArray(source['i'])) return null;
+
+    const rawItems = source['i']
+      .map(decodeItem)
+      .filter((item): item is Record<string, unknown> => item !== null);
+    const items = parsePlan(rawItems);
+    if (!items || !items.some(isExercise)) return null;
+
+    const name = typeof source['n'] === 'string' && source['n'].trim() ? source['n'] : null;
+    const config = parseSessionConfig({
+      mode: source['m'] === 'x' ? 'circuit' : 'classic',
+      pause: source['p'],
+      trans: source['t'],
+    });
+    return { name, items, config };
+  } catch {
+    return null;
+  }
+}
