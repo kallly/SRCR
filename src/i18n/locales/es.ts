@@ -187,6 +187,31 @@ export const es: Translations = {
     close: 'Cerrar',
   },
 
+
+  page: {
+    titleSuffix: 'cómo hacerlo',
+    description:
+      'Cómo hacer {name} correctamente: músculos trabajados, técnica paso a paso y errores frecuentes que evitar.',
+    back: '← Volver a la app',
+    howTo: 'Cómo hacer el ejercicio',
+    mistakes: 'Errores frecuentes',
+    sensation: 'Dónde debes notarlo',
+    rangeOfMotion: 'Amplitud',
+    tempo: 'Ritmo y respiración',
+    anatomy: 'Qué trabaja, exactamente',
+    mechanics: 'Mecánica del movimiento',
+    benefits: 'Beneficios',
+    progression: 'Adaptar y progresar',
+    easier: 'Más accesible',
+    harder: 'Más exigente',
+    readyWhen: 'Pasar al siguiente nivel',
+    precautions: 'Precauciones',
+    similar: 'Ejercicios similares',
+    tagline: 'planificador y cronómetro de entrenamiento con el peso corporal.',
+    disclaimer:
+      'Esta información es de carácter general y no sustituye el consejo de un profesional sanitario. Si tienes dolor, una lesión o una patología conocida, consulta a un médico antes de empezar.',
+  },
+
   exercise: {
     inclined: {
       name: 'Flexiones inclinadas',

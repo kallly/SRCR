@@ -247,9 +247,11 @@ serait à notre portée — coût pour un gain nul à négatif. Ne pas en ajoute
 « pour faire complet ».
 
 **Limites connues, inutile d'y revenir :**
-- *`hreflang`* : les 5 langues partagent une seule URL. Le faire correctement
-  demanderait des URL indexables par locale (`/en/`, `/es/`…) générées au
-  build — un changement structurel, pas une balise à ajouter.
+- *`hreflang` sur l'app elle-même* : les 5 langues partagent une seule URL,
+  il n'y a donc rien à déclarer. **Les fiches d'exercice, elles, ont bien un
+  `hreflang`** depuis qu'elles existent en plusieurs langues à des URL
+  distinctes (`exercises/<locale>/<slug>.html`) — c'est exactement la
+  condition qui manquait.
 - *Redirection www ↔ non-www* : sans objet pour un sous-domaine
   `*.github.io` ; ne s'applique qu'à un domaine personnalisé avec apex + www.
 - *En-têtes `Cache-Control`/`Expires`* : contrairement à ce que rapportait
@@ -375,6 +377,24 @@ affiche qu'un extrait et que la plupart des visiteurs ne l'ouvriront jamais.
 Ne pas rebasculer sur un `import` statique « pour simplifier » : ça
 doublerait le poids du démarrage. La source reste unique, c'est le même
 module que celui lu par le générateur de pages.
+
+**Le chrome des pages générées vient de l'i18n, pas du générateur.** Titres
+de section, `<title>`, description, avertissement, pied de page : tout est
+dans `page.*` des dictionnaires, donc exigé dans les 5 langues. Ne jamais
+réécrire une de ces chaînes en dur dans `scripts/build-exercise-pages.ts` —
+c'est le défaut qu'avait la première version anglaise : contenu traduit,
+titres restés en français, ce qui casse la page pour le lecteur et brouille
+la détection de langue de Google.
+
+**L'index de l'accueil suit la langue active sans rien importer.** Le HTML
+statique liste les fiches de la langue source (crawlable), et le plugin Vite
+dépose le slug de **chaque** langue en `data-slug-<locale>` sur le lien.
+`ui/guides-index.ts` reconstruit alors le `href` depuis ces attributs à
+chaque changement de langue. Deux pièges déjà rencontrés : importer
+`content/exercise-details` dans ce module ramènerait tout le contenu long
+dans le bundle de démarrage ; et reconstruire depuis le `href` courant au
+lieu des attributs rend la réécriture non idempotente — passer de l'anglais
+à une langue sans fiche laissait le lien anglais en place.
 
 **Modal d'info (`ui/exercise-info.ts`).** Un `<dialog>` natif (skeleton
 statique dans `index.html`, jamais construit en JS) : fermeture Échap et

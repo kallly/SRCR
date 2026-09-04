@@ -16,15 +16,15 @@ import { LIBRARY } from '../src/data/library';
 import { figureSvg } from '../src/data/figures';
 import { groupColor } from '../src/data/groups';
 import type { ExerciseKey, GroupId, Locale } from '../src/core/types';
-import { fr as i18nFr } from '../src/i18n/locales/fr';
+import { DICTIONARIES, type Translations } from '../src/i18n';
 import { DETAILS_BY_LOCALE, type ExerciseDetail } from '../src/content/exercise-details';
 
 const SITE_URL = 'https://kallly.github.io/SRCR';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DIST = join(ROOT, 'dist');
 
-/** Noms/conseils courts par langue, pour les memes langues que DETAILS_BY_LOCALE. */
-const NAMES_BY_LOCALE: Partial<Record<Locale, typeof i18nFr>> = { fr: i18nFr };
+/** Langue source : la seule garantie d'avoir du contenu pour chaque exercice. */
+const SOURCE_LOCALE: Locale = 'fr';
 
 function esc(s: string): string {
   return s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
@@ -47,29 +47,54 @@ function jsonLd(value: unknown): string {
  * mobilite ou du cardio n'ont pas de "progression" au sens d'un exercice de
  * force — mieux vaut une section absente qu'une section de remplissage.
  */
-function renderProgression(detail: ExerciseDetail): string {
+function renderProgression(detail: ExerciseDetail, dict: Translations): string {
   const p = detail.progression;
   if (!p) return '';
   const rows = [
-    p.easier ? `        <li><b>Plus accessible :</b> ${esc(p.easier)}</li>` : '',
-    p.harder ? `        <li><b>Plus exigeant :</b> ${esc(p.harder)}</li>` : '',
-    p.readyWhen ? `        <li><b>Passer à la suite :</b> ${esc(p.readyWhen)}</li>` : '',
+    p.easier ? `        <li><b>${esc(dict.page.easier)} :</b> ${esc(p.easier)}</li>` : '',
+    p.harder ? `        <li><b>${esc(dict.page.harder)} :</b> ${esc(p.harder)}</li>` : '',
+    p.readyWhen ? `        <li><b>${esc(dict.page.readyWhen)} :</b> ${esc(p.readyWhen)}</li>` : '',
   ].filter(Boolean);
   if (rows.length === 0) return '';
   return `
-      <h2>Adapter et progresser</h2>
+      <h2>${esc(dict.page.progression)}</h2>
       <ul class="progression">
 ${rows.join('\n')}
       </ul>
 `;
 }
 
-function renderPrecautions(detail: ExerciseDetail): string {
+function renderPrecautions(detail: ExerciseDetail, dict: Translations): string {
   if (!detail.precautions) return '';
   return `
-      <h2>Précautions</h2>
+      <h2>${esc(dict.page.precautions)}</h2>
       <p class="precautions">${esc(detail.precautions)}</p>
 `;
+}
+
+/**
+ * Balises hreflang d'une fiche : declare toutes les langues qui ont
+ * reellement une page pour cet exercice, plus x-default.
+ *
+ * Longtemps impossible et documente comme tel : hreflang n'a de sens que si
+ * chaque langue a sa propre URL. C'est desormais le cas pour les fiches
+ * (exercises/<locale>/<slug>.html), contrairement a l'app elle-meme qui
+ * reste sur une URL unique. Chaque page declare aussi sa propre langue :
+ * un ensemble hreflang sans auto-reference est ignore par Google.
+ */
+function hreflangTags(key: ExerciseKey): string {
+  const available = (Object.keys(DETAILS_BY_LOCALE) as Locale[]).filter(
+    (l) => DETAILS_BY_LOCALE[l]?.[key],
+  );
+  if (available.length < 2) return '';
+
+  const tag = (hreflang: string, l: Locale) =>
+    `    <link rel="alternate" hreflang="${hreflang}" href="${SITE_URL}/exercises/${l}/${DETAILS_BY_LOCALE[l]![key]!.slug}.html" />`;
+
+  const lines = available.map((l) => tag(l, l));
+  // x-default pointe vers la langue source, celle qui a toujours du contenu.
+  if (available.includes(SOURCE_LOCALE)) lines.push(tag('x-default', SOURCE_LOCALE));
+  return lines.join('\n');
 }
 
 function libraryEntry(key: ExerciseKey) {
@@ -78,7 +103,7 @@ function libraryEntry(key: ExerciseKey) {
   return entry;
 }
 
-function carouselCard(key: ExerciseKey, dict: typeof i18nFr, detail: ExerciseDetail): string {
+function carouselCard(key: ExerciseKey, dict: Translations, detail: ExerciseDetail): string {
   const name = dict.exercise[key]?.name ?? key;
   return `<a class="carousel-card" href="${detail.slug}.html">
   <span class="cfig">${figureSvg(key)}</span>
@@ -89,13 +114,16 @@ function carouselCard(key: ExerciseKey, dict: typeof i18nFr, detail: ExerciseDet
 </a>`;
 }
 
-function renderPage(locale: Locale, key: ExerciseKey, dict: typeof i18nFr, all: Partial<Record<ExerciseKey, ExerciseDetail>>): string {
+function renderPage(locale: Locale, key: ExerciseKey, dict: Translations, all: Partial<Record<ExerciseKey, ExerciseDetail>>): string {
   const detail = all[key];
   if (!detail) throw new Error(`unreachable: ${key}`);
   const entry = libraryEntry(key);
   const name = dict.exercise[key]?.name ?? key;
   const groupLabel = dict.group[entry.group as GroupId] ?? entry.group;
-  const description = `Comment faire ${name} correctement : muscles sollicités, étapes détaillées et erreurs fréquentes à éviter.`;
+  // Remplacement par fonction, pas par chaine : une chaine de remplacement
+  // ferait interpreter $&, $` ou $1 s'ils apparaissaient un jour dans un nom
+  // d'exercice, en corrompant silencieusement la description.
+  const description = dict.page.description.replace('{name}', () => name);
   const url = `${SITE_URL}/exercises/${locale}/${detail.slug}.html`;
 
   const similar = LIBRARY.filter(
@@ -104,7 +132,7 @@ function renderPage(locale: Locale, key: ExerciseKey, dict: typeof i18nFr, all: 
 
   const carousel =
     similar.length > 0
-      ? `<h2>Exercices similaires</h2>
+      ? `<h2>${esc(dict.page.similar)}</h2>
 <div class="carousel">
 ${similar.map((e) => carouselCard(e.key, dict, all[e.key]!)).join('\n')}
 </div>`
@@ -118,12 +146,13 @@ ${similar.map((e) => carouselCard(e.key, dict, all[e.key]!)).join('\n')}
     <meta name="description" content="${esc(description)}" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#0e1210" />
-    <title>${esc(name)} — comment le faire | Séance</title>
+    <title>${esc(name)} — ${esc(dict.page.titleSuffix)} | Séance</title>
     <link rel="canonical" href="${url}" />
+${hreflangTags(key)}
     <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="../../favicon.ico" sizes="32x32" />
 
-    <meta property="og:title" content="${esc(name)} — comment le faire" />
+    <meta property="og:title" content="${esc(name)} — ${esc(dict.page.titleSuffix)}" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="${url}" />
     <meta property="og:description" content="${esc(description)}" />
@@ -140,7 +169,7 @@ ${similar.map((e) => carouselCard(e.key, dict, all[e.key]!)).join('\n')}
     <meta property="og:image:alt" content="Séance — reprise au poids du corps sans matériel" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${esc(name)} — comment le faire" />
+    <meta name="twitter:title" content="${esc(name)} — ${esc(dict.page.titleSuffix)}" />
     <meta name="twitter:description" content="${esc(description)}" />
     <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
 
@@ -166,56 +195,52 @@ ${similar.map((e) => carouselCard(e.key, dict, all[e.key]!)).join('\n')}
   </head>
   <body>
     <main class="wrap">
-      <a class="back" href="${SITE_URL}/">← Retour à l’app</a>
+      <a class="back" href="${SITE_URL}/">${esc(dict.page.back)}</a>
 
       <span class="chip"><i style="background:${groupColor(entry.group)}"></i>${esc(groupLabel)}</span>
       <h1>${esc(name)}</h1>
 
       <div class="fig">${figureSvg(key)}</div>
 
-      <p class="muscles"><b>Muscles sollicités :</b> ${esc(detail.muscles.primary)}${
+      <p class="muscles"><b>${esc(dict.exerciseInfo.muscles)} :</b> ${esc(detail.muscles.primary)}${
         detail.muscles.secondary ? ` <span>· ${esc(detail.muscles.secondary)}</span>` : ''
       }</p>
 
-      <h2>Comment faire l’exercice</h2>
+      <h2>${esc(dict.page.howTo)}</h2>
       <ol>
 ${detail.steps.map((s) => `        <li>${esc(s)}</li>`).join('\n')}
       </ol>
 
-      <h2>Erreurs fréquentes</h2>
+      <h2>${esc(dict.page.mistakes)}</h2>
       <ul class="mistakes">
 ${detail.mistakes.map((m) => `        <li>${esc(m)}</li>`).join('\n')}
       </ul>
 
-      <h2>Où ça doit travailler</h2>
+      <h2>${esc(dict.page.sensation)}</h2>
       <p>${esc(detail.sensation)}</p>
 
-      <h2>Amplitude</h2>
+      <h2>${esc(dict.page.rangeOfMotion)}</h2>
       <p>${esc(detail.rangeOfMotion)}</p>
 
-      <h2>Rythme et respiration</h2>
+      <h2>${esc(dict.page.tempo)}</h2>
       <p>${esc(detail.tempo)}</p>
 
-      <h2>Ce qui travaille, précisément</h2>
+      <h2>${esc(dict.page.anatomy)}</h2>
       <p>${esc(detail.anatomy)}</p>
 
-      <h2>Mécanique du mouvement</h2>
+      <h2>${esc(dict.page.mechanics)}</h2>
       <p>${esc(detail.mechanics)}</p>
 
-      <h2>Bienfaits</h2>
+      <h2>${esc(dict.page.benefits)}</h2>
       <ul>
 ${detail.benefits.map((b) => `        <li>${esc(b)}</li>`).join('\n')}
       </ul>
-${renderProgression(detail)}${renderPrecautions(detail)}
+${renderProgression(detail, dict)}${renderPrecautions(detail, dict)}
       ${carousel}
 
       <footer>
-        <p class="disclaimer">
-          Ces informations sont d’ordre général et ne remplacent pas l’avis d’un
-          professionnel de santé. En cas de douleur, de blessure ou de pathologie
-          connue, demandez un avis médical avant de vous lancer.
-        </p>
-        <a href="${SITE_URL}/">Séance</a> — planificateur et minuteur de séance au poids du corps.
+        <p class="disclaimer">${esc(dict.page.disclaimer)}</p>
+        <a href="${SITE_URL}/">Séance</a> — ${esc(dict.page.tagline)}
       </footer>
     </main>
   </body>
@@ -232,7 +257,7 @@ function main(): void {
 
   for (const locale of Object.keys(DETAILS_BY_LOCALE) as Locale[]) {
     const all = DETAILS_BY_LOCALE[locale]!;
-    const dict = NAMES_BY_LOCALE[locale]!;
+    const dict = DICTIONARIES[locale];
     const localeDir = join(exercisesDir, locale);
     mkdirSync(localeDir, { recursive: true });
 

@@ -4,6 +4,7 @@ import { saveState, type State } from '../core/storage';
 import type { ExerciseKey } from '../core/types';
 import { applyStaticTranslations, byId } from './dom';
 import { createExerciseInfo } from './exercise-info';
+import { createGuidesIndex } from './guides-index';
 import { createHistory } from './history';
 import { createLangSwitch } from './langswitch';
 import { createLibrary } from './library';
@@ -72,6 +73,7 @@ export function createApp(state: State): { render: () => void } {
   const library = createLibrary(ctx);
   const langSwitch = createLangSwitch(ctx);
   const runner = createRunner(ctx);
+  const guidesIndex = createGuidesIndex();
   const exerciseInfo = createExerciseInfo();
 
   function save(): void {
@@ -102,6 +104,7 @@ export function createApp(state: State): { render: () => void } {
       config.mode === 'circuit' ? t('mode.hintCircuit') : t('mode.hintClassic');
 
     langSwitch.render();
+    guidesIndex.render();
     planner.render();
     library.render();
     history.render();

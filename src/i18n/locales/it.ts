@@ -187,6 +187,31 @@ export const it: Translations = {
     close: 'Chiudi',
   },
 
+
+  page: {
+    titleSuffix: 'come si fa',
+    description:
+      'Come fare {name} correttamente: muscoli coinvolti, tecnica passo dopo passo ed errori frequenti da evitare.',
+    back: '← Torna all’app',
+    howTo: 'Come eseguire l’esercizio',
+    mistakes: 'Errori frequenti',
+    sensation: 'Dove deve lavorare',
+    rangeOfMotion: 'Ampiezza',
+    tempo: 'Ritmo e respirazione',
+    anatomy: 'Cosa lavora, di preciso',
+    mechanics: 'Meccanica del movimento',
+    benefits: 'Benefici',
+    progression: 'Adattare e progredire',
+    easier: 'Più accessibile',
+    harder: 'Più impegnativo',
+    readyWhen: 'Passare al livello successivo',
+    precautions: 'Precauzioni',
+    similar: 'Esercizi simili',
+    tagline: 'pianificatore e cronometro per l’allenamento a corpo libero.',
+    disclaimer:
+      'Queste informazioni sono di carattere generale e non sostituiscono il parere di un professionista sanitario. In caso di dolore, infortunio o patologia nota, chiedi un parere medico prima di iniziare.',
+  },
+
   exercise: {
     inclined: {
       name: 'Piegamenti inclinati',

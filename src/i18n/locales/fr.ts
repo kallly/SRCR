@@ -195,6 +195,31 @@ export const fr = {
     close: 'Fermer',
   },
 
+
+  page: {
+    titleSuffix: 'comment le faire',
+    description:
+      'Comment faire {name} correctement : muscles sollicités, étapes détaillées et erreurs fréquentes à éviter.',
+    back: '← Retour à l’app',
+    howTo: 'Comment faire l’exercice',
+    mistakes: 'Erreurs fréquentes',
+    sensation: 'Où ça doit travailler',
+    rangeOfMotion: 'Amplitude',
+    tempo: 'Rythme et respiration',
+    anatomy: 'Ce qui travaille, précisément',
+    mechanics: 'Mécanique du mouvement',
+    benefits: 'Bienfaits',
+    progression: 'Adapter et progresser',
+    easier: 'Plus accessible',
+    harder: 'Plus exigeant',
+    readyWhen: 'Passer à la suite',
+    precautions: 'Précautions',
+    similar: 'Exercices similaires',
+    tagline: 'planificateur et minuteur de séance au poids du corps.',
+    disclaimer:
+      'Ces informations sont d’ordre général et ne remplacent pas l’avis d’un professionnel de santé. En cas de douleur, de blessure ou de pathologie connue, demandez un avis médical avant de vous lancer.',
+  },
+
   exercise: {
     inclined: {
       name: 'Pompes inclinées',

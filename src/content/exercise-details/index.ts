@@ -1,5 +1,6 @@
 import type { ExerciseKey, Locale } from '../../core/types';
 import { fr } from './fr';
+import { en } from './en';
 import type { ExerciseDetail } from './fr';
 
 export type { ExerciseDetail };
@@ -13,6 +14,7 @@ export type { ExerciseDetail };
  */
 export const DETAILS_BY_LOCALE: Partial<Record<Locale, Partial<Record<ExerciseKey, ExerciseDetail>>>> = {
   fr,
+  en,
 };
 
 /**

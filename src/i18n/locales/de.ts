@@ -188,6 +188,31 @@ export const de: Translations = {
     close: 'Schließen',
   },
 
+
+  page: {
+    titleSuffix: 'so geht’s',
+    description:
+      'Wie du {name} richtig ausführst: beanspruchte Muskeln, Technik Schritt für Schritt und die häufigsten Fehler.',
+    back: '← Zurück zur App',
+    howTo: 'So führst du die Übung aus',
+    mistakes: 'Häufige Fehler',
+    sensation: 'Wo es arbeiten soll',
+    rangeOfMotion: 'Bewegungsumfang',
+    tempo: 'Tempo und Atmung',
+    anatomy: 'Was genau arbeitet',
+    mechanics: 'Mechanik der Bewegung',
+    benefits: 'Nutzen',
+    progression: 'Anpassen und steigern',
+    easier: 'Leichter',
+    harder: 'Anspruchsvoller',
+    readyWhen: 'Weitergehen, wenn',
+    precautions: 'Vorsichtsmaßnahmen',
+    similar: 'Ähnliche Übungen',
+    tagline: 'Planer und Timer für das Training mit dem eigenen Körpergewicht.',
+    disclaimer:
+      'Diese Informationen sind allgemeiner Art und ersetzen keine ärztliche Beratung. Bei Schmerzen, Verletzungen oder bekannten Vorerkrankungen hole vor dem Start ärztlichen Rat ein.',
+  },
+
   exercise: {
     inclined: {
       name: 'Liegestütze erhöht',

@@ -186,6 +186,31 @@ export const en: Translations = {
     close: 'Close',
   },
 
+
+  page: {
+    titleSuffix: 'how to do it',
+    description:
+      'How to do {name} correctly: muscles worked, step-by-step technique and the common mistakes to avoid.',
+    back: '← Back to the app',
+    howTo: 'How to do it',
+    mistakes: 'Common mistakes',
+    sensation: 'Where you should feel it',
+    rangeOfMotion: 'Range of motion',
+    tempo: 'Tempo and breathing',
+    anatomy: 'What works, precisely',
+    mechanics: 'Movement mechanics',
+    benefits: 'Benefits',
+    progression: 'Adapt and progress',
+    easier: 'Easier',
+    harder: 'Harder',
+    readyWhen: 'Move on when',
+    precautions: 'Precautions',
+    similar: 'Similar exercises',
+    tagline: 'bodyweight workout planner and timer.',
+    disclaimer:
+      'This is general information and does not replace advice from a health professional. If you have pain, an injury or a known condition, seek medical advice before starting.',
+  },
+
   exercise: {
     inclined: {
       name: 'Incline push-ups',

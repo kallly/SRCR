@@ -49,7 +49,12 @@ export type TranslationKey = Paths<Translations>;
 
 export type Params = Record<string, string | number>;
 
-const DICTIONARIES: Record<Locale, Translations> = { fr, en, es, de, it };
+/**
+ * Exporte pour que le generateur de pages statiques
+ * (scripts/build-exercise-pages.ts) lise les memes dictionnaires que l'app,
+ * au lieu d'en maintenir une seconde carte vouee a diverger de celle-ci.
+ */
+export const DICTIONARIES: Record<Locale, Translations> = { fr, en, es, de, it };
 
 /** Ordre du selecteur de langue. */
 export const LOCALES: readonly Locale[] = ['fr', 'en', 'es', 'de', 'it'];

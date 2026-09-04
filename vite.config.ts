@@ -6,12 +6,14 @@ import type { ExerciseKey, Locale } from './src/core/types';
 
 /**
  * Langue source de l'index des fiches. L'accueil est une URL unique et non
- * localisee : il ne peut pointer que vers une seule langue de fiches, et
- * c'est celle-ci. Le lien « Plus d'informations » de la modal, lui, resout
- * vers la langue active quand elle a son propre contenu (ui/exercise-info.ts)
- * — les deux divergeront donc le jour ou une deuxieme langue aura des fiches.
- * A ce moment-la, il faudra faire remettre a jour ces liens par le JS au
- * changement de langue, comme le reste de l'interface.
+ * localisee : le HTML *livre* ne peut pointer que vers une seule langue de
+ * fiches, et c'est celle-ci — c'est aussi ce que voit un crawler.
+ *
+ * Au chargement, `ui/guides-index.ts` reoriente ces liens vers la langue
+ * active a partir des attributs `data-slug-<locale>` deposes ci-dessous, de
+ * sorte que l'index et le bouton « Plus d'informations » de la modal
+ * (`ui/exercise-info.ts`) pointent toujours vers la meme URL. Les deux
+ * retombent sur cette langue quand la langue active n'a pas encore de fiche.
  */
 const INDEX_LOCALE: Locale = 'fr';
 
@@ -40,13 +42,27 @@ function injectExerciseIndex(): Plugin {
         throw new Error(`Marqueur ${MARKER} introuvable dans index.html.`);
       }
 
+      // Les slugs de TOUTES les langues sont deposes en attributs data-, y
+      // compris la langue source : ui/guides-index.ts reconstruit le href a
+      // partir de ces attributs a chaque changement de langue. Sans le slug
+      // source, passer de l'anglais a une langue sans fiche laisserait le
+      // lien anglais en place, faute de pouvoir revenir en arriere.
+      // Aucun import de contenu cote navigateur : le bundle de demarrage
+      // reste allege (voir CLAUDE.md).
+      const localesWithPages = Object.keys(DETAILS_BY_LOCALE) as Locale[];
+
       const links = (Object.keys(all) as ExerciseKey[])
-        .map((key) => ({ name: i18nFr.exercise[key]?.name ?? key, slug: all[key]!.slug }))
+        .map((key) => ({ key, name: i18nFr.exercise[key]?.name ?? key, slug: all[key]!.slug }))
         .sort((a, b) => a.name.localeCompare(b.name, INDEX_LOCALE))
-        .map(
-          (e) =>
-            `          <li><a href="exercises/${INDEX_LOCALE}/${e.slug}.html">${e.name}</a></li>`,
-        )
+        .map((e) => {
+          const data = localesWithPages
+            .map((l) => {
+              const slug = DETAILS_BY_LOCALE[l]?.[e.key]?.slug;
+              return slug ? ` data-slug-${l}="${slug}"` : '';
+            })
+            .join('');
+          return `          <li><a href="exercises/${INDEX_LOCALE}/${e.slug}.html"${data}>${e.name}</a></li>`;
+        })
         .join('\n');
 
       return html.replace(MARKER, `<ul>\n${links}\n        </ul>`);
