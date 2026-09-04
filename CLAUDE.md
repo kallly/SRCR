@@ -163,9 +163,17 @@ non plus. Un `<dialog>` non ouvert est de toute façon masqué par défaut par
 le navigateur (`dialog:not([open]){display:none}`), donc invisible pour un
 crawler ou un lecteur d'écran tant qu'il n'est pas ouvert.
 
-Le reste du chrome interactif (boutons, labels de formulaire, listes) n'a pas
-ce double, volontairement — il n'a aucune valeur pour un robot puisqu'il ne
-fait rien sans JS.
+**Tout élément `data-i18n` porte son texte français en dur, sans exception.**
+C'est l'invariante à conserver, et elle est vérifiable : `data-i18n` désigne
+exactement le chrome traduisible, tandis que les valeurs par exercice
+(`#infoName`, `#infoGroup`, `#infoMuscles`, `#infoPoints`, `#runName`) n'en
+portent pas et restent donc légitimement vides.
+
+Le chrome interactif (boutons de mode, actions, libellés) a longtemps été
+laissé vide au motif qu'il « n'a aucune valeur pour un robot ». C'était vrai
+pour l'indexation et faux pour le **CLS** : ces 14 éléments passaient de zéro
+à leur hauteur réelle dès que `applyStaticTranslations()` tournait, décalant
+tout ce qui suit. Ne pas revenir en arrière pour « alléger » le HTML.
 
 Un test de non-régression couvre tout cela : il charge `dist/index.html` dans
 jsdom **sans jamais exécuter le JS de l'app** et vérifie qu'aucun titre n'est
@@ -209,6 +217,28 @@ effet utile puisque Google indexe en mobile-first.
 
 **Images.** `scripts/generate-og-image.py` produit `og-image.png`,
 `apple-touch-icon.png` et `favicon.ico`. `favicon.svg` est écrit à la main.
+
+**Réservation de hauteur et CLS — piège de mesure.** `#plan` et `#library`
+sont remplis par JavaScript et passent de 0 à ~2000px chacun. Sur un réseau
+réel le navigateur peint **avant** la fin du téléchargement du module : tout
+ce qui suit (index des fiches, « À propos », navigation) est poussé vers le
+bas. Mesuré à **CLS 0,43**, soit près du double du seuil « mauvais » (0,25).
+`#plan:empty`/`#library:empty` réservent donc la hauteur attendue
+(`src/styles/planner.css`), ce qui ramène le CLS à **0,013** en 3G bridée.
+
+**Le piège est la mesure, pas le correctif** : en local sur un serveur
+rapide, ou avec Playwright en `wait_until="networkidle"`, le décalage
+n'apparaît pas et on conclut à tort que tout va bien. Toute vérification du
+CLS doit se faire en `wait_until="load"` **et** avec bridage réseau.
+
+Deux conditions rendent `:empty` sûr, à préserver : les conteneurs sont
+réellement vides dans `index.html` (espaces compris — ne pas les reformater
+sur plusieurs lignes), et ils sont **masqués** quand ils sont légitimement
+vides après rendu (`list.hidden` dans `ui/planner.ts`, `grid.hidden` dans
+`ui/library.ts`). Sans ce masquage, vider le déroulé rouvrirait un trou de
+~2000px au-dessus du message « Aucun exercice ». Les valeurs réservées sont
+mesurées sur le rendu réel : à reprendre si le nombre d'exercices, la
+hauteur des cartes ou le déroulé par défaut changent.
 
 **Cibles tactiles.** Tout élément interactif vise `min-width`/`min-height:
 44px` (bonne pratique Lighthouse/Apple HIG — la norme réellement opposable,

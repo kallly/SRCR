@@ -216,6 +216,13 @@ export function createPlanner(ctx: Context): { render: () => void } {
       }
     });
 
+    // La liste vide est masquee, comme la grille de la bibliotheque quand la
+    // recherche ne donne rien (ui/library.ts). Deux raisons : un <ul> vide n'a
+    // rien a annoncer a un lecteur d'ecran, et surtout la reservation de
+    // hauteur `#plan:empty` (planner.css) ne doit s'appliquer qu'AVANT le
+    // premier rendu — sans ce masquage, vider le deroule rouvrirait un trou
+    // de ~2000px au-dessus du message « Aucun exercice ».
+    list.hidden = plan.length === 0;
     empty.style.display = plan.length > 0 ? 'none' : 'block';
   }
 

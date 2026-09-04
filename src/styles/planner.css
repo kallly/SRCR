@@ -597,3 +597,49 @@
   padding-left: 12px;
   line-height: 1.5;
 }
+
+/*
+  Reservation de hauteur avant le premier rendu JS — corrige un CLS mesure a
+  0,43 (le seuil « mauvais » est 0,25).
+
+  Le deroule et la bibliotheque sont remplis par JavaScript. Sur un reseau
+  reel, le navigateur peint AVANT que le module ait fini de se telecharger :
+  les deux conteneurs passent alors de 0 a ~2000px chacun et poussent vers le
+  bas tout ce qui suit (index des fiches, « A propos », navigation). En local
+  sur un serveur rapide le decalage ne se voit pas — il faut brider le reseau
+  pour le reproduire, sinon on conclut a tort que tout va bien.
+
+  `:empty` plutot qu'une classe posee/retiree en JS : le selecteur cesse de
+  s'appliquer de lui-meme des que le conteneur recoit son premier enfant, donc
+  aucune reservation ne peut rester coincee si le rendu echoue. Il exige que
+  le conteneur soit vraiment vide dans index.html, espaces compris — ne pas
+  reformater `<ul class="plan" id="plan"></ul>` sur plusieurs lignes.
+
+  Valeurs mesurees sur le rendu reel (28 cartes en 2 colonnes ; deroule par
+  defaut de 7 lignes) : a reprendre si le nombre d'exercices de la
+  bibliotheque, la hauteur des cartes ou le deroule par defaut changent.
+*/
+#library:empty {
+  min-height: 2140px;
+}
+
+#plan:empty {
+  min-height: 1982px;
+}
+
+@media (max-width: 389px) {
+  /* Les noms longs passent sur deux lignes : cartes et lignes plus hautes. */
+  #library:empty {
+    min-height: 2175px;
+  }
+
+  #plan:empty {
+    min-height: 2129px;
+  }
+}
+
+@media (min-width: 390px) and (max-width: 767px) {
+  #plan:empty {
+    min-height: 2055px;
+  }
+}
