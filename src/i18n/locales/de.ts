@@ -23,6 +23,7 @@ export const de: Translations = {
     unnamed: 'Unbenannte Einheit',
     namePrompt: 'Name der Einheit?',
     confirmDelete: 'Diese Einheit und ihren Ablauf löschen?',
+    copyName: '{name} - Kopie',
   },
 
   share: {

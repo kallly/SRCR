@@ -187,14 +187,6 @@
   display: block;
 }
 
-.cue {
-  font-size: 12.5px;
-  color: var(--lime);
-  margin-top: 5px;
-  line-height: 1.4;
-  opacity: 0.85;
-}
-
 .fields {
   display: flex;
   gap: 8px;
@@ -730,13 +722,19 @@
   Valeurs mesurees sur le rendu reel (28 cartes en 2 colonnes ; deroule par
   defaut de 7 lignes) : a reprendre si le nombre d'exercices de la
   bibliotheque, la hauteur des cartes ou le deroule par defaut changent.
+
+  Les trois valeurs #plan:empty ci-dessous ont ete abaissees d'une
+  estimation (~150px, une ligne de conseil `.cue` en moins par exercice,
+  supprimee du deroule) plutot que remesurees en reseau bride — a corriger
+  avec une vraie mesure avant de s'y fier (meme reserve que la regle
+  min-width:900px plus bas).
 */
 #library:empty {
   min-height: 2140px;
 }
 
 #plan:empty {
-  min-height: 1982px;
+  min-height: 1832px;
 }
 
 @media (max-width: 389px) {
@@ -746,13 +744,13 @@
   }
 
   #plan:empty {
-    min-height: 2129px;
+    min-height: 1979px;
   }
 }
 
 @media (min-width: 390px) and (max-width: 767px) {
   #plan:empty {
-    min-height: 2055px;
+    min-height: 1905px;
   }
 }
 

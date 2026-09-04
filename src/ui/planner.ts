@@ -1,6 +1,6 @@
 import { t } from '../i18n';
 import { groupColor, GROUP_IDS } from '../data/groups';
-import { exerciseCue, exerciseName, isExercise, move } from '../core/plan';
+import { exerciseName, isExercise, move } from '../core/plan';
 import { isLibraryKey } from '../data/library';
 import type { ExerciseItem, ExerciseKey, PlanItem, RestItem } from '../core/types';
 import type { Context } from './app';
@@ -75,7 +75,10 @@ function exerciseRow(
   position: number,
   showRest: boolean,
 ): HTMLElement {
-  const cue = exerciseCue(item);
+  // Le conseil d'execution (exerciseCue) n'est plus affiche ici : il figeait
+  // le deroule, deja dense, alors qu'il n'est utile qu'au moment de faire
+  // l'exercice — il reste affiche dans le lecteur (ui/runner.ts, paintWork),
+  // pour les deux modes.
   const name = el('div', {
     className: 'name',
     children: [
@@ -85,7 +88,6 @@ function exerciseRow(
         children: [dot(groupColor(item.group)), document.createTextNode(t(`group.${item.group}`))],
       }),
       infoButton(item.key),
-      cue ? el('div', { className: 'cue', text: cue }) : null,
     ],
   });
 
@@ -107,14 +109,21 @@ function exerciseRow(
         { value: 'time', label: t('effort.time') },
       ]),
       numberField(effortLabel, effortValue, effortField, item.id, { min: '1', max: '3600' }),
-      selectField(
-        t('item.group'),
-        item.group,
-        'group',
-        item.id,
-        GROUP_IDS.map((id) => ({ value: id, label: t(`group.${id}`) })),
-        'f wide',
-      ),
+      // Le groupe musculaire d'un exercice de la bibliotheque est intrinseque
+      // a l'exercice (donnee de src/data/library.ts) : le rendre modifiable
+      // desynchroniserait le badge affiche et fausserait le regroupement du
+      // mode circuit. Seul un exercice perso n'a pas d'autre moyen de le
+      // renseigner.
+      !isLibraryKey(item.key)
+        ? selectField(
+            t('item.group'),
+            item.group,
+            'group',
+            item.id,
+            GROUP_IDS.map((id) => ({ value: id, label: t(`group.${id}`) })),
+            'f wide',
+          )
+        : null,
       // En mode circuit, la pause est gouvernee par le reglage global : afficher
       // un repos par exercice laisserait croire qu'il a un effet.
       showRest

@@ -106,9 +106,11 @@ export function createApp(state: State): { render: () => void } {
       if (!source) return;
       registerPlan({
         id: uid(),
-        // Copie exacte, jamais un suffixe « (copie) » : ce serait du texte
-        // traduit fige dans une donnee persistee (regle CLAUDE.md n°2).
-        name: source.name,
+        // Suffixe ajoute une seule fois, a la duplication : comme
+        // `customName`, c'est ensuite du texte fige (regle CLAUDE.md n°2,
+        // meme compromis que « Copie de … » dans un tableur). Rien a
+        // suffixer sur une seance qui n'a pas de nom.
+        name: source.name ? t('plans.copyName', { name: source.name }) : null,
         items: source.items.map((item) => ({ ...item, id: uid() })),
         config: { ...source.config },
       });

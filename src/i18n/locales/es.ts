@@ -23,6 +23,7 @@ export const es: Translations = {
     unnamed: 'Sesión sin nombre',
     namePrompt: '¿Nombre de la sesión?',
     confirmDelete: '¿Eliminar esta sesión y su plan?',
+    copyName: '{name} - copia',
   },
 
   share: {

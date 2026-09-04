@@ -23,6 +23,7 @@ export const it: Translations = {
     unnamed: 'Seduta senza nome',
     namePrompt: 'Nome della seduta?',
     confirmDelete: 'Eliminare questa seduta e il suo programma?',
+    copyName: '{name} - copia',
   },
 
   share: {

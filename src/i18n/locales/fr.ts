@@ -30,6 +30,7 @@ export const fr = {
     unnamed: 'Séance sans nom',
     namePrompt: 'Nom de la séance ?',
     confirmDelete: 'Supprimer cette séance et son déroulé ?',
+    copyName: '{name} - copie',
   },
 
   share: {

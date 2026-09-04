@@ -106,9 +106,15 @@ elle est globale à l'app (clé `seance.locale.v5`), lue par `main.ts` avant
 même qu'un plan existe, et `core/queue.ts` ne l'a d'ailleurs jamais lue.
 `SavedPlan.name` suit la même règle que `customName` sur `ExerciseItem`
 (section précédente) : `null` ou du texte saisi par l'utilisateur, jamais un
-libellé traduit — le nom affiché pour une séance sans nom
-(`plans.unnamed`) est résolu à l'affichage par `ui/plan-switcher.ts`, jamais
-stocké. `loadState()` migre l'ancien schéma v4 (un seul plan + une config qui
+libellé traduit résolu à chaque affichage — le nom affiché pour une séance
+sans nom (`plans.unnamed`) est résolu à l'affichage par `ui/plan-switcher.ts`,
+jamais stocké. Seule exception assumée : `duplicatePlan()` (`ui/app.ts`)
+ajoute le suffixe `plans.copyName` (« {name} - copie ») **une seule fois, à
+la duplication** — comme un tableur qui nomme une copie « Copie de … » —
+donc ce texte reste figé dans la langue active à cet instant si l'utilisateur
+change ensuite de langue ; accepté comme compromis, contrairement à un
+libellé de chrome qui doit toujours suivre la langue courante. `loadState()`
+migre l'ancien schéma v4 (un seul plan + une config qui
 mélangeait réglages et langue) en une unique `SavedPlan` nommée `null` ; les
 clés v4 et v3 restent lisibles et ne sont jamais effacées. Partout dans l'UI,
 `ctx.activePlan()` (`ui/app.ts`) est l'accesseur à utiliser — jamais
