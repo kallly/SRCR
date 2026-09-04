@@ -378,6 +378,13 @@ entier (page d'accueil + une entrée par page générée) à chaque build.
 `public/sitemap.xml` a été supprimé — ne pas le recréer, ce serait une
 deuxième source vouée à diverger de la première.
 
+**Pas de `lastmod` dans le sitemap, délibérément.** Le build regénère les 141
+fichiers à chaque push : y écrire la date de build reviendrait à déclarer que
+toutes les pages ont changé alors que la plupart sont identiques. Google
+ignore les `lastmod` qu'il juge peu fiables, et un signal faux vaut moins que
+pas de signal. N'en ajouter un que le jour où on saura dater chaque page
+individuellement.
+
 **Image Gemini : jamais référencée avant d'exister.** Tant qu'aucune image
 n'a été générée et ajoutée, la page utilise la figure SVG existante — jamais
 une balise `<img>` vers un fichier qui n'existe pas.
