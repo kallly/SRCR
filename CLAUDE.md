@@ -35,7 +35,8 @@ src/
     library.ts     28 exercices : reglages seulement
     figures.ts     figures SVG
   content/
-    exercise-details/fr.ts  contenu long (etapes, muscles, prompt image) — voir plus bas
+    exercise-details/     contenu long par langue (fr, en, es, de, it) :
+                          etapes, muscles, anatomie, prompt image — voir plus bas
     exercise-page.css       styles des pages d'exercice statiques
   i18n/
     index.ts       t(), pluriels via Intl.PluralRules, detection, formatDate
@@ -287,15 +288,16 @@ prochain build l'écrase sans avertissement.
 **Pour une modification groupée (touchant les 28 pages à la fois), un seul
 endroit à toucher selon la nature du changement :**
 
-| Ce qui change sur les 28 pages | Où éditer |
+| Ce qui change sur les 140 pages | Où éditer |
 |---|---|
 | Structure HTML, balises meta, JSON-LD, carrousel | `renderPage()` dans `scripts/build-exercise-pages.ts` |
 | Couleurs, typographie, mise en page, carrousel (CSS) | `src/content/exercise-page.css` |
-| Contenu d'un exercice précis (étapes, muscles, erreurs) | l'entrée correspondante dans `src/content/exercise-details/fr.ts` |
+| Contenu d'un exercice précis (étapes, muscles, erreurs) | l'entrée correspondante dans `src/content/exercise-details/<locale>.ts` — **les 5 fichiers**, sinon les langues divergent |
+| Titres de section, `<title>`, avertissement, pied de page | le bloc `page.*` des 5 dictionnaires `i18n/locales/*.ts`, jamais en dur dans le générateur |
 | Sélection des exercices « similaires » | la fonction `similar` dans `renderPage()` |
 
 Après toute modification de l'un de ces fichiers, `npm run build` régénère
-les 28 pages en une fois — jamais besoin (et jamais correct) de modifier un
+les 140 pages en une fois — jamais besoin (et jamais correct) de modifier un
 fichier `dist/exercises/**/*.html` à la main pour propager un changement.
 
 Chaque exercice a deux niveaux de texte, dans deux systèmes différents :
@@ -308,7 +310,13 @@ Chaque exercice a deux niveaux de texte, dans deux systèmes différents :
   d'image. Volontairement **hors du contrat i18n strict**
   (`Partial<Record<ExerciseKey, ExerciseDetail>>`, pas `Translations`) — une
   langue peut légitimement ne pas encore avoir traduit ce contenu, contrairement
-  à un bouton qui ne doit jamais être vide. Aujourd'hui, seul `fr.ts` existe.
+  à un bouton qui ne doit jamais être vide. **Les 5 langues sont aujourd'hui
+  complètes** (28 exercices chacune), mais le contrat reste volontairement
+  partiel : c'est ce qui a permis de les livrer une par une, et ce qui
+  permettra d'en ajouter une sixième sans bloquer le build. Le repli sur le
+  français dans `exerciseDetail()` n'est donc plus emprunté en pratique —
+  ne pas le supprimer pour autant, il est la seule chose qui empêche une
+  page blanche le jour où une clé d'exercice est ajoutée sans traduction.
   Ajouter une langue : créer `exercise-details/<locale>.ts`, puis l'ajouter à
   `DETAILS_BY_LOCALE` dans `content/exercise-details/index.ts` — **seule
   source** de cette carte, lue à la fois par l'app (`ui/exercise-info.ts`,

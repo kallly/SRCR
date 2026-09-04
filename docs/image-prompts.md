@@ -231,3 +231,339 @@ Flat minimalist illustration, solid very dark green background (#0e1210), simpli
 ## Butt-kick march in place
 
 Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person marching on the spot, one heel drawn up towards the glute, chest upright, side view.
+
+## Flexiones inclinadas
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person doing incline push-ups, hands on a raised ledge, side view, body in a straight line from ankles to head, elbows at 45°.
+
+## Sentadilla a la silla
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person performing a squat in front of a chair, side view, hips pushed back, knees tracking over the feet, chest upright, just before touching the seat.
+
+## Elevación de gemelos de pie
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing on the balls of their feet, front view, heels raised, calves contracted, arms slightly out for balance.
+
+## Sentadilla isométrica en pared
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person seated against a wall with no chair, thighs parallel to the floor, knees at 90°, back flat on the wall, side view.
+
+## Rotación externa de hombro
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying on their side, bent elbow tucked to the body, forearm rotating upwards holding a small weight, slightly angled top view.
+
+## Dead bug
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying on their back, one arm and the opposite leg extended diagonally towards the floor, the other arm and leg bent, top view.
+
+## Plancha
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person in a forearm plank, body perfectly aligned from heels to head, side view.
+
+## Caminata
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person mid-walk, side view, chest upright, one arm forward and one back, mid-stride.
+
+## Flexiones de rodillas
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person doing push-ups from the knees, side view, body aligned from knees to head, elbows at 45°, chest near the floor.
+
+## Flexiones contra la pared
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing leaning towards a wall, hands on the wall at chest height, body in a straight line, side view.
+
+## Fondos de tríceps en silla
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person doing tricep dips on a chair, hands on the seat edge, legs extended in front, elbows bent backwards, side view.
+
+## Círculos de brazos
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing, arms extended horizontally to each side, small circular arrows around the hands showing the movement, front view.
+
+## Deslizamientos en la pared
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing with back to a wall, arms bent in a W against the wall sliding upwards, vertical arrow showing the movement, front view.
+
+## Superman
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying face down, arms and legs lifted simultaneously in a slight extension, side view.
+
+## Ángel invertido en el suelo
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying face down, arms tracing a wide arc from in front of the body down to the hips, curved arrow showing the path, top view.
+
+## Bird dog
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person on all fours, one arm extended forward and the opposite leg extended back, flat back, side view.
+
+## Gato-vaca
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person on all fours, back arched upwards then downwards, arrow showing the back-and-forth movement of the spine, side view.
+
+## Zancada atrás
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person in a reverse lunge, rear leg bent close to the floor, front knee at 90°, chest upright, side view.
+
+## Subida a la silla
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person stepping up onto a stable chair, one foot on the seat mid-drive, side view.
+
+## Zancada lateral
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person in a lateral lunge, one leg bent and the other extended to the side, chest upright, front view.
+
+## Puente de glúteos
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying on their back, knees bent, hips lifted into a bridge, glutes contracted, side view.
+
+## Patada de burro
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person on all fours, one bent knee pushed towards the ceiling, flat back, rear three-quarter view.
+
+## Abducción de cadera de pie
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing, one straight leg lifted out to the side, chest upright, arrow showing the sideways movement, front view.
+
+## Plancha lateral
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person in a side plank, resting on one forearm, body in a straight line from feet to head, other arm raised, front view.
+
+## Elevación de rodilla de pie
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing, one knee lifted towards the chest, straight back, arms balanced, side view.
+
+## Crunch
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying on their back, knees bent, shoulders lifted slightly off the floor in an abdominal contraction, side view.
+
+## Marcha con rodillas altas
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person marching on the spot, one knee lifted to hip height, arms in motion, side view.
+
+## Marcha talón-glúteo
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person marching on the spot, one heel drawn up towards the glute, chest upright, side view.
+
+## Liegestütze erhöht
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person doing incline push-ups, hands on a raised ledge, side view, body in a straight line from ankles to head, elbows at 45°.
+
+## Kniebeuge zum Stuhl
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person performing a squat in front of a chair, side view, hips pushed back, knees tracking over the feet, chest upright, just before touching the seat.
+
+## Wadenheben im Stehen
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing on the balls of their feet, front view, heels raised, calves contracted, arms slightly out for balance.
+
+## Wandsitz
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person seated against a wall with no chair, thighs parallel to the floor, knees at 90°, back flat on the wall, side view.
+
+## Außenrotation der Schulter
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying on their side, bent elbow tucked to the body, forearm rotating upwards holding a small weight, slightly angled top view.
+
+## Dead Bug
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying on their back, one arm and the opposite leg extended diagonally towards the floor, the other arm and leg bent, top view.
+
+## Unterarmstütz
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person in a forearm plank, body perfectly aligned from heels to head, side view.
+
+## Gehen
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person mid-walk, side view, chest upright, one arm forward and one back, mid-stride.
+
+## Liegestütze auf Knien
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person doing push-ups from the knees, side view, body aligned from knees to head, elbows at 45°, chest near the floor.
+
+## Liegestütze an der Wand
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing leaning towards a wall, hands on the wall at chest height, body in a straight line, side view.
+
+## Trizeps-Dips am Stuhl
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person doing tricep dips on a chair, hands on the seat edge, legs extended in front, elbows bent backwards, side view.
+
+## Armkreisen
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing, arms extended horizontally to each side, small circular arrows around the hands showing the movement, front view.
+
+## Wandgleiten
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing with back to a wall, arms bent in a W against the wall sliding upwards, vertical arrow showing the movement, front view.
+
+## Superman
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying face down, arms and legs lifted simultaneously in a slight extension, side view.
+
+## Umgekehrter Schneeengel
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying face down, arms tracing a wide arc from in front of the body down to the hips, curved arrow showing the path, top view.
+
+## Vogelhund (Bird Dog)
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person on all fours, one arm extended forward and the opposite leg extended back, flat back, side view.
+
+## Katze-Kuh
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person on all fours, back arched upwards then downwards, arrow showing the back-and-forth movement of the spine, side view.
+
+## Rückwärtsausfallschritt
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person in a reverse lunge, rear leg bent close to the floor, front knee at 90°, chest upright, side view.
+
+## Aufsteigen auf den Stuhl
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person stepping up onto a stable chair, one foot on the seat mid-drive, side view.
+
+## Seitlicher Ausfallschritt
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person in a lateral lunge, one leg bent and the other extended to the side, chest upright, front view.
+
+## Gesäßbrücke
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying on their back, knees bent, hips lifted into a bridge, glutes contracted, side view.
+
+## Eselstritt (Donkey Kick)
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person on all fours, one bent knee pushed towards the ceiling, flat back, rear three-quarter view.
+
+## Hüftabduktion im Stehen
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing, one straight leg lifted out to the side, chest upright, arrow showing the sideways movement, front view.
+
+## Seitstütz
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person in a side plank, resting on one forearm, body in a straight line from feet to head, other arm raised, front view.
+
+## Knieheben im Stehen
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing, one knee lifted towards the chest, straight back, arms balanced, side view.
+
+## Crunch
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying on their back, knees bent, shoulders lifted slightly off the floor in an abdominal contraction, side view.
+
+## Kniehebelauf auf der Stelle
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person marching on the spot, one knee lifted to hip height, arms in motion, side view.
+
+## Anfersen auf der Stelle
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person marching on the spot, one heel drawn up towards the glute, chest upright, side view.
+
+## Piegamenti inclinati
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person doing incline push-ups, hands on a raised ledge, side view, body in a straight line from ankles to head, elbows at 45°.
+
+## Squat sulla sedia
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person performing a squat in front of a chair, side view, hips pushed back, knees tracking over the feet, chest upright, just before touching the seat.
+
+## Polpacci in piedi
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing on the balls of their feet, front view, heels raised, calves contracted, arms slightly out for balance.
+
+## Wall sit
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person seated against a wall with no chair, thighs parallel to the floor, knees at 90°, back flat on the wall, side view.
+
+## Rotazione esterna di spalla
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying on their side, bent elbow tucked to the body, forearm rotating upwards holding a small weight, slightly angled top view.
+
+## Dead bug
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying on their back, one arm and the opposite leg extended diagonally towards the floor, the other arm and leg bent, top view.
+
+## Plank
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person in a forearm plank, body perfectly aligned from heels to head, side view.
+
+## Camminata
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person mid-walk, side view, chest upright, one arm forward and one back, mid-stride.
+
+## Piegamenti sulle ginocchia
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person doing push-ups from the knees, side view, body aligned from knees to head, elbows at 45°, chest near the floor.
+
+## Piegamenti al muro
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing leaning towards a wall, hands on the wall at chest height, body in a straight line, side view.
+
+## Dip tricipiti sulla sedia
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person doing tricep dips on a chair, hands on the seat edge, legs extended in front, elbows bent backwards, side view.
+
+## Circonduzioni delle braccia
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing, arms extended horizontally to each side, small circular arrows around the hands showing the movement, front view.
+
+## Scivolamenti al muro
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing with back to a wall, arms bent in a W against the wall sliding upwards, vertical arrow showing the movement, front view.
+
+## Superman
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying face down, arms and legs lifted simultaneously in a slight extension, side view.
+
+## Angelo rovesciato a terra
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying face down, arms tracing a wide arc from in front of the body down to the hips, curved arrow showing the path, top view.
+
+## Bird dog
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person on all fours, one arm extended forward and the opposite leg extended back, flat back, side view.
+
+## Gatto-mucca
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person on all fours, back arched upwards then downwards, arrow showing the back-and-forth movement of the spine, side view.
+
+## Affondo indietro
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person in a reverse lunge, rear leg bent close to the floor, front knee at 90°, chest upright, side view.
+
+## Step-up sulla sedia
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person stepping up onto a stable chair, one foot on the seat mid-drive, side view.
+
+## Affondo laterale
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person in a lateral lunge, one leg bent and the other extended to the side, chest upright, front view.
+
+## Ponte glutei
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying on their back, knees bent, hips lifted into a bridge, glutes contracted, side view.
+
+## Donkey kick
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person on all fours, one bent knee pushed towards the ceiling, flat back, rear three-quarter view.
+
+## Abduzione d’anca in piedi
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing, one straight leg lifted out to the side, chest upright, arrow showing the sideways movement, front view.
+
+## Plank laterale
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person in a side plank, resting on one forearm, body in a straight line from feet to head, other arm raised, front view.
+
+## Sollevamento ginocchia in piedi
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing, one knee lifted towards the chest, straight back, arms balanced, side view.
+
+## Crunch
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person lying on their back, knees bent, shoulders lifted slightly off the floor in an abdominal contraction, side view.
+
+## Marcia sul posto ginocchia alte
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person marching on the spot, one knee lifted to hip height, arms in motion, side view.
+
+## Marcia sul posto calcio ai glutei
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person marching on the spot, one heel drawn up towards the glute, chest upright, side view.
