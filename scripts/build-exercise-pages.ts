@@ -129,6 +129,20 @@ ${similar.map((e) => carouselCard(e.key, dict, all[e.key]!)).join('\n')}
     <meta property="og:description" content="${esc(description)}" />
     <meta property="og:site_name" content="Séance" />
     <meta property="og:locale" content="${locale}_${locale.toUpperCase()}" />
+    <!--
+      Image de partage : celle de l'app, faute d'illustration par exercice.
+      Le jour ou les images generees existeront (voir docs/image-prompts.md),
+      c'est ici qu'il faudra pointer vers celle de l'exercice courant.
+    -->
+    <meta property="og:image" content="${SITE_URL}/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Séance — reprise au poids du corps sans matériel" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${esc(name)} — comment le faire" />
+    <meta name="twitter:description" content="${esc(description)}" />
+    <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
 
     <script type="application/ld+json">
       ${jsonLd({

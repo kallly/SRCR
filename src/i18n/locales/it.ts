@@ -50,6 +50,7 @@ export const it: Translations = {
   section: {
     plan: 'Svolgimento',
     library: 'Libreria',
+    allGuides: 'Tutte le schede degli esercizi',
   },
 
   library: {

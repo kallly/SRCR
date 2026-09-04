@@ -57,6 +57,7 @@ export const fr = {
   section: {
     plan: 'Déroulé',
     library: 'Bibliothèque',
+    allGuides: 'Toutes les fiches d’exercice',
   },
 
   library: {

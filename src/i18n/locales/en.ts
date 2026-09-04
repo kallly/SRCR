@@ -50,6 +50,7 @@ export const en: Translations = {
   section: {
     plan: 'Running order',
     library: 'Library',
+    allGuides: 'All exercise guides',
   },
 
   library: {

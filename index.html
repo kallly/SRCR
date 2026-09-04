@@ -156,6 +156,19 @@
       <p class="done" id="history"></p>
 
       <!--
+        Index statique des fiches d'exercice, injecte au build par
+        scripts/build-exercise-pages.ts a la place du marqueur ci-dessous.
+        Raison d'etre : sans lui, aucune fiche n'est atteignable depuis
+        l'accueil en HTML brut — les liens de la modal sont generes en JS,
+        dans un <dialog> ferme, donc invisibles pour un crawler. Ne pas
+        remplir cette liste a la main.
+      -->
+      <nav class="guides" aria-label="Fiches d’exercice">
+        <h2 data-i18n="section.allGuides">Toutes les fiches d’exercice</h2>
+        <!--EXERCISE_INDEX-->
+      </nav>
+
+      <!--
         Livree ouverte : sans JavaScript elle reste depliee partout, donc
         accessible. src/ui/app.ts la replie sous 760 px. Le contenu d'un
         <details> est dans le DOM quel que soit son etat : meme HTML pour les
@@ -204,7 +217,13 @@
       <p class="info-unavailable" id="infoUnavailable" data-i18n="exerciseInfo.unavailable" hidden></p>
       <h4 data-i18n="exerciseInfo.keyPoints">Points clés</h4>
       <ul id="infoPoints"></ul>
-      <a class="info-more" id="infoMore" target="_blank" rel="noopener" data-i18n="exerciseInfo.moreInfo">Plus d’informations</a>
+      <!--
+        href de repli : le JS le remplace par la fiche de l'exercice ouvert.
+        Sans valeur statique, ce n'est pas un lien pour autant (un <a> sans
+        href n'est ni focusable ni annonce comme lien) — l'index des fiches
+        est la cible la plus sensee si le JS n'a pas encore renseigne l'URL.
+      -->
+      <a class="info-more" id="infoMore" href="#section-library" target="_blank" rel="noopener" data-i18n="exerciseInfo.moreInfo">Plus d’informations</a>
     </dialog>
 
     <div class="bar">

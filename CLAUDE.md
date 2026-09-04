@@ -143,7 +143,8 @@ leur `data-i18n` qui continue à les retraduire normalement au chargement.
 
 **Règle : si on change l'une de ces clés dans `fr.ts`, il faut répercuter le
 même texte dans `index.html`** — `app.eyebrow`, `app.heading`, `app.tagline`,
-`app.sourceCode`, `section.plan`, `section.library`, `preview.title`, les
+`app.sourceCode`, `section.plan`, `section.library`, `section.allGuides`,
+`preview.title`, les
 quatre clés `about.*`, `exerciseInfo.close`/`.keyPoints`/`.moreInfo` (la
 modal d'info sur un exercice), et `library.search`/`.filterLabel`/
 `.filterAll`/`.noResults` (recherche et filtre de la bibliothèque — y
@@ -320,6 +321,16 @@ Chaque exercice a deux niveaux de texte, dans deux systèmes différents :
 être crawlables sans JS et référençables individuellement dans le sitemap —
 une route client (`#/exercise/...`) ne le permettrait pas, exactement le
 problème hreflang déjà documenté plus haut pour l'app elle-même.
+
+**L'index des fiches sur l'accueil est injecté au build, pas écrit à la
+main.** `index.html` porte un marqueur `<!--EXERCISE_INDEX-->` que
+`injectExerciseIndex()` remplace par la liste des 28 liens dans
+`dist/index.html`. Sans lui, **aucune fiche n'est atteignable depuis
+l'accueil en HTML brut** : les seuls liens vers les fiches sont ceux de la
+modal, générés en JS dans un `<dialog>` fermé — donc invisibles pour un
+crawler, qui ne les découvrirait que par le sitemap, sans aucun maillage
+interne. Le générateur échoue explicitement si le marqueur a disparu, plutôt
+que de produire silencieusement un accueil sans index.
 
 **`dist/sitemap.xml` n'a plus qu'une seule source** : le générateur l'écrit en
 entier (page d'accueil + une entrée par page générée) à chaque build.

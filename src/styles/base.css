@@ -211,6 +211,45 @@ h2::after {
   max-width: 62ch;
 }
 
+/* index statique des fiches d'exercice (injecte au build) */
+.guides {
+  margin-top: 30px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.guides h2 {
+  margin: 0 0 10px;
+}
+
+.guides ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 2px 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.guides a {
+  display: inline-flex;
+  align-items: center;
+  /* 44px comme le reste de l'app : ce sont 28 liens adjacents dans une
+     grille dense, donc exactement le cas ou une cible trop petite provoque
+     des erreurs de frappe. */
+  min-height: 44px;
+  font-size: 12.5px;
+  color: var(--paper-dim);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+
+.guides a:hover {
+  color: var(--lime);
+  text-decoration-color: var(--lime);
+}
+
 /* lien de pied de page vers le depot */
 .credit {
   font-size: 11.5px;
