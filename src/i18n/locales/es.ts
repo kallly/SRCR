@@ -193,6 +193,7 @@ export const es: Translations = {
     description:
       'Cómo hacer {name} correctamente: músculos trabajados, técnica paso a paso y errores frecuentes que evitar.',
     back: '← Volver a la app',
+    breadcrumb: 'Ruta de navegación',
     howTo: 'Cómo hacer el ejercicio',
     mistakes: 'Errores frecuentes',
     sensation: 'Dónde debes notarlo',

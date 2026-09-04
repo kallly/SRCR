@@ -201,6 +201,7 @@ export const fr = {
     description:
       'Comment faire {name} correctement : muscles sollicités, étapes détaillées et erreurs fréquentes à éviter.',
     back: '← Retour à l’app',
+    breadcrumb: 'Fil d’Ariane',
     howTo: 'Comment faire l’exercice',
     mistakes: 'Erreurs fréquentes',
     sensation: 'Où ça doit travailler',

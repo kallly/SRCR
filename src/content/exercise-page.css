@@ -48,21 +48,40 @@ a {
   color: var(--lime);
 }
 
+/*
+  Fil d'Ariane. `.back` est le conteneur (un <nav>), pas le lien : le
+  soulignement et la couleur de lien vont sur le <a> seul, sinon le separateur
+  et le nom de la page courante seraient soulignes comme s'ils cliquaient.
+  La cible tactile de 44px est portee par le <a>, la ou on appuie.
+*/
 .back {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--paper-dim);
+}
+
+.back a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font-size: 13px;
-  font-weight: 600;
   color: var(--paper-dim);
   text-decoration: underline;
   text-decoration-color: var(--line);
   text-underline-offset: 3px;
 }
 
-.back:hover {
+.back a:hover {
   color: var(--lime);
   text-decoration-color: var(--lime);
+}
+
+/* La page courante n'est pas un lien : elle reste discrete et non cliquable. */
+.back [aria-current='page'] {
+  color: var(--paper);
 }
 
 .chip {

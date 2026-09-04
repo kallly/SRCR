@@ -194,6 +194,7 @@ export const de: Translations = {
     description:
       'Wie du {name} richtig ausführst: beanspruchte Muskeln, Technik Schritt für Schritt und die häufigsten Fehler.',
     back: '← Zurück zur App',
+    breadcrumb: 'Brotkrümelnavigation',
     howTo: 'So führst du die Übung aus',
     mistakes: 'Häufige Fehler',
     sensation: 'Wo es arbeiten soll',

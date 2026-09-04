@@ -20,6 +20,21 @@ import { DICTIONARIES, type Translations } from '../src/i18n';
 import { DETAILS_BY_LOCALE, type ExerciseDetail } from '../src/content/exercise-details';
 import { imagePrompt } from '../src/content/image-prompts';
 
+/**
+ * Locales Open Graph, langue + territoire. Table explicite et non
+ * `${locale}_${locale.toUpperCase()}` : ce raccourci marche par coincidence
+ * pour fr/es/de/it, dont le code pays coincide avec le code langue, mais
+ * produit `en_EN` pour l'anglais — or « EN » n'est pas un code pays
+ * ISO 3166-1, et la valeur est donc invalide.
+ */
+const OG_LOCALES: Record<Locale, string> = {
+  fr: 'fr_FR',
+  en: 'en_US',
+  es: 'es_ES',
+  de: 'de_DE',
+  it: 'it_IT',
+};
+
 const SITE_URL = 'https://kallly.github.io/SRCR';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DIST = join(ROOT, 'dist');
@@ -158,7 +173,7 @@ ${hreflangTags(key)}
     <meta property="og:url" content="${url}" />
     <meta property="og:description" content="${esc(description)}" />
     <meta property="og:site_name" content="Séance" />
-    <meta property="og:locale" content="${locale}_${locale.toUpperCase()}" />
+    <meta property="og:locale" content="${OG_LOCALES[locale]}" />
     <!--
       Image de partage : celle de l'app, faute d'illustration par exercice.
       Le jour ou les images generees existeront (voir docs/image-prompts.md),
@@ -175,15 +190,25 @@ ${hreflangTags(key)}
     <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
 
     <script type="application/ld+json">
-      ${jsonLd({
-        '@context': 'https://schema.org',
-        '@type': 'WebPage',
-        name,
-        description,
-        url,
-        inLanguage: locale,
-        isPartOf: { '@type': 'WebApplication', name: 'Séance', url: `${SITE_URL}/` },
-      })}
+      ${jsonLd([
+        {
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name,
+          description,
+          url,
+          inLanguage: locale,
+          isPartOf: { '@type': 'WebApplication', name: 'Séance', url: `${SITE_URL}/` },
+        },
+        {
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Séance', item: `${SITE_URL}/` },
+            { '@type': 'ListItem', position: 2, name, item: url },
+          ],
+        },
+      ])}
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -196,7 +221,11 @@ ${hreflangTags(key)}
   </head>
   <body>
     <main class="wrap">
-      <a class="back" href="${SITE_URL}/">${esc(dict.page.back)}</a>
+      <nav class="back" aria-label="${esc(dict.page.breadcrumb)}">
+        <a href="${SITE_URL}/">${esc(dict.page.back)}</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">${esc(name)}</span>
+      </nav>
 
       <span class="chip"><i style="background:${groupColor(entry.group)}"></i>${esc(groupLabel)}</span>
       <h1>${esc(name)}</h1>

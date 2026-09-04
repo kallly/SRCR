@@ -366,6 +366,23 @@ par langue. `docs/image-prompts.md` est régénéré à chaque build (ne pas
 l'éditer à la main) et liste sous chaque prompt les noms traduits qui
 partagent cette figure.
 
+**Fil d'Ariane et `BreadcrumbList`.** Le lien de retour en haut de page est
+un `<nav class="back">` : lien vers l'app, séparateur, puis la page courante
+en `aria-current="page"`. Il porte un `BreadcrumbList` en JSON-LD, à côté du
+`WebPage` — c'est un type de résultat enrichi **toujours supporté** par
+Google, contrairement à `HowTo`, retiré en 2023 : ne pas ajouter de `HowTo`
+sur ces pages malgré leur structure en étapes, ça ne produirait rien.
+Le JSON-LD de la page est donc un **tableau** de deux objets, pas un objet
+seul. Côté CSS, `.back` est le conteneur et `.back a` le lien : mettre le
+soulignement sur le conteneur ferait passer le séparateur et le nom de la
+page courante pour des liens.
+
+**`og:locale` vient d'une table explicite** (`OG_LOCALES` dans le
+générateur), jamais de `` `${locale}_${locale.toUpperCase()}` ``. Ce
+raccourci marche par coïncidence pour fr/es/de/it, dont le code pays est
+identique au code langue, mais produit `en_EN` pour l'anglais — « EN » n'est
+pas un code pays ISO 3166-1, et la valeur est invalide.
+
 **Exercices similaires : seulement s'il y en a vraiment.** Le carrousel en
 bas de page ne liste que les exercices du même groupe musculaire ayant
 eux-mêmes une page générée ; la section entière est omise s'il n'y en a
