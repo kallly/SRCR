@@ -37,7 +37,8 @@ src/
   content/
     exercise-details/     contenu long par langue (fr, en, es, de, it) :
                           etapes, muscles, anatomie, prompt image — voir plus bas
-    exercise-page.css       styles des pages d'exercice statiques
+    image-prompts.ts      prompts d'illustration — UNE source pour les 5 langues
+    exercise-page.css     styles des pages d'exercice statiques
   i18n/
     index.ts       t(), pluriels via Intl.PluralRules, detection, formatDate
     locales/       fr (source) + en, es, de, it
@@ -306,8 +307,8 @@ Chaque exercice a deux niveaux de texte, dans deux systèmes différents :
   d'interface (carte de la bibliothèque, ligne du déroulé) : exigé dans les
   **5 langues** dès l'ajout d'une clé, comme tout le reste de `Translations`.
 - **Contenu long** — `src/content/exercise-details/<locale>.ts`, sous la clé
-  de l'exercice : muscles sollicités, étapes, erreurs fréquentes, prompt
-  d'image. Volontairement **hors du contrat i18n strict**
+  de l'exercice : muscles sollicités, étapes, erreurs fréquentes, anatomie,
+  mécanique, bienfaits. Volontairement **hors du contrat i18n strict**
   (`Partial<Record<ExerciseKey, ExerciseDetail>>`, pas `Translations`) — une
   langue peut légitimement ne pas encore avoir traduit ce contenu, contrairement
   à un bouton qui ne doit jamais être vide. **Les 5 langues sont aujourd'hui
@@ -347,11 +348,23 @@ entier (page d'accueil + une entrée par page générée) à chaque build.
 `public/sitemap.xml` a été supprimé — ne pas le recréer, ce serait une
 deuxième source vouée à diverger de la première.
 
-**Image Gemini : jamais référencée avant d'exister.** Chaque `ExerciseDetail`
-porte un `imagePrompt`, consolidé par le générateur dans `docs/image-prompts.md`
-(ne pas éditer ce fichier à la main, il est régénéré à chaque build). Tant
-qu'aucune image n'a été générée et ajoutée, la page utilise la figure SVG
-existante — jamais une balise `<img>` vers un fichier qui n'existe pas.
+**Image Gemini : jamais référencée avant d'exister.** Tant qu'aucune image
+n'a été générée et ajoutée, la page utilise la figure SVG existante — jamais
+une balise `<img>` vers un fichier qui n'existe pas.
+
+**Le prompt d'image est hors des fichiers de langue, délibérément.**
+`src/content/image-prompts.ts` en est la source unique, rédigée en anglais
+(langue sur laquelle les générateurs d'images sont les plus fiables, et ce
+texte n'est jamais affiché). L'illustration est identique dans les 5 langues :
+la direction artistique impose « no text, no logo », il n'y a donc rien à
+traduire dedans. Le champ a d'abord vécu dans `ExerciseDetail`, donc dupliqué
+par langue — `docs/image-prompts.md` annonçait alors **140 images à générer
+pour 28 figures réelles**, et surtout le français et l'anglais décrivaient la
+même scène dans deux rédactions concurrentes, ce qui aurait produit deux
+dessins différents du même exercice. Ne pas remettre ce champ dans le contenu
+par langue. `docs/image-prompts.md` est régénéré à chaque build (ne pas
+l'éditer à la main) et liste sous chaque prompt les noms traduits qui
+partagent cette figure.
 
 **Exercices similaires : seulement s'il y en a vraiment.** Le carrousel en
 bas de page ne liste que les exercices du même groupe musculaire ayant

@@ -18,6 +18,7 @@ import { groupColor } from '../src/data/groups';
 import type { ExerciseKey, GroupId, Locale } from '../src/core/types';
 import { DICTIONARIES, type Translations } from '../src/i18n';
 import { DETAILS_BY_LOCALE, type ExerciseDetail } from '../src/content/exercise-details';
+import { imagePrompt } from '../src/content/image-prompts';
 
 const SITE_URL = 'https://kallly.github.io/SRCR';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
@@ -253,7 +254,10 @@ function main(): void {
   rmSync(exercisesDir, { recursive: true, force: true });
 
   const sitemapUrls: string[] = [`${SITE_URL}/`];
-  const imagePromptSections: string[] = [];
+  // Un prompt par illustration, pas par page : les figures ne contiennent
+  // aucun texte, la meme image sert donc aux cinq langues. La cle est le
+  // prompt lui-meme, la valeur les noms traduits qui l'utilisent.
+  const promptsByImage = new Map<string, string[]>();
 
   for (const locale of Object.keys(DETAILS_BY_LOCALE) as Locale[]) {
     const all = DETAILS_BY_LOCALE[locale]!;
@@ -269,7 +273,10 @@ function main(): void {
       sitemapUrls.push(`${SITE_URL}/exercises/${locale}/${detail.slug}.html`);
 
       const name = dict.exercise[key]?.name ?? key;
-      imagePromptSections.push(`## ${name}\n\n${detail.imagePrompt}\n`);
+      const prompt = imagePrompt(key);
+      const names = promptsByImage.get(prompt) ?? [];
+      names.push(name);
+      promptsByImage.set(prompt, names);
     }
     console.log(`${keys.length} page(s) generee(s) pour la langue "${locale}".`);
   }
@@ -292,17 +299,23 @@ ${sitemapUrls.map((u) => `  <url>\n    <loc>${u}</loc>\n  </url>`).join('\n')}
   mkdirSync(docsDir, { recursive: true });
   const promptsDoc = `# Prompts d'illustration (Gemini)
 
-Genere par \`scripts/build-exercise-pages.ts\` depuis le champ \`imagePrompt\`
-de \`src/content/exercise-details/fr.ts\` -- ne pas editer ce fichier a la
-main, editer la source puis relancer \`npm run build\`.
+Genere par \`scripts/build-exercise-pages.ts\` depuis
+\`src/content/image-prompts.ts\` -- ne pas editer ce fichier a la main, editer
+la source puis relancer \`npm run build\`.
+
+**Une entree = une image a generer.** Les illustrations ne contiennent aucun
+texte, la meme image sert donc aux cinq langues : les noms traduits listes
+sous chaque prompt designent la meme figure, pas des images differentes.
 
 Aucune des pages ne reference d'image generee tant qu'elle n'existe pas :
 elles utilisent la figure SVG existante. Ajouter une image generee a une
 page est un suivi separe.
 
-${imagePromptSections.join('\n')}`;
+${[...promptsByImage.entries()]
+  .map(([prompt, names]) => `## ${names[0]}\n\n*${names.join(' · ')}*\n\n${prompt}\n`)
+  .join('\n')}`;
   writeFileSync(join(docsDir, 'image-prompts.md'), promptsDoc, 'utf8');
-  console.log(`docs/image-prompts.md : ${imagePromptSections.length} prompt(s).`);
+  console.log(`docs/image-prompts.md : ${promptsByImage.size} image(s) a generer.`);
 }
 
 main();

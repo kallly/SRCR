@@ -9,12 +9,6 @@ import type { ExerciseDetail } from './fr';
  * Les slugs sont en anglais : ces pages vivent sous exercises/en/ et une URL
  * francaise y serait incoherente pour un lecteur anglophone.
  */
-const ART_DIRECTION =
-  'Flat minimalist illustration, solid very dark green background (#0e1210), ' +
-  'simplified human silhouette in off-white (#f2f0e8), a single lime-green ' +
-  'accent (#d7ff3f) on the primary muscle worked, thick clean linework, no ' +
-  'text, no logo, square crop. ';
-
 export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
   inclined: {
     slug: 'incline-push-ups',
@@ -54,9 +48,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'If the front of the shoulder hurts, reduce the range and bring the elbows closer to the body before trying to go lower.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person doing incline push-ups, hands on a raised ledge, side view, body in a straight line from ankles to head, elbows at 45°.',
   },
 
   chairsquat: {
@@ -97,9 +88,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'If the knee is sore, reduce the depth rather than the number of repetitions: a pain-free partial range beats a full range that hurts.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person performing a squat in front of a chair, side view, hips pushed back, knees tracking over the feet, chest upright, just before touching the seat.',
   },
 
   calf: {
@@ -137,9 +125,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
         'Work one leg at a time, or place the ball of the foot on a step so the heel can drop below toe level.',
       readyWhen: 'When three sets of twenty go by at a slow tempo with no hand support, switch to one leg.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing on the balls of their feet, front view, heels raised, calves contracted, arms slightly out for balance.',
   },
 
   wallsit: {
@@ -180,9 +165,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'If the knee pulls, open the angle before anything else. This exercise is easy to make gentler; there is no point in enduring it as it is.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person seated against a wall with no chair, thighs parallel to the floor, knees at 90°, back flat on the wall, side view.',
   },
 
   rotation: {
@@ -223,9 +205,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'No pain should appear in the shoulder. If it does, cut the range first, then the load; if it persists, this is not the exercise your session is missing.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying on their side, bent elbow tucked to the body, forearm rotating upwards holding a small weight, slightly angled top view.',
   },
 
   deadbug: {
@@ -265,9 +244,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'When three sets of ten per side go by with the lower back never lifting and the leg extended a few centimetres off the floor.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying on their back, one arm and the opposite leg extended diagonally towards the floor, the other arm and leg bent, top view.',
   },
 
   plank: {
@@ -307,9 +283,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Do not hold your breath. If the lower back pulls, the position has already sagged: come down and restart rather than gritting it out.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person in a forearm plank, body perfectly aligned from heels to head, side view.',
   },
 
   walk: {
@@ -346,9 +319,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       harder: 'Extend the duration, seek out hills, or lift the pace slightly on sections.',
       readyWhen: 'When thirty minutes pass with no noticeable breathlessness, look for hills rather than extra time.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person mid-walk, side view, chest upright, one arm forward and one back, mid-stride.',
   },
 
   kneePushup: {
@@ -389,9 +359,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Put a cushion or mat under the knees: discomfort on a hard floor ends the set before the muscle tires.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person doing push-ups from the knees, side view, body aligned from knees to head, elbows at 45°, chest near the floor.',
   },
 
   wallPushup: {
@@ -428,9 +395,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       harder: 'Step the feet back, then move to a lower support: a counter, then a chair.',
       readyWhen: 'When three sets of fifteen feel easy, move to a lower support rather than adding repetitions.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing leaning towards a wall, hands on the wall at chest height, body in a straight line, side view.',
   },
 
   chairDips: {
@@ -469,9 +433,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Demanding for the front of the shoulder. With any history or discomfort there, cut the range sharply or replace it with a push-up variant.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person doing tricep dips on a chair, hands on the seat edge, legs extended in front, elbows bent backwards, side view.',
   },
 
   armCircles: {
@@ -507,9 +468,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       harder: 'Extend the duration, or hold a small water bottle in each hand.',
       readyWhen: 'When a minute in each direction goes by without the shoulders rising, add a light load.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing, arms extended horizontally to each side, small circular arrows around the hands showing the movement, front view.',
   },
 
   wallSlides: {
@@ -549,9 +507,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Losing contact with the wall is not a failure but information: it is your current mobility. Forcing past it by arching does not improve that mobility.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing with back to a wall, arms bent in a W against the wall sliding upwards, vertical arrow showing the movement, front view.',
   },
 
   superman: {
@@ -590,9 +545,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Lifting the head to look ahead compresses the neck: keep the eyes down. With established lower-back pain, this is not the right starting point.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying face down, arms and legs lifted simultaneously in a slight extension, side view.',
   },
 
   reverseSnowAngel: {
@@ -629,9 +581,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       harder: 'Fully extend the arms, slow down, or pause at both ends of the arc.',
       readyWhen: 'When three sets of twelve go by with straight arms and no shoulder rolling.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying face down, arms tracing a wide arc from in front of the body down to the hips, curved arrow showing the path, top view.',
   },
 
   birdDog: {
@@ -672,9 +621,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'A mat or cushion under the knees stops joint discomfort ending the set before the muscles tire.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person on all fours, one arm extended forward and the opposite leg extended back, flat back, side view.',
   },
 
   catCow: {
@@ -708,9 +654,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     ],
     precautions:
       'No pain should appear: this is mobility, not a forced stretch. If a segment stays stuck, reduce the range rather than pressing into it.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person on all fours, back arched upwards then downwards, arrow showing the back-and-forth movement of the spine, side view.',
   },
 
   reverseLunge: {
@@ -751,9 +694,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'The front knee must stay in line with the foot. If it consistently caves inwards, the gluteus medius lacks strength: work standing hip abduction alongside it.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person in a reverse lunge, rear leg bent close to the floor, front knee at 90°, chest upright, side view.',
   },
 
   stepUp: {
@@ -794,9 +734,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'The stability of the support is non-negotiable: a chair that slides or tips makes this exercise dangerous. A stair step is often the better choice.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person stepping up onto a stable chair, one foot on the seat mid-drive, side view.',
   },
 
   lateralLunge: {
@@ -836,9 +773,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'With any discomfort on the inside of the thigh, narrow the stance sharply: adductors strain easily when maximum range is chased too soon.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person in a lateral lunge, one leg bent and the other extended to the side, chest upright, front view.',
   },
 
   gluteBridge: {
@@ -878,9 +812,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'A hamstring cramp at the top usually means the glutes are not taking their share: bring the feet closer and focus on pushing through the heels.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying on their back, knees bent, hips lifted into a bridge, glutes contracted, side view.',
   },
 
   donkeyKick: {
@@ -919,9 +850,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'When fifteen repetitions per side go by with no hollowing of the lower back and no pelvic rotation.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person on all fours, one bent knee pushed towards the ceiling, flat back, rear three-quarter view.',
   },
 
   hipAbduction: {
@@ -960,9 +888,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
         'Let go of the support, extend the hold at the top, or move to a side-lying position to remove all compensation.',
       readyWhen: 'When fifteen repetitions per side go by with no support and no torso lean.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing, one straight leg lifted out to the side, chest upright, arrow showing the sideways movement, front view.',
   },
 
   sidePlank: {
@@ -1003,9 +928,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'The elbow must be exactly under the shoulder. Too far forward or back and the strain shifts onto the joint instead of staying on the muscle.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person in a side plank, resting on one forearm, body in a straight line from feet to head, other arm raised, front view.',
   },
 
   standingKneeRaise: {
@@ -1042,9 +964,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       harder: 'Let go of the support, close your eyes, or extend the hold at the top.',
       readyWhen: 'When fifteen repetitions per leg go by with no support and no backward lean.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing, one knee lifted towards the chest, straight back, arms balanced, side view.',
   },
 
   crunch: {
@@ -1083,9 +1002,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Repeated spinal flexion does not suit everyone. With any lumbar sensitivity, favour the dead bug and the plank, which produce abdominal work without flexing the spine.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying on their back, knees bent, shoulders lifted slightly off the floor in an abdominal contraction, side view.',
   },
 
   highKneeMarch: {
@@ -1122,9 +1038,6 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       harder: 'Pick up the rhythm, extend the duration, or add an overhead arm movement.',
       readyWhen: 'When two sixty-second rounds go by with no marked breathlessness, extend the duration.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person marching on the spot, one knee lifted to hip height, arms in motion, side view.',
   },
 
   buttKickMarch: {
@@ -1163,8 +1076,5 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'A cramp at the back of the thigh usually signals insufficient warm-up: start with a simple march on the spot before adding the range.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person marching on the spot, one heel drawn up towards the glute, chest upright, side view.',
   },
 };

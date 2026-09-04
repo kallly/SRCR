@@ -11,12 +11,6 @@ import type { ExerciseDetail } from './fr';
  * germanophone. Quelques termes restent en anglais (dead bug, bird dog, crunch)
  * parce que c'est sous ce nom qu'ils sont connus et cherches en allemand.
  */
-const ART_DIRECTION =
-  'Flat minimalist illustration, solid very dark green background (#0e1210), ' +
-  'simplified human silhouette in off-white (#f2f0e8), a single lime-green ' +
-  'accent (#d7ff3f) on the primary muscle worked, thick clean linework, no ' +
-  'text, no logo, square crop. ';
-
 export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
   inclined: {
     slug: 'erhoehte-liegestuetze',
@@ -56,9 +50,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Wenn die Schultervorderseite schmerzt, verringere den Bewegungsweg und führe die Ellenbogen näher an den Körper, bevor du tiefer gehst.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person doing incline push-ups, hands on a raised ledge, side view, body in a straight line from ankles to head, elbows at 45°.',
   },
 
   chairsquat: {
@@ -99,9 +90,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Wenn das Knie zwickt, reduziere die Tiefe statt der Wiederholungszahl: ein schmerzfreier Teilbereich ist mehr wert als ein voller, der wehtut.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person performing a squat in front of a chair, side view, hips pushed back, knees tracking over the feet, chest upright, just before touching the seat.',
   },
 
   calf: {
@@ -140,9 +128,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Wenn drei Sätze mit zwanzig Wiederholungen im langsamen Tempo ohne Handstütze gelingen, wechsle auf ein Bein.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing on the balls of their feet, front view, heels raised, calves contracted, arms slightly out for balance.',
   },
 
   wallsit: {
@@ -183,9 +168,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Wenn das Knie zieht, öffne zuerst den Winkel. Diese Übung lässt sich leicht sanfter machen; es bringt nichts, sie so auszuhalten.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person seated against a wall with no chair, thighs parallel to the floor, knees at 90°, back flat on the wall, side view.',
   },
 
   rotation: {
@@ -227,9 +209,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'In der Schulter sollte kein Schmerz auftreten. Tut er es, verringere zuerst den Bewegungsweg, dann die Last; hält er an, ist das nicht die Übung, die deiner Einheit fehlt.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying on their side, bent elbow tucked to the body, forearm rotating upwards holding a small weight, slightly angled top view.',
   },
 
   deadbug: {
@@ -269,9 +248,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Wenn drei Sätze mit zehn Wiederholungen pro Seite gelingen, ohne dass der untere Rücken abhebt, und das Bein wenige Zentimeter über dem Boden gestreckt ist.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying on their back, one arm and the opposite leg extended diagonally towards the floor, the other arm and leg bent, top view.',
   },
 
   plank: {
@@ -311,8 +287,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Halte die Luft nicht an. Zieht der untere Rücken, ist die Position bereits durchgehängt: Geh herunter und beginne neu, statt es auszuhalten.',
-    imagePrompt:
-      ART_DIRECTION + 'Person in a forearm plank, body perfectly aligned from heels to head, side view.',
   },
 
   walk: {
@@ -350,9 +324,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Wenn dreißig Minuten ohne spürbare Atemnot vergehen, suche eher Steigungen als zusätzliche Zeit.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person mid-walk, side view, chest upright, one arm forward and one back, mid-stride.',
   },
 
   kneePushup: {
@@ -393,9 +364,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Lege ein Kissen oder eine Matte unter die Knie: Beschwerden auf hartem Boden beenden den Satz, bevor der Muskel ermüdet.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person doing push-ups from the knees, side view, body aligned from knees to head, elbows at 45°, chest near the floor.',
   },
 
   wallPushup: {
@@ -433,9 +401,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Wenn drei Sätze mit fünfzehn Wiederholungen leicht fallen, wechsle zu einer niedrigeren Auflage, statt Wiederholungen hinzuzufügen.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing leaning towards a wall, hands on the wall at chest height, body in a straight line, side view.',
   },
 
   chairDips: {
@@ -475,9 +440,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Fordernd für die Schultervorderseite. Bei Vorgeschichte oder Beschwerden dort den Bewegungsweg stark verkürzen oder durch eine Liegestützvariante ersetzen.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person doing tricep dips on a chair, hands on the seat edge, legs extended in front, elbows bent backwards, side view.',
   },
 
   armCircles: {
@@ -514,9 +476,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Wenn eine Minute in jede Richtung gelingt, ohne dass die Schultern hochziehen, füge eine leichte Last hinzu.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing, arms extended horizontally to each side, small circular arrows around the hands showing the movement, front view.',
   },
 
   wallSlides: {
@@ -556,9 +515,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Den Wandkontakt zu verlieren ist kein Versagen, sondern eine Information: Es ist deine aktuelle Beweglichkeit. Sie durch ein Hohlkreuz zu erzwingen, verbessert diese Beweglichkeit nicht.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing with back to a wall, arms bent in a W against the wall sliding upwards, vertical arrow showing the movement, front view.',
   },
 
   superman: {
@@ -597,9 +553,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Den Kopf zu heben, um nach vorn zu schauen, staucht den Nacken: Blick nach unten. Bei bestehenden Rückenschmerzen ist das nicht der richtige Ausgangspunkt.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying face down, arms and legs lifted simultaneously in a slight extension, side view.',
   },
 
   reverseSnowAngel: {
@@ -636,9 +589,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       harder: 'Strecke die Arme vollständig, werde langsamer, oder halte an beiden Enden des Bogens kurz inne.',
       readyWhen: 'Wenn drei Sätze mit zwölf Wiederholungen mit gestreckten Armen und ohne Rollen der Schultern gelingen.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying face down, arms tracing a wide arc from in front of the body down to the hips, curved arrow showing the path, top view.',
   },
 
   birdDog: {
@@ -679,9 +629,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Eine Matte oder ein Kissen unter den Knien verhindert, dass Gelenkbeschwerden den Satz beenden, bevor die Muskeln ermüden.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person on all fours, one arm extended forward and the opposite leg extended back, flat back, side view.',
   },
 
   catCow: {
@@ -715,9 +662,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     ],
     precautions:
       'Es sollte kein Schmerz auftreten: Das ist Mobilität, keine erzwungene Dehnung. Bleibt ein Segment blockiert, verringere den Bewegungsweg, statt hineinzudrücken.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person on all fours, back arched upwards then downwards, arrow showing the back-and-forth movement of the spine, side view.',
   },
 
   reverseLunge: {
@@ -758,9 +702,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Das vordere Knie muss in Linie mit dem Fuß bleiben. Fällt es regelmäßig nach innen, fehlt Kraft im mittleren Gesäßmuskel: Arbeite parallel die Hüftabduktion im Stehen.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person in a reverse lunge, rear leg bent close to the floor, front knee at 90°, chest upright, side view.',
   },
 
   stepUp: {
@@ -801,9 +742,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Die Stabilität der Auflage ist nicht verhandelbar: Ein Stuhl, der rutscht oder kippt, macht diese Übung gefährlich. Eine Treppenstufe ist oft die bessere Wahl.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person stepping up onto a stable chair, one foot on the seat mid-drive, side view.',
   },
 
   lateralLunge: {
@@ -843,9 +781,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Bei Beschwerden an der Oberschenkelinnenseite den Schritt deutlich verkürzen: Adduktoren reagieren empfindlich, wenn zu früh der maximale Bereich gesucht wird.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person in a lateral lunge, one leg bent and the other extended to the side, chest upright, front view.',
   },
 
   gluteBridge: {
@@ -885,9 +820,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Ein Krampf in den Beinbeugern oben heißt meist, dass das Gesäß seinen Anteil nicht übernimmt: Stelle die Füße näher und konzentriere dich auf das Drücken über die Fersen.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying on their back, knees bent, hips lifted into a bridge, glutes contracted, side view.',
   },
 
   donkeyKick: {
@@ -926,9 +858,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Wenn fünfzehn Wiederholungen pro Seite ohne Durchsacken des unteren Rückens und ohne Beckenrotation gelingen.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person on all fours, one bent knee pushed towards the ceiling, flat back, rear three-quarter view.',
   },
 
   hipAbduction: {
@@ -967,9 +896,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
         'Lass die Stütze los, verlängere das Halten oben, oder gehe in die Seitenlage, um jede Ausweichbewegung auszuschließen.',
       readyWhen: 'Wenn fünfzehn Wiederholungen pro Seite ohne Stütze und ohne Oberkörperneigung gelingen.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing, one straight leg lifted out to the side, chest upright, arrow showing the sideways movement, front view.',
   },
 
   sidePlank: {
@@ -1010,9 +936,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Der Ellenbogen muss genau unter der Schulter liegen. Zu weit vorn oder hinten verlagert sich die Belastung auf das Gelenk, statt im Muskel zu bleiben.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person in a side plank, resting on one forearm, body in a straight line from feet to head, other arm raised, front view.',
   },
 
   standingKneeRaise: {
@@ -1049,9 +972,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       harder: 'Lass die Stütze los, schließe die Augen, oder verlängere das Halten oben.',
       readyWhen: 'Wenn fünfzehn Wiederholungen pro Bein ohne Stütze und ohne Zurücklehnen gelingen.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing, one knee lifted towards the chest, straight back, arms balanced, side view.',
   },
 
   crunch: {
@@ -1090,9 +1010,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Wiederholte Wirbelsäulenbeugung passt nicht zu jedem. Bei Empfindlichkeit im unteren Rücken sind Dead Bug und Unterarmstütz vorzuziehen, die Baucharbeit ohne Beugung der Wirbelsäule erzeugen.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying on their back, knees bent, shoulders lifted slightly off the floor in an abdominal contraction, side view.',
   },
 
   highKneeMarch: {
@@ -1130,9 +1047,6 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Wenn zwei Runden von sechzig Sekunden ohne deutliche Atemnot gelingen, verlängere die Dauer.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person marching on the spot, one knee lifted to hip height, arms in motion, side view.',
   },
 
   buttKickMarch: {
@@ -1171,8 +1085,5 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Ein Krampf in der Oberschenkelrückseite deutet meist auf unzureichendes Aufwärmen hin: Beginne mit einem einfachen Marsch auf der Stelle, bevor du den Bewegungsumfang hinzunimmst.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person marching on the spot, one heel drawn up towards the glute, chest upright, side view.',
   },
 };

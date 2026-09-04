@@ -19,13 +19,6 @@ export interface ExerciseDetail {
   steps: string[];
   /** 2 a 4 erreurs frequentes ou points de securite. Reste en tete aussi. */
   mistakes: string[];
-  /**
-   * Prompt pour generer une illustration avec Gemini (voir docs/image-prompts.md,
-   * genere depuis ce champ par scripts/build-exercise-pages.ts). Tant qu'aucune
-   * image n'existe, la page detaillee n'en reference aucune : elle reutilise la
-   * figure SVG existante, deja fiable.
-   */
-  imagePrompt: string;
 
   /*
     Contenu approfondi. Regle de redaction : uniquement du verifiable et du
@@ -60,12 +53,6 @@ export interface ExerciseDetail {
  * Prefixe commun a tous les prompts : garde une direction artistique
  * coherente d'un exercice a l'autre, meme generes separement dans Gemini.
  */
-const ART_DIRECTION =
-  'Illustration plate et minimaliste, fond uni vert tres sombre (#0e1210), ' +
-  'silhouette humaine simplifiee en blanc casse (#f2f0e8), un seul accent ' +
-  'vert citron (#d7ff3f) sur le groupe musculaire principal sollicite, trait ' +
-  'epais et propre, aucun texte, aucun logo, cadrage carre. ';
-
 export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
   inclined: {
     slug: 'pompes-inclinees',
@@ -105,9 +92,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'En cas de douleur à l’avant de l’épaule, réduis l’amplitude et rapproche les coudes du corps avant de chercher à descendre plus bas.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne faisant des pompes inclinées, mains posées sur un rebord surélevé, vue de profil, corps aligné en ligne droite des chevilles à la tête, coudes à 45°.',
   },
 
   chairsquat: {
@@ -149,9 +133,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Si le genou est douloureux, réduis la profondeur plutôt que le nombre de répétitions : une amplitude partielle indolore vaut mieux qu’une amplitude complète qui fait mal.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne en train de faire un squat devant une chaise, vue de profil, hanches reculées, genoux dans l’axe des pieds, buste droit, juste avant de toucher l’assise.',
   },
 
   calf: {
@@ -190,9 +171,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Quand trois séries de vingt passent en tempo lent sans appui des mains, passe à une jambe.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne debout sur la pointe des pieds, vue de face, talons levés, mollets contractés, bras légèrement écartés pour l’équilibre.',
   },
 
   wallsit: {
@@ -233,9 +211,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Si le genou tire, ouvre l’angle avant toute autre chose. Cet exercice est facile à rendre plus doux, il n’y a aucun intérêt à le subir tel quel.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne assise contre un mur sans chaise, cuisses parallèles au sol, genoux à 90°, dos plaqué au mur, vue de profil.',
   },
 
   rotation: {
@@ -277,9 +252,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Aucune douleur ne doit apparaître dans l’épaule. Si c’est le cas, réduis d’abord l’amplitude, puis la charge ; si elle persiste, cet exercice n’est pas celui qui manque à ta séance.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne allongée sur le côté, coude plié collé au corps, avant-bras qui pivote vers le haut tenant une petite charge, vue de dessus légèrement en angle.',
   },
 
   deadbug: {
@@ -320,9 +292,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Quand trois séries de dix par côté passent avec le bas du dos qui ne décolle jamais et une jambe tendue à quelques centimètres du sol.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne allongée sur le dos, un bras et la jambe opposée tendus en diagonale vers le bas, l’autre bras et l’autre jambe repliés, vue de dessus.',
   },
 
   plank: {
@@ -362,9 +331,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Ne pas retenir sa respiration. Si le bas du dos tire, la position s’est déjà affaissée : redescends et recommence plutôt que de tenir coûte que coûte.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne en planche sur les avant-bras, corps parfaitement aligné des talons à la tête, vue de profil.',
   },
 
   walk: {
@@ -402,9 +368,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Quand trente minutes passent sans essoufflement notable, cherche du dénivelé plutôt que de la durée supplémentaire.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne en pleine marche, vue de profil, buste droit, un bras en avant et l’autre en arrière, mi-foulée.',
   },
 
   kneePushup: {
@@ -445,9 +408,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Place un coussin ou un tapis sous les genoux : l’inconfort au sol dur écourte la série avant que le muscle ne fatigue.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne faisant des pompes sur les genoux, vue de profil, corps aligné des genoux à la tête, coudes à 45°, poitrine proche du sol.',
   },
 
   wallPushup: {
@@ -485,9 +445,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Quand trois séries de quinze passent facilement, passe à un appui plus bas plutôt que d’ajouter des répétitions.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne debout inclinée vers un mur, mains posées sur le mur à hauteur de poitrine, corps en ligne droite, vue de profil.',
   },
 
   chairDips: {
@@ -526,9 +483,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Exercice exigeant pour l’avant de l’épaule. En cas d’antécédent ou de gêne à cet endroit, réduis franchement l’amplitude ou remplace-le par une variante de pompe.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne faisant des dips triceps sur une chaise, mains sur le bord de l’assise, jambes tendues devant, coudes pliés vers l’arrière, vue de profil.',
   },
 
   armCircles: {
@@ -564,9 +518,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       harder: 'Allonge la durée, ou tiens une petite bouteille d’eau dans chaque main.',
       readyWhen: 'Quand une minute par sens passe sans que les épaules remontent, ajoute une charge légère.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne debout, bras tendus à l’horizontale de chaque côté, petites flèches circulaires autour des mains indiquant le mouvement, vue de face.',
   },
 
   wallSlides: {
@@ -606,9 +557,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'La perte de contact avec le mur n’est pas un échec mais une information : c’est ta mobilité actuelle. Forcer au-delà en cambrant ne fait pas progresser cette mobilité.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne debout dos au mur, bras pliés en position de W contre le mur glissant vers le haut, flèche verticale indiquant le mouvement, vue de face.',
   },
 
   superman: {
@@ -648,9 +596,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Relever la tête pour regarder devant comprime la nuque : garde le regard au sol. En cas de douleur lombaire installée, cet exercice n’est pas le bon point de départ.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne allongée sur le ventre, bras et jambes levés simultanément en légère extension, vue de profil.',
   },
 
   reverseSnowAngel: {
@@ -687,9 +632,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       harder: 'Tends complètement les bras, ralentis, ou marque une pause aux deux extrémités de l’arc.',
       readyWhen: 'Quand trois séries de douze passent bras tendus sans que les épaules s’enroulent.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne allongée sur le ventre, bras dessinant un large arc depuis l’avant du corps vers les hanches, flèche courbe indiquant la trajectoire, vue de dessus.',
   },
 
   birdDog: {
@@ -731,9 +673,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Un tapis ou un coussin sous les genoux évite que l’inconfort articulaire n’écourte la série avant la fatigue musculaire.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne à quatre pattes, un bras tendu devant et la jambe opposée tendue derrière, dos plat, vue de profil.',
   },
 
   catCow: {
@@ -767,9 +706,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     ],
     precautions:
       'Aucune douleur ne doit apparaître : c’est une mobilité, pas un étirement forcé. Si un segment reste bloqué, réduis l’amplitude plutôt que d’insister dessus.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne à quatre pattes, dos arqué vers le haut puis vers le bas, flèche indiquant le mouvement de va-et-vient de la colonne, vue de profil.',
   },
 
   reverseLunge: {
@@ -810,9 +746,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Le genou avant doit rester dans l’axe du pied. S’il rentre systématiquement vers l’intérieur, c’est le moyen fessier qui manque de force : travaille l’abduction de hanche en parallèle.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne en fente arrière, jambe arrière fléchie proche du sol, genou avant à 90°, buste droit, vue de profil.',
   },
 
   stepUp: {
@@ -853,9 +786,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'La stabilité du support est non négociable : une chaise qui glisse ou bascule rend cet exercice dangereux. Une marche d’escalier est souvent le meilleur choix.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne montant sur une chaise stable, un pied posé sur l’assise en pleine poussée, vue de profil.',
   },
 
   lateralLunge: {
@@ -896,9 +826,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'En cas de gêne à l’intérieur de la cuisse, réduis franchement l’écartement : les adducteurs se claquent facilement quand on cherche l’amplitude maximale trop tôt.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne en fente latérale, une jambe pliée et l’autre tendue sur le côté, buste droit, vue de face.',
   },
 
   gluteBridge: {
@@ -939,9 +866,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Une crampe dans les ischio-jambiers en haut du mouvement indique souvent que les fessiers ne prennent pas leur part : rapproche les pieds des fessiers et concentre-toi sur la poussée dans les talons.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne allongée sur le dos, genoux pliés, hanches levées en pont, fessiers contractés, vue de profil.',
   },
 
   donkeyKick: {
@@ -981,9 +905,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Quand quinze répétitions par côté passent sans que le bas du dos se creuse ni que le bassin pivote.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne à quatre pattes, un genou plié poussé vers le plafond, dos plat, vue de trois-quarts arrière.',
   },
 
   hipAbduction: {
@@ -1023,9 +944,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Quand quinze répétitions par côté passent sans appui et sans que le buste s’incline.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne debout, une jambe tendue levée sur le côté, buste droit, flèche indiquant le mouvement latéral, vue de face.',
   },
 
   sidePlank: {
@@ -1067,9 +985,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Le coude doit être exactement sous l’épaule. Trop en avant ou trop en arrière, la contrainte se déplace sur l’articulation au lieu de rester sur le muscle.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne en planche latérale, appui sur un avant-bras, corps en ligne droite des pieds à la tête, autre bras levé, vue de face.',
   },
 
   standingKneeRaise: {
@@ -1107,9 +1022,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Quand quinze répétitions par jambe passent sans appui et sans que le buste bascule en arrière.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne debout, un genou levé vers la poitrine, dos droit, bras en équilibre, vue de profil.',
   },
 
   crunch: {
@@ -1148,9 +1060,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'La flexion répétée de la colonne ne convient pas à tout le monde. En cas de sensibilité lombaire, privilégie le dead bug et la planche, qui produisent un travail abdominal sans mettre la colonne en flexion.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne allongée sur le dos, genoux pliés, épaules légèrement décollées du sol en contraction abdominale, vue de profil.',
   },
 
   highKneeMarch: {
@@ -1187,9 +1096,6 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       harder: 'Accélère le rythme, allonge la durée, ou ajoute une flexion des bras au-dessus de la tête.',
       readyWhen: 'Quand deux fois soixante secondes passent sans essoufflement marqué, allonge la durée.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne en train de marcher sur place, un genou levé à hauteur de hanche, bras en mouvement, vue de profil.',
   },
 
   buttKickMarch: {
@@ -1228,8 +1134,5 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Une crampe à l’arrière de la cuisse indique généralement un manque d’échauffement : commence par une marche sur place simple avant d’ajouter l’amplitude.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Personne en train de marcher sur place, un talon ramené vers le fessier, buste droit, vue de profil.',
   },
 };

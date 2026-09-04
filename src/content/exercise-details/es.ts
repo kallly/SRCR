@@ -11,12 +11,6 @@ import type { ExerciseDetail } from './fr';
  * restent en anglais (dead bug, bird dog) parce que c'est sous ce nom qu'ils
  * sont connus et cherches en espagnol.
  */
-const ART_DIRECTION =
-  'Flat minimalist illustration, solid very dark green background (#0e1210), ' +
-  'simplified human silhouette in off-white (#f2f0e8), a single lime-green ' +
-  'accent (#d7ff3f) on the primary muscle worked, thick clean linework, no ' +
-  'text, no logo, square crop. ';
-
 export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
   inclined: {
     slug: 'flexiones-inclinadas',
@@ -56,9 +50,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Si duele la parte delantera del hombro, reduce el recorrido y acerca los codos al cuerpo antes de intentar bajar más.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person doing incline push-ups, hands on a raised ledge, side view, body in a straight line from ankles to head, elbows at 45°.',
   },
 
   chairsquat: {
@@ -99,9 +90,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Si la rodilla molesta, reduce la profundidad antes que el número de repeticiones: un recorrido parcial sin dolor vale más que uno completo que duele.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person performing a squat in front of a chair, side view, hips pushed back, knees tracking over the feet, chest upright, just before touching the seat.',
   },
 
   calf: {
@@ -140,9 +128,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Cuando hagas tres series de veinte a ritmo lento y sin apoyo de las manos, pasa a una sola pierna.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing on the balls of their feet, front view, heels raised, calves contracted, arms slightly out for balance.',
   },
 
   wallsit: {
@@ -183,9 +168,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Si la rodilla tira, abre el ángulo antes que cualquier otra cosa. Este ejercicio es fácil de suavizar; no tiene sentido aguantarlo tal cual.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person seated against a wall with no chair, thighs parallel to the floor, knees at 90°, back flat on the wall, side view.',
   },
 
   rotation: {
@@ -227,9 +209,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'No debe aparecer dolor en el hombro. Si aparece, reduce primero el recorrido y luego la carga; si persiste, no es este el ejercicio que le falta a tu sesión.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying on their side, bent elbow tucked to the body, forearm rotating upwards holding a small weight, slightly angled top view.',
   },
 
   deadbug: {
@@ -269,9 +248,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Cuando hagas tres series de diez por lado sin que la zona lumbar se despegue y con la pierna extendida a unos centímetros del suelo.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying on their back, one arm and the opposite leg extended diagonally towards the floor, the other arm and leg bent, top view.',
   },
 
   plank: {
@@ -311,8 +287,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'No bloquees la respiración. Si la zona lumbar tira, la posición ya se ha hundido: baja y vuelve a empezar en lugar de aguantar a la fuerza.',
-    imagePrompt:
-      ART_DIRECTION + 'Person in a forearm plank, body perfectly aligned from heels to head, side view.',
   },
 
   walk: {
@@ -350,9 +324,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Cuando pases treinta minutos sin notar falta de aire, busca desnivel antes que más tiempo.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person mid-walk, side view, chest upright, one arm forward and one back, mid-stride.',
   },
 
   kneePushup: {
@@ -393,9 +364,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Pon un cojín o una esterilla bajo las rodillas: la molestia sobre un suelo duro termina la serie antes de que el músculo se canse.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person doing push-ups from the knees, side view, body aligned from knees to head, elbows at 45°, chest near the floor.',
   },
 
   wallPushup: {
@@ -433,9 +401,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Cuando tres series de quince te resulten fáciles, pasa a un apoyo más bajo en lugar de añadir repeticiones.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing leaning towards a wall, hands on the wall at chest height, body in a straight line, side view.',
   },
 
   chairDips: {
@@ -475,9 +440,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Exigente para la parte delantera del hombro. Con cualquier antecedente o molestia en esa zona, reduce mucho el recorrido o sustitúyelo por una variante de flexión.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person doing tricep dips on a chair, hands on the seat edge, legs extended in front, elbows bent backwards, side view.',
   },
 
   armCircles: {
@@ -514,9 +476,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Cuando aguantes un minuto en cada sentido sin que los hombros suban, añade una carga ligera.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing, arms extended horizontally to each side, small circular arrows around the hands showing the movement, front view.',
   },
 
   wallSlides: {
@@ -556,9 +515,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Perder el contacto con la pared no es un fracaso sino información: es tu movilidad actual. Forzar arqueando la espalda no mejora esa movilidad.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing with back to a wall, arms bent in a W against the wall sliding upwards, vertical arrow showing the movement, front view.',
   },
 
   superman: {
@@ -597,9 +553,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Levantar la cabeza para mirar al frente comprime el cuello: mantén la mirada baja. Con dolor lumbar establecido, este no es el punto de partida adecuado.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying face down, arms and legs lifted simultaneously in a slight extension, side view.',
   },
 
   reverseSnowAngel: {
@@ -636,9 +589,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       harder: 'Extiende los brazos por completo, ve más despacio, o haz una pausa en ambos extremos del arco.',
       readyWhen: 'Cuando hagas tres series de doce con los brazos estirados y sin que los hombros rueden.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying face down, arms tracing a wide arc from in front of the body down to the hips, curved arrow showing the path, top view.',
   },
 
   birdDog: {
@@ -679,9 +629,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Una esterilla o un cojín bajo las rodillas evita que la molestia articular termine la serie antes de que los músculos se cansen.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person on all fours, one arm extended forward and the opposite leg extended back, flat back, side view.',
   },
 
   catCow: {
@@ -715,9 +662,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     ],
     precautions:
       'No debe aparecer dolor: esto es movilidad, no un estiramiento forzado. Si un segmento se queda bloqueado, reduce el recorrido en lugar de insistir.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person on all fours, back arched upwards then downwards, arrow showing the back-and-forth movement of the spine, side view.',
   },
 
   reverseLunge: {
@@ -758,9 +702,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'La rodilla delantera debe permanecer alineada con el pie. Si se mete hacia dentro de forma sistemática, falta fuerza en el glúteo medio: trabaja en paralelo la abducción de cadera de pie.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person in a reverse lunge, rear leg bent close to the floor, front knee at 90°, chest upright, side view.',
   },
 
   stepUp: {
@@ -801,9 +742,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'La estabilidad del apoyo no es negociable: una silla que resbala o vuelca hace peligroso este ejercicio. Un escalón de una escalera suele ser mejor opción.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person stepping up onto a stable chair, one foot on the seat mid-drive, side view.',
   },
 
   lateralLunge: {
@@ -843,9 +781,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Ante cualquier molestia en la cara interna del muslo, reduce mucho la amplitud del paso: los aductores se resienten con facilidad cuando se busca el recorrido máximo demasiado pronto.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person in a lateral lunge, one leg bent and the other extended to the side, chest upright, front view.',
   },
 
   gluteBridge: {
@@ -885,9 +820,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Un calambre en los isquiotibiales arriba suele indicar que los glúteos no están asumiendo su parte: acerca los pies y concéntrate en empujar con los talones.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying on their back, knees bent, hips lifted into a bridge, glutes contracted, side view.',
   },
 
   donkeyKick: {
@@ -926,9 +858,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Cuando hagas quince repeticiones por lado sin hundir la zona lumbar y sin rotación de la pelvis.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person on all fours, one bent knee pushed towards the ceiling, flat back, rear three-quarter view.',
   },
 
   hipAbduction: {
@@ -967,9 +896,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
         'Suelta el apoyo, alarga el mantenimiento arriba, o pasa a la posición tumbado de lado para eliminar toda compensación.',
       readyWhen: 'Cuando hagas quince repeticiones por lado sin apoyo y sin inclinar el tronco.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing, one straight leg lifted out to the side, chest upright, arrow showing the sideways movement, front view.',
   },
 
   sidePlank: {
@@ -1010,9 +936,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'El codo debe quedar exactamente bajo el hombro. Demasiado adelante o atrás, la tensión se desplaza a la articulación en lugar de quedarse en el músculo.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person in a side plank, resting on one forearm, body in a straight line from feet to head, other arm raised, front view.',
   },
 
   standingKneeRaise: {
@@ -1049,9 +972,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       harder: 'Suelta el apoyo, cierra los ojos, o alarga el mantenimiento arriba.',
       readyWhen: 'Cuando hagas quince repeticiones por pierna sin apoyo y sin inclinarte hacia atrás.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person standing, one knee lifted towards the chest, straight back, arms balanced, side view.',
   },
 
   crunch: {
@@ -1090,9 +1010,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'La flexión repetida de la columna no le conviene a todo el mundo. Con cualquier sensibilidad lumbar, prioriza el dead bug y la plancha, que producen trabajo abdominal sin flexionar la columna.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person lying on their back, knees bent, shoulders lifted slightly off the floor in an abdominal contraction, side view.',
   },
 
   highKneeMarch: {
@@ -1130,9 +1047,6 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
       readyWhen:
         'Cuando hagas dos rondas de sesenta segundos sin falta de aire marcada, alarga la duración.',
     },
-    imagePrompt:
-      ART_DIRECTION +
-      'Person marching on the spot, one knee lifted to hip height, arms in motion, side view.',
   },
 
   buttKickMarch: {
@@ -1171,8 +1085,5 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Un calambre en la parte posterior del muslo suele indicar un calentamiento insuficiente: empieza con una simple marcha en el sitio antes de añadir amplitud.',
-    imagePrompt:
-      ART_DIRECTION +
-      'Person marching on the spot, one heel drawn up towards the glute, chest upright, side view.',
   },
 };
