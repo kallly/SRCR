@@ -78,6 +78,7 @@ export const it: Translations = {
   },
 
   section: {
+    sessions: 'Sedute',
     plan: 'Svolgimento',
     library: 'Libreria',
     allGuides: 'Tutte le schede degli esercizi',
@@ -137,6 +138,7 @@ export const it: Translations = {
     seconds: 'Durata (s)',
     group: 'Gruppo muscolare',
     rest: 'Recupero tra le serie (s)',
+    restShort: 's riposo',
     delete: 'Elimina',
     moveUp: 'Sposta su',
     moveDown: 'Sposta giù',
@@ -144,7 +146,9 @@ export const it: Translations = {
 
   effort: {
     reps: 'Ripetizioni',
-    time: 'Durata',
+    time: 'Secondi',
+    repsShort: 'rip',
+    timeShort: 's',
   },
 
   group: {

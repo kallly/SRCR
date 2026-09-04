@@ -63,49 +63,91 @@ function fieldId(field: string, itemId: string): string {
   return `f-${field}-${itemId}`;
 }
 
-/** Champ numerique du deroule, identifie par l'element et le nom du champ. */
+/**
+ * Champs compacts du deroule : l'unite s'affiche A COTE du nombre (`unit`)
+ * au lieu d'une etiquette empilee au-dessus, ce qui rend ~19px par champ.
+ * Le libelle complet reste porte par `ariaLabel` — un suffixe court comme
+ * « s repos » ne suffirait pas a un lecteur d'ecran.
+ *
+ * Classe `.f-inline` et non `.f` : cette derniere est partagee avec le bloc
+ * reglages d'index.html et le selecteur de seance, qui gardent tous deux
+ * l'etiquette au-dessus du champ.
+ */
+export interface FieldOptions {
+  /** Libelle complet, jamais affiche : c'est le nom accessible du champ. */
+  ariaLabel: string;
+  /** Suffixe court affiche apres le champ. Omis quand un select fait office d'unite. */
+  unit?: string;
+  field: string;
+  itemId: string;
+}
+
 export function numberField(
-  label: string,
-  value: number,
-  field: string,
-  itemId: string,
-  attrs: Record<string, string>,
+  options: FieldOptions & { value: number; attrs: Record<string, string> },
 ): HTMLElement {
-  const id = fieldId(field, itemId);
   const input = el('input', {
     attrs: {
       type: 'number',
-      value: String(value),
-      id,
-      'data-field': field,
-      'data-id': itemId,
-      ...attrs,
+      value: String(options.value),
+      id: fieldId(options.field, options.itemId),
+      'aria-label': options.ariaLabel,
+      'data-field': options.field,
+      'data-id': options.itemId,
+      ...options.attrs,
     },
   });
   return el('div', {
-    className: 'f',
-    children: [el('label', { text: label, attrs: { for: id } }), input],
+    className: 'f-inline',
+    children: [input, options.unit ? el('span', { className: 'unit', text: options.unit }) : null],
   });
 }
 
+/**
+ * Select compact des cartes du deroule.
+ *
+ * Sans `display`, c'est un `<select>` nu (cas du groupe musculaire d'un
+ * exercice perso). Avec `display`, il sert d'unite juste apres un champ
+ * numerique (`[ 10 ] [s ▾]`) et le select natif est rendu transparent
+ * par-dessus un libelle court dessine a la main : la liste montre alors les
+ * libelles longs (« Secondes »), la carte l'unite courte (« s »).
+ *
+ * Un `<select>` natif affiche toujours le texte de l'option selectionnee
+ * quand il est ferme — ni `option[label]` ni la CSS ne dissocient les deux
+ * etats, et il n'existe pas d'evenement d'ouverture exploitable (sur mobile
+ * c'est une feuille native de l'OS). Cette superposition est donc le seul
+ * moyen d'avoir les deux, tout en gardant le selecteur natif.
+ */
 export function selectField(
-  label: string,
-  value: string,
-  field: string,
-  itemId: string,
-  options: { value: string; label: string }[],
-  className = 'f',
+  options: FieldOptions & {
+    value: string;
+    choices: { value: string; label: string }[];
+    /** Texte court affiche a la place de l'option choisie, une fois le select ferme. */
+    display?: string;
+  },
 ): HTMLElement {
-  const id = fieldId(field, itemId);
-  const select = el('select', { attrs: { id, 'data-field': field, 'data-id': itemId } });
-  for (const option of options) {
-    const node = el('option', { text: option.label, attrs: { value: option.value } });
-    if (option.value === value) node.selected = true;
+  const select = el('select', {
+    attrs: {
+      id: fieldId(options.field, options.itemId),
+      'aria-label': options.ariaLabel,
+      'data-field': options.field,
+      'data-id': options.itemId,
+    },
+  });
+  for (const choice of options.choices) {
+    const node = el('option', { text: choice.label, attrs: { value: choice.value } });
+    if (choice.value === options.value) node.selected = true;
     select.append(node);
   }
-  return el('div', {
-    className,
-    children: [el('label', { text: label, attrs: { for: id } }), select],
+
+  if (options.display === undefined) return select;
+
+  return el('span', {
+    className: 'unit-select',
+    children: [
+      // Le nom accessible reste celui du select (aria-label + libelles longs).
+      el('span', { className: 'unit', text: options.display, attrs: { 'aria-hidden': 'true' } }),
+      select,
+    ],
   });
 }
 

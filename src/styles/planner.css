@@ -51,11 +51,47 @@
 
 /* selecteur de seance */
 #planSwitcher {
-  margin: 0 0 18px;
+  margin: 0 0 20px;
+  /* Separateur entre les actions de la seance (dont Partager) et la bascule
+     de mode (Classique/Circuit) qui suit — meme motif que `.about`
+     (base.css) : un trait plutot qu'un simple espacement, pour marquer que
+     ce qui suit appartient a un autre groupe de reglages. */
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
 }
 
-#planSwitcher .f {
+/* Selecteur de seance + Partager, sur la meme rangee : c'est l'action qui
+   porte sur LA seance choisie ici, contrairement au reste de
+   `.plan-actions` (creer/dupliquer/renommer/supprimer). */
+.session-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 10px;
+}
+
+.session-row select {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--surface-2);
+  color: var(--paper);
+  font-size: 15px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23a9b0a7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+
+/* Partager reprend `.go` (bouton Demarrer) plutot que `.ghost` : c'est
+   l'action qui fait sortir la seance de l'appareil (lien/QR), elle merite
+   d'etre reperee au meme coup d'oeil qu'une action principale. */
+.session-row .share-btn {
+  flex: 0 0 auto;
+  min-height: 44px;
 }
 
 .plan-actions {
@@ -76,12 +112,15 @@
 
 /*
   Reservation approximative (formulaire construit en JS, jamais mesuree en
-  reseau bride comme #plan:empty/#library:empty plus bas) : un select (44px)
-  + son label, et 5 boutons (dont Partager) qui tiennent sur trois rangees
-  de deux en mobile (`flex: 1 1 calc(50% - 4px)`).
+  reseau bride comme #plan:empty/#library:empty plus bas) : la rangee
+  select+Partager (44px + 10px de marge), 4 boutons (creer/dupliquer/
+  renommer/supprimer) qui tiennent sur deux rangees en mobile (44*2 + 8 de
+  gouttiere), + le padding-bottom et la bordure du separateur ci-dessus
+  (19px) — box-sizing: border-box oblige, `min-height` couvre le rendu FINAL
+  (padding+bordure+contenu), pas le contenu seul.
 */
 #planSwitcher:empty {
-  min-height: 237px;
+  min-height: 169px;
 }
 
 /* formulaire inline : remplace un window.prompt() natif (ui/inline-input.ts) */
@@ -116,53 +155,94 @@
 }
 
 .item {
-  position: relative;
+  display: flex;
+  align-items: stretch;
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  /* Recolore en fonction du groupe musculaire (style inline, comme le point
+     de couleur du chip) : la meme teinte qui sert deja a scanner la
+     bibliotheque et le lecteur sert maintenant a scanner le deroule. */
+  border-left: 4px solid var(--line);
+  border-radius: 10px;
   margin-bottom: 10px;
-  padding: 14px 14px 14px 54px;
+  /* Aucun padding ici : le rail de reordonnancement doit toucher le bord.
+     C'est `.content` qui porte les marges interieures. */
+  padding: 0;
+  overflow: hidden;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.item:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+/* Rail colle au bord gauche : monter / numero / descendre. */
+.reorder {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 6px 0;
+  background: var(--surface-2);
+  border-right: 1px solid var(--line);
 }
 
 .item .idx {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-family: var(--disp);
   font-stretch: 125%;
   font-weight: 800;
-  font-size: 15px;
+  font-size: 13px;
   color: var(--paper-dim);
+  line-height: 1;
 }
 
-.item:not(.rest) .idx {
-  border-right: 1px solid var(--line-soft);
+.item .content {
+  flex: 1;
+  min-width: 0;
+  padding: 12px;
 }
 
 .item.rest {
   background: transparent;
-  border: 1px dashed var(--line);
+  border-style: dashed;
+  /* Une pause n'a pas de groupe musculaire : pas d'accent colore, juste le
+     meme trait en pointilles sur les quatre cotes. */
+  border-left-width: 1px;
+}
+
+.item.rest .reorder {
+  background: transparent;
+  border-right-style: dashed;
 }
 
 .item.rest .idx {
-  opacity: 0.6;
+  opacity: 0.7;
+}
+
+.item.rest:hover {
+  box-shadow: none;
 }
 
 .top {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 8px;
 }
 
+/* Colonne : le badge de groupe tombe toujours sous le titre. */
 .name {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.title {
   font-weight: 700;
   font-size: 16.5px;
-  flex: 1;
   line-height: 1.3;
 }
 
@@ -189,18 +269,112 @@
 
 .fields {
   display: flex;
+  align-items: center;
   gap: 8px;
-  margin-top: 13px;
+  margin-top: 12px;
   flex-wrap: wrap;
+}
+
+/*
+  Champs compacts du deroule (ui/dom.ts, numberField/selectField) : l'unite
+  se lit A COTE du nombre au lieu d'une etiquette empilee au-dessus, ce qui
+  rend ~19px par champ — sur une carte qui en aligne trois, c'est la moitie
+  de la hauteur regagnee.
+
+  Classe distincte de `.f`, qui reste l'etiquette-au-dessus utilisee par le
+  bloc reglages d'index.html et par le selecteur de seance
+  (ui/plan-switcher.ts) : ces deux-la ne sont pas des champs de carte.
+*/
+.f-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.f-inline input {
+  /* 52px : trois chiffres a 15px (~27px) + padding + bordures, sans que le
+     champ ne mange la rangee qu'il partage avec les actions. */
+  width: 52px;
+  min-height: 44px;
+  padding: 8px 6px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--surface-2);
+  color: var(--paper);
+  font-size: 15px;
+  text-align: center;
+}
+
+/*
+  Enfant DIRECT seulement : le select d'unite, lui, est transparent et
+  superpose a son propre libelle (`.unit-select` plus bas), il ne doit pas
+  hériter de cette apparence.
+*/
+.f-inline > select {
+  min-height: 44px;
+  padding: 8px 22px 8px 8px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--surface-2);
+  color: var(--paper);
+  font-size: 13px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23a9b0a7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+
+/*
+  Selecteur d'unite : c'est le conteneur qui porte l'apparence du controle
+  (fond, bordure, fleche) et le libelle court ; le <select> natif est pose
+  par-dessus, invisible mais cliquable. La liste deroulante reste donc celle
+  de l'OS, avec les libelles longs, et la largeur du champ ne depend pas de
+  l'option la plus longue — voir ui/dom.ts, selectField().
+*/
+.unit-select {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  /* Sinon le controle retrecirait en passant de « reps » a « s », et la
+     rangee de champs sauterait a chaque changement de mode. Couvre aussi la
+     forme courte la plus large des cinq langues (« Wdh » en allemand). */
+  min-width: 52px;
+  padding: 8px 22px 8px 8px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--surface-2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23a9b0a7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+
+.unit-select select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  border: 0;
+  padding: 0;
+  appearance: none;
+}
+
+/* L'`opacity: 0` du select emporterait aussi son anneau de focus. */
+.unit-select:focus-within {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+}
+
+.f-inline .unit {
+  font-size: 11.5px;
+  color: var(--paper-dim);
+  white-space: nowrap;
 }
 
 .f {
   flex: 1;
   min-width: 78px;
-}
-
-.f.wide {
-  min-width: 110px;
 }
 
 .f label {
@@ -231,18 +405,16 @@
   background-position: right 8px center;
 }
 
-.arrows {
-  display: flex;
-  flex-direction: column;
-  /* 8px : espacement minimal recommande entre cibles tactiles adjacentes. */
-  gap: 8px;
-}
-
+/*
+  Fleches du rail : sans bordure ni fond, le rail porte deja les deux. Elles
+  gardent en revanche le gabarit tactile de 44x44 — ce sont les commandes le
+  plus souvent repetees de la carte, contrairement a `.del`/`.info-btn` qui
+  sont des badges de coin (voir CLAUDE.md, « Cibles tactiles »).
+*/
 .mini {
-  border: 1px solid var(--line);
-  background: var(--surface-2);
+  border: 0;
+  background: transparent;
   color: var(--paper-dim);
-  /* 44x44 : seuil de bonne pratique pour une cible tactile (Lighthouse/Apple HIG). */
   min-width: 44px;
   min-height: 44px;
   line-height: 1;
@@ -251,7 +423,6 @@
 }
 
 .mini:hover:not(:disabled) {
-  border-color: var(--lime);
   color: var(--lime);
 }
 
@@ -260,20 +431,32 @@
   cursor: default;
 }
 
+/* Badge du coin haut droit, au meme gabarit que le `.info-btn` du coin bas. */
 .del {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
   border: 1px solid var(--line);
+  border-radius: 50%;
   background: var(--surface-2);
   color: var(--paper-dim);
-  min-width: 44px;
-  /* Aligne la hauteur totale sur la pile des deux boutons .mini (44+8+44). */
-  min-height: 96px;
-  padding: 0;
-  font-size: 17px;
+  font-size: 15px;
+  line-height: 1;
 }
 
 .del:hover {
   border-color: var(--coral);
   color: var(--coral);
+}
+
+/* Coin bas droit de la carte, a l'oppose des champs. */
+.fields .info-btn {
+  margin-left: auto;
+  background: var(--surface-2);
 }
 
 .empty {
@@ -309,17 +492,42 @@
   display: block;
 }
 
-.preview h3 {
+/* Meme motif de divulgation que `.about summary` (base.css) : triangle qui
+   pivote a l'ouverture, marqueur natif masque, cible tactile de 44px. */
+.preview summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   font-size: 12.5px;
   font-weight: 700;
   color: var(--paper-dim);
-  margin: 0 0 4px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.preview summary::-webkit-details-marker {
+  display: none;
+}
+
+.preview summary::before {
+  content: '▸';
+  display: inline-block;
+  margin-right: 7px;
+  transition: transform 0.15s;
+}
+
+.preview[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.preview summary:hover {
+  color: var(--lime);
 }
 
 .preview .lead {
   font-size: 12.5px;
   color: var(--paper-dim);
-  margin: 0 0 12px;
+  margin: 4px 0 12px;
   line-height: 1.45;
 }
 
@@ -492,8 +700,8 @@
 
 /*
   Bouton d'info sur un exercice : bibliotheque (badge en overlay sur la
-  carte) et deroule (inline a cote du groupe musculaire) partagent la meme
-  apparence de base, seul le positionnement differe.
+  carte) et deroule (badge du coin bas droit) partagent la meme apparence de
+  base, seul le positionnement differe.
 
   Volontairement en dessous du seuil de 44px du reste de l'app : c'est une
   action secondaire (l'action principale d'une carte est de l'ajouter, celle
@@ -525,11 +733,6 @@
   top: 6px;
   right: 6px;
   background: var(--surface-2);
-}
-
-.name .info-btn {
-  vertical-align: middle;
-  margin-left: 4px;
 }
 
 .libcard .fig {
@@ -719,22 +922,32 @@
   le conteneur soit vraiment vide dans index.html, espaces compris — ne pas
   reformater `<ul class="plan" id="plan"></ul>` sur plusieurs lignes.
 
-  Valeurs mesurees sur le rendu reel (28 cartes en 2 colonnes ; deroule par
-  defaut de 7 lignes) : a reprendre si le nombre d'exercices de la
-  bibliotheque, la hauteur des cartes ou le deroule par defaut changent.
+  `#library:empty` reste sur ses valeurs mesurees (28 cartes en 2 colonnes) :
+  a reprendre si le nombre d'exercices ou la hauteur des cartes changent.
 
-  Les trois valeurs #plan:empty ci-dessous ont ete abaissees d'une
-  estimation (~150px, une ligne de conseil `.cue` en moins par exercice,
-  supprimee du deroule) plutot que remesurees en reseau bride — a corriger
-  avec une vraie mesure avant de s'y fier (meme reserve que la regle
-  min-width:900px plus bas).
+  `#plan:empty` en revanche a suivi la refonte des cartes du deroule (champs
+  compacts, actions dans la rangee des champs) : les valeurs ci-dessous sont
+  CALCULEES depuis le modele de boite, pas mesurees en reseau bride, faute de
+  navigateur sur la machine de dev. Elles valent bien mieux que les
+  anciennes (calees sur une carte de ~279px, aujourd'hui ~193px), mais
+  restent a reancrer sur une vraie mesure — meme reserve que la regle
+  min-width:900px plus bas.
+
+  Detail du calcul, deroule par defaut de 7 exercices en mode classique :
+  carte = 24 (padding de `.content`) + ~50 (titre + badge en dessous) +
+  rangees de champs (44px chacune + 8 de gouttiere + 12 de marge haute),
+  + 10 de marge entre cartes. Le rail de reordonnancement (~117px) ne
+  depasse jamais cette hauteur, il ne la contraint donc pas.
+  - >= 768px  : les 3 champs + le bouton info tiennent sur une rangee -> ~131px
+  - < 768px   : deux rangees -> ~183px (un peu plus quand un nom long passe
+    sur deux lignes, d'ou la marge sous 390px)
 */
 #library:empty {
   min-height: 2140px;
 }
 
 #plan:empty {
-  min-height: 1832px;
+  min-height: 990px;
 }
 
 @media (max-width: 389px) {
@@ -744,13 +957,13 @@
   }
 
   #plan:empty {
-    min-height: 1979px;
+    min-height: 1400px;
   }
 }
 
 @media (min-width: 390px) and (max-width: 767px) {
   #plan:empty {
-    min-height: 1905px;
+    min-height: 1350px;
   }
 }
 

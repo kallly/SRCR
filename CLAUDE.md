@@ -63,6 +63,34 @@ changement de structure, de mode ou de langue) ; `renderDerived()` ne rafraîchi
 que l'aperçu et la barre de statut. Une saisie chiffrée passe par
 `renderDerived()` — reconstruire la liste ferait perdre le focus du champ.
 
+**Deux styles de champ, à ne pas confondre.** `.f-inline` (`ui/dom.ts`,
+`numberField()`/`selectField()`) est le champ compact des cartes du déroulé :
+l'unité se lit *à côté* du nombre (`[ 3 ] séries`, `[ 10 ] [reps ▾]`), le
+libellé complet vit dans l'`aria-label`. `.f` est l'autre motif, étiquette
+empilée au-dessus du champ, utilisé par le bloc réglages d'`index.html` et
+par le sélecteur de séance (`ui/plan-switcher.ts`). Ne pas fusionner les
+deux : c'est le passage en `.f-inline` qui a fait tomber la carte du déroulé
+de ~279px à ~193px, mais un bloc de réglages isolé a besoin de son étiquette
+lisible au-dessus.
+
+**`.unit-select` : le sélecteur d'unité affiche deux textes différents.** Dans
+la liste déroulante, les libellés longs (« Répétitions », « Secondes ») — un
+`s` isolé ne se comprend pas au moment de choisir ; une fois l'option
+sélectionnée, la carte n'affiche que l'unité courte (`reps`, `s`). Un
+`<select>` natif ne sait pas faire ça : fermé, il rend toujours le texte de
+l'option sélectionnée, et ni `option[label]` ni la CSS ne dissocient les deux
+états (il n'y a pas non plus d'événement d'ouverture exploitable — sur mobile
+c'est une feuille native de l'OS). D'où le motif de `selectField()` quand on
+lui passe `display` : **le conteneur porte l'apparence** (fond, bordure,
+flèche) et le libellé court, et le `<select>` natif est posé par-dessus en
+`position: absolute; opacity: 0`. On garde donc le sélecteur natif, le
+clavier et l'accessibilité, et la largeur du champ ne dépend plus de l'option
+la plus longue. Deux conséquences à ne pas défaire : le focus se dessine sur
+le conteneur (`:focus-within`, l'`opacity: 0` emporterait l'anneau du select),
+et la règle d'apparence des selects visibles est scopée en `.f-inline >
+select` — sans le combinateur enfant, elle rhabillerait aussi le select
+transparent.
+
 ## Les trois règles non devinables à la lecture
 
 ### 1. `i18n/locales/fr.ts` est la source de vérité
@@ -344,9 +372,19 @@ hauteur des cartes ou le déroulé par défaut changent.
 44px` (bonne pratique Lighthouse/Apple HIG — la norme réellement opposable,
 WCAG 2.5.8 AA, ne fixe que 24px). `min-height`/`min-width` plutôt que
 `height`/`width` : la zone tactile est garantie quelle que soit la métrique
-réelle de la police, pas déduite d'un calcul de padding. `.del` est calé sur
-`.mini` × 2 + le `gap` de `.arrows` (96px) pour garder les deux empilés
-visuellement alignés, comme dans le design d'origine. Pour un lien texte
+réelle de la police, pas déduite d'un calcul de padding. **Sur une carte du
+déroulé, les commandes sont réparties par fréquence d'usage** : le rail
+`.reorder` collé au bord gauche (monter / n° / descendre, `.mini` en 44×44,
+sans bordure puisque le rail porte déjà fond et séparateur), la suppression
+`.del` en badge du coin haut droit et l'info `.info-btn` en badge du coin bas
+droit. Ces deux badges de coin font **32px, en dessous du seuil de 44px —
+décision assumée** : ce sont des actions ponctuelles, contrairement aux
+flèches qu'on répète pour ordonner une séance. Deux designs abandonnés avant
+celui-là, pour mémoire : flèches et croix empilées à côté du nom (`.del` calé
+sur `.mini` × 2 + le `gap`, soit 96px), ce qui imposait 96px de haut à la
+rangée du nom et laissait un vide sous le badge de groupe ; puis les trois en
+rangée horizontale, qui poussait les champs à passer à la ligne sur les
+écrans étroits. Pour un lien texte
 court (`.quicknav a`, `.credit a`), la zone cliquable s'étend par `padding`
 seul — jamais de marge négative pour « rattraper » ce padding : le `gap` du
 conteneur flex mesure l'espace entre les boîtes (`border-box`), le padding
@@ -593,8 +631,10 @@ décision assumée**, pas un oubli. C'est une action secondaire (l'action
 principale d'une carte est de l'ajouter au déroulé, celle d'une ligne est
 de régler ses paramètres) dans un espace déjà dense (grille 2 colonnes,
 ligne à 4-5 champs). Un seul style de base partagé (`.info-btn`), deux
-contextes de positionnement (`.libcard .info-btn` en badge absolu,
-`.name .info-btn` en inline à côté du chip de groupe).
+contextes de positionnement (`.libcard .info-btn` en badge absolu sur la
+carte de bibliothèque, `.fields .info-btn` poussé au coin bas droit de la
+carte du déroulé). `.del` reprend le même gabarit 32px au coin haut droit —
+voir « Cibles tactiles » plus haut pour la répartition complète.
 
 **Recherche et filtre (`ui/library.ts`).** État local au module (`search`,
 `group`), volontairement **hors de `State`** — un filtre d'affichage n'a rien

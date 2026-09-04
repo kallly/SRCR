@@ -78,6 +78,7 @@ export const en: Translations = {
   },
 
   section: {
+    sessions: 'Sessions',
     plan: 'Running order',
     library: 'Library',
     allGuides: 'All exercise guides',
@@ -137,14 +138,17 @@ export const en: Translations = {
     seconds: 'Duration (s)',
     group: 'Muscle group',
     rest: 'Rest between sets (s)',
+    restShort: 's rest',
     delete: 'Delete',
     moveUp: 'Move up',
     moveDown: 'Move down',
   },
 
   effort: {
-    reps: 'Reps',
-    time: 'Duration',
+    reps: 'Repetitions',
+    time: 'Seconds',
+    repsShort: 'reps',
+    timeShort: 's',
   },
 
   group: {

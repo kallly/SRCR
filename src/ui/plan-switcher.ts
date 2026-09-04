@@ -34,9 +34,24 @@ export function createPlanSwitcher(ctx: Context): { render: () => void } {
     }
     select.addEventListener('change', () => ctx.switchPlan(select.value));
 
+    // `.go` : meme style que le bouton Demarrer (fond lime, sans contour,
+    // police --disp) — pas `.ghost`, reserve aux actions neutres.
+    const shareBtn = el('button', {
+      className: 'go share-btn',
+      text: t('share.trigger'),
+      attrs: { type: 'button' },
+    });
+    shareBtn.addEventListener('click', () => ctx.openShareDialog());
+
+    // Pas de <label> visible : le <h2>Séances</h2> juste au-dessus dit deja
+    // ce qu'est ce selecteur. Le nom accessible reste porte par l'aria-label
+    // du select ci-dessus, pour un lecteur d'ecran qui n'a pas ce contexte
+    // visuel. Partager est sur la meme ligne, a droite : c'est l'action
+    // qui porte sur LA seance choisie ici, contrairement aux autres
+    // (creer/dupliquer/renommer/supprimer) regroupees dans `.plan-actions`.
     const selectField = el('div', {
-      className: 'f',
-      children: [el('label', { text: t('plans.label'), attrs: { for: 'planSelect' } }), select],
+      className: 'session-row',
+      children: [select, shareBtn],
     });
 
     const newBtn = el('button', {
@@ -62,12 +77,6 @@ export function createPlanSwitcher(ctx: Context): { render: () => void } {
     // Desactive plutot que confirme-puis-refuse : plus clair, evite une
     // confirmation qui ne mene a rien quand il ne reste qu'une seule seance.
     deleteBtn.disabled = plans.length <= 1;
-    const shareBtn = el('button', {
-      className: 'ghost',
-      text: t('share.trigger'),
-      attrs: { type: 'button' },
-    });
-    shareBtn.addEventListener('click', () => ctx.openShareDialog());
 
     createInlineInput(newBtn, {
       label: () => t('plans.namePrompt'),
@@ -98,7 +107,7 @@ export function createPlanSwitcher(ctx: Context): { render: () => void } {
       selectField,
       el('div', {
         className: 'plan-actions',
-        children: [newBtn, duplicateBtn, renameBtn, deleteBtn, shareBtn],
+        children: [newBtn, duplicateBtn, renameBtn, deleteBtn],
       }),
     );
   }

@@ -96,6 +96,7 @@
         <a href="#section-library" data-i18n="section.library">Bibliothèque</a>
       </nav>
 
+      <h2 id="section-sessions" data-i18n="section.sessions">Séances</h2>
       <div id="planSwitcher"></div>
 
       <div class="modes">
@@ -121,12 +122,20 @@
         <b data-i18n="empty.title">Aucun exercice pour l’instant</b><span data-i18n="empty.body">Choisis dans la liste ci-dessous pour construire ta séance.</span>
       </div>
 
-      <div class="preview" id="preview">
-        <h3 data-i18n="preview.title">Enchaînement calculé</h3>
+      <!--
+        Callout repliee par defaut (pas d'attribut `open`) : contrairement a
+        « A propos », personne n'a besoin de lire l'enchainement calcule
+        avant meme d'avoir construit sa seance. ui/preview.ts ne touche
+        jamais a l'etat ouvert/ferme, seulement a la visibilite (.on) —
+        rouvrir cette section a chaque rendu redeplierait sous le nez de
+        l'utilisateur une section qu'il a sciemment refermee.
+      -->
+      <details class="preview" id="preview">
+        <summary data-i18n="preview.title">Enchaînement calculé</summary>
         <p class="lead" id="previewLead"></p>
         <div class="seq" id="previewSeq"></div>
         <div class="pcount" id="previewCount"></div>
-      </div>
+      </details>
 
       <p class="saved" id="saved" role="status"></p>
 

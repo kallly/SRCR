@@ -85,6 +85,7 @@ export const fr = {
   },
 
   section: {
+    sessions: 'Séances',
     plan: 'Déroulé',
     library: 'Bibliothèque',
     allGuides: 'Toutes les fiches d’exercice',
@@ -145,6 +146,8 @@ export const fr = {
     seconds: 'Durée (s)',
     group: 'Groupe musculaire',
     rest: 'Repos entre séries (s)',
+    /** Suffixe court affiche a cote du champ ; `rest` reste l'aria-label complet. */
+    restShort: 's repos',
     delete: 'Supprimer',
     moveUp: 'Monter',
     moveDown: 'Descendre',
@@ -152,7 +155,10 @@ export const fr = {
 
   effort: {
     reps: 'Répétitions',
-    time: 'Durée',
+    time: 'Secondes',
+    /** Formes courtes : le select sert d'unite juste apres le nombre. */
+    repsShort: 'reps',
+    timeShort: 's',
   },
 
   group: {

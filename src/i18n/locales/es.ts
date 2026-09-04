@@ -78,6 +78,7 @@ export const es: Translations = {
   },
 
   section: {
+    sessions: 'Sesiones',
     plan: 'Desarrollo',
     library: 'Biblioteca',
     allGuides: 'Todas las fichas de ejercicio',
@@ -137,6 +138,7 @@ export const es: Translations = {
     seconds: 'Duración (s)',
     group: 'Grupo muscular',
     rest: 'Descanso entre series (s)',
+    restShort: 's descanso',
     delete: 'Eliminar',
     moveUp: 'Subir',
     moveDown: 'Bajar',
@@ -144,7 +146,9 @@ export const es: Translations = {
 
   effort: {
     reps: 'Repeticiones',
-    time: 'Duración',
+    time: 'Segundos',
+    repsShort: 'reps',
+    timeShort: 's',
   },
 
   group: {

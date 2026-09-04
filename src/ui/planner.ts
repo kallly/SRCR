@@ -9,7 +9,12 @@ import { byId, dot, el, numberField, selectField } from './dom';
 /** Champs numeriques dont la modification ne touche pas la structure du deroule. */
 const NUMERIC_FIELDS = new Set(['sets', 'reps', 'seconds', 'rest']);
 
-function arrows(index: number, total: number): HTMLElement {
+/**
+ * Rail de reordonnancement, colle au bord gauche de la carte : monter, le
+ * numero de position, descendre. Les fleches gardent leur gabarit 44x44 —
+ * ce sont les seules cibles tactiles vraiment repetees de la carte.
+ */
+function reorderRail(label: string, index: number, total: number): HTMLElement {
   const up = el('button', {
     className: 'mini',
     text: '▲',
@@ -22,9 +27,13 @@ function arrows(index: number, total: number): HTMLElement {
   });
   up.disabled = index === 0;
   down.disabled = index === total - 1;
-  return el('div', { className: 'arrows', children: [up, down] });
+  return el('div', {
+    className: 'reorder',
+    children: [up, el('div', { className: 'idx', text: label }), down],
+  });
 }
 
+/** Coin haut droit de la carte. Volontairement plus petite que 44px (voir CLAUDE.md). */
 function deleteButton(id: string): HTMLElement {
   return el('button', {
     className: 'del',
@@ -47,24 +56,32 @@ function restRow(item: RestItem, index: number, total: number): HTMLElement {
   const top = el('div', {
     className: 'top',
     children: [
-      el('div', { className: 'name', text: t('item.restName') }),
-      arrows(index, total),
+      el('div', {
+        className: 'name',
+        children: [el('div', { className: 'title', text: t('item.restName') })],
+      }),
       deleteButton(item.id),
     ],
   });
   const fields = el('div', {
     className: 'fields',
     children: [
-      numberField(t('item.restSeconds'), item.seconds, 'seconds', item.id, {
-        min: '5',
-        max: '900',
-        step: '5',
+      numberField({
+        ariaLabel: t('item.restSeconds'),
+        unit: t('effort.timeShort'),
+        value: item.seconds,
+        field: 'seconds',
+        itemId: item.id,
+        attrs: { min: '5', max: '900', step: '5' },
       }),
     ],
   });
   return el('li', {
     className: 'item rest',
-    children: [el('div', { className: 'idx', text: '⋯' }), top, fields],
+    children: [
+      reorderRail('⋯', index, total),
+      el('div', { className: 'content', children: [top, fields] }),
+    ],
   });
 }
 
@@ -79,67 +96,107 @@ function exerciseRow(
   // le deroule, deja dense, alors qu'il n'est utile qu'au moment de faire
   // l'exercice — il reste affiche dans le lecteur (ui/runner.ts, paintWork),
   // pour les deux modes.
+  // Le badge de groupe est un bloc sous le titre, jamais en fin de ligne :
+  // `.name` est une colonne, pas un flux inline ou le badge remonterait a
+  // cote du titre des que celui-ci est court.
   const name = el('div', {
     className: 'name',
     children: [
-      document.createTextNode(exerciseName(item)),
+      el('div', { className: 'title', text: exerciseName(item) }),
       el('div', {
         className: 'chip',
         children: [dot(groupColor(item.group)), document.createTextNode(t(`group.${item.group}`))],
       }),
-      infoButton(item.key),
     ],
   });
 
   const top = el('div', {
     className: 'top',
-    children: [name, arrows(index, total), deleteButton(item.id)],
+    children: [name, deleteButton(item.id)],
   });
 
-  const effortLabel = item.mode === 'reps' ? t('item.reps') : t('item.seconds');
-  const effortField = item.mode === 'reps' ? 'reps' : 'seconds';
-  const effortValue = item.mode === 'reps' ? item.reps : item.seconds;
+  // Le select de mode sert d'unite au champ d'effort (`[ 10 ] [reps ▾]`) :
+  // il remplace l'ancien champ « Type » separe, une redondance de moins.
+  const effort = numberField({
+    ariaLabel: item.mode === 'reps' ? t('item.reps') : t('item.seconds'),
+    value: item.mode === 'reps' ? item.reps : item.seconds,
+    field: item.mode === 'reps' ? 'reps' : 'seconds',
+    itemId: item.id,
+    attrs: { min: '1', max: '3600' },
+  });
+  effort.append(
+    selectField({
+      ariaLabel: t('item.effort'),
+      value: item.mode,
+      field: 'mode',
+      itemId: item.id,
+      // Libelles longs dans la liste (« Secondes » seul est comprehensible),
+      // unite courte une fois l'option choisie.
+      choices: [
+        { value: 'reps', label: t('effort.reps') },
+        { value: 'time', label: t('effort.time') },
+      ],
+      display: item.mode === 'reps' ? t('effort.repsShort') : t('effort.timeShort'),
+    }),
+  );
 
   const fields = el('div', {
     className: 'fields',
     children: [
-      numberField(t('item.sets'), item.sets, 'sets', item.id, { min: '1', max: '10' }),
-      selectField(t('item.effort'), item.mode, 'mode', item.id, [
-        { value: 'reps', label: t('effort.reps') },
-        { value: 'time', label: t('effort.time') },
-      ]),
-      numberField(effortLabel, effortValue, effortField, item.id, { min: '1', max: '3600' }),
+      numberField({
+        ariaLabel: t('item.sets'),
+        unit: t('item.sets'),
+        value: item.sets,
+        field: 'sets',
+        itemId: item.id,
+        attrs: { min: '1', max: '10' },
+      }),
+      effort,
       // Le groupe musculaire d'un exercice de la bibliotheque est intrinseque
       // a l'exercice (donnee de src/data/library.ts) : le rendre modifiable
       // desynchroniserait le badge affiche et fausserait le regroupement du
       // mode circuit. Seul un exercice perso n'a pas d'autre moyen de le
       // renseigner.
       !isLibraryKey(item.key)
-        ? selectField(
-            t('item.group'),
-            item.group,
-            'group',
-            item.id,
-            GROUP_IDS.map((id) => ({ value: id, label: t(`group.${id}`) })),
-            'f wide',
-          )
+        ? el('div', {
+            className: 'f-inline',
+            children: [
+              selectField({
+                ariaLabel: t('item.group'),
+                value: item.group,
+                field: 'group',
+                itemId: item.id,
+                choices: GROUP_IDS.map((id) => ({ value: id, label: t(`group.${id}`) })),
+              }),
+            ],
+          })
         : null,
       // En mode circuit, la pause est gouvernee par le reglage global : afficher
       // un repos par exercice laisserait croire qu'il a un effet.
       showRest
-        ? numberField(t('item.rest'), item.rest, 'rest', item.id, {
-            min: '0',
-            max: '600',
-            step: '10',
+        ? numberField({
+            ariaLabel: t('item.rest'),
+            unit: t('item.restShort'),
+            value: item.rest,
+            field: 'rest',
+            itemId: item.id,
+            attrs: { min: '0', max: '600', step: '10' },
           })
         : null,
+      // Coin bas droit : action secondaire, poussee a l'oppose des champs.
+      infoButton(item.key),
     ],
   });
-  if (showRest) fields.lastElementChild?.classList.add('wide');
 
   return el('li', {
     className: 'item',
-    children: [el('div', { className: 'idx', text: String(position) }), top, fields],
+    // Meme teinte que le chip et le lecteur : la bande de gauche permet de
+    // scanner le deroule par groupe musculaire d'un coup d'oeil.
+    attrs: { style: `border-left-color: ${groupColor(item.group)}` },
+    children: [
+      reorderRail(String(position), index, total),
+      el('div', { className: 'content', children: [top, fields] }),
+    ],
   });
 }
 

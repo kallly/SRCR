@@ -78,6 +78,7 @@ export const de: Translations = {
   },
 
   section: {
+    sessions: 'Einheiten',
     plan: 'Ablauf',
     library: 'Bibliothek',
     allGuides: 'Alle Übungsanleitungen',
@@ -137,6 +138,7 @@ export const de: Translations = {
     seconds: 'Dauer (s)',
     group: 'Muskelgruppe',
     rest: 'Pause zwischen Sätzen (s)',
+    restShort: 's Pause',
     delete: 'Löschen',
     moveUp: 'Nach oben',
     moveDown: 'Nach unten',
@@ -144,7 +146,9 @@ export const de: Translations = {
 
   effort: {
     reps: 'Wiederholungen',
-    time: 'Dauer',
+    time: 'Sekunden',
+    repsShort: 'Wdh',
+    timeShort: 's',
   },
 
   group: {
