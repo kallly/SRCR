@@ -21,6 +21,17 @@ export const fr = {
     label: 'Langue',
   },
 
+  plans: {
+    label: 'Séance',
+    new: '+ Nouvelle séance',
+    duplicate: 'Dupliquer',
+    rename: 'Renommer',
+    delete: 'Supprimer',
+    unnamed: 'Séance sans nom',
+    namePrompt: 'Nom de la séance ?',
+    confirmDelete: 'Supprimer cette séance et son déroulé ?',
+  },
+
   about: {
     title: 'À propos de Séance',
     intro:
@@ -38,6 +49,8 @@ export const fr = {
     keyPoints: 'Points clés',
     moreInfo: 'Plus d’informations',
     unavailable: 'Fiche détaillée bientôt disponible dans cette langue — affichage en français.',
+    loading: 'Chargement…',
+    loadError: 'Impossible de charger la fiche de cet exercice.',
   },
 
   mode: {
@@ -92,11 +105,18 @@ export const fr = {
     addCustom: '+ Exercice perso',
     loadDefault: 'Charger la séance type',
     clearAll: 'Tout effacer',
+    confirm: 'Valider',
+    cancel: 'Annuler',
   },
 
   storage: {
     saved: 'Enregistré',
     unavailable: 'Sauvegarde impossible : le stockage local est désactivé dans ce navigateur.',
+  },
+
+  toast: {
+    deleted: 'Supprimé',
+    undo: 'Annuler',
   },
 
   item: {

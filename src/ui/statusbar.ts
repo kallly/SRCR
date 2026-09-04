@@ -14,7 +14,7 @@ export function createStatusBar(ctx: Context): { render: () => void } {
   start.addEventListener('click', () => ctx.startSession());
 
   function render(): void {
-    const { plan, config } = ctx.state;
+    const { items: plan, config } = ctx.activePlan();
     start.disabled = plan.length === 0;
 
     if (plan.length === 0) {

@@ -20,3 +20,27 @@
   --disp: 'Archivo', sans-serif;
   --sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
 }
+
+/*
+  Theme clair, en overlay du socle sombre ci-dessus (jamais l'inverse) :
+  l'app a toujours ete livree sombre, donc garder ces valeurs comme defaut
+  ne regresse rien pour qui n'exprime aucune preference. `--lime`/`--mint`/
+  `--coral` sont assombris ici (verifie manuellement a >= 4.5:1 sur fond
+  blanc), sinon illisibles en petit texte sur fond clair ; les couleurs par
+  groupe musculaire (data/groups.ts) restent, elles, en style inline non
+  couvert par ces tokens — a auditer separement pour le contraste clair.
+*/
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f5f4ee;
+    --surface: #ffffff;
+    --surface-2: #ece9dd;
+    --line: #d9d6c9;
+    --line-soft: #e6e3d6;
+    --paper: #1b1f1c;
+    --paper-dim: #5b6058;
+    --lime: #5c7a00;
+    --mint: #16805a;
+    --coral: #c73a22;
+  }
+}

@@ -14,6 +14,17 @@ export const es: Translations = {
     label: 'Idioma',
   },
 
+  plans: {
+    label: 'Sesión',
+    new: '+ Nueva sesión',
+    duplicate: 'Duplicar',
+    rename: 'Renombrar',
+    delete: 'Eliminar',
+    unnamed: 'Sesión sin nombre',
+    namePrompt: '¿Nombre de la sesión?',
+    confirmDelete: '¿Eliminar esta sesión y su plan?',
+  },
+
   about: {
     title: 'Acerca de Séance',
     intro:
@@ -31,6 +42,8 @@ export const es: Translations = {
     keyPoints: 'Puntos clave',
     moreInfo: 'Más información',
     unavailable: 'Ficha detallada disponible próximamente en este idioma — mostrando en francés.',
+    loading: 'Cargando…',
+    loadError: 'No se pudo cargar la ficha de este ejercicio.',
   },
 
   mode: {
@@ -84,11 +97,18 @@ export const es: Translations = {
     addCustom: '+ Ejercicio propio',
     loadDefault: 'Cargar la sesión tipo',
     clearAll: 'Borrar todo',
+    confirm: 'Confirmar',
+    cancel: 'Cancelar',
   },
 
   storage: {
     saved: 'Guardado',
     unavailable: 'No se puede guardar: el almacenamiento local está desactivado en este navegador.',
+  },
+
+  toast: {
+    deleted: 'Eliminado',
+    undo: 'Deshacer',
   },
 
   item: {

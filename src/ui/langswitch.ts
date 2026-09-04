@@ -1,8 +1,8 @@
-import { getLocale, LOCALE_NAMES, LOCALES, setLocale, isLocale } from '../i18n';
+import { getLocale, LOCALE_NAMES, LOCALES, isLocale } from '../i18n';
 import type { Context } from './app';
 import { byId, el } from './dom';
 
-/** Selecteur de langue. Le choix est persiste avec le reste des reglages. */
+/** Selecteur de langue. La langue est globale, independante des seances. */
 export function createLangSwitch(ctx: Context): { render: () => void } {
   const select = byId<HTMLSelectElement>('locale');
 
@@ -14,10 +14,7 @@ export function createLangSwitch(ctx: Context): { render: () => void } {
 
   select.addEventListener('change', () => {
     if (!isLocale(select.value)) return;
-    ctx.state.config.locale = select.value;
-    setLocale(select.value);
-    ctx.save();
-    ctx.renderAll();
+    ctx.setLocale(select.value);
   });
 
   function render(): void {

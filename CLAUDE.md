@@ -4,9 +4,10 @@ Planificateur et minuteur de séance au poids du corps. Site statique, multiling
 (fr, en, es, de, it), sans backend : tout l'état vit dans le `localStorage` du
 navigateur et rien ne quitte l'appareil.
 
-L'application a deux écrans : le **planificateur** (construire le déroulé,
-réordonner, régler les pauses) et le **lecteur** (`.run`, plein écran, chrono +
-anneau de progression + bip).
+L'application a deux écrans : le **planificateur** (choisir la séance active
+parmi plusieurs séances sauvegardées, construire son déroulé, réordonner,
+régler les pauses) et le **lecteur** (`.run`, plein écran, chrono + anneau de
+progression + bip).
 
 ## Commandes
 
@@ -26,10 +27,10 @@ que les cinq langues exposent exactement les mêmes clés.
 src/
   main.ts          detecte la langue, charge l'etat, monte l'app
   core/            logique pure, sans DOM
-    types.ts       PlanItem / Step / Config
+    types.ts       PlanItem / Step / SessionConfig / SavedPlan
     plan.ts        creation de lignes, resolution des noms traduits
     queue.ts       LE moteur : buildClassic, buildCircuit, queueDuration
-    storage.ts     localStorage v4 + migration depuis la v3
+    storage.ts     localStorage v5 (plusieurs SavedPlan) + migration depuis la v4/v3
   data/            donnees sans texte
     groups.ts      ids + couleurs des groupes musculaires
     library.ts     28 exercices : reglages seulement
@@ -44,6 +45,9 @@ src/
     locales/       fr (source) + en, es, de, it
   ui/              rendu et interactions, un module par zone d'ecran
     app.ts         orchestration : etat partage, sauvegarde, cycles de rendu
+    plan-switcher.ts  choix/creation/duplication/renommage/suppression de seance
+    toast.ts       toast transitoire avec action (annulation de suppression)
+    inline-input.ts  formulaire inline, remplace un window.prompt() natif
     dom.ts         el(), byId(), applyStaticTranslations()
   platform/        audio.ts (bip), wakelock.ts (ecran allume)
 scripts/
@@ -87,11 +91,29 @@ séance et de voir l'écran se retraduire immédiatement.
 
 ### 3. Modifier le schéma persisté impose une migration
 
-Les clés de stockage sont versionnées (`seance.plan.v4`, …) dans
+Les clés de stockage sont versionnées (`seance.plans.v5`, …) dans
 `core/storage.ts`. Tout changement de forme des données stockées demande de
 bumper la version **et** d'écrire la migration. `parseItem()` accepte aujourd'hui
-les deux formes (v3 `type: 'ex'` avec nom inline, v4 `type: 'exercise'`) et ne
-supprime jamais les clés v3 : la v4 est écrite à côté.
+les deux formes (v3 `type: 'ex'` avec nom inline, v4/v5 `type: 'exercise'`) et
+ne supprime jamais les anciennes clés : chaque version est écrite à côté de la
+précédente, jamais à sa place.
+
+**v5 : plusieurs séances sauvegardées, pas un seul plan.** `State` est
+`{ plans: SavedPlan[], activePlanId, history }` ; chaque `SavedPlan` porte son
+propre déroulé (`items`) et ses propres réglages (`SessionConfig` :
+mode/pause/transition). La langue (`locale`) n'est **plus** dans ce réglage —
+elle est globale à l'app (clé `seance.locale.v5`), lue par `main.ts` avant
+même qu'un plan existe, et `core/queue.ts` ne l'a d'ailleurs jamais lue.
+`SavedPlan.name` suit la même règle que `customName` sur `ExerciseItem`
+(section précédente) : `null` ou du texte saisi par l'utilisateur, jamais un
+libellé traduit — le nom affiché pour une séance sans nom
+(`plans.unnamed`) est résolu à l'affichage par `ui/plan-switcher.ts`, jamais
+stocké. `loadState()` migre l'ancien schéma v4 (un seul plan + une config qui
+mélangeait réglages et langue) en une unique `SavedPlan` nommée `null` ; les
+clés v4 et v3 restent lisibles et ne sont jamais effacées. Partout dans l'UI,
+`ctx.activePlan()` (`ui/app.ts`) est l'accesseur à utiliser — jamais
+`ctx.state.plans.find(...)` répété à chaque endroit — avec un invariant
+garanti par `loadState()` : il y a toujours au moins une séance.
 
 ## Le moteur (`core/queue.ts`)
 

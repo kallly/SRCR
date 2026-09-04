@@ -93,6 +93,17 @@
   display: block;
 }
 
+/* Deux barres, pas un rond : distinct du point plein de l'effort (`dot()`)
+   par la forme, pas seulement par la couleur (daltonisme, plein soleil). */
+.rlabel .rest-icon {
+  width: 8px;
+  height: 8px;
+  border-radius: 0;
+  background:
+    linear-gradient(var(--mint), var(--mint)) left / 2px 8px no-repeat,
+    linear-gradient(var(--mint), var(--mint)) right / 2px 8px no-repeat;
+}
+
 .run.resting .rlabel {
   color: var(--mint);
 }

@@ -1,4 +1,4 @@
-import type { Config, ExerciseItem, PlanItem, RestStep, Step, WorkStep } from './types';
+import type { ExerciseItem, PlanItem, RestStep, SessionConfig, Step, WorkStep } from './types';
 import { isExercise } from './plan';
 
 /** Estimation de la duree d'une repetition, en secondes. */
@@ -40,7 +40,7 @@ export function buildClassic(plan: readonly PlanItem[]): Step[] {
  */
 function buildCircuitSegment(
   items: readonly ExerciseItem[],
-  cfg: Config,
+  cfg: SessionConfig,
   previousGroup: string | null,
 ): { steps: Step[]; lastGroup: string | null } {
   const pool = items.map((item, index) => ({ item, index, left: item.sets }));
@@ -76,7 +76,7 @@ function buildCircuitSegment(
  * Mode circuit. Une pause ajoutee manuellement au deroule coupe le circuit en
  * deux segments independants : l'alternance repart de zero apres elle.
  */
-export function buildCircuit(plan: readonly PlanItem[], cfg: Config): Step[] {
+export function buildCircuit(plan: readonly PlanItem[], cfg: SessionConfig): Step[] {
   const steps: Step[] = [];
   let segment: ExerciseItem[] = [];
   let last: string | null = null;
@@ -103,7 +103,7 @@ export function buildCircuit(plan: readonly PlanItem[], cfg: Config): Step[] {
   return steps;
 }
 
-export function buildQueue(plan: readonly PlanItem[], cfg: Config): Step[] {
+export function buildQueue(plan: readonly PlanItem[], cfg: SessionConfig): Step[] {
   return cfg.mode === 'circuit' ? buildCircuit(plan, cfg) : buildClassic(plan);
 }
 

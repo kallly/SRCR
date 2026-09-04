@@ -14,6 +14,17 @@ export const de: Translations = {
     label: 'Sprache',
   },
 
+  plans: {
+    label: 'Einheit',
+    new: '+ Neue Einheit',
+    duplicate: 'Duplizieren',
+    rename: 'Umbenennen',
+    delete: 'Löschen',
+    unnamed: 'Unbenannte Einheit',
+    namePrompt: 'Name der Einheit?',
+    confirmDelete: 'Diese Einheit und ihren Ablauf löschen?',
+  },
+
   about: {
     title: 'Über Séance',
     intro:
@@ -31,6 +42,8 @@ export const de: Translations = {
     keyPoints: 'Wichtigste Punkte',
     moreInfo: 'Mehr erfahren',
     unavailable: 'Ausführliche Seite in dieser Sprache bald verfügbar — Anzeige auf Französisch.',
+    loading: 'Wird geladen…',
+    loadError: 'Die Seite zu dieser Übung konnte nicht geladen werden.',
   },
 
   mode: {
@@ -84,11 +97,18 @@ export const de: Translations = {
     addCustom: '+ Eigene Übung',
     loadDefault: 'MusterEinheit laden',
     clearAll: 'Alles löschen',
+    confirm: 'Bestätigen',
+    cancel: 'Abbrechen',
   },
 
   storage: {
     saved: 'Gespeichert',
     unavailable: 'Speichern nicht möglich: Der lokale Speicher ist in diesem Browser deaktiviert.',
+  },
+
+  toast: {
+    deleted: 'Gelöscht',
+    undo: 'Rückgängig',
   },
 
   item: {

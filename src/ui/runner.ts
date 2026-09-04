@@ -6,7 +6,7 @@ import { buildQueue } from '../core/queue';
 import type { RestStep, Step, WorkStep } from '../core/types';
 import { beep, primeAudio } from '../platform/audio';
 import { acquireWakeLock, releaseWakeLock } from '../platform/wakelock';
-import { byId, dot } from './dom';
+import { byId, dot, el } from './dom';
 import { clock } from './format';
 import type { Context } from './app';
 
@@ -114,8 +114,17 @@ export function createRunner(ctx: Context): Runner {
     return queue.slice(index + 1).find((step): step is WorkStep => step.kind === 'work');
   }
 
+  /**
+   * Repos et effort ne se distinguaient qu'a la couleur (teinte de fond,
+   * anneau, pastille) : illisible en plein soleil ou pour un daltonien.
+   * Icone dediee, de forme differente du rond plein utilise pour l'effort.
+   */
+  function restIcon(): HTMLElement {
+    return el('i', { className: 'rest-icon', attrs: { 'aria-hidden': 'true' } });
+  }
+
   function paintRest(step: RestStep): void {
-    label.replaceChildren(document.createTextNode(t(REST_LABELS[step.reason])));
+    label.replaceChildren(restIcon(), document.createTextNode(t(REST_LABELS[step.reason])));
     name.textContent = step.next
       ? t('runner.then', { name: exerciseName(step.next) })
       : t('runner.recover');
@@ -291,7 +300,7 @@ export function createRunner(ctx: Context): Runner {
   }
 
   function start(): void {
-    queue = buildQueue(ctx.state.plan, ctx.state.config);
+    queue = buildQueue(ctx.activePlan().items, ctx.activePlan().config);
     if (queue.length === 0) return;
     index = 0;
     active = true;

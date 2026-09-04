@@ -81,14 +81,32 @@ export interface RestItem {
 
 export type PlanItem = ExerciseItem | RestItem;
 
-/** Reglages de la seance. */
-export interface Config {
+/**
+ * Reglages d'une seance. La langue n'y figure plus : elle est globale a
+ * l'application (voir `core/storage.ts`), alors que mode/pause/transition
+ * sont propres a chaque seance sauvegardee.
+ */
+export interface SessionConfig {
   mode: SessionMode;
   /** Duree de la pause imposee en mode circuit, en secondes. */
   pause: number;
   /** Transition entre deux exercices en mode circuit, en secondes. */
   trans: number;
-  locale: Locale;
+}
+
+/**
+ * Une seance sauvegardee : son deroule et ses reglages, sous un nom.
+ *
+ * IMPORTANT : `name` ne contient jamais de texte traduit, seulement du texte
+ * saisi par l'utilisateur (meme statut que `customName` sur `ExerciseItem`).
+ * `null` signifie « pas encore nommee » ; le libelle affiche dans ce cas
+ * (« Seance sans nom ») est resolu a l'affichage, jamais stocke.
+ */
+export interface SavedPlan {
+  id: string;
+  name: string | null;
+  items: PlanItem[];
+  config: SessionConfig;
 }
 
 /** Une serie a executer. */

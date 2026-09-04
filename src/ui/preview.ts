@@ -34,7 +34,7 @@ export function createPreview(ctx: Context): { render: () => void } {
   const count = byId('previewCount');
 
   function render(): void {
-    const { plan, config } = ctx.state;
+    const { items: plan, config } = ctx.activePlan();
     const visible = config.mode === 'circuit' && plan.some(isExercise);
     panel.classList.toggle('on', visible);
     if (!visible) return;

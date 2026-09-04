@@ -1,18 +1,25 @@
-import { DEFAULT_LOCALE, isLocale } from '../i18n';
+import { isLocale } from '../i18n';
 import { isGroupId } from '../data/groups';
 import { isLibraryKey } from '../data/library';
 import { defaultPlan, uid } from './plan';
-import type { Config, ExerciseItem, Locale, PlanItem, RestItem } from './types';
+import type { ExerciseItem, Locale, PlanItem, RestItem, SavedPlan, SessionConfig } from './types';
 
 /**
- * Schema v4. La v3 (le monolithe) stockait le nom et le conseil traduits dans
- * chaque ligne, ce qui figeait la langue au moment de l'ajout ; la v4 ne garde
- * que la cle. Toute modification du schema impose de bumper ces cles et
- * d'ecrire la migration correspondante.
+ * Schema v5 : plusieurs seances sauvegardees (`SavedPlan`), au lieu d'un seul
+ * plan. La v4 (un plan + une config qui melangeait reglages et langue)
+ * n'est jamais effacee : elle sert de migration, et la v5 est ecrite a cote.
+ * Voir CLAUDE.md, section « Modifier le schema persiste impose une migration ».
  */
 const KEYS = {
-  plan: 'seance.plan.v4',
+  plans: 'seance.plans.v5',
+  activePlanId: 'seance.active.v5',
+  locale: 'seance.locale.v5',
   history: 'seance.history.v4',
+} as const;
+
+/** v4 : un seul plan + une config portant aussi la langue. */
+const V4_KEYS = {
+  plan: 'seance.plan.v4',
   config: 'seance.cfg.v4',
 } as const;
 
@@ -26,16 +33,15 @@ const LEGACY_KEYS = {
 const MAX_HISTORY = 200;
 
 export interface State {
-  plan: PlanItem[];
+  plans: SavedPlan[];
+  activePlanId: string;
   history: number[];
-  config: Config;
 }
 
-export const DEFAULT_CONFIG: Config = {
+export const DEFAULT_SESSION_CONFIG: SessionConfig = {
   mode: 'classic',
   pause: 60,
   trans: 0,
-  locale: DEFAULT_LOCALE,
 };
 
 function readJson(key: string): unknown {
@@ -101,40 +107,122 @@ function parseHistory(raw: unknown): number[] {
   return raw.filter((entry): entry is number => typeof entry === 'number').slice(-MAX_HISTORY);
 }
 
-function parseConfig(raw: unknown, detected: Locale): Config {
+function parseSessionConfig(raw: unknown): SessionConfig {
   const source = typeof raw === 'object' && raw !== null ? (raw as Record<string, unknown>) : {};
-  const stored = source['locale'];
   return {
     mode: source['mode'] === 'circuit' ? 'circuit' : 'classic',
-    pause: positiveInt(source['pause'], DEFAULT_CONFIG.pause),
-    trans: positiveInt(source['trans'], DEFAULT_CONFIG.trans),
-    // Pas de langue enregistree : premier lancement, on suit le navigateur.
-    locale: isLocale(stored) ? stored : detected,
+    pause: positiveInt(source['pause'], DEFAULT_SESSION_CONFIG.pause),
+    trans: positiveInt(source['trans'], DEFAULT_SESSION_CONFIG.trans),
   };
 }
 
+/** Jamais de texte traduit : une chaine vide ou absente devient `null`. */
+function parsePlanName(raw: unknown): string | null {
+  return typeof raw === 'string' && raw.trim() ? raw : null;
+}
+
+function parsePlanEntry(raw: unknown): SavedPlan | null {
+  if (typeof raw !== 'object' || raw === null) return null;
+  const source = raw as Record<string, unknown>;
+  return {
+    id: typeof source['id'] === 'string' ? source['id'] : uid(),
+    name: parsePlanName(source['name']),
+    items: parsePlan(source['items']) ?? [],
+    config: parseSessionConfig(source['config']),
+  };
+}
+
+function parsePlansList(raw: unknown): SavedPlan[] | null {
+  if (!Array.isArray(raw) || raw.length === 0) return null;
+  const plans = raw.map(parsePlanEntry).filter((entry): entry is SavedPlan => entry !== null);
+  return plans.length > 0 ? plans : null;
+}
+
+/** Enveloppe l'ancien schema v4 (retombant lui-meme sur la v3) en une seule seance. */
+function migrateFromV4(): SavedPlan | null {
+  const rawPlan = readJson(V4_KEYS.plan) ?? readJson(LEGACY_KEYS.plan);
+  const rawConfig = readJson(V4_KEYS.config) ?? readJson(LEGACY_KEYS.config);
+  if (rawPlan === undefined && rawConfig === undefined) return null;
+  return {
+    id: uid(),
+    name: null,
+    items: parsePlan(rawPlan) ?? defaultPlan(),
+    config: parseSessionConfig(rawConfig),
+  };
+}
+
+function legacyLocale(): unknown {
+  const rawConfig = readJson(V4_KEYS.config) ?? readJson(LEGACY_KEYS.config);
+  return typeof rawConfig === 'object' && rawConfig !== null
+    ? (rawConfig as Record<string, unknown>)['locale']
+    : undefined;
+}
+
 /**
- * Charge l'etat, en se rabattant sur la v3 puis sur la seance type.
- * La v3 n'est jamais effacee : la v4 est ecrite a cote.
+ * Langue active, independante de toute seance. Se rabat sur l'ancienne
+ * config v4/v3 (ou elle vivait) pour que le choix d'un utilisateur existant
+ * survive a la migration, puis sur la langue detectee du navigateur.
  */
-export function loadState(detectedLocale: Locale): State {
-  const rawPlan = readJson(KEYS.plan) ?? readJson(LEGACY_KEYS.plan);
-  const rawHistory = readJson(KEYS.history) ?? readJson(LEGACY_KEYS.history);
-  const rawConfig = readJson(KEYS.config) ?? readJson(LEGACY_KEYS.config);
+export function loadLocale(detected: Locale): Locale {
+  const stored = readJson(KEYS.locale);
+  if (isLocale(stored)) return stored;
+  const legacy = legacyLocale();
+  return isLocale(legacy) ? legacy : detected;
+}
+
+/** Ecrit la langue. Best-effort : rien a faire si le stockage local manque. */
+export function saveLocale(locale: Locale): void {
+  try {
+    localStorage.setItem(KEYS.locale, JSON.stringify(locale));
+  } catch {
+    // Sauvegarde best-effort.
+  }
+}
+
+/**
+ * Charge l'etat, en se rabattant sur la migration v4 puis sur la seance
+ * type. Les anciennes cles ne sont jamais effacees : la v5 est ecrite a cote.
+ */
+export function loadState(): State {
+  const plans =
+    parsePlansList(readJson(KEYS.plans)) ??
+    (() => {
+      const migrated = migrateFromV4();
+      return [
+        migrated ?? {
+          id: uid(),
+          name: null,
+          items: defaultPlan(),
+          // Copie, jamais la reference : sinon muter le mode d'une session
+          // (ctx.activePlan().config.mode = ...) mute ce singleton partage,
+          // et toute session creee ensuite via createPlan() en herite.
+          config: { ...DEFAULT_SESSION_CONFIG },
+        },
+      ];
+    })();
+
+  // Invariant preserve partout dans l'app : il y a toujours au moins une
+  // seance, meme fraichement creee ci-dessus si tout le reste a echoue.
+  const firstPlan = plans[0] as SavedPlan;
+  const rawActiveId = readJson(KEYS.activePlanId);
+  const activePlanId =
+    typeof rawActiveId === 'string' && plans.some((plan) => plan.id === rawActiveId)
+      ? rawActiveId
+      : firstPlan.id;
 
   return {
-    plan: parsePlan(rawPlan) ?? defaultPlan(),
-    history: parseHistory(rawHistory),
-    config: parseConfig(rawConfig, detectedLocale),
+    plans,
+    activePlanId,
+    history: parseHistory(readJson(KEYS.history) ?? readJson(LEGACY_KEYS.history)),
   };
 }
 
 /** Ecrit l'etat. Renvoie `false` si le stockage local est indisponible. */
 export function saveState(state: State): boolean {
   try {
-    localStorage.setItem(KEYS.plan, JSON.stringify(state.plan));
+    localStorage.setItem(KEYS.plans, JSON.stringify(state.plans));
+    localStorage.setItem(KEYS.activePlanId, JSON.stringify(state.activePlanId));
     localStorage.setItem(KEYS.history, JSON.stringify(state.history.slice(-MAX_HISTORY)));
-    localStorage.setItem(KEYS.config, JSON.stringify(state.config));
     return true;
   } catch {
     return false;

@@ -4,9 +4,9 @@ import './styles/planner.css';
 import './styles/runner.css';
 
 import { detectLocale, setLocale } from './i18n';
-import { loadState } from './core/storage';
+import { loadLocale, loadState } from './core/storage';
 import { createApp } from './ui/app';
 
-const state = loadState(detectLocale());
-setLocale(state.config.locale);
-createApp(state).render();
+const locale = loadLocale(detectLocale());
+setLocale(locale);
+createApp(loadState()).render();

@@ -8,8 +8,9 @@
       name="description"
       content="Planificateur et minuteur de séance au poids du corps, sans matériel. Mode classique ou circuit, en 5 langues. Sans compte : tout reste sur votre appareil."
     />
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#0e1210" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0e1210" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f5f4ee" media="(prefers-color-scheme: light)" />
     <title>Séance — reprise au poids du corps sans matériel</title>
     <link rel="canonical" href="https://kallly.github.io/SRCR/" />
 
@@ -94,6 +95,8 @@
         <a href="#section-plan" data-i18n="section.plan">Déroulé</a>
         <a href="#section-library" data-i18n="section.library">Bibliothèque</a>
       </nav>
+
+      <div id="planSwitcher"></div>
 
       <div class="modes">
         <button id="modeClassic" type="button" data-i18n="mode.classic">Classique</button>

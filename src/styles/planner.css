@@ -49,6 +49,64 @@
   flex: 1;
 }
 
+/* selecteur de seance */
+#planSwitcher {
+  margin: 0 0 18px;
+}
+
+#planSwitcher .f {
+  margin-bottom: 10px;
+}
+
+.plan-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.plan-actions .ghost {
+  flex: 1 1 calc(50% - 4px);
+  min-height: 44px;
+}
+
+.plan-actions .ghost:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/*
+  Reservation approximative (formulaire construit en JS, jamais mesuree en
+  reseau bride comme #plan:empty/#library:empty plus bas) : un select (44px)
+  + son label, et 4 boutons qui tiennent sur deux rangees en mobile.
+*/
+#planSwitcher:empty {
+  min-height: 185px;
+}
+
+/* formulaire inline : remplace un window.prompt() natif (ui/inline-input.ts) */
+.inline-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.inline-input input {
+  flex: 1 1 160px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--surface-2);
+  color: var(--paper);
+  font-size: 15px;
+}
+
+.inline-input button {
+  min-height: 44px;
+  padding: 0 14px;
+}
+
 /* deroule */
 .plan {
   list-style: none;
@@ -392,6 +450,17 @@
   gap: 10px;
 }
 
+/*
+  Ajustement desktop modeste (pas de mise en page a deux volets, priorite
+  mobile) : la grille bibliotheque profite d'un peu plus de largeur au meme
+  point de rupture que `.wrap` (base.css).
+*/
+@media (min-width: 900px) {
+  .lib {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .libcard {
   position: relative;
   background: var(--surface);
@@ -533,6 +602,42 @@
   display: block;
 }
 
+/*
+  Toast d'annulation apres suppression (ui/toast.ts). Position fixe : ne
+  participe jamais au flux du document (`display:none` par defaut), donc
+  aucune reservation de hauteur a prevoir contrairement a #plan/#library.
+  Place au-dessus de la barre fixe du bas.
+*/
+.toast {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: calc(84px + env(safe-area-inset-bottom));
+  z-index: 30;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 8px 10px 14px;
+  font-size: 13.5px;
+}
+
+.toast.on {
+  display: flex;
+}
+
+.toast-action {
+  min-height: 44px;
+  padding: 0 14px;
+  background: transparent;
+  border: 0;
+  color: var(--lime);
+  font-weight: 700;
+}
+
 /* barre fixe */
 .bar {
   position: fixed;
@@ -641,5 +746,17 @@
 @media (min-width: 390px) and (max-width: 767px) {
   #plan:empty {
     min-height: 2055px;
+  }
+}
+
+/*
+  A la difference des valeurs ci-dessus (mesurees), celle-ci est une
+  estimation arithmetique (28 cartes en 3 colonnes ~= 10 rangees, contre 14
+  en 2 colonnes) : a corriger avec une vraie mesure reseau bride avant de
+  s'y fier (voir CLAUDE.md, section CLS — le piege est la mesure).
+*/
+@media (min-width: 900px) {
+  #library:empty {
+    min-height: 1550px;
   }
 }

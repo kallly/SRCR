@@ -141,7 +141,7 @@ export function createPlanner(ctx: Context): { render: () => void } {
   list.addEventListener('click', (event) => {
     const button = (event.target as HTMLElement).closest('button');
     if (!button) return;
-    const { plan } = ctx.state;
+    const plan = ctx.activePlan().items;
 
     const infoKey = button.dataset['info'] as ExerciseKey | undefined;
     if (infoKey) {
@@ -151,9 +151,24 @@ export function createPlanner(ctx: Context): { render: () => void } {
 
     const deleteId = button.dataset['delete'];
     if (deleteId) {
-      ctx.state.plan = plan.filter((item) => item.id !== deleteId);
+      const removedIndex = plan.findIndex((item) => item.id === deleteId);
+      if (removedIndex === -1) return;
+      const [removed] = plan.splice(removedIndex, 1);
+      // Capture l'id de LA seance concernee : si l'utilisateur bascule vers
+      // une autre seance avant de cliquer "Annuler", ctx.activePlan() aurait
+      // alors renvoye la nouvelle seance active, pas celle d'origine.
+      const planId = ctx.activePlan().id;
       ctx.save();
       ctx.renderAll();
+      if (removed) {
+        ctx.toast.show(t('toast.deleted'), t('toast.undo'), () => {
+          const target = ctx.getPlan(planId);
+          if (!target) return;
+          target.items.splice(removedIndex, 0, removed);
+          ctx.save();
+          ctx.renderAll();
+        });
+      }
       return;
     }
 
@@ -172,7 +187,7 @@ export function createPlanner(ctx: Context): { render: () => void } {
     const id = input.dataset['id'];
     if (!field || !id) return;
 
-    const item = ctx.state.plan.find((entry) => entry.id === id);
+    const item = ctx.activePlan().items.find((entry) => entry.id === id);
     if (!item) return;
 
     if (NUMERIC_FIELDS.has(field)) {
@@ -202,8 +217,9 @@ export function createPlanner(ctx: Context): { render: () => void } {
   });
 
   function render(): void {
-    const { plan, config } = ctx.state;
-    const showRest = config.mode === 'classic';
+    const active = ctx.activePlan();
+    const plan = active.items;
+    const showRest = active.config.mode === 'classic';
     list.replaceChildren();
 
     let position = 0;

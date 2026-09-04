@@ -14,6 +14,17 @@ export const en: Translations = {
     label: 'Language',
   },
 
+  plans: {
+    label: 'Session',
+    new: '+ New session',
+    duplicate: 'Duplicate',
+    rename: 'Rename',
+    delete: 'Delete',
+    unnamed: 'Untitled session',
+    namePrompt: 'Session name?',
+    confirmDelete: 'Delete this session and its plan?',
+  },
+
   about: {
     title: 'About Séance',
     intro:
@@ -31,6 +42,8 @@ export const en: Translations = {
     keyPoints: 'Key points',
     moreInfo: 'More information',
     unavailable: 'Detailed page coming soon in this language — showing French.',
+    loading: 'Loading…',
+    loadError: 'Could not load this exercise’s page.',
   },
 
   mode: {
@@ -84,11 +97,18 @@ export const en: Translations = {
     addCustom: '+ Custom exercise',
     loadDefault: 'Load the sample session',
     clearAll: 'Clear everything',
+    confirm: 'Confirm',
+    cancel: 'Cancel',
   },
 
   storage: {
     saved: 'Saved',
     unavailable: 'Cannot save: local storage is disabled in this browser.',
+  },
+
+  toast: {
+    deleted: 'Deleted',
+    undo: 'Undo',
   },
 
   item: {

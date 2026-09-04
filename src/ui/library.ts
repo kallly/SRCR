@@ -1,4 +1,4 @@
-import { t } from '../i18n';
+import { getLocale, t } from '../i18n';
 import { GROUP_IDS, groupColor } from '../data/groups';
 import { LIBRARY, type LibraryEntry } from '../data/library';
 import { figureSvg } from '../data/figures';
@@ -84,15 +84,29 @@ export function createLibrary(ctx: Context): { render: () => void } {
 
     const item = createFromLibrary(key);
     if (!item) return;
-    ctx.state.plan.push(item);
+    ctx.activePlan().items.push(item);
     ctx.save();
     ctx.renderAll();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
+  /**
+   * Par groupe musculaire (ordre `GROUP_IDS`), puis alphabetique par nom
+   * traduit, plutot que l'ordre de declaration brut de `LIBRARY`. Refait a
+   * chaque rendu, donc suit naturellement un changement de langue.
+   */
+  function sortedLibrary(): LibraryEntry[] {
+    const locale = getLocale();
+    return [...LIBRARY].sort((a, b) => {
+      const groupDiff = GROUP_IDS.indexOf(a.group) - GROUP_IDS.indexOf(b.group);
+      if (groupDiff !== 0) return groupDiff;
+      return t(`exercise.${a.key}.name`).localeCompare(t(`exercise.${b.key}.name`), locale);
+    });
+  }
+
   function renderGrid(): void {
     const term = normalize(search);
-    const filtered = LIBRARY.filter((entry) => {
+    const filtered = sortedLibrary().filter((entry) => {
       if (group && entry.group !== group) return false;
       if (term && !normalize(t(`exercise.${entry.key}.name`)).includes(term)) return false;
       return true;

@@ -14,6 +14,17 @@ export const it: Translations = {
     label: 'Lingua',
   },
 
+  plans: {
+    label: 'Seduta',
+    new: '+ Nuova seduta',
+    duplicate: 'Duplica',
+    rename: 'Rinomina',
+    delete: 'Elimina',
+    unnamed: 'Seduta senza nome',
+    namePrompt: 'Nome della seduta?',
+    confirmDelete: 'Eliminare questa seduta e il suo programma?',
+  },
+
   about: {
     title: 'Informazioni su Séance',
     intro:
@@ -31,6 +42,8 @@ export const it: Translations = {
     keyPoints: 'Punti chiave',
     moreInfo: 'Maggiori informazioni',
     unavailable: 'Scheda dettagliata presto disponibile in questa lingua — visualizzazione in francese.',
+    loading: 'Caricamento…',
+    loadError: 'Impossibile caricare la scheda di questo esercizio.',
   },
 
   mode: {
@@ -84,11 +97,18 @@ export const it: Translations = {
     addCustom: '+ Esercizio personale',
     loadDefault: 'Carica la seduta tipo',
     clearAll: 'Cancella tutto',
+    confirm: 'Conferma',
+    cancel: 'Annulla',
   },
 
   storage: {
     saved: 'Salvato',
     unavailable: 'Salvataggio impossibile: la memoria locale è disattivata in questo browser.',
+  },
+
+  toast: {
+    deleted: 'Eliminato',
+    undo: 'Annulla',
   },
 
   item: {
