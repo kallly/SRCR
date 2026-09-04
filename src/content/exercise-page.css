@@ -170,6 +170,29 @@ ul.mistakes li {
   color: var(--paper-dim);
 }
 
+p {
+  max-width: 62ch;
+}
+
+ul.progression li b {
+  color: var(--paper);
+  font-weight: 600;
+}
+
+.precautions {
+  border-left: 2px solid var(--line);
+  padding-left: 14px;
+  color: var(--paper-dim);
+}
+
+.disclaimer {
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--paper-dim);
+  margin: 0 0 14px;
+  max-width: 62ch;
+}
+
 /* carrousel d'exercices similaires : defilement natif, sans JS */
 .carousel {
   display: flex;

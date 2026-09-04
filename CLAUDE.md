@@ -338,6 +338,33 @@ eux-mêmes une page générée ; la section entière est omise s'il n'y en a
 aucun (ex. les mollets, seul exercice de leur groupe) — jamais de remplissage
 avec des exercices non pertinents pour avoir quelque chose à afficher.
 
+**Règle de rédaction du contenu long — la plus importante de cette section.**
+Ce contenu est de la matière santé/sport lue par des gens qui reprennent le
+sport : uniquement du **vérifiable et du stable** — anatomie (noms et rôles
+musculaires), biomécanique (actions articulaires, plans, types de
+contraction), principes d'entraînement établis. **Jamais de citation
+d'étude, jamais de pourcentage d'activation EMG, jamais de chiffre à fausse
+précision** : ça sonnerait scientifique en étant inventé, ce qui est pire
+que de rester général. Les précautions sont pratiques (réduire l'amplitude,
+adapter) et ne posent **jamais** de diagnostic ; un avertissement global
+figure en pied de chaque page générée.
+
+**Champs optionnels = sections absentes, pas sections vides.** `progression`
+et `precautions` sont optionnels parce qu'ils ne s'appliquent pas partout
+(une mobilité comme le chat-vache n'a pas de « progression » au sens d'un
+exercice de force). Le générateur omet la section entière plutôt que
+d'afficher un titre suivi de remplissage — même logique que le carrousel
+d'exercices similaires.
+
+**Le contenu long n'est PAS dans le bundle initial.** `ui/exercise-info.ts`
+le charge via un `import()` dynamique : Vite en fait un chunk séparé, tiré
+seulement à la première ouverture d'une modal. C'est délibéré — ce contenu
+pèse plus lourd que tout le reste de l'app réunie, alors que la modal n'en
+affiche qu'un extrait et que la plupart des visiteurs ne l'ouvriront jamais.
+Ne pas rebasculer sur un `import` statique « pour simplifier » : ça
+doublerait le poids du démarrage. La source reste unique, c'est le même
+module que celui lu par le générateur de pages.
+
 **Modal d'info (`ui/exercise-info.ts`).** Un `<dialog>` natif (skeleton
 statique dans `index.html`, jamais construit en JS) : fermeture Échap et
 focus-trap gratuits. Un exercice `custom` n'a pas de bouton ⓘ —

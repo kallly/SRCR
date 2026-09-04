@@ -2,12 +2,28 @@ import { getLocale, t } from '../i18n';
 import { groupColor } from '../data/groups';
 import { figureSvg } from '../data/figures';
 import { LIBRARY } from '../data/library';
-import { DETAILS_BY_LOCALE, exerciseDetail } from '../content/exercise-details';
 import type { ExerciseKey, GroupId } from '../core/types';
 import { byId, el } from './dom';
 
 /** Nombre de points cles resumes dans la modal (les etapes completes sont sur la page dediee). */
 const KEY_POINTS = 3;
+
+/**
+ * Le contenu long des 28 exercices pese plus lourd que tout le reste de
+ * l'app reunie, et la modal n'en montre qu'un extrait — le charger au
+ * demarrage ferait payer a chaque visiteur du texte que la plupart ne
+ * liront jamais. `import()` dynamique : Vite en fait un chunk separe, tire
+ * seulement a la premiere ouverture de la modal, puis mis en cache par le
+ * navigateur. Source unique preservee : c'est le meme module que celui lu
+ * par le generateur de pages statiques.
+ */
+type DetailsModule = typeof import('../content/exercise-details');
+let detailsModule: Promise<DetailsModule> | null = null;
+
+function loadDetails(): Promise<DetailsModule> {
+  detailsModule ??= import('../content/exercise-details');
+  return detailsModule;
+}
 
 export interface ExerciseInfo {
   open(key: ExerciseKey): void;
@@ -37,11 +53,12 @@ export function createExerciseInfo(): ExerciseInfo {
     if (event.target === dialog) dialog.close();
   });
 
-  function open(key: ExerciseKey): void {
+  async function open(key: ExerciseKey): Promise<void> {
     const entry = LIBRARY.find((e) => e.key === key);
     if (!entry) return;
 
     const locale = getLocale();
+    const { DETAILS_BY_LOCALE, exerciseDetail } = await loadDetails();
     const native = DETAILS_BY_LOCALE[locale]?.[key];
     const detail = native ?? exerciseDetail(key, locale);
     if (!detail) return;
@@ -66,5 +83,12 @@ export function createExerciseInfo(): ExerciseInfo {
     dialog.showModal();
   }
 
-  return { open };
+  // Le chargement du contenu est asynchrone, l'ouverture reste declenchee
+  // depuis un gestionnaire de clic synchrone : on laisse partir la promesse.
+  // Un echec de chargement ne doit rien casser d'autre que cette modal.
+  return {
+    open: (key) => {
+      void open(key).catch(() => {});
+    },
+  };
 }

@@ -42,6 +42,36 @@ function jsonLd(value: unknown): string {
   return JSON.stringify(value, null, 2).replace(/</g, '\\u003c');
 }
 
+/**
+ * Sections optionnelles : rendues seulement si le contenu existe. Une
+ * mobilite ou du cardio n'ont pas de "progression" au sens d'un exercice de
+ * force — mieux vaut une section absente qu'une section de remplissage.
+ */
+function renderProgression(detail: ExerciseDetail): string {
+  const p = detail.progression;
+  if (!p) return '';
+  const rows = [
+    p.easier ? `        <li><b>Plus accessible :</b> ${esc(p.easier)}</li>` : '',
+    p.harder ? `        <li><b>Plus exigeant :</b> ${esc(p.harder)}</li>` : '',
+    p.readyWhen ? `        <li><b>Passer à la suite :</b> ${esc(p.readyWhen)}</li>` : '',
+  ].filter(Boolean);
+  if (rows.length === 0) return '';
+  return `
+      <h2>Adapter et progresser</h2>
+      <ul class="progression">
+${rows.join('\n')}
+      </ul>
+`;
+}
+
+function renderPrecautions(detail: ExerciseDetail): string {
+  if (!detail.precautions) return '';
+  return `
+      <h2>Précautions</h2>
+      <p class="precautions">${esc(detail.precautions)}</p>
+`;
+}
+
 function libraryEntry(key: ExerciseKey) {
   const entry = LIBRARY.find((e) => e.key === key);
   if (!entry) throw new Error(`Aucune entree LIBRARY pour la cle "${key}" (exercise-details en a une en trop).`);
@@ -143,9 +173,34 @@ ${detail.steps.map((s) => `        <li>${esc(s)}</li>`).join('\n')}
 ${detail.mistakes.map((m) => `        <li>${esc(m)}</li>`).join('\n')}
       </ul>
 
+      <h2>Où ça doit travailler</h2>
+      <p>${esc(detail.sensation)}</p>
+
+      <h2>Amplitude</h2>
+      <p>${esc(detail.rangeOfMotion)}</p>
+
+      <h2>Rythme et respiration</h2>
+      <p>${esc(detail.tempo)}</p>
+
+      <h2>Ce qui travaille, précisément</h2>
+      <p>${esc(detail.anatomy)}</p>
+
+      <h2>Mécanique du mouvement</h2>
+      <p>${esc(detail.mechanics)}</p>
+
+      <h2>Bienfaits</h2>
+      <ul>
+${detail.benefits.map((b) => `        <li>${esc(b)}</li>`).join('\n')}
+      </ul>
+${renderProgression(detail)}${renderPrecautions(detail)}
       ${carousel}
 
       <footer>
+        <p class="disclaimer">
+          Ces informations sont d’ordre général et ne remplacent pas l’avis d’un
+          professionnel de santé. En cas de douleur, de blessure ou de pathologie
+          connue, demandez un avis médical avant de vous lancer.
+        </p>
         <a href="${SITE_URL}/">Séance</a> — planificateur et minuteur de séance au poids du corps.
       </footer>
     </main>
