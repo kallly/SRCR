@@ -589,10 +589,18 @@
    gabarit que "Annuler" (.ghost, flex:1) dans la meme rangee. */
 .rowbtns .go {
   flex: 1;
+  min-width: 0;
 }
 
 .ghost {
   flex: 1;
+  /* Sans ca, un libelle long (« Remplacer "Haut du corps — 20 min" ») refuse
+     de passer sous sa largeur de contenu minimale et deborde la rangee —
+     cette rangee peut compter jusqu'a 3 boutons dans le dialogue d'import,
+     contrairement aux autres usages de `.rowbtns` (toujours 2, libelles
+     courts). `min-width: 0` laisse le texte se re-couper sur plusieurs
+     lignes plutot que de pousser le bouton hors du dialogue. */
+  min-width: 0;
   background: transparent;
   border: 1px solid var(--line);
   color: var(--paper);

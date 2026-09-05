@@ -42,6 +42,11 @@ button {
   cursor: pointer;
   border-radius: var(--radius);
   -webkit-appearance: none;
+  /* Explicite plutot que suppose : un bouton dont le libelle passe sur
+     plusieurs lignes (ex. "Remplacer" dans le dialogue d'import, une fois
+     `min-width: 0` autorise a re-couper le texte) ne centre pas forcement
+     chaque ligne pareil selon le navigateur sans cette regle. */
+  text-align: center;
 }
 
 button:focus-visible,
