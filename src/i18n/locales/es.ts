@@ -68,6 +68,8 @@ export const es: Translations = {
       'El enlace esperado tiene la forma de abajo: un objeto JSON con el nombre de la sesión, el modo de encadenamiento y la lista de líneas, codificado en base64url dentro del parámetro s.',
     keys:
       'La clave que hay que usar para cada ejercicio aparece en letra pequeña bajo su nombre, en la lista «Todas las fichas de ejercicio» de arriba (por ejemplo catCow bajo «Gato-vaca») — nunca la palabra con la que termina la dirección de su ficha. El grupo muscular, el tipo de esfuerzo y los valores que falten se deducen de la biblioteca. Una clave desconocida se convierte en un ejercicio personalizado con ese nombre. Una línea sin clave inserta una pausa.',
+    rawLink:
+      'Da siempre este enlace tal cual — nunca envuelto en una búsqueda (google.com/search) ni acortado. Algunos asistentes añaden esta envoltura automáticamente: si el enlace que vas a dar contiene una, quítala antes de responder — la importación en un clic solo funciona con el enlace exacto.',
     spec: 'Especificación completa del formato',
   },
 
@@ -79,11 +81,11 @@ export const es: Translations = {
     createTitle: 'Crear una sesión',
     createText: 'Copia este mensaje:',
     createPrompt:
-      'Este es un sitio de sesiones a peso corporal: https://kallly.github.io/SRCR/. Crea una sesión de tren superior de 20 minutos y dame solo el enlace en bruto para importarla (nada de enlace de búsqueda de Google).',
+      'Este es un sitio de sesiones a peso corporal: https://kallly.github.io/SRCR/. Crea una sesión de tren superior de 20 minutos y dame el enlace para importarla.',
     modifyTitle: 'Modificar una sesión',
     modifyText: 'Usa el enlace de tu sesión para pedirle a la IA que la modifique:',
     modifyPrompt:
-      'Este es el enlace de mi sesión actual: {link}. Añade un ejercicio de gemelos y devuélveme solo el enlace en bruto actualizado (nada de enlace de búsqueda de Google).',
+      'Este es el enlace de mi sesión actual: {link}. Añade un ejercicio de gemelos y devuélveme el enlace actualizado.',
     linkMask: '[tu enlace]',
     copied: 'Mensaje copiado',
   },

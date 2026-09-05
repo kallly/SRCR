@@ -68,6 +68,8 @@ export const it: Translations = {
       'Il link atteso ha la forma qui sotto: un oggetto JSON che porta il nome della seduta, la modalità di concatenamento e l’elenco delle righe, codificato in base64url nel parametro s.',
     keys:
       'La chiave da usare per ciascun esercizio è indicata in piccolo sotto il suo nome, nell’elenco «Tutte le schede degli esercizi» qui sopra (per esempio catCow sotto «Gatto-mucca») — mai la parola con cui termina l’indirizzo della sua scheda. Il gruppo muscolare, il tipo di sforzo e i valori mancanti sono dedotti dalla libreria. Una chiave sconosciuta diventa un esercizio personalizzato con quel nome. Una riga senza chiave inserisce una pausa.',
+    rawLink:
+      'Dai sempre questo link così com’è — mai avvolto in una ricerca (google.com/search) né accorciato. Alcuni assistenti aggiungono questo involucro automaticamente: se il link che stai per dare ne contiene uno, toglilo prima di rispondere — l’importazione in un clic funziona solo con il link esatto.',
     spec: 'Specifica completa del formato',
   },
 
@@ -79,11 +81,11 @@ export const it: Translations = {
     createTitle: 'Creare una seduta',
     createText: 'Copia questo messaggio:',
     createPrompt:
-      'Ecco un sito di sedute a corpo libero: https://kallly.github.io/SRCR/. Creami una seduta per la parte superiore del corpo di 20 minuti e dammi solo il link grezzo per importarla (niente link di ricerca Google).',
+      'Ecco un sito di sedute a corpo libero: https://kallly.github.io/SRCR/. Creami una seduta per la parte superiore del corpo di 20 minuti e dammi il link per importarla.',
     modifyTitle: 'Modificare una seduta',
     modifyText: 'Usa il link di condivisione della tua seduta per chiedere all’IA di modificarla:',
     modifyPrompt:
-      'Ecco il link della mia seduta attuale: {link}. Aggiungi un esercizio per i polpacci e rimandami solo il link grezzo aggiornato (niente link di ricerca Google).',
+      'Ecco il link della mia seduta attuale: {link}. Aggiungi un esercizio per i polpacci e rimandami il link aggiornato.',
     linkMask: '[il tuo link]',
     copied: 'Messaggio copiato',
   },

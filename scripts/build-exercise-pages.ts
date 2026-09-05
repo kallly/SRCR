@@ -539,6 +539,14 @@ Pause    : ["r", secondes]</code></pre>
       <pre><code>${esc(example.json)}</code></pre>
       <pre><code>${esc(example.url)}</code></pre>
 
+      <h2>Le lien à donner</h2>
+      <p>
+        Donnez toujours ce lien tel quel — jamais enveloppé dans une recherche
+        (<code>google.com/search</code>) ni raccourci. Certains assistants ajoutent cette
+        enveloppe automatiquement : si le lien que vous vous apprêtez à donner en contient une,
+        retirez-la avant de répondre. L’import en un clic ne fonctionne qu’avec le lien exact.
+      </p>
+
       <h2>Les 28 clés d’exercice</h2>
       <div class="tablewrap">
         <table>
@@ -649,6 +657,11 @@ base64url = base64 standard, + → -, / → _, remplissage = retiré.
 Exemple qui fonctionne :
 ${example.json}
 ${example.url}
+
+Donnez toujours ce lien tel quel — jamais enveloppé dans une recherche
+(google.com/search) ni raccourci. Si le lien que vous vous apprêtez à donner
+en contient une, retirez-la avant de répondre : l'import en un clic ne
+fonctionne qu'avec le lien exact.
 
 Repli si le base64 est incertain : ?plan= accepte le même contenu en JSON
 lisible non encodé, avec des noms de champs explicites (ex, sets, reps,

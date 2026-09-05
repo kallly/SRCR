@@ -356,14 +356,32 @@ l'UI le permet aussi.
 
 **Un lien produit par une IA peut arriver enveloppé dans une redirection de
 recherche** (`google.com/search?q=<lien>` chez Gemini, notamment) : un
-comportement du produit, pas quelque chose que ce site contrôle. La seule
-parade réaliste est dans le prompt lui-même — `aiHelp.createPrompt` et
-`aiHelp.modifyPrompt` (`ui/ai-help.ts`) demandent explicitement « le lien
-brut, pas de lien de recherche Google ». Compromis assumé : ça n'agit que
-sur les deux prompts fournis par l'app, pas sur une IA qui lit `#aiPlan` de
-sa propre initiative sans prompt fourni par l'utilisateur.
+comportement du produit, pas quelque chose que ce site contrôle. L'instruction
+« donnez ce lien tel quel, jamais enveloppé » vit dans `aiPlan.rawLink`
+(section `#aiPlan` de l'accueil, la page de spec générée et `llms.txt`) —
+**volontairement pas dans les prompts prêts à copier** (`aiHelp.createPrompt`/
+`.modifyPrompt`, `ui/ai-help.ts`, redevenus plus courts) : le but est qu'une
+IA qui lit la page l'applique d'elle-même, sans dépendre d'un prompt
+particulier tapé par l'utilisateur — cohérent avec le principe déjà posé pour
+tout `#aiPlan` (« documentée dans la page elle-même pour que le modèle le
+découvre sans qu'on le lui explique »).
 
-**Deux pistes explorées puis écartées pour ce même problème, faute de
+**Efficacité non prouvée, à ne pas sur-vendre.** Le test « Test direct » de
+Gemini portait déjà, dans son propre prompt auto-corrigé, la phrase « sans
+passer par une recherche Google » — collée juste avant de générer le lien —
+et le lien produit était **quand même enveloppé**. Cette formulation précise
+a donc déjà échoué une fois collée directement dans ce que le modèle vient de
+lire avant de répondre ; la déplacer dans `#aiPlan` est un pari sur le fait
+qu'une instruction lue en parcourant la page pourrait peser différemment
+qu'une instruction reçue dans le tour de conversation, pas une garantie. Si
+une nouvelle observation montre que ça ne change rien, ne pas ajouter une
+troisième variante de la même phrase à un troisième endroit : le problème
+est vraisemblablement un filtre de sécurité au niveau du produit, appliqué
+à toute URL générée (non issue d'une recherche), insensible au texte
+environnant — voir le paragraphe suivant pour les deux pistes déjà écartées
+sur cette base.
+
+**Deux autres pistes explorées puis écartées pour ce même problème, faute de
 preuve — ne pas les reprendre sans nouvelle donnée.** Gemini a lui-même
 suggéré (1) demander un lien Markdown cliquable `[texte](url)` plutôt qu'une
 URL brute, et (2) raccourcir le payload `?s=` pour réduire le risque
@@ -431,7 +449,7 @@ leur `data-i18n` qui continue à les retraduire normalement au chargement.
 même texte dans `index.html`** — `app.eyebrow`, `app.heading`, `app.tagline`,
 `app.sourceCode`, `section.plan`, `section.library`, `section.allGuides`,
 `preview.title`, les
-quatre clés `about.*`, les quatre clés `aiPlan.*`, `share.importAppend` et
+quatre clés `about.*`, les six clés `aiPlan.*`, `share.importAppend` et
 `aiHelp.trigger`/`.triggerLabel` (respectivement section « Créer une séance
 par lien », dialogue d'import, et étiquette fixe `#aiHelpTab` — voir
 « Écriture par lien » plus haut), `exerciseInfo.close`/`.keyPoints`/`.moreInfo` (la

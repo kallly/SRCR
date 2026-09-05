@@ -68,6 +68,8 @@ export const en: Translations = {
       'The expected link has the shape below: a JSON object carrying the session name, the sequencing mode and the list of rows, encoded as base64url in the s parameter.',
     keys:
       'The key to use for each exercise is shown in small print under its name, in the "All exercise guides" list above (e.g. catCow under "Cat-cow") — never the word at the end of its guide\'s address. The muscle group, effort type and any missing values are taken from the library. An unknown key becomes a custom exercise with that name. A row without a key inserts a rest.',
+    rawLink:
+      'Always give this link exactly as is — never wrapped in a search (google.com/search) or shortened. Some assistants add this wrapper automatically: if the link you are about to give contains one, strip it before answering — one-click import only works with the exact link.',
     spec: 'Full format specification',
   },
 
@@ -79,11 +81,11 @@ export const en: Translations = {
     createTitle: 'Create a session',
     createText: 'Copy this message:',
     createPrompt:
-      'Here is a bodyweight session site: https://kallly.github.io/SRCR/. Build me a 20-minute upper body session, then give me only the raw link to open to import it (no Google search link).',
+      'Here is a bodyweight session site: https://kallly.github.io/SRCR/. Build me a 20-minute upper body session, then give me the link to open to import it.',
     modifyTitle: 'Edit a session',
     modifyText: 'Use your session’s share link to ask the AI to edit it:',
     modifyPrompt:
-      'Here is the link to my current session: {link}. Add a calf exercise, then send me back only the raw updated link (no Google search link).',
+      'Here is the link to my current session: {link}. Add a calf exercise, then send me back the updated link.',
     linkMask: '[your link]',
     copied: 'Message copied',
   },
