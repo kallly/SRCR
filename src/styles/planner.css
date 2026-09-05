@@ -736,6 +736,22 @@
   color: var(--lime);
 }
 
+/*
+  Piege verifie : une declaration `display` posee par une classe l'emporte
+  sur le `display: none` de la feuille de style du navigateur pour `[hidden]`
+  — l'origine (auteur vs navigateur) tranche le conflit avant la specificite,
+  meme a specificite egale. Sans ce garde, un `.info-btn` a qui on bascule
+  `.hidden = true` (ui/runner.ts, masque pendant un repos) resterait affiche
+  a taille fixe. Ailleurs dans l'app, `.hidden` bascule des conteneurs qui
+  sont aussi vides de contenu quand ils sont masques (`.lib`/`.plan`) : le
+  meme conflit existe mais passe inapercu, une boite display:grid/flex sans
+  enfant s'effondrant deja a 0px. `.info-btn` garde toujours son icone et sa
+  taille fixe, donc le conflit devient visible sans ce garde.
+*/
+.info-btn[hidden] {
+  display: none;
+}
+
 .libcard .info-btn {
   position: absolute;
   top: 6px;

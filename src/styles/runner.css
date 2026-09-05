@@ -33,8 +33,21 @@
   color: var(--paper-dim);
 }
 
-.rhead .x {
+/*
+  Groupe les boutons de droite (info + quitter) : pousser directement `.x`
+  via `margin-left: auto` casserait des que `#runInfo` (cache pendant un
+  repos, voir ui/runner.ts) redevient visible, chacun des deux tenterait
+  alors d'absorber sa part de l'espace libre et un vide s'ouvrirait entre
+  eux au lieu de les coller ensemble a droite.
+*/
+.rhead-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-left: auto;
+}
+
+.rhead .x {
   background: transparent;
   border: 1px solid var(--line);
   color: var(--paper-dim);

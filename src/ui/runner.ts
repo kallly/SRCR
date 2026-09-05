@@ -3,7 +3,8 @@ import { groupColor } from '../data/groups';
 import { figureSvg } from '../data/figures';
 import { exerciseCue, exerciseName } from '../core/plan';
 import { buildQueue } from '../core/queue';
-import type { RestStep, Step, WorkStep } from '../core/types';
+import { isLibraryKey } from '../data/library';
+import type { ExerciseKey, RestStep, Step, WorkStep } from '../core/types';
 import { beep, beepExerciseEnd, beepWarning, primeAudio } from '../platform/audio';
 import { acquireWakeLock, releaseWakeLock } from '../platform/wakelock';
 import { byId, dot, el } from './dom';
@@ -67,6 +68,7 @@ export function createRunner(ctx: Context): Runner {
   const upNext = byId('runNext');
   const secondary = byId<HTMLButtonElement>('runSecondary');
   const primary = byId<HTMLButtonElement>('runPrimary');
+  const infoBtn = byId<HTMLButtonElement>('runInfo');
 
   ringFill.setAttribute('stroke-dasharray', String(RING_CIRCUMFERENCE));
 
@@ -80,6 +82,8 @@ export function createRunner(ctx: Context): Runner {
   let endsAt = 0;
   let onCountdownEnd: () => void = next;
   let warned = false;
+  /** Cle de l'exercice affichable dans la modal d'info, ou null si le bouton doit rester cache. */
+  let infoKey: ExerciseKey | null = null;
 
   function clearTimer(): void {
     if (timer !== null) window.clearInterval(timer);
@@ -144,7 +148,21 @@ export function createRunner(ctx: Context): Runner {
     return el('i', { className: 'rest-icon', attrs: { 'aria-hidden': 'true' } });
   }
 
+  /**
+   * Meme bouton "ⓘ" que dans le deroule/la bibliotheque (`ui/planner.ts`,
+   * `ui/library.ts`), pose ici pour consulter la fiche de l'exercice EN
+   * COURS sans quitter le lecteur. Cache pendant un repos (rien de precis a
+   * montrer : l'ecran de repos annonce le prochain exercice, pas un exercice
+   * en cours d'execution) et pour un exercice perso, comme partout ailleurs
+   * (`isLibraryKey()` : aucun contenu n'existe pour la cle `custom`).
+   */
+  function paintInfoButton(key: ExerciseKey | null): void {
+    infoKey = key && isLibraryKey(key) ? key : null;
+    infoBtn.hidden = infoKey === null;
+  }
+
   function paintRest(step: RestStep): void {
+    paintInfoButton(null);
     label.replaceChildren(restIcon(), document.createTextNode(t(REST_LABELS[step.reason])));
     name.textContent = step.next
       ? t('runner.then', { name: exerciseName(step.next) })
@@ -163,6 +181,7 @@ export function createRunner(ctx: Context): Runner {
 
   function paintWork(step: WorkStep): void {
     const { item } = step;
+    paintInfoButton(item.key);
     label.replaceChildren(
       dot(groupColor(item.group)),
       document.createTextNode(t(`group.${item.group}`)),
@@ -188,6 +207,7 @@ export function createRunner(ctx: Context): Runner {
   }
 
   function paintDone(): void {
+    paintInfoButton(null);
     label.replaceChildren();
     name.textContent = t('runner.finished');
     setLine.textContent = '';
@@ -369,8 +389,18 @@ export function createRunner(ctx: Context): Runner {
 
   byId('runQuit').addEventListener('click', stop);
 
+  infoBtn.addEventListener('click', () => {
+    if (infoKey) ctx.showExerciseInfo(infoKey);
+  });
+
   document.addEventListener('keydown', (event) => {
     if (!active) return;
+    // La modal d'info (ouverte depuis #runInfo) passe par-dessus le lecteur
+    // dans le top layer du navigateur, mais ce gestionnaire ecoute tout le
+    // document : sans ce garde, Echap fermerait la modal ET quitterait la
+    // seance d'un seul appui, et Espace ferait avancer le chrono derriere
+    // pendant la lecture de la fiche.
+    if (document.querySelector('dialog[open]')) return;
     if (event.key === ' ') {
       event.preventDefault();
       primary.click();

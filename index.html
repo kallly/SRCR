@@ -377,7 +377,18 @@ https://kallly.github.io/SRCR/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4Iiw
     <div class="run" id="run">
       <div class="rhead">
         <span id="runStep"></span>
-        <button class="x" type="button" id="runQuit" data-i18n="runner.quit"></button>
+        <div class="rhead-actions">
+          <button
+            class="info-btn"
+            type="button"
+            id="runInfo"
+            aria-label=""
+            data-i18n-aria-label="exerciseInfo.trigger"
+            hidden
+            >ⓘ</button
+          >
+          <button class="x" type="button" id="runQuit" data-i18n="runner.quit"></button>
+        </div>
       </div>
       <div class="prog"><i id="runProgress" style="width: 0"></i></div>
       <div class="rbody">
