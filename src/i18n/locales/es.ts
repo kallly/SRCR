@@ -257,8 +257,10 @@ export const es: Translations = {
       one: '{count} rep',
       other: '{count} reps',
     },
-    readyHint: 'Ponte en posición y luego lanza el cronómetro.',
+    readyHint: 'Al lanzar el cronómetro, tendrás 5 segundos para ponerte en posición.',
     startTimer: 'Iniciar el cronómetro',
+    startingSoon: 'Colócate, empieza en un instante.',
+    skipSetup: 'Empezar ahora',
     done: 'Terminado',
     finished: 'Sesión terminada',
     finishedCue:

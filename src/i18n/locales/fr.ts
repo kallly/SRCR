@@ -267,8 +267,10 @@ export const fr = {
       one: '{count} rep',
       other: '{count} reps',
     },
-    readyHint: 'Mets-toi en position, puis lance le chrono.',
+    readyHint: 'Tu auras 5 secondes pour te mettre en position en lançant le chrono.',
     startTimer: 'Démarrer le chrono',
+    startingSoon: 'Installe-toi, ça démarre dans un instant.',
+    skipSetup: 'Commencer maintenant',
     done: 'Terminé',
     finished: 'Séance terminée',
     finishedCue:

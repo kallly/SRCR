@@ -1,10 +1,13 @@
 .run {
   position: fixed;
   inset: 0;
+  height: 100vh;
+  height: 100dvh;
   background: var(--bg);
   color: var(--paper);
   display: none;
   flex-direction: column;
+  overflow: hidden;
   z-index: 20;
   transition: background 0.5s ease;
 }
@@ -66,6 +69,8 @@
 
 .rbody {
   flex: 1;
+  min-height: 0;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,7 +117,8 @@
   font-family: var(--disp);
   font-stretch: 125%;
   font-weight: 800;
-  font-size: 32px;
+  font-size: clamp(20px, 5vh, 32px);
+  font-size: clamp(20px, 5dvh, 32px);
   letter-spacing: -0.01em;
   margin: 8px 0 2px;
   line-height: 1.08;
@@ -132,7 +138,8 @@
 
 .rfig svg {
   width: 100%;
-  height: 82px;
+  height: clamp(50px, 10vh, 82px);
+  height: clamp(50px, 10dvh, 82px);
 }
 
 .rfig .s,
@@ -159,14 +166,38 @@
   stroke: none;
 }
 
+/*
+ * L'anneau ne se dimensionne plus via un pourcentage de la hauteur du
+ * viewport (`vh`/`dvh`) : sur Firefox mobile, la taille peinte pouvait se
+ * desynchroniser de la taille reservee par la mise en page (decalage de
+ * recalcul de la barre d'outils dynamique), et le texte suivant (`.rhint`)
+ * se retrouvait rendu a l'interieur du cercle. En dependant uniquement du
+ * flex (`flex-basis` + `flex-shrink`) et de `aspect-ratio`, la taille du
+ * cercle est directement celle que le layout reserve — les deux ne peuvent
+ * plus diverger, quel que soit le navigateur.
+ */
 .ring {
   position: relative;
-  width: 230px;
-  height: 230px;
+  container-type: size;
+  flex: 0 1 230px;
+  min-height: 90px;
+  width: auto;
+  max-width: 230px;
+  aspect-ratio: 1;
   margin: 8px auto 6px;
   display: none;
   align-items: center;
   justify-content: center;
+}
+
+/* Sous 700px de hauteur, l'anneau (deja reduit ci-dessus) et la figure de
+   forme se chevauchent trop : la figure, purement decorative une fois le
+   chrono affiche, cede la place. Au-dela de 700px (desktop, phones hauts),
+   les deux restent visibles comme avant. */
+@media (max-height: 700px) {
+  .rbody:has(.ring.on) .rfig {
+    display: none;
+  }
 }
 
 .ring.on {
@@ -209,6 +240,14 @@
   opacity: 0.55;
 }
 
+.run.countdown {
+  background: #12211a;
+}
+
+.run.countdown .ring .fill {
+  stroke: var(--mint);
+}
+
 .rhint {
   font-size: 13px;
   color: var(--mint);
@@ -225,7 +264,11 @@
   font-family: var(--disp);
   font-stretch: 125%;
   font-weight: 800;
-  font-size: 56px;
+  /* Repli si `container-type` n'est pas supporte, sinon ecrase juste apres :
+     proportionnel a la taille reelle de `.ring` (24cqmin), jamais a celle du
+     viewport — les deux ne peuvent plus se desynchroniser. */
+  font-size: clamp(26px, 8dvh, 56px);
+  font-size: 24cqmin;
   letter-spacing: -0.02em;
   line-height: 1;
   position: relative;
@@ -236,7 +279,8 @@
   font-family: var(--disp);
   font-stretch: 125%;
   font-weight: 800;
-  font-size: 64px;
+  font-size: clamp(32px, 9vh, 64px);
+  font-size: clamp(32px, 9dvh, 64px);
   letter-spacing: -0.02em;
   margin: 16px 0 2px;
   color: var(--lime);
@@ -270,6 +314,7 @@
 
 .rfoot button {
   flex: 1;
+  min-height: 44px;
   padding: 16px;
   font-weight: 700;
   font-size: 14.5px;
@@ -286,4 +331,35 @@
   flex: 2;
   font-family: var(--disp);
   font-stretch: 125%;
+}
+
+/* Palier dedie aux tres faibles hauteurs (telephone en paysage) : le
+   contenu fixe (hors figure/anneau, deja adaptes ci-dessus) ne tient plus
+   sous ~480px. Premiere media-query sur la hauteur du projet, deliberement
+   isolee ici puisque la contrainte est reellement la hauteur, pas la
+   largeur (toutes les autres media-queries du projet portent sur min/max-width). */
+@media (max-height: 480px) {
+  .rbody {
+    padding: 10px 20px;
+  }
+
+  .rname {
+    margin: 4px 0 2px;
+  }
+
+  .rcue {
+    margin-top: 6px;
+  }
+
+  .rnext {
+    display: none;
+  }
+
+  .rfoot {
+    padding: 10px 20px calc(14px + env(safe-area-inset-bottom));
+  }
+
+  .rfoot button {
+    padding: 10px 16px;
+  }
 }

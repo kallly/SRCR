@@ -258,8 +258,10 @@ export const de: Translations = {
       one: '{count} Wdh.',
       other: '{count} Wdh.',
     },
-    readyHint: 'Geh in Position, dann starte die Uhr.',
+    readyHint: 'Wenn du die Uhr startest, hast du 5 Sekunden, um in Position zu gehen.',
     startTimer: 'Uhr starten',
+    startingSoon: 'Mach dich bereit, es geht gleich los.',
+    skipSetup: 'Jetzt starten',
     done: 'Fertig',
     finished: 'Einheit beendet',
     finishedCue:

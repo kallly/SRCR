@@ -257,8 +257,10 @@ export const it: Translations = {
       one: '{count} rip.',
       other: '{count} rip.',
     },
-    readyHint: 'Mettiti in posizione, poi avvia il cronometro.',
+    readyHint: 'Avviando il cronometro avrai 5 secondi per metterti in posizione.',
     startTimer: 'Avvia il cronometro',
+    startingSoon: 'Preparati, si parte tra un istante.',
+    skipSetup: 'Inizia subito',
     done: 'Fatto',
     finished: 'Seduta completata',
     finishedCue:

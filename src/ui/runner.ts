@@ -4,7 +4,7 @@ import { figureSvg } from '../data/figures';
 import { exerciseCue, exerciseName } from '../core/plan';
 import { buildQueue } from '../core/queue';
 import type { RestStep, Step, WorkStep } from '../core/types';
-import { beep, primeAudio } from '../platform/audio';
+import { beep, beepExerciseEnd, beepWarning, primeAudio } from '../platform/audio';
 import { acquireWakeLock, releaseWakeLock } from '../platform/wakelock';
 import { byId, dot, el } from './dom';
 import { clock } from './format';
@@ -16,15 +16,25 @@ const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 /** Secondes ajoutees par le bouton secondaire pendant une pause. */
 const EXTRA_SECONDS = 15;
 
+/**
+ * Secondes de mise en place entre l'appui sur « Demarrer le chrono » et le
+ * vrai depart (bip + decompte de l'exercice) : le temps de lacher le
+ * telephone et de se mettre en position. Un bouton permet de la sauter.
+ */
+const SETUP_SECONDS = 5;
+
 /** Periode de rafraichissement du chrono : assez fine pour ne pas sauter de seconde. */
 const TICK_MS = 250;
+
+/** Bip d'avertissement quand il reste ce nombre de secondes ou moins. */
+const WARNING_SECONDS = 3;
 
 /**
  * Phase courante du lecteur. Elle determine a la fois l'affichage et l'action
  * des deux boutons du bas, ce qui permet de repeindre l'ecran a tout moment
  * (changement de langue) sans toucher au chrono en cours.
  */
-type Phase = 'rest' | 'ready' | 'timing' | 'reps' | 'done';
+type Phase = 'rest' | 'ready' | 'countdown' | 'timing' | 'reps' | 'done';
 
 const REST_LABELS: Record<RestStep['reason'], Parameters<typeof t>[0]> = {
   manual: 'rest.manual',
@@ -68,6 +78,8 @@ export function createRunner(ctx: Context): Runner {
   let remaining = 0;
   let duration = 0;
   let endsAt = 0;
+  let onCountdownEnd: () => void = next;
+  let warned = false;
 
   function clearTimer(): void {
     if (timer !== null) window.clearInterval(timer);
@@ -89,18 +101,27 @@ export function createRunner(ctx: Context): Runner {
   function tick(): void {
     remaining = Math.max(0, Math.round((endsAt - Date.now()) / 1000));
     paintClock();
+    // Pas d'avertissement pendant la mise en place : ses 5 secondes sont deja
+    // toutes une preparation, un bip a 3 s n'y annoncerait rien de nouveau.
+    if (!warned && phase !== 'countdown' && remaining > 0 && remaining <= WARNING_SECONDS) {
+      warned = true;
+      beepWarning();
+    }
     if (remaining <= 0) {
       clearTimer();
-      beep();
-      next();
+      if (phase === 'timing') beepExerciseEnd();
+      else beep();
+      onCountdownEnd();
     }
   }
 
-  function startCountdown(seconds: number): void {
+  function startCountdown(seconds: number, onEnd: () => void = next): void {
     clearTimer();
     duration = seconds;
     remaining = seconds;
     endsAt = Date.now() + seconds * 1000;
+    onCountdownEnd = onEnd;
+    warned = seconds <= WARNING_SECONDS;
     paintClock();
     timer = window.setInterval(tick, TICK_MS);
   }
@@ -157,8 +178,13 @@ export function createRunner(ctx: Context): Runner {
       primary.textContent = t('runner.setDone');
       return;
     }
-    hint.textContent = t('runner.readyHint');
-    primary.textContent = phase === 'ready' ? t('runner.startTimer') : t('runner.done');
+    hint.textContent = phase === 'countdown' ? t('runner.startingSoon') : t('runner.readyHint');
+    primary.textContent =
+      phase === 'ready'
+        ? t('runner.startTimer')
+        : phase === 'countdown'
+          ? t('runner.skipSetup')
+          : t('runner.done');
   }
 
   function paintDone(): void {
@@ -212,7 +238,7 @@ export function createRunner(ctx: Context): Runner {
     }
 
     screen.classList.toggle('resting', step.kind === 'rest');
-    screen.classList.remove('done-state', 'ready');
+    screen.classList.remove('done-state', 'ready', 'countdown');
     hint.classList.remove('on');
     secondary.style.display = '';
     progress.style.width = `${(index / queue.length) * 100}%`;
@@ -244,14 +270,30 @@ export function createRunner(ctx: Context): Runner {
     render();
   }
 
+  /** Appui sur « Demarrer le chrono » : lance la mise en place, pas l'exercice. */
+  function beginSetup(): void {
+    const step = currentStep();
+    if (!step || step.kind !== 'work' || step.item.mode !== 'time') return;
+    phase = 'countdown';
+    screen.classList.remove('ready');
+    screen.classList.add('countdown');
+    render();
+    startCountdown(SETUP_SECONDS, startTimer);
+  }
+
+  /**
+   * Vrai depart de l'exercice : fin de la mise en place, spontanee ou sautee.
+   * Ne bipe pas elle-meme : `tick()` l'a deja fait pour une fin naturelle, et
+   * le bouton « Commencer maintenant » s'en charge pour une fin sautee — sans
+   * quoi les deux chemins produiraient un double bip.
+   */
   function startTimer(): void {
     const step = currentStep();
     if (!step || step.kind !== 'work' || step.item.mode !== 'time') return;
     phase = 'timing';
-    screen.classList.remove('ready');
+    screen.classList.remove('countdown');
     hint.classList.remove('on');
     render();
-    beep();
     startCountdown(step.item.seconds);
   }
 
@@ -275,7 +317,7 @@ export function createRunner(ctx: Context): Runner {
     ctx.state.history.push(Date.now());
     ctx.save();
 
-    screen.classList.remove('resting', 'ready');
+    screen.classList.remove('resting', 'ready', 'countdown');
     screen.classList.add('done-state');
     hint.classList.remove('on');
     ring.classList.remove('on');
@@ -289,7 +331,7 @@ export function createRunner(ctx: Context): Runner {
     clearTimer();
     active = false;
     phase = 'done';
-    screen.classList.remove('on', 'resting', 'done-state', 'ready');
+    screen.classList.remove('on', 'resting', 'done-state', 'ready', 'countdown');
     hint.classList.remove('on');
     secondary.style.display = '';
     // Sans cette remise a zero, la barre gardait la position de la seance
@@ -312,7 +354,11 @@ export function createRunner(ctx: Context): Runner {
 
   primary.addEventListener('click', () => {
     if (phase === 'done') stop();
-    else if (phase === 'ready') startTimer();
+    else if (phase === 'ready') beginSetup();
+    else if (phase === 'countdown') {
+      beep();
+      startTimer();
+    }
     else next();
   });
 
