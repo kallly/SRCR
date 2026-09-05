@@ -71,7 +71,16 @@ function injectExerciseIndex(): Plugin {
           // ui/guides-index.ts, qui ne lit que `dataset.slug*`.
           const entry = findLibraryEntry(e.key);
           const machine = entry ? ` data-key="${entry.key}" data-group="${entry.group}"` : '';
-          return `          <li><a href="exercises/${INDEX_LOCALE}/${e.slug}.html"${machine}${data}>${e.name}</a></li>`;
+          // La cle est AUSSI du texte visible (`<code>`), pas seulement
+          // l'attribut `data-key` ci-dessus — piege verifie : une IA qui lit
+          // la page en extraction de texte (beaucoup d'outils de navigation
+          // le font, plutot que de parser les attributs HTML) ne voit que le
+          // nom et l'URL du lien, jamais `data-key`. Sans repere visible, une
+          // IA a deja pris le SLUG de la fiche dans l'URL (`chat-vache`) pour
+          // la cle attendue (`catCow`), produisant une seance ou chaque
+          // exercice s'affichait comme "Exercice perso" faute de cle connue.
+          const visibleKey = entry ? ` <code>${entry.key}</code>` : '';
+          return `          <li><a href="exercises/${INDEX_LOCALE}/${e.slug}.html"${machine}${data}>${e.name}</a>${visibleKey}</li>`;
         })
         .join('\n');
 

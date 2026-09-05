@@ -74,7 +74,7 @@ export const fr = {
     format:
       'Le lien attendu est de la forme ci-dessous : un objet JSON qui porte le nom de la séance, le mode d’enchaînement et la liste des lignes, compressé en base64url dans le paramètre s.',
     keys:
-      'La valeur à mettre dans le champ clé est l’attribut data-key des liens « Toutes les fiches d’exercice » ci-dessus, et data-group donne le groupe musculaire de chacun. Le groupe, le type d’effort et les valeurs manquantes sont déduits de la bibliothèque. Une clé inconnue devient un exercice personnalisé portant ce nom. Une ligne sans clé insère une pause.',
+      'La clé à utiliser pour chaque exercice est indiquée en petit sous son nom, dans la liste « Toutes les fiches d’exercice » ci-dessus (par exemple catCow sous « Chat-vache ») — ce n’est jamais le mot qui termine l’adresse de sa fiche. Le groupe musculaire, le type d’effort et les valeurs manquantes sont déduits de la bibliothèque. Une clé inconnue devient un exercice personnalisé portant ce nom. Une ligne sans clé insère une pause.',
     spec: 'Spécification complète du format',
   },
 
@@ -86,11 +86,11 @@ export const fr = {
     createTitle: 'Créer une séance',
     createText: 'Copiez ce message :',
     createPrompt:
-      'Voici un site de séances au poids du corps : https://kallly.github.io/SRCR/. Crée-moi une séance haut du corps de 20 minutes, puis donne-moi le lien à ouvrir pour l’importer.',
+      'Voici un site de séances au poids du corps : https://kallly.github.io/SRCR/. Crée-moi une séance haut du corps de 20 minutes, puis donne-moi uniquement le lien brut à ouvrir pour l’importer (pas de lien de recherche Google).',
     modifyTitle: 'Modifier une séance',
     modifyText: 'Utilisez le lien de partage de votre séance pour demander à l’IA de la modifier :',
     modifyPrompt:
-      'Voici le lien de ma séance actuelle : {link}. Ajoute un exercice pour les mollets, puis renvoie-moi le lien mis à jour.',
+      'Voici le lien de ma séance actuelle : {link}. Ajoute un exercice pour les mollets, puis renvoie-moi uniquement le lien brut mis à jour (pas de lien de recherche Google).',
     linkMask: '[votre lien]',
     copied: 'Message copié',
   },

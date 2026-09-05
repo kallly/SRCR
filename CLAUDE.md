@@ -318,6 +318,36 @@ d'un tiers (une messagerie qui tronque) et que l'utilisateur n'y pouvait
 rien ; plus du tout depuis qu'il peut venir d'une IA à qui on peut demander
 de recommencer.
 
+**Une clé inconnue sans nom fourni se dégrade vers une version lisible de la
+clé, jamais vers l'anonymat total** (`humanizeUnknownKey()`,
+`core/storage.ts`). Piège vérifié en usage réel : Gemini a lu la page en
+extraction de texte, sans les attributs HTML, et a puisé le **slug de la
+fiche d'exercice** (`chat-vache`, visible dans l'URL de la fiche) au lieu de
+la **clé interne** attendue (`catCow`, alors invisible pour lui). Sans
+filet, une clé ainsi mal formée et sans `customName` faisait perdre tout
+nom : `parseItem()` retombait sur `key: 'custom'` sans `customName`, et
+`exerciseName()` (`core/plan.ts`) affichait alors le générique
+`exercise.custom.name` (« Exercice perso ») pour **chaque ligne** de la
+séance importée — un lien qui décodait correctement mais rendait la séance
+méconnaissable. Double correction : la clé de chaque exercice est
+maintenant *aussi* du texte visible (`<code>`) à côté de son nom dans
+l'index des fiches (`injectExerciseIndex()`, `vite.config.ts`), pas
+seulement l'attribut `data-key` — préventif, pour qu'une IA en lecture de
+texte tombe directement sur la bonne valeur ; et `humanizeUnknownKey()` est
+le filet pour les cas qui persisteraient malgré tout (« moulinets-de-bras »
+→ « Moulinets de bras » plutôt que rien). `rawKey === 'custom'` reste
+exempté : c'est le sentinel légitime, pas une clé mal formée, et il n'y a
+rien à en déduire.
+
+**Un lien produit par une IA peut arriver enveloppé dans une redirection de
+recherche** (`google.com/search?q=<lien>` chez Gemini, notamment) : un
+comportement du produit, pas quelque chose que ce site contrôle. La seule
+parade réaliste est dans le prompt lui-même — `aiHelp.createPrompt` et
+`aiHelp.modifyPrompt` (`ui/ai-help.ts`) demandent explicitement « le lien
+brut, pas de lien de recherche Google ». Compromis assumé : ça n'agit que
+sur les deux prompts fournis par l'app, pas sur une IA qui lit `#aiPlan` de
+sa propre initiative sans prompt fourni par l'utilisateur.
+
 **WebMCP (`ui/webmcp.ts`) est un pari assumé, pas un socle.**
 `navigator.modelContext` est un draft du W3C Community Group en origin trial
 Chrome, et **aucun agent grand public ne l'appelle aujourd'hui**. D'où :

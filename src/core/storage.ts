@@ -59,6 +59,23 @@ function positiveInt(value: unknown, fallback: number): number {
     : fallback;
 }
 
+/**
+ * Degrade une cle inconnue en nom lisible plutot que de perdre toute
+ * information : "moulinets-de-bras" -> "Moulinets de bras".
+ *
+ * Piege verifie : une IA a qui on donne l'URL du site lit parfois la page en
+ * extraction de texte, sans les attributs HTML (`data-key`) — elle ne voit
+ * alors que les URL des fiches d'exercice et y puise le SLUG de la fiche
+ * (`chat-vache`) au lieu de la cle interne attendue (`catCow`). Sans ce
+ * filet, une telle ligne perdait tout nom et retombait sur le libelle
+ * generique `exercise.custom.name` (« Exercice perso ») pour chaque
+ * exercice de la seance, rendant le lien inutilisable une fois importe.
+ */
+function humanizeUnknownKey(key: string): string {
+  const spaced = key.replace(/[-_]+/g, ' ').trim();
+  return spaced ? spaced.charAt(0).toUpperCase() + spaced.slice(1) : '';
+}
+
 /** Accepte aussi bien une ligne v4 qu'une ligne v3 (`type: 'ex'`, nom inline). */
 function parseItem(raw: unknown): PlanItem | null {
   if (typeof raw !== 'object' || raw === null) return null;
@@ -76,8 +93,13 @@ function parseItem(raw: unknown): PlanItem | null {
   // v3 : le nom etait recopie dans la ligne. On ne le garde que s'il ne peut
   // pas etre retrouve depuis la bibliotheque, c'est-a-dire pour un perso.
   const legacyName = typeof source['name'] === 'string' ? source['name'].trim() : '';
-  const customName =
+  const providedName =
     typeof source['customName'] === 'string' ? source['customName'].trim() : legacyName;
+  // `rawKey === 'custom'` est le sentinel legitime (aucun nom a en deduire) ;
+  // toute AUTRE cle inconnue est vraisemblablement une cle mal formee — voir
+  // humanizeUnknownKey().
+  const customName =
+    providedName || (!known && rawKey !== 'custom' ? humanizeUnknownKey(rawKey) : '');
 
   const group = isGroupId(source['group']) ? source['group'] : 'core';
   const mode = source['mode'] === 'time' ? 'time' : 'reps';

@@ -67,7 +67,7 @@ export const de: Translations = {
     format:
       'Der erwartete Link hat die unten gezeigte Form: ein JSON-Objekt mit dem Namen der Einheit, dem Ablaufmodus und der Liste der Zeilen, als base64url im Parameter s abgelegt.',
     keys:
-      'Der Wert für das Schlüsselfeld ist das Attribut data-key der Links „Alle Übungsseiten“ oben, und data-group nennt die jeweilige Muskelgruppe. Gruppe, Belastungsart und fehlende Werte stammen aus der Bibliothek. Ein unbekannter Schlüssel wird zu einer eigenen Übung mit diesem Namen. Eine Zeile ohne Schlüssel fügt eine Pause ein.',
+      'Der zu verwendende Schlüssel steht klein unter dem Namen jeder Übung, in der Liste „Alle Übungsseiten“ oben (z. B. catCow unter „Katze-Kuh“) — niemals das Wort am Ende der Adresse ihrer Seite. Muskelgruppe, Belastungsart und fehlende Werte stammen aus der Bibliothek. Ein unbekannter Schlüssel wird zu einer eigenen Übung mit diesem Namen. Eine Zeile ohne Schlüssel fügt eine Pause ein.',
     spec: 'Vollständige Formatspezifikation',
   },
 
@@ -79,11 +79,11 @@ export const de: Translations = {
     createTitle: 'Eine Einheit erstellen',
     createText: 'Kopiere diese Nachricht:',
     createPrompt:
-      'Hier ist eine Seite für Körpergewichtseinheiten: https://kallly.github.io/SRCR/. Erstelle mir eine 20-minütige Oberkörper-Einheit und gib mir den Link zum Importieren.',
+      'Hier ist eine Seite für Körpergewichtseinheiten: https://kallly.github.io/SRCR/. Erstelle mir eine 20-minütige Oberkörper-Einheit und gib mir nur den reinen Link zum Importieren (keinen Google-Suchlink).',
     modifyTitle: 'Eine Einheit ändern',
     modifyText: 'Nutze den Freigabelink deiner Einheit, um die KI um eine Änderung zu bitten:',
     modifyPrompt:
-      'Hier ist der Link zu meiner aktuellen Einheit: {link}. Füge eine Wadenübung hinzu und schick mir den aktualisierten Link zurück.',
+      'Hier ist der Link zu meiner aktuellen Einheit: {link}. Füge eine Wadenübung hinzu und schick mir nur den reinen aktualisierten Link zurück (keinen Google-Suchlink).',
     linkMask: '[dein Link]',
     copied: 'Nachricht kopiert',
   },
