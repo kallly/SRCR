@@ -204,7 +204,6 @@ export function createShare(ctx: Context): Share {
     });
 
     importConfirmBtn.hidden = false;
-    importAppendBtn.hidden = false;
     // `onclick =` plutot qu'addEventListener : la fonction peut etre rappelee
     // (WebMCP), et les handlers s'accumuleraient.
     importConfirmBtn.onclick = () => {
@@ -230,6 +229,15 @@ export function createShare(ctx: Context): Share {
 
     const target = shared.name ? findPlanByName(shared.name) : undefined;
     importReplaceBtn.hidden = target === undefined;
+    // Quand le nom correspond a une seance existante, ce lien EST une
+    // nouvelle version de cette seance (cas typique : une IA qui relit puis
+    // renvoie « Haut du corps — 20 min » modifiee) — « Ajouter a la seance
+    // active » n'a alors pas de sens a cote de « Remplacer », les deux
+    // brouillant un choix qui n'en est en realite qu'un (remplacer, ou garder
+    // les deux versions separement via « nouvelle seance »). Sans
+    // correspondance de nom, l'ajout reste la seule facon de fusionner un
+    // petit lot d'exercices partages dans la seance en cours.
+    importAppendBtn.hidden = target !== undefined;
     if (!target) {
       importReplaceBtn.onclick = null;
       importReplaceBtn.textContent = '';

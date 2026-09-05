@@ -306,7 +306,14 @@ qui fait marcher `?s=` — un lien produit en français s'importe en italien.
 **Le lien ne décide de rien : l'utilisateur choisit la destination.** Le
 dialogue d'import propose « Importer comme nouvelle séance », « Ajouter à la
 séance active », et « Remplacer "X" » seulement si le nom correspond à une
-séance existante. Aucun champ « opération » à faire produire par le modèle,
+séance existante — et dans ce dernier cas, **« Ajouter » disparaît** :
+l'usage réel qui fait apparaître « Remplacer » est une IA qui relit une
+séance nommée puis renvoie sa version modifiée, pas un lot d'exercices à
+fusionner ailleurs ; proposer les deux à côté d'« Ajouter » brouillait un
+choix qui n'en est en réalité qu'un (remplacer, ou garder les deux versions
+séparément via « nouvelle séance »). Sans correspondance de nom, « Ajouter »
+reste la seule façon de fusionner un petit lot d'exercices partagés dans la
+séance en cours. Aucun champ « opération » à faire produire par le modèle,
 aucun changement de format, et une IA ne peut pas écraser une séance à l'insu
 de son propriétaire. Remplacer et ajouter sont suivis d'un toast « Annuler ».
 `importPlan()` (`ui/app.ts`) garde sa sémantique « crée toujours » ;
