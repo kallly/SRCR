@@ -32,6 +32,7 @@ visé.
 | `npm run build` | Vérification des types puis build vers `dist/` |
 | `npm run preview` | Sert le build de production, port 8000 |
 | `npm run typecheck` | Vérifie le code et la complétude des cinq traductions |
+| `npm run check` | Build, puis vérifie ce qu'il a produit dans `dist/` |
 
 ## Publier
 
@@ -63,4 +64,5 @@ src/platform/  bip audio, verrou d'écran
 ```
 
 Les détails d'architecture et les règles à respecter sont dans
-[CLAUDE.md](CLAUDE.md).
+[CLAUDE.md](CLAUDE.md), qui renvoie vers `.claude/skills/` pour les règles
+propres à une zone (partage par lien, SEO, pages d'exercice, modules d'interface).
