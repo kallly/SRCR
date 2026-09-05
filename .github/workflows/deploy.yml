@@ -34,6 +34,13 @@ jobs:
 
       - run: npm run build
 
+      # Verifie ce que le build *produit* : texte francais present pour les
+      # robots sans JS, 28 cles d'exercice lisibles par une IA, JSON-LD
+      # valide, exemple `?s=` de la page de spec reellement decodable, et
+      # 140 fiches non vides toutes inscrites au sitemap. Le typecheck
+      # ci-dessus ne voit rien de tout cela.
+      - run: npx tsx scripts/check-build.ts
+
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3

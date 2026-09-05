@@ -8,7 +8,9 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build && tsx scripts/build-exercise-pages.ts",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "exo": "tsx scripts/show-exercise.ts",
+    "check": "npm run build && tsx scripts/check-build.ts"
   },
   "devDependencies": {
     "@types/node": "^26.4.1",

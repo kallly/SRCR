@@ -59,21 +59,34 @@ interface (documented in `fr.ts` of that directory): `slug`, `muscles`,
 they don't apply — see CLAUDE.md, "Champs optionnels = sections absentes").
 
 **This contract is intentionally `Partial`, so a missing locale will not
-fail `npm run typecheck`.** After writing the French entry, explicitly grep
-for the key across the other 4 files before considering the exercise done:
+fail `npm run typecheck`.** `npm run exo <key>` is the check — and the way to
+read these files without opening 1 100 lines five times over:
 
 ```bash
-for f in en es de it; do grep -q "^\s*<key>:" src/content/exercise-details/$f.ts || echo "MISSING: $f"; done
+npm run exo catCow
+#   fr.ts   L678-709     slug: chat-vache      complet
+#   en.ts   L626-657     slug: cat-cow         complet
+#   …
 ```
+
+Run it **before** editing (to read only the lines it names, with `Read`'s
+`offset`/`limit`) and **after** (it reports any locale still missing, or any
+required field left empty).
 
 Writing rules (CLAUDE.md, "Règle de rédaction du contenu long"): only
 verifiable, stable anatomy/biomechanics/training-principle content — never a
 cited study, an EMG activation percentage, or a falsely precise number.
 Precautions are practical, never a diagnosis.
 
-`slug` must be a readable French slug (e.g. `pompes-genoux`), used in the
-generated URL for every locale's page for this exercise — it does not need
-to be translated per locale.
+**`slug` is translated per locale, and that is load-bearing.** Each locale's
+page lives at `exercises/<locale>/<slug>.html`, so the slug must be written in
+that locale's language: `pompes-inclinees` (fr), `incline-push-ups` (en),
+`flexiones-inclinadas` (es), `erhoehte-liegestuetze` (de),
+`piegamenti-inclinati` (it). A French slug under `exercises/en/` is an
+incoherent URL for an English reader and undercuts the per-language indexing
+these pages exist for. `src/content/exercise-details/en.ts` says the same in
+its header comment. Slugs may legitimately coincide when the term is the same
+in both languages (`wall-sit`, `superman`).
 
 ## 6. Image prompt — `src/content/image-prompts.ts` (optional, one file)
 
@@ -88,13 +101,16 @@ d'exister").
 
 ```bash
 npm run typecheck   # catches steps 1-3 if any of the 5 locales was missed
-npm run build       # regenerates dist/exercises/<locale>/<slug>.html for all 5 locales + sitemap.xml + docs/image-prompts.md
+npm run exo <key>   # catches step 5: which locale is still missing content
+npm run check       # build + assert on dist/ (see below)
 ```
 
-After building, confirm the new exercise has a generated page in all 5
-locale folders under `dist/exercises/`, and that `dist/index.html` lists it
-in the injected exercise index (`<!--EXERCISE_INDEX-->` in `index.html` is
-replaced at build time — don't edit that list by hand).
+`npm run check` runs the build and then verifies what it produced: a page in
+all 5 locale folders for the new slug, every page non-empty and listed in
+`dist/sitemap.xml`, the new key present in the injected exercise index of
+`dist/index.html` both as `data-key` and as a visible `<code>` badge. That
+covers by machine what used to be a manual read-through — don't re-check it by
+hand, and never edit the injected list (`<!--EXERCISE_INDEX-->`) yourself.
 
 Never hand-edit anything under `dist/exercises/` — it is regenerated wholesale
 on every build.
