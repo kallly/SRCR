@@ -5,8 +5,7 @@ export const it: Translations = {
     title: 'Seduta — ripresa a corpo libero',
     eyebrow: 'Fase 1 · senza attrezzi',
     heading: 'La mia seduta',
-    tagline:
-      'Costruisci il tuo allenamento, ordina gli esercizi, regola le pause. Tutto resta su questo dispositivo.',
+    tagline: 'Costruisci il tuo allenamento, ordina gli esercizi, regola le pause.',
     sourceCode: 'Codice sorgente',
   },
 
@@ -39,7 +38,16 @@ export const it: Translations = {
       one: '«{name}» — {count} esercizio.',
       other: '«{name}» — {count} esercizi.',
     },
-    importConfirm: 'Importa',
+    importConfirm: 'Importa come nuova seduta',
+    importAppend: 'Aggiungi alla seduta attiva',
+    importReplace: 'Sostituisci «{name}»',
+    importInvalid:
+      'Questo link non descrive una seduta valida. Se proviene da un’intelligenza artificiale, chiedile di rigenerarlo seguendo il formato indicato in fondo alla pagina iniziale.',
+    replaced: 'Seduta sostituita',
+    appended: {
+      one: '{count} esercizio aggiunto',
+      other: '{count} esercizi aggiunti',
+    },
   },
 
   about: {
@@ -50,6 +58,34 @@ export const it: Translations = {
       'Due modi di concatenare le serie. In modalità classica esegui tutte le serie di un esercizio prima di passare al successivo, con il recupero impostato su ogni riga. In modalità circuito le serie alternano i gruppi muscolari e una pausa compare solo quando due sforzi dello stesso gruppo devono per forza susseguirsi — l’anteprima mostra la sequenza calcolata prima di iniziare.',
     privacy:
       'Durante la seduta, un lettore a schermo intero mostra il cronometro, l’anello di avanzamento e l’indicazione di esecuzione, mantiene lo schermo acceso e segnala la fine di ogni intervallo. Nessun account, nessun server, nessun dato inviato: seduta e cronologia sono salvate nel browser. L’interfaccia è disponibile in francese, inglese, spagnolo, tedesco e italiano.',
+  },
+
+  aiPlan: {
+    title: 'Creare una seduta tramite link (per un’IA)',
+    intro:
+      'Questa pagina sa ricevere una seduta descritta nel proprio indirizzo: aprire un link del genere propone di importarla, e nulla viene salvato senza conferma. Un’intelligenza artificiale può quindi comporre una seduta e consegnartela sotto forma di link, senza account né server. Basta darle l’indirizzo di questa pagina.',
+    format:
+      'Il link atteso ha la forma qui sotto: un oggetto JSON che porta il nome della seduta, la modalità di concatenamento e l’elenco delle righe, codificato in base64url nel parametro s.',
+    keys:
+      'Il valore da mettere nel campo chiave è l’attributo data-key dei link «Tutte le schede degli esercizi» qui sopra, e data-group indica il gruppo muscolare di ciascuno. Gruppo, tipo di sforzo e valori mancanti sono dedotti dalla libreria. Una chiave sconosciuta diventa un esercizio personalizzato con quel nome. Una riga senza chiave inserisce una pausa.',
+    spec: 'Specifica completa del formato',
+  },
+
+  aiHelp: {
+    trigger: 'IA',
+    triggerLabel: 'Creare o modificare una seduta con un’IA',
+    title: 'Creare o modificare con un’IA',
+    intro: 'ChatGPT, Claude e Gemini possono creare o modificare la tua seduta: dagli solo un link.',
+    createTitle: 'Creare una seduta',
+    createText: 'Copia questo messaggio:',
+    createPrompt:
+      'Ecco un sito di sedute a corpo libero: https://kallly.github.io/SRCR/. Creami una seduta per la parte superiore del corpo di 20 minuti e dammi il link per importarla.',
+    modifyTitle: 'Modificare una seduta',
+    modifyText: 'Usa il link di condivisione della tua seduta per chiedere all’IA di modificarla:',
+    modifyPrompt:
+      'Ecco il link della mia seduta attuale: {link}. Aggiungi un esercizio per i polpacci e rimandami il link aggiornato.',
+    linkMask: '[il tuo link]',
+    copied: 'Messaggio copiato',
   },
 
   exerciseInfo: {

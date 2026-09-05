@@ -14,7 +14,7 @@ progression + bip).
 | Commande | Effet |
 |---|---|
 | `npm run dev` | Serveur de développement sur le port 8000, exposé sur le réseau local |
-| `npm run build` | `tsc --noEmit`, build Vite vers `dist/`, puis génère les pages d'exercice (`scripts/build-exercise-pages.ts`) et `dist/sitemap.xml` |
+| `npm run build` | `tsc --noEmit`, build Vite vers `dist/`, puis génère les pages d'exercice, `dist/creer-une-seance-par-lien.html`, `dist/llms.txt` et `dist/sitemap.xml` (`scripts/build-exercise-pages.ts`) |
 | `npm run preview` | Sert `dist/` sur le port 8000 |
 | `npm run typecheck` | Le filet du projet — il n'y a pas de suite de tests |
 
@@ -31,6 +31,8 @@ src/
     plan.ts        creation de lignes, resolution des noms traduits
     queue.ts       LE moteur : buildClassic, buildCircuit, queueDuration
     storage.ts     localStorage v5 (plusieurs SavedPlan) + migration depuis la v4/v3
+    share.ts       format dense du lien/QR de partage (?s=), base64url
+    ai-plan.ts     format JSON lisible (?plan=), le filet du pilotage par une IA
   data/            donnees sans texte
     groups.ts      ids + couleurs des groupes musculaires
     library.ts     28 exercices : reglages seulement
@@ -49,9 +51,12 @@ src/
     toast.ts       toast transitoire avec action (annulation de suppression)
     inline-input.ts  formulaire inline, remplace un window.prompt() natif
     dom.ts         el(), byId(), applyStaticTranslations()
+    share.ts       modales partage (QR) et import ; lecture de ?s= et ?plan=
+    webmcp.ts      outils exposes a un navigateur agentique — charge a la demande
   platform/        audio.ts (bip), wakelock.ts (ecran allume)
 scripts/
-  build-exercise-pages.ts  genere dist/exercises/*, dist/sitemap.xml, docs/image-prompts.md
+  build-exercise-pages.ts  genere dist/exercises/*, dist/creer-une-seance-par-lien.html,
+                           dist/llms.txt, dist/sitemap.xml, docs/image-prompts.md
 ```
 
 Les modules d'interface reçoivent un `Context` (`ui/app.ts`) qui leur donne
@@ -238,6 +243,92 @@ standard (version 40), `qrcode-generator` lève une chaîne brute (pas une
 copiable reste disponible, plutôt que de casser toute la fonctionnalité pour
 une séance inhabituellement grande.
 
+## Écriture par lien : le site est pilotable par une IA
+
+On peut donner l'URL du site à ChatGPT, Claude ou Gemini et obtenir un lien
+qui crée la séance. Rien de neuf côté moteur : c'est le lien de partage
+`?s=` ci-dessus, mais **documenté dans la page elle-même** pour que le modèle
+le découvre sans qu'on le lui explique.
+
+**Le canal qui porte la fonctionnalité est le texte visible d'`index.html`.**
+Ces outils récupèrent le HTML et le lisent ; ils n'exécutent pas notre JS.
+D'où la section `#aiPlan` (`<details class="about" open>`, entre « À propos »
+et le pied de page), livrée ouverte comme « À propos » et repliée sous 760 px
+par `ui/app.ts` — certains récupérateurs extraient l'`innerText` d'un rendu
+headless, et le contenu d'un `<details>` fermé n'y figure pas. **Jamais de
+bloc masqué réservé aux robots** : c'est du cloaking (déjà interdit § « À
+propos »), et `display: none` est de toute façon absent de l'`innerText`.
+
+**Aucune norme ne fait autorité ici, vérifié en 2026** — `llms.txt`,
+`ai.txt`, `agents.txt`, `/.well-known/agent-*.json` sont fragmentés, et tous
+s'ancrent à la **racine du domaine**, qui appartient à l'autre projet. C'est
+la même contrainte que pour `robots.txt` et le sitemap. Le choix retenu est
+donc une **page HTML crawlable maillée depuis l'accueil**
+(`dist/creer-une-seance-par-lien.html`, générée par
+`scripts/build-exercise-pages.ts`, inscrite au sitemap) : la doctrine déjà
+assumée pour les 140 fiches, du contenu qu'on trouve en suivant un lien.
+Trois surfaces secondaires l'accompagnent : `potentialAction`/`EntryPoint`
+dans le JSON-LD de l'accueil (le seul vocabulaire normé pour déclarer une
+URL-gabarit ; Google n'en fait aucun résultat enrichi, et beaucoup de
+convertisseurs HTML→markdown suppriment les `<script type="application/ld+json">`
+— c'est une ceinture, pas la fonction), `dist/llms.txt`, et WebMCP.
+
+**`data-key`/`data-group` sur l'index des fiches** (`injectExerciseIndex()`,
+`vite.config.ts`) : la liste des 28 clés lisible par une IA existe **une
+seule fois**, injectée depuis `LIBRARY`. Ne jamais écrire une seconde liste à
+la main dans `index.html` — ce serait le problème `public/sitemap.xml` à
+nouveau. La section `#aiPlan` porte la phrase qui fait le lien (« la valeur
+de la clé est l'attribut `data-key` des liens ci-dessus ») : sans elle,
+l'indirection est trop implicite pour être suivie.
+
+**`?s=` reste le format canonique annoncé aux IA**, et l'exemple de la page
+de spec est **encodé au build en appelant `encodeSharedPlan()`** — jamais
+recopié à la main. Un exemple faux serait pire que pas d'exemple.
+
+**`?plan=` : le filet, pas le format principal** (`core/ai-plan.ts`). Même
+JSON, en clair, à clés explicites. Un modèle encode le base64 à la main et se
+trompe, et personne ne peut relire un lien faux : sans cette voie, l'échec
+n'a aucune issue. Trois invariants :
+- il n'entre **jamais** dans un QR code — sa verbosité est l'exact opposé de
+  ce que cherche `?s=`, dont la densité est toute la raison d'être ;
+- la validation reste centralisée dans `parsePlan()`/`parseSessionConfig()`
+  (`core/storage.ts`) : `ai-plan.ts` ne fait que reconstruire la forme
+  `{ type, key, ... }`, exactement comme `decodeItem()` pour `?s=` ;
+- **la coercition chaîne→nombre (`"3"` → 3) vit dans `ai-plan.ts`**, jamais
+  en relâchant `positiveInt()` : le parseur du schéma persisté n'a pas à
+  s'assouplir pour une source tierce.
+Une clé inconnue devient un exercice perso **portant ce nom** (et non un
+`custom` anonyme) : le modèle peut toujours écrire `ex`. Mais **jamais de
+reconnaissance par nom traduit** (« Planche » → `plank`) : ça ferait dépendre
+l'import de la langue active, contre la règle n°2, et casserait la propriété
+qui fait marcher `?s=` — un lien produit en français s'importe en italien.
+
+**Le lien ne décide de rien : l'utilisateur choisit la destination.** Le
+dialogue d'import propose « Importer comme nouvelle séance », « Ajouter à la
+séance active », et « Remplacer "X" » seulement si le nom correspond à une
+séance existante. Aucun champ « opération » à faire produire par le modèle,
+aucun changement de format, et une IA ne peut pas écraser une séance à l'insu
+de son propriétaire. Remplacer et ajouter sont suivis d'un toast « Annuler ».
+`importPlan()` (`ui/app.ts`) garde sa sémantique « crée toujours » ;
+`replacePlan()` et `appendToActive()` sont des méthodes distinctes.
+
+**Un lien invalide ouvre désormais un message** (`share.importInvalid`) au
+lieu d'échouer en silence. Le silence se défendait tant que le lien venait
+d'un tiers (une messagerie qui tronque) et que l'utilisateur n'y pouvait
+rien ; plus du tout depuis qu'il peut venir d'une IA à qui on peut demander
+de recommencer.
+
+**WebMCP (`ui/webmcp.ts`) est un pari assumé, pas un socle.**
+`navigator.modelContext` est un draft du W3C Community Group en origin trial
+Chrome, et **aucun agent grand public ne l'appelle aujourd'hui**. D'où :
+chargé en `import()` dynamique et seulement si l'API existe (zéro octet au
+démarrage pour tout le monde), tout enveloppé dans un `try/catch` car la
+signature peut changer d'une version à l'autre, et `create_session` **ouvre
+le dialogue d'import** au lieu d'écrire — un agent propose, la personne
+dispose, même invariant que pour un lien. Dans `ui/` et non `platform/` :
+`platform/` regroupe des capacités navigateur pures sans connaissance de
+l'app, ce module reçoit un `Context`.
+
 ## Bugs du monolithe corrigés au portage
 
 1. `beep()` créait un `AudioContext` par appel ; les navigateurs en plafonnent le
@@ -275,7 +366,10 @@ leur `data-i18n` qui continue à les retraduire normalement au chargement.
 même texte dans `index.html`** — `app.eyebrow`, `app.heading`, `app.tagline`,
 `app.sourceCode`, `section.plan`, `section.library`, `section.allGuides`,
 `preview.title`, les
-quatre clés `about.*`, `exerciseInfo.close`/`.keyPoints`/`.moreInfo` (la
+quatre clés `about.*`, les quatre clés `aiPlan.*`, `share.importAppend` et
+`aiHelp.trigger`/`.triggerLabel` (respectivement section « Créer une séance
+par lien », dialogue d'import, et étiquette fixe `#aiHelpTab` — voir
+« Écriture par lien » plus haut), `exerciseInfo.close`/`.keyPoints`/`.moreInfo` (la
 modal d'info sur un exercice), et `library.search`/`.filterLabel`/
 `.filterAll`/`.noResults` (recherche et filtre de la bibliothèque — y
 compris le `placeholder` et l'`aria-label` du champ de recherche, qui
@@ -303,10 +397,17 @@ pour l'indexation et faux pour le **CLS** : ces 14 éléments passaient de zéro
 à leur hauteur réelle dès que `applyStaticTranslations()` tournait, décalant
 tout ce qui suit. Ne pas revenir en arrière pour « alléger » le HTML.
 
-Un test de non-régression couvre tout cela : il charge `dist/index.html` dans
-jsdom **sans jamais exécuter le JS de l'app** et vérifie qu'aucun titre n'est
-vide, que les balises sont présentes et que le contenu indexable reste
-substantiel.
+**Rien ne vérifie cela automatiquement** — il n'y a aucun test dans le dépôt,
+et la CI ne lance que `typecheck` puis `build`. La vérification est manuelle,
+sur `dist/index.html` après un build :
+
+```bash
+grep -o 'data-i18n="[^"]*"></[a-z]*>' dist/index.html   # doit ne rien sortir
+grep -o 'data-key="[^"]*"' dist/index.html | wc -l      # 28
+```
+
+(Une version antérieure de ce fichier décrivait ici un test jsdom de
+non-régression. Il n'a jamais existé.)
 
 Les balises `og:*`, `canonical` et le JSON-LD ne servent que ces robots-là (le
 JS ne les touche jamais) et portent donc une URL absolue figée :
@@ -408,13 +509,21 @@ du build (`transformIndexHtml` dans `vite.config.ts`), aussi bien en dev qu'en
 prod. `datePublished` reste fixe (2026-09-03, premier commit du portage) et ne
 change plus.
 
-**`llms.txt` : délibérément absent.** Cette même compétence GEO documente que
-Google l'ignore explicitement pour la recherche (ni bonus ni pénalité) ; les
-autres moteurs IA n'y accordent pas de poids de citation avéré non plus. Et le
-problème d'autorité du domaine s'appliquerait de toute façon : la racine
-attendue (`/llms.txt`) appartient à l'autre projet, seul `/SRCR/llms.txt`
-serait à notre portée — coût pour un gain nul à négatif. Ne pas en ajouter un
-« pour faire complet ».
+**`llms.txt` : présent, mais pas pour le SEO.** Le raisonnement d'origine
+reste valable et ne doit pas être « corrigé » : Google l'ignore explicitement
+pour la recherche (ni bonus ni pénalité), aucun moteur IA ne lui accorde de
+poids de citation avéré, et la racine faisant autorité (`/llms.txt`)
+appartient à l'autre projet — seul `/SRCR/llms.txt` est à notre portée.
+**En attendre le moindre gain de référencement serait une erreur.**
+
+Il existe pour une autre raison, apparue avec le pilotage par une IA (voir
+« Écriture par lien » plus haut) : les outils agentiques (Claude Code,
+Cursor, Cline) le lisent **quand on leur pointe une URL**, ce qui est
+exactement l'usage visé. Il est généré par
+`scripts/build-exercise-pages.ts` depuis les mêmes sources que la page de
+spec (`LIBRARY`, les dictionnaires, `encodeSharedPlan()`) — donc sans risque
+de diverger, et à coût quasi nul. Ne pas y ajouter de contenu qui n'existe
+pas ailleurs : ce doit rester un miroir.
 
 **Limites connues, inutile d'y revenir :**
 - *`hreflang` sur l'app elle-même* : les 5 langues partagent une seule URL,

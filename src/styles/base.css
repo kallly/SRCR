@@ -222,6 +222,24 @@ h2::after {
   max-width: 62ch;
 }
 
+/*
+  Gabarit d'URL de la section « Creer une seance par lien ». Deborde
+  horizontalement DANS SA PROPRE BOITE (overflow-x) : le body ne doit jamais
+  defiler lateralement. Pas de `white-space: pre-wrap` — une chaine base64
+  coupee sur plusieurs lignes se recopie mal.
+*/
+.ai-code {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  overflow-x: auto;
+  background: var(--surface-2);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  color: var(--paper-dim);
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+
 /* index statique des fiches d'exercice (injecte au build) */
 .guides {
   margin-top: 30px;
@@ -498,6 +516,99 @@ h2::after {
   margin: 14px 0 0;
   line-height: 1.5;
 }
+
+/*
+  Etiquette fixe (ui/ai-help.ts) qui ouvre la modal d'aide au pilotage par
+  IA. Hors de .wrap dans index.html, et decalee de calc(88px + safe-area) :
+  un simple `top: 12px` chevaucherait le selecteur de langue (#locale), qui
+  occupe deja tout le coin haut-droit de l'en-tete sur mobile comme sur
+  desktop (44px de haut, aligne au meme bord). 88px degage cette zone quelle
+  que soit la langue active : app.eyebrow/app.heading restent tous deux sur
+  une seule ligne dans les 5 langues (verifie), donc la hauteur de l'en-tete
+  ne varie pas assez pour remettre ce chiffre en cause.
+  env(safe-area-inset-*) : meme precaution que .bar (barre du bas) pour un
+  element qui, etant fixe, ignore le flux du document et pourrait sinon
+  passer sous une encoche/barre de statut.
+  z-index 15 : sous le lecteur plein ecran (.run, 20) qui le recouvre donc
+  naturellement pendant une seance, et sous le toast (30) ; les <dialog>
+  natives passent au-dessus de toute facon (top layer du navigateur).
+*/
+.ai-help-tab {
+  position: fixed;
+  top: calc(88px + env(safe-area-inset-top, 0px));
+  right: calc(12px + env(safe-area-inset-right, 0px));
+  z-index: 15;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 16px;
+  background: var(--lime);
+  border: 0;
+  border-radius: var(--radius);
+  color: #0e1210;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.ai-help-prompt-block {
+  margin-top: 10px;
+}
+
+/* Boite de citation : texte humain a copier-coller, donc chasse jamais
+   monospace (a la difference de .ai-code, qui montre du JSON/une URL). */
+.ai-help-prompt {
+  margin: 0;
+  padding: 10px 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--line-soft);
+  border-left: 3px solid var(--lime);
+  border-radius: 5px;
+  color: var(--paper);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/*
+  Jeton visuel a la place du vrai lien de partage dans #aiHelpModifyPrompt
+  (ui/ai-help.ts) : une URL base64 fait plusieurs centaines de caracteres et
+  noierait le reste du message sous un pave illisible. Le vrai lien n'est
+  ecrit qu'au moment de la copie, jamais affiche.
+*/
+.ai-help-link-mask {
+  color: var(--mint);
+  font-style: italic;
+}
+
+.ai-help-copy-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.ai-help-copy {
+  min-height: 36px;
+  padding: 0 14px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--paper);
+  border-radius: 5px;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.ai-help-copy:hover {
+  border-color: var(--lime);
+  color: var(--lime);
+}
+
+.ai-help-copied {
+  font-size: 12px;
+  color: var(--lime);
+}
+
+
 
 @media (prefers-reduced-motion: reduce) {
   * {

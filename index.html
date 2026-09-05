@@ -65,6 +65,17 @@
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "EUR"
+        },
+        "potentialAction": {
+          "@type": "CreateAction",
+          "name": "Créer une séance depuis un lien",
+          "description": "Ouvrir cette adresse avec une séance encodée dans le paramètre s propose de l’importer. Format complet : https://kallly.github.io/SRCR/creer-une-seance-par-lien.html",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://kallly.github.io/SRCR/?s={plan}",
+            "encodingType": "application/json",
+            "actionPlatform": "http://schema.org/DesktopWebPlatform"
+          }
         }
       }
     </script>
@@ -77,6 +88,24 @@
     />
   </head>
   <body>
+    <!--
+      Etiquette fixe, toujours visible meme en scrollant : ouvre la modal
+      d'aide au pilotage par IA (#aiHelp, ui/ai-help.ts). Placee hors de
+      .wrap et decalee sous l'en-tete (voir le commentaire CSS de
+      .ai-help-tab) pour ne jamais chevaucher le selecteur de langue, qui
+      occupe deja le coin haut-droit du header.
+    -->
+    <button
+      type="button"
+      class="ai-help-tab"
+      id="aiHelpTab"
+      aria-haspopup="dialog"
+      data-i18n="aiHelp.trigger"
+      data-i18n-aria-label="aiHelp.triggerLabel"
+      aria-label="Créer ou modifier une séance avec une IA"
+      >IA</button
+    >
+
     <main class="wrap">
       <header class="head">
         <div class="titles">
@@ -88,8 +117,7 @@
         </div>
       </header>
       <p class="tagline" data-i18n="app.tagline">
-        Construis ton entraînement, ordonne les exercices, règle les pauses. Tout reste enregistré
-        sur cet appareil.
+        Construis ton entraînement, ordonne les exercices, règle les pauses.
       </p>
       <nav class="quicknav" aria-label="Sections">
         <a href="#section-plan" data-i18n="section.plan">Déroulé</a>
@@ -211,6 +239,57 @@
         </p>
       </details>
 
+      <!--
+        Capacite d'ecriture par lien, decrite en HTML statique : les outils de
+        navigation de ChatGPT/Claude/Gemini recuperent ce fichier sans jamais
+        executer src/main.ts. Livree ouverte comme « A propos » — certains de
+        ces outils extraient l'innerText d'un rendu headless, or le contenu
+        d'un <details> ferme n'y figure pas. ui/app.ts la replie sous 760 px.
+        Jamais de bloc masque reserve aux robots : ce serait du cloaking, et ca
+        ne marcherait pas non plus (display:none est absent de l'innerText).
+
+        Les blocs <code> n'ont volontairement PAS de data-i18n :
+        applyStaticTranslations() ecrase textContent et emporterait le markup,
+        et un gabarit d'URL n'est pas du texte traduisible.
+      -->
+      <details class="about" id="aiPlan" open>
+        <summary data-i18n="aiPlan.title">Créer une séance par lien (pour une IA)</summary>
+        <p data-i18n="aiPlan.intro">
+          Cette page sait recevoir une séance décrite dans son adresse : ouvrir un tel lien propose
+          de l’importer, rien n’est enregistré sans confirmation. Une intelligence artificielle peut
+          donc composer une séance et vous la livrer sous forme de lien, sans compte ni serveur.
+          Donnez-lui simplement l’adresse de cette page.
+        </p>
+        <p data-i18n="aiPlan.format">
+          Le lien attendu est de la forme ci-dessous : un objet JSON qui porte le nom de la séance,
+          le mode d’enchaînement et la liste des lignes, compressé en base64url dans le paramètre s.
+        </p>
+        <pre class="ai-code"><code>{"v":1,"n":"Haut du corps","m":"x","p":60,"t":0,"i":[
+  ["e","kneePushup","push","r",4,12,30,60],
+  ["e","plank","core","t",3,10,45,60]
+]}
+
+v = version du format (1)          n = nom de la séance
+m = "c" classique | "x" circuit    p = pause imposée (s, mode circuit)
+t = transition entre exercices (s) i = lignes du déroulé
+
+Exercice : ["e", clé, groupe, "r" reps | "t" durée, séries, reps, secondes, repos, nomPerso?]
+Pause    : ["r", secondes]
+
+https://kallly.github.io/SRCR/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsInQiOjAsImkiOltbImUiLCJrbmVlUHVzaHVwIiwicHVzaCIsInIiLDQsMTIsMzAsNjBdLFsiZSIsInBsYW5rIiwiY29yZSIsInQiLDMsMTAsNDUsNjBdXX0</code></pre>
+        <p data-i18n="aiPlan.keys">
+          La valeur à mettre dans le champ clé est l’attribut data-key des liens « Toutes les fiches
+          d’exercice » ci-dessus, et data-group donne le groupe musculaire de chacun. Le groupe, le
+          type d’effort et les valeurs manquantes sont déduits de la bibliothèque. Une clé inconnue
+          devient un exercice personnalisé portant ce nom. Une ligne sans clé insère une pause.
+        </p>
+        <p>
+          <a href="creer-une-seance-par-lien.html" data-i18n="aiPlan.spec"
+            >Spécification complète du format</a
+          >
+        </p>
+      </details>
+
       <footer class="credit">
         <a href="https://github.com/kallly/SRCR" target="_blank" rel="noopener" data-i18n="app.sourceCode"
           >Code source</a
@@ -265,9 +344,62 @@
         <button class="info-close" type="button" id="importClose" data-i18n="exerciseInfo.close">Fermer</button>
       </div>
       <p class="import-summary" id="importSummary"></p>
+      <!--
+        #importReplace ne porte PAS de data-i18n : son libelle est parametre
+        (« Remplacer "{name}" ») et applyStaticTranslations() appelle t() sans
+        parametre, ce qui afficherait le jeton {name} tel quel. Meme statut que
+        #importSummary : texte transitoire, rempli par ui/share.ts.
+      -->
       <div class="rowbtns">
         <button class="ghost" type="button" id="importCancel" data-i18n="actions.cancel">Annuler</button>
-        <button class="go" type="button" id="importConfirm" data-i18n="share.importConfirm">Importer</button>
+        <button class="ghost" type="button" id="importReplace" hidden></button>
+        <button class="ghost" type="button" id="importAppend" data-i18n="share.importAppend">Ajouter à la séance active</button>
+        <button class="go" type="button" id="importConfirm" data-i18n="share.importConfirm">Importer comme nouvelle séance</button>
+      </div>
+    </dialog>
+
+    <dialog class="info" id="aiHelp">
+      <div class="info-head">
+        <h3 data-i18n="aiHelp.title">Créer ou modifier avec une IA</h3>
+        <button class="info-close" type="button" id="aiHelpClose" data-i18n="exerciseInfo.close">Fermer</button>
+      </div>
+      <p data-i18n="aiHelp.intro">
+        ChatGPT, Claude et Gemini peuvent créer ou modifier votre séance : donnez-leur un lien.
+      </p>
+
+      <h4 data-i18n="aiHelp.createTitle">Créer une séance</h4>
+      <p data-i18n="aiHelp.createText">Copiez ce message :</p>
+      <div class="ai-help-prompt-block">
+        <p class="ai-help-prompt" data-i18n="aiHelp.createPrompt">
+          Voici un site de séances au poids du corps : https://kallly.github.io/SRCR/. Crée-moi
+          une séance haut du corps de 20 minutes, puis donne-moi le lien à ouvrir pour l’importer.
+        </p>
+        <div class="ai-help-copy-row">
+          <button type="button" class="ai-help-copy" id="aiHelpCreateCopy" data-i18n="share.copy">Copier</button>
+          <span class="ai-help-copied" id="aiHelpCreateCopied" role="status" hidden></span>
+        </div>
+      </div>
+
+      <h4 data-i18n="aiHelp.modifyTitle">Modifier une séance</h4>
+      <p data-i18n="aiHelp.modifyText">
+        Utilisez le lien de partage de votre séance pour demander à l’IA de la modifier :
+      </p>
+      <!--
+        #aiHelpModifyPrompt ne porte PAS de data-i18n. Son contenu affiche
+        n'est pas le texte reel : le vrai lien de partage y est remplace par
+        le jeton visuel aiHelp.linkMask ("[votre lien]"), compose par
+        ui/ai-help.ts a partir du gabarit brut aiHelp.modifyPrompt (t() sans
+        parametres renvoie {link} tel quel, jamais interpole). Objectif :
+        eviter d'etaler une longue chaine base64 illisible dans la modal. Le
+        VRAI lien n'est ecrit nulle part dans le DOM ; il n'existe que dans
+        la memoire copiee au clic sur #aiHelpModifyCopy.
+      -->
+      <div class="ai-help-prompt-block">
+        <p class="ai-help-prompt" id="aiHelpModifyPrompt"></p>
+        <div class="ai-help-copy-row">
+          <button type="button" class="ai-help-copy" id="aiHelpModifyCopy" data-i18n="share.copy">Copier</button>
+          <span class="ai-help-copied" id="aiHelpModifyCopied" role="status" hidden></span>
+        </div>
       </div>
     </dialog>
 

@@ -1,11 +1,23 @@
 import { t } from '../i18n';
 import { isExercise } from '../core/plan';
+import { decodeAiPlan } from '../core/ai-plan';
 import { decodeSharedPlan, encodeSharedPlan } from '../core/share';
+import type { SharedPlan } from '../core/share';
+import type { SavedPlan } from '../core/types';
 import type { Context } from './app';
 import { byId, wireDialogClose } from './dom';
 
 /** Nom du parametre d'URL portant une seance partagee. Court, pour un lien plus lisible. */
 const SHARE_QUERY_PARAM = 's';
+
+/**
+ * Second parametre accepte a l'import : une seance en JSON lisible
+ * (core/ai-plan.ts). C'est le filet du pilotage par une IA — le format
+ * annonce reste `?s=`, mais un modele encode le base64 a la main et se
+ * trompe. Ce parametre n'est JAMAIS produit par l'app, et jamais encode en
+ * QR : sa verbosite est l'exact oppose de ce que cherche `?s=`.
+ */
+const AI_QUERY_PARAM = 'plan';
 
 /**
  * Le generateur de QR n'est utile qu'a la minorite de visiteurs qui cliquent
@@ -78,6 +90,12 @@ export interface Share {
   openShareDialog(): void;
   /** A appeler une fois au demarrage : propose l'import si l'URL en porte un. */
   checkIncomingShare(): void;
+  /**
+   * Ouvre le dialogue d'import sur une seance deja decodee. Utilise par
+   * l'outil WebMCP (platform/webmcp.ts) : un agent decrit une seance, mais
+   * rien ne s'ecrit sans que l'utilisateur ait choisi une destination.
+   */
+  proposeImport(shared: SharedPlan): void;
 }
 
 /**
@@ -145,18 +163,109 @@ export function createShare(ctx: Context): Share {
   const importDialog = byId<HTMLDialogElement>('importPlan');
   const importSummary = byId('importSummary');
   const importConfirmBtn = byId<HTMLButtonElement>('importConfirm');
+  const importAppendBtn = byId<HTMLButtonElement>('importAppend');
+  const importReplaceBtn = byId<HTMLButtonElement>('importReplace');
 
   wireDialogClose(importDialog, byId('importClose'));
   byId('importCancel').addEventListener('click', () => importDialog.close());
 
+  /**
+   * Correspondance de nom, insensible a la casse et aux espaces de bord :
+   * c'est ce qui fait apparaitre « Remplacer » plutot que d'accumuler trois
+   * « Haut du corps » dans le selecteur. Une seance sans nom (`null`) ne
+   * correspond jamais a rien — `plans.unnamed` est un libelle d'affichage,
+   * pas une identite.
+   */
+  function findPlanByName(name: string): SavedPlan | undefined {
+    const target = name.trim().toLowerCase();
+    return ctx.state.plans.find((plan) => plan.name?.trim().toLowerCase() === target);
+  }
+
+  /**
+   * Le dialogue d'import sert aussi de dialogue d'erreur : meme markup, meme
+   * fermeture, aucun CSS de plus. Seules les destinations disparaissent.
+   */
+  function openImportError(): void {
+    importSummary.textContent = t('share.importInvalid');
+    importConfirmBtn.hidden = true;
+    importAppendBtn.hidden = true;
+    importReplaceBtn.hidden = true;
+    // Contenu mis a jour meme si le dialogue est deja ouvert (WebMCP peut
+    // rappeler cette fonction) ; seul le second showModal() est evite, il
+    // leverait sur une <dialog> deja ouverte (meme garde que openShare()).
+    if (!importDialog.open) importDialog.showModal();
+  }
+
+  function openImportDialog(shared: SharedPlan): void {
+    const count = shared.items.filter(isExercise).length;
+    importSummary.textContent = t('share.importSummary', {
+      name: shared.name ?? t('plans.unnamed'),
+      count,
+    });
+
+    importConfirmBtn.hidden = false;
+    importAppendBtn.hidden = false;
+    // `onclick =` plutot qu'addEventListener : la fonction peut etre rappelee
+    // (WebMCP), et les handlers s'accumuleraient.
+    importConfirmBtn.onclick = () => {
+      ctx.importPlan(shared.name, shared.items, shared.config);
+      importDialog.close();
+    };
+    importAppendBtn.onclick = () => {
+      // Instantane avant ajout plutot qu'un `slice` de la fin a l'annulation :
+      // ca reste juste meme si le deroule a bouge entre-temps, et ca vise la
+      // seance par son id plutot que « celle qui est active maintenant ».
+      const target = ctx.activePlan();
+      const before = [...target.items];
+      ctx.appendToActive(shared.items);
+      ctx.toast.show(t('share.appended', { count }), t('toast.undo'), () => {
+        const plan = ctx.getPlan(target.id);
+        if (!plan) return;
+        plan.items = before;
+        ctx.save();
+        ctx.renderAll();
+      });
+      importDialog.close();
+    };
+
+    const target = shared.name ? findPlanByName(shared.name) : undefined;
+    importReplaceBtn.hidden = target === undefined;
+    if (!target) {
+      importReplaceBtn.onclick = null;
+      importReplaceBtn.textContent = '';
+    } else {
+      // Libelle parametre, donc rempli ici et non par
+      // applyStaticTranslations() : meme statut que #importSummary.
+      importReplaceBtn.textContent = t('share.importReplace', { name: target.name ?? '' });
+      importReplaceBtn.onclick = () => {
+        // Ecrasement irreversible sans ce filet. Un lien approximatif venu
+        // d'une IA detruirait sinon une seance construite a la main.
+        const before = { name: target.name, items: target.items, config: target.config };
+        ctx.replacePlan(target.id, shared.name, shared.items, shared.config);
+        ctx.toast.show(t('share.replaced'), t('toast.undo'), () => {
+          ctx.replacePlan(target.id, before.name, before.items, before.config);
+        });
+        importDialog.close();
+      };
+    }
+
+    // Contenu mis a jour meme si le dialogue est deja ouvert (WebMCP peut
+    // rappeler proposeImport() avec une seance revisee) ; seul le second
+    // showModal() est evite, il leverait sur une <dialog> deja ouverte —
+    // meme garde que openShare(), qui l'a explicitement pour la meme raison.
+    if (!importDialog.open) importDialog.showModal();
+  }
+
   function checkIncomingShare(): void {
     const params = new URLSearchParams(location.search);
     const encoded = params.get(SHARE_QUERY_PARAM);
-    if (!encoded) return;
+    const aiRaw = params.get(AI_QUERY_PARAM);
+    if (encoded === null && aiRaw === null) return;
 
     // Nettoyage immediat, que le lien soit valide ou non : recharger ou
     // repartager cette URL ne doit pas reproposer le meme import a l'infini.
     params.delete(SHARE_QUERY_PARAM);
+    params.delete(AI_QUERY_PARAM);
     const query = params.toString();
     // location.hash preserve : un lien partage vers une ancre (#section-plan)
     // ne doit pas la perdre au nettoyage du parametre de partage.
@@ -166,21 +275,17 @@ export function createShare(ctx: Context): Share {
       location.pathname + (query ? `?${query}` : '') + location.hash,
     );
 
-    const shared = decodeSharedPlan(encoded);
-    if (!shared) return;
-
-    const count = shared.items.filter(isExercise).length;
-    importSummary.textContent = t('share.importSummary', {
-      name: shared.name ?? t('plans.unnamed'),
-      count,
-    });
-
-    importConfirmBtn.onclick = () => {
-      ctx.importPlan(shared.name, shared.items, shared.config);
-      importDialog.close();
-    };
-
-    importDialog.showModal();
+    // `?s=` prioritaire : c'est le format que l'app produit elle-meme.
+    const shared = encoded !== null ? decodeSharedPlan(encoded) : decodeAiPlan(aiRaw ?? '');
+    if (!shared) {
+      // Un lien casse echouait en silence. Acceptable tant qu'il venait d'un
+      // tiers (messagerie qui tronque) et que l'utilisateur n'y pouvait rien ;
+      // plus du tout depuis qu'il peut venir d'une IA a qui on peut demander
+      // de recommencer — encore faut-il le savoir.
+      openImportError();
+      return;
+    }
+    openImportDialog(shared);
   }
 
   return {
@@ -190,5 +295,6 @@ export function createShare(ctx: Context): Share {
       void openShare().catch(() => {});
     },
     checkIncomingShare,
+    proposeImport: openImportDialog,
   };
 }

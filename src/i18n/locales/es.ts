@@ -5,8 +5,7 @@ export const es: Translations = {
     title: 'Sesión — vuelta con peso corporal',
     eyebrow: 'Fase 1 · sin material',
     heading: 'Mi sesión',
-    tagline:
-      'Construye tu entrenamiento, ordena los ejercicios, ajusta las pausas. Todo se queda en este dispositivo.',
+    tagline: 'Construye tu entrenamiento, ordena los ejercicios, ajusta las pausas.',
     sourceCode: 'Código fuente',
   },
 
@@ -39,7 +38,16 @@ export const es: Translations = {
       one: '«{name}» — {count} ejercicio.',
       other: '«{name}» — {count} ejercicios.',
     },
-    importConfirm: 'Importar',
+    importConfirm: 'Importar como sesión nueva',
+    importAppend: 'Añadir a la sesión activa',
+    importReplace: 'Reemplazar «{name}»',
+    importInvalid:
+      'Este enlace no describe una sesión válida. Si viene de una inteligencia artificial, pídele que lo genere de nuevo siguiendo el formato indicado al final de la página de inicio.',
+    replaced: 'Sesión reemplazada',
+    appended: {
+      one: '{count} ejercicio añadido',
+      other: '{count} ejercicios añadidos',
+    },
   },
 
   about: {
@@ -50,6 +58,34 @@ export const es: Translations = {
       'Dos formas de encadenar las series. En modo clásico, haces todas las series de un ejercicio antes de pasar al siguiente, con el descanso ajustado en cada línea. En modo circuito, las series alternan los grupos musculares y solo aparece una pausa cuando dos esfuerzos del mismo grupo tienen que seguirse forzosamente — la vista previa muestra la secuencia calculada antes de empezar.',
     privacy:
       'Durante la sesión, un reproductor a pantalla completa muestra el cronómetro, el anillo de progreso y la indicación de ejecución, mantiene la pantalla encendida y avisa del final de cada intervalo. Sin cuenta, sin servidor, sin datos enviados: la sesión y el historial se guardan en el navegador. La interfaz está disponible en francés, inglés, español, alemán e italiano.',
+  },
+
+  aiPlan: {
+    title: 'Crear una sesión mediante un enlace (para una IA)',
+    intro:
+      'Esta página sabe recibir una sesión descrita en su propia dirección: abrir un enlace así propone importarla, y no se guarda nada sin confirmación. Una inteligencia artificial puede así componer una sesión y entregártela como enlace, sin cuenta ni servidor. Basta con darle la dirección de esta página.',
+    format:
+      'El enlace esperado tiene la forma de abajo: un objeto JSON con el nombre de la sesión, el modo de encadenamiento y la lista de líneas, codificado en base64url dentro del parámetro s.',
+    keys:
+      'El valor del campo de clave es el atributo data-key de los enlaces «Todas las fichas de ejercicio» de arriba, y data-group indica el grupo muscular de cada uno. El grupo, el tipo de esfuerzo y los valores que falten se deducen de la biblioteca. Una clave desconocida se convierte en un ejercicio personalizado con ese nombre. Una línea sin clave inserta una pausa.',
+    spec: 'Especificación completa del formato',
+  },
+
+  aiHelp: {
+    trigger: 'IA',
+    triggerLabel: 'Crear o modificar una sesión con una IA',
+    title: 'Crear o modificar con una IA',
+    intro: 'ChatGPT, Claude y Gemini pueden crear o modificar tu sesión: solo dales un enlace.',
+    createTitle: 'Crear una sesión',
+    createText: 'Copia este mensaje:',
+    createPrompt:
+      'Este es un sitio de sesiones a peso corporal: https://kallly.github.io/SRCR/. Crea una sesión de tren superior de 20 minutos y dame el enlace para importarla.',
+    modifyTitle: 'Modificar una sesión',
+    modifyText: 'Usa el enlace de tu sesión para pedirle a la IA que la modifique:',
+    modifyPrompt:
+      'Este es el enlace de mi sesión actual: {link}. Añade un ejercicio de gemelos y devuélveme el enlace actualizado.',
+    linkMask: '[tu enlace]',
+    copied: 'Mensaje copiado',
   },
 
   exerciseInfo: {

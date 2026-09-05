@@ -13,6 +13,7 @@ import { createPlanner } from './planner';
 import { createPlanSwitcher } from './plan-switcher';
 import { createPreview } from './preview';
 import { createRunner } from './runner';
+import { createAiHelp } from './ai-help';
 import { createShare } from './share';
 import { createStatusBar } from './statusbar';
 import { createToast, type Toast } from './toast';
@@ -23,7 +24,7 @@ const SAVED_TOAST_MS = 1600;
 /** Duree par defaut d'une pause ajoutee manuellement, en secondes. */
 const DEFAULT_REST_SECONDS = 120;
 
-/** En dessous, la section « A propos » est repliee pour ne pas allonger la page. */
+/** En dessous, « A propos » et « Creer une seance par lien » sont repliees pour ne pas allonger la page. */
 const ABOUT_COLLAPSE_BELOW = '(max-width: 759px)';
 
 /**
@@ -45,6 +46,14 @@ export interface Context {
   createPlan(name: string | null): void;
   /** Cree une seance a partir d'un lien/QR code partage (ui/share.ts). */
   importPlan(name: string | null, items: PlanItem[], config: SessionConfig): void;
+  /**
+   * Ecrase une seance existante par le contenu d'un lien importe. Distinct
+   * d'`importPlan()`, qui cree toujours : ici l'id est conserve, donc les
+   * references du selecteur de seance restent valides.
+   */
+  replacePlan(id: string, name: string | null, items: PlanItem[], config: SessionConfig): void;
+  /** Ajoute des lignes a la fin du deroule actif, sans toucher a ses reglages. */
+  appendToActive(items: PlanItem[]): void;
   duplicatePlan(id: string): void;
   renamePlan(id: string, name: string | null): void;
   deletePlan(id: string): void;
@@ -80,6 +89,7 @@ export function createApp(state: State): { render: () => void } {
   // pouvoir empecher l'app de demarrer la ou matchMedia manque.
   if (window.matchMedia?.(ABOUT_COLLAPSE_BELOW).matches) {
     byId<HTMLDetailsElement>('about').open = false;
+    byId<HTMLDetailsElement>('aiPlan').open = false;
   }
 
   const toast = createToast();
@@ -100,6 +110,21 @@ export function createApp(state: State): { render: () => void } {
     },
     importPlan: (name, items, config) => {
       registerPlan({ id: uid(), name, items, config });
+    },
+    replacePlan: (id, name, items, config) => {
+      const plan = ctx.getPlan(id);
+      if (!plan) return;
+      plan.name = name;
+      plan.items = items;
+      plan.config = config;
+      ctx.state.activePlanId = plan.id;
+      save();
+      renderAll();
+    },
+    appendToActive: (items) => {
+      ctx.activePlan().items.push(...items);
+      save();
+      renderAll();
     },
     duplicatePlan: (id) => {
       const source = ctx.state.plans.find((plan) => plan.id === id);
@@ -166,6 +191,7 @@ export function createApp(state: State): { render: () => void } {
   const guidesIndex = createGuidesIndex();
   const exerciseInfo = createExerciseInfo();
   const share = createShare(ctx);
+  createAiHelp(ctx);
 
   /** Sequence commune a createPlan/importPlan/duplicatePlan : enregistrer, activer, sauvegarder, tout rafraichir. */
   function registerPlan(plan: SavedPlan): void {
@@ -271,6 +297,17 @@ export function createApp(state: State): { render: () => void } {
   // Une seule fois au demarrage : un lien partage ouvert directement propose
   // son import, puis nettoie l'URL (voir ui/share.ts).
   share.checkIncomingShare();
+
+  // Navigateur agentique : exposer les operations de l'app comme des outils
+  // plutot que de laisser l'agent deviner le DOM (voir ui/webmcp.ts). Le test
+  // est fait ICI, avant l'import : sans lui, tout le monde telechargerait un
+  // module qu'aucun navigateur courant n'utilise. `catch` silencieux — une
+  // API en origin trial ne doit jamais empecher l'app de demarrer.
+  if ('modelContext' in navigator || 'modelContext' in document) {
+    void import('./webmcp')
+      .then((mod) => mod.installWebMcp(ctx, share))
+      .catch(() => {});
+  }
 
   return { render: renderAll };
 }

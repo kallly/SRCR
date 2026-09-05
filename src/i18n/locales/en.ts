@@ -5,8 +5,7 @@ export const en: Translations = {
     title: 'Session — bodyweight comeback',
     eyebrow: 'Phase 1 · no equipment',
     heading: 'My session',
-    tagline:
-      'Build your workout, order the exercises, set the breaks. Everything stays on this device.',
+    tagline: 'Build your workout, order the exercises, set the breaks.',
     sourceCode: 'Source code',
   },
 
@@ -39,7 +38,16 @@ export const en: Translations = {
       one: '"{name}" — {count} exercise.',
       other: '"{name}" — {count} exercises.',
     },
-    importConfirm: 'Import',
+    importConfirm: 'Import as a new session',
+    importAppend: 'Add to the active session',
+    importReplace: 'Replace "{name}"',
+    importInvalid:
+      'This link does not describe a valid session. If it came from an AI, ask it to generate the link again using the format shown at the bottom of the home page.',
+    replaced: 'Session replaced',
+    appended: {
+      one: '{count} exercise added',
+      other: '{count} exercises added',
+    },
   },
 
   about: {
@@ -50,6 +58,34 @@ export const en: Translations = {
       'Two ways to chain the sets. In classic mode, you complete every set of one exercise before moving to the next, with the rest set on each row. In circuit mode, sets alternate muscle groups and a break only appears when two efforts from the same group unavoidably follow each other — the preview shows the computed sequence before you start.',
     privacy:
       'During the session, a full-screen player shows the timer, the progress ring and the execution cue, keeps the screen awake and signals the end of each interval. No account, no server, no data sent: your session and history are stored in the browser. The interface is available in French, English, Spanish, German and Italian.',
+  },
+
+  aiPlan: {
+    title: 'Create a session from a link (for an AI)',
+    intro:
+      'This page can receive a session described in its own address: opening such a link offers to import it, and nothing is saved without confirmation. An AI can therefore put a session together and hand it to you as a link, with no account and no server. Just give it the address of this page.',
+    format:
+      'The expected link has the shape below: a JSON object carrying the session name, the sequencing mode and the list of rows, encoded as base64url in the s parameter.',
+    keys:
+      'The value for the key field is the data-key attribute of the "All exercise guides" links above, and data-group gives the muscle group of each one. The group, the effort type and any missing values are taken from the library. An unknown key becomes a custom exercise with that name. A row without a key inserts a rest.',
+    spec: 'Full format specification',
+  },
+
+  aiHelp: {
+    trigger: 'AI',
+    triggerLabel: 'Create or edit a session with an AI',
+    title: 'Create or edit with an AI',
+    intro: 'ChatGPT, Claude and Gemini can create or edit your session: just give them a link.',
+    createTitle: 'Create a session',
+    createText: 'Copy this message:',
+    createPrompt:
+      'Here is a bodyweight session site: https://kallly.github.io/SRCR/. Build me a 20-minute upper body session, then give me the link to open to import it.',
+    modifyTitle: 'Edit a session',
+    modifyText: 'Use your session’s share link to ask the AI to edit it:',
+    modifyPrompt:
+      'Here is the link to my current session: {link}. Add a calf exercise, then send me back the updated link.',
+    linkMask: '[your link]',
+    copied: 'Message copied',
   },
 
   exerciseInfo: {

@@ -5,8 +5,7 @@ export const de: Translations = {
     title: 'Einheit — Wiedereinstieg mit Körpergewicht',
     eyebrow: 'Phase 1 · ohne Geräte',
     heading: 'Meine Einheit',
-    tagline:
-      'Stell dein Training zusammen, ordne die Übungen, leg die Pausen fest. Alles bleibt auf diesem Gerät.',
+    tagline: 'Stell dein Training zusammen, ordne die Übungen, leg die Pausen fest.',
     sourceCode: 'Quellcode',
   },
 
@@ -39,7 +38,16 @@ export const de: Translations = {
       one: '„{name}“ — {count} Übung.',
       other: '„{name}“ — {count} Übungen.',
     },
-    importConfirm: 'Importieren',
+    importConfirm: 'Als neue Einheit importieren',
+    importAppend: 'Zur aktiven Einheit hinzufügen',
+    importReplace: '„{name}“ ersetzen',
+    importInvalid:
+      'Dieser Link beschreibt keine gültige Einheit. Wenn er von einer KI stammt, bitte sie, den Link erneut im Format zu erzeugen, das unten auf der Startseite beschrieben ist.',
+    replaced: 'Einheit ersetzt',
+    appended: {
+      one: '{count} Übung hinzugefügt',
+      other: '{count} Übungen hinzugefügt',
+    },
   },
 
   about: {
@@ -50,6 +58,34 @@ export const de: Translations = {
       'Zwei Arten, die Sätze aneinanderzureihen. Im klassischen Modus absolvierst du alle Sätze einer Übung, bevor die nächste folgt, mit der Pause aus der jeweiligen Zeile. Im Zirkelmodus wechseln die Sätze die Muskelgruppen, und eine Pause erscheint nur, wenn zwei Belastungen derselben Gruppe zwangsläufig aufeinanderfolgen — die Vorschau zeigt die berechnete Abfolge vor dem Start.',
     privacy:
       'Während der Einheit zeigt ein Vollbild-Player die Uhr, den Fortschrittsring und den Ausführungshinweis, hält den Bildschirm wach und meldet das Ende jedes Intervalls. Kein Konto, kein Server, keine gesendeten Daten: Einheit und Verlauf werden im Browser gespeichert. Die Oberfläche gibt es auf Französisch, Englisch, Spanisch, Deutsch und Italienisch.',
+  },
+
+  aiPlan: {
+    title: 'Eine Einheit per Link erstellen (für eine KI)',
+    intro:
+      'Diese Seite kann eine Einheit entgegennehmen, die in ihrer eigenen Adresse beschrieben ist: Beim Öffnen eines solchen Links wird der Import angeboten, und ohne Bestätigung wird nichts gespeichert. Eine KI kann also eine Einheit zusammenstellen und sie dir als Link liefern, ohne Konto und ohne Server. Gib ihr einfach die Adresse dieser Seite.',
+    format:
+      'Der erwartete Link hat die unten gezeigte Form: ein JSON-Objekt mit dem Namen der Einheit, dem Ablaufmodus und der Liste der Zeilen, als base64url im Parameter s abgelegt.',
+    keys:
+      'Der Wert für das Schlüsselfeld ist das Attribut data-key der Links „Alle Übungsseiten“ oben, und data-group nennt die jeweilige Muskelgruppe. Gruppe, Belastungsart und fehlende Werte stammen aus der Bibliothek. Ein unbekannter Schlüssel wird zu einer eigenen Übung mit diesem Namen. Eine Zeile ohne Schlüssel fügt eine Pause ein.',
+    spec: 'Vollständige Formatspezifikation',
+  },
+
+  aiHelp: {
+    trigger: 'KI',
+    triggerLabel: 'Eine Einheit mit einer KI erstellen oder ändern',
+    title: 'Erstellen oder ändern mit einer KI',
+    intro: 'ChatGPT, Claude und Gemini können deine Einheit erstellen oder ändern: gib ihnen einfach einen Link.',
+    createTitle: 'Eine Einheit erstellen',
+    createText: 'Kopiere diese Nachricht:',
+    createPrompt:
+      'Hier ist eine Seite für Körpergewichtseinheiten: https://kallly.github.io/SRCR/. Erstelle mir eine 20-minütige Oberkörper-Einheit und gib mir den Link zum Importieren.',
+    modifyTitle: 'Eine Einheit ändern',
+    modifyText: 'Nutze den Freigabelink deiner Einheit, um die KI um eine Änderung zu bitten:',
+    modifyPrompt:
+      'Hier ist der Link zu meiner aktuellen Einheit: {link}. Füge eine Wadenübung hinzu und schick mir den aktualisierten Link zurück.',
+    linkMask: '[dein Link]',
+    copied: 'Nachricht kopiert',
   },
 
   exerciseInfo: {

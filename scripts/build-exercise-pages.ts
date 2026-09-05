@@ -13,6 +13,9 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { LIBRARY } from '../src/data/library';
+import { GROUP_IDS } from '../src/data/groups';
+import { encodeSharedPlan } from '../src/core/share';
+import type { ExerciseItem, PlanItem } from '../src/core/types';
 import { figureSvg } from '../src/data/figures';
 import { groupColor } from '../src/data/groups';
 import type { ExerciseKey, GroupId, Locale } from '../src/core/types';
@@ -278,6 +281,397 @@ ${renderProgression(detail, dict)}${renderPrecautions(detail, dict)}
 `;
 }
 
+/**
+ * Page de specification du format de lien, pour les intelligences
+ * artificielles a qui on donne l'URL du site.
+ *
+ * Pourquoi une page HTML et pas un fichier de convention. Aucune norme ne
+ * s'est imposee (llms.txt, ai.txt, agents.txt, /.well-known/*), et toutes
+ * s'ancrent a la RACINE du domaine — hors de portee ici, `kallly.github.io/`
+ * appartenant a un autre projet. Une page crawlable, inscrite au sitemap et
+ * atteignable par un <a> depuis l'accueil, est la meme doctrine que les 140
+ * fiches d'exercice : du contenu qu'on trouve en suivant un lien.
+ *
+ * Francais uniquement, et c'est une divergence assumee de la regle « le
+ * chrome des pages generees vient de l'i18n » : c'est une specification
+ * technique dont tous les identifiants sont deja en anglais, et y faire
+ * entrer sa prose dans le contrat i18n strict couterait cinq traductions
+ * pour un lecteur (un modele) qui lit tres bien le francais.
+ */
+const AI_PAGE_SLUG = 'creer-une-seance-par-lien';
+const AI_PAGE_TITLE = 'Créer une séance par lien';
+
+/**
+ * Reciproque de `toBase64Url()` (core/share.ts), pour un seul usage : relire
+ * en clair l'exemple qu'on vient d'encoder (voir `aiExample()`). Reimplemente
+ * ici plutot qu'importee, faute d'export dans core/share.ts, dont la version
+ * s'appuie sur `atob` pour rester compatible navigateur — indisponible et
+ * inutile ici, ce script tournant sous Node (`Buffer`).
+ */
+function decodeBase64Url(encoded: string): string {
+  const base64 = encoded.replace(/-/g, '+').replace(/_/g, '/');
+  return Buffer.from(base64, 'base64').toString('utf8');
+}
+
+/**
+ * Exemple de reference, ENCODE AU BUILD par `encodeSharedPlan()` — jamais
+ * recopie a la main. C'est la seule facon de garantir que la chaine donnee
+ * en exemple aux modeles decode reellement : un exemple faux serait pire que
+ * pas d'exemple.
+ */
+function aiExample(): { json: string; encoded: string; url: string } {
+  const line = (key: ExerciseKey, over: Partial<ExerciseItem> = {}): ExerciseItem => {
+    const entry = libraryEntry(key);
+    return {
+      id: '',
+      type: 'exercise',
+      key: entry.key,
+      group: entry.group,
+      mode: entry.mode,
+      sets: entry.sets,
+      reps: entry.reps,
+      seconds: entry.seconds,
+      rest: entry.rest,
+      ...over,
+    };
+  };
+  const items: PlanItem[] = [
+    line('kneePushup', { sets: 4, reps: 12, rest: 60 }),
+    line('superman', { sets: 3, reps: 10, rest: 60 }),
+    line('plank', { sets: 3, seconds: 45, rest: 60 }),
+    { id: '', type: 'rest', seconds: 90 },
+    {
+      id: '',
+      type: 'exercise',
+      key: 'custom',
+      customName: 'Burpees',
+      group: 'cardio',
+      mode: 'reps',
+      sets: 3,
+      reps: 10,
+      seconds: 30,
+      rest: 60,
+    },
+  ];
+  const plan = {
+    id: '',
+    name: 'Haut du corps',
+    items,
+    config: { mode: 'circuit' as const, pause: 60, trans: 0 },
+  };
+  const encoded = encodeSharedPlan(plan);
+  // Decode le base64url produit ci-dessus au lieu de reconstruire le JSON a
+  // la main : piege deja rencontre une fois ici meme (un `json` tape a la
+  // main a diverge silencieusement du payload reel qu'encode `encoded`,
+  // malgre ce commentaire de fonction qui promettait l'inverse). Node fournit
+  // `Buffer`, donc pas besoin de reimplementer `atob` comme le fait
+  // core/share.ts (qui doit rester compatible navigateur).
+  const json = decodeBase64Url(encoded);
+  return { json, encoded, url: `${SITE_URL}/?s=${encoded}` };
+}
+
+/** Table des 28 cles, derivee de LIBRARY : jamais une seconde liste a tenir a jour. */
+function aiKeysTable(dict: Translations): string {
+  return LIBRARY.map((e) => {
+    const name = dict.exercise[e.key]?.name ?? e.key;
+    const effort = e.mode === 'time' ? `${e.seconds} s` : `${e.reps} reps`;
+    return `          <tr><td><code>${e.key}</code></td><td>${esc(name)}</td><td><code>${e.group}</code></td><td><code>${e.mode}</code></td><td>${e.sets} × ${effort}, repos ${e.rest} s</td></tr>`;
+  }).join('\n');
+}
+
+function aiGroupsTable(dict: Translations): string {
+  return GROUP_IDS.map(
+    (id) => `          <tr><td><code>${id}</code></td><td>${esc(dict.group[id])}</td></tr>`,
+  ).join('\n');
+}
+
+function renderAiPlanPage(dict: Translations): string {
+  const url = `${SITE_URL}/${AI_PAGE_SLUG}.html`;
+  const description =
+    'Format du lien qui crée une séance dans Séance : structure JSON, encodage base64url, liste des 28 clés d’exercice et des groupes musculaires. Destiné aux intelligences artificielles à qui on donne l’adresse du site.';
+  const example = aiExample();
+
+  return `<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="${esc(description)}" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0e1210" />
+    <title>${esc(AI_PAGE_TITLE)} — format pour une IA | Séance</title>
+    <link rel="canonical" href="${url}" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+
+    <meta property="og:title" content="${esc(AI_PAGE_TITLE)} — format pour une IA" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="${url}" />
+    <meta property="og:description" content="${esc(description)}" />
+    <meta property="og:site_name" content="Séance" />
+    <meta property="og:locale" content="${OG_LOCALES[SOURCE_LOCALE]}" />
+    <meta property="og:image" content="${SITE_URL}/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Séance — reprise au poids du corps sans matériel" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${esc(AI_PAGE_TITLE)} — format pour une IA" />
+    <meta name="twitter:description" content="${esc(description)}" />
+    <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
+
+    <script type="application/ld+json">
+      ${jsonLd([
+        {
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: AI_PAGE_TITLE,
+          description,
+          url,
+          inLanguage: SOURCE_LOCALE,
+          isPartOf: { '@type': 'WebApplication', name: 'Séance', url: `${SITE_URL}/` },
+        },
+        {
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Séance', item: `${SITE_URL}/` },
+            { '@type': 'ListItem', position: 2, name: AI_PAGE_TITLE, item: url },
+          ],
+        },
+      ])}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,600;125,700;125,800&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="exercises/style.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <nav class="back" aria-label="${esc(dict.page.breadcrumb)}">
+        <a href="${SITE_URL}/">${esc(dict.page.back)}</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">${esc(AI_PAGE_TITLE)}</span>
+      </nav>
+
+      <h1>${esc(AI_PAGE_TITLE)}</h1>
+
+      <p>
+        Séance sait recevoir une séance entière décrite dans son adresse. Ouvrir un tel lien
+        affiche un résumé et propose de l’importer : rien n’est enregistré sans que la personne
+        ait choisi une destination. Il n’y a ni compte, ni serveur, ni envoi de données — la
+        séance voyage dans l’URL et ne quitte jamais l’appareil.
+      </p>
+      <p>
+        Cette page est écrite pour une intelligence artificielle à qui on donne l’adresse du site
+        et qui doit produire un lien valide du premier coup.
+      </p>
+
+      <h2>La forme du lien</h2>
+      <pre><code>${SITE_URL}/?s=&lt;base64url du JSON&gt;</code></pre>
+
+      <h2>L’enveloppe JSON</h2>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Champ</th><th>Valeur</th></tr></thead>
+          <tbody>
+            <tr><td><code>v</code></td><td>Version du format. Toujours <code>1</code>.</td></tr>
+            <tr><td><code>n</code></td><td>Nom de la séance, ou <code>null</code>.</td></tr>
+            <tr><td><code>m</code></td><td>Mode : <code>"c"</code> classique, <code>"x"</code> circuit.</td></tr>
+            <tr><td><code>p</code></td><td>Pause imposée en secondes (mode circuit uniquement).</td></tr>
+            <tr><td><code>t</code></td><td>Transition entre exercices en secondes (0 pour aucune).</td></tr>
+            <tr><td><code>i</code></td><td>Lignes du déroulé, dans l’ordre.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        En mode classique, les séries d’un exercice s’enchaînent avant de passer au suivant, avec
+        le repos réglé sur chaque ligne. En mode circuit, les séries alternent les groupes
+        musculaires et le repos de chaque ligne est ignoré : c’est <code>p</code> qui s’applique.
+      </p>
+
+      <h2>Les lignes</h2>
+      <p>Chaque ligne est un tableau positionnel, pas un objet.</p>
+      <pre><code>Exercice : ["e", clé, groupe, effort, séries, répétitions, secondes, repos, nomPerso?]
+Pause    : ["r", secondes]</code></pre>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Position</th><th>Valeur</th></tr></thead>
+          <tbody>
+            <tr><td>clé</td><td>Une des 28 clés ci-dessous, ou <code>"custom"</code>.</td></tr>
+            <tr><td>groupe</td><td>Un des 8 identifiants de groupe musculaire.</td></tr>
+            <tr><td>effort</td><td><code>"r"</code> répétitions, <code>"t"</code> durée.</td></tr>
+            <tr><td>séries</td><td>Entier ≥ 1.</td></tr>
+            <tr><td>répétitions</td><td>Entier ≥ 1. Utilisé si l’effort est <code>"r"</code>.</td></tr>
+            <tr><td>secondes</td><td>Entier ≥ 1. Utilisé si l’effort est <code>"t"</code>.</td></tr>
+            <tr><td>repos</td><td>Secondes entre deux séries (mode classique).</td></tr>
+            <tr><td>nomPerso</td><td>Neuvième élément, uniquement si la clé est <code>"custom"</code>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Renseigner les deux valeurs (répétitions <em>et</em> secondes) est normal : seule celle
+        qui correspond à l’effort choisi est affichée, l’autre sert si l’on bascule l’unité.
+        Une clé absente de la liste est traitée comme <code>"custom"</code>.
+      </p>
+
+      <h2>Exercice personnalisé</h2>
+      <p>
+        Un mouvement absent de la bibliothèque s’écrit avec la clé <code>"custom"</code>, le
+        groupe musculaire qui lui correspond, et son nom en neuvième position. Le groupe compte :
+        c’est lui qui fait alterner les efforts en mode circuit.
+      </p>
+      <pre><code>["e", "custom", "cardio", "r", 3, 10, 30, 60, "Burpees"]</code></pre>
+
+      <h2>Encodage</h2>
+      <p>
+        Le JSON est encodé en <strong>base64url</strong> : base64 standard, puis
+        <code>+</code> remplacé par <code>-</code>, <code>/</code> par <code>_</code>, et le
+        remplissage <code>=</code> retiré. Aucune compression.
+      </p>
+
+      <h2>Exemple complet</h2>
+      <p>Le JSON ci-dessous et la chaîne qui le suit sont générés ensemble à chaque build : ce lien fonctionne.</p>
+      <pre><code>${esc(example.json)}</code></pre>
+      <pre><code>${esc(example.url)}</code></pre>
+
+      <h2>Les 28 clés d’exercice</h2>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Clé</th><th>Nom</th><th>Groupe</th><th>Effort</th><th>Réglages par défaut</th></tr></thead>
+          <tbody>
+${aiKeysTable(dict)}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Les 8 groupes musculaires</h2>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Identifiant</th><th>Nom</th></tr></thead>
+          <tbody>
+${aiGroupsTable(dict)}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Si le base64 pose problème</h2>
+      <p>
+        Un second paramètre, <code>?plan=</code>, accepte la même séance en <strong>JSON lisible
+        non encodé</strong>, avec des noms de champs explicites. Il est plus long et ne rentre pas
+        dans un QR code, mais il se relit à l’œil et se corrige. À utiliser en repli lorsque la
+        chaîne base64 risque d’être approximative.
+      </p>
+      <pre><code>${SITE_URL}/?plan={"name":"Haut du corps","mode":"circuit","pause":60,"items":[
+  {"ex":"kneePushup","sets":4,"reps":12,"rest":60},
+  {"ex":"plank","sets":3,"seconds":45},
+  {"ex":"Burpees","group":"cardio","sets":3,"reps":10},
+  {"rest":90}
+]}</code></pre>
+      <p>
+        Dans cette forme : <code>ex</code> accepte une clé de la bibliothèque ou un nom libre (qui
+        devient un exercice personnalisé) ; le groupe, le type d’effort et tout champ absent sont
+        déduits de la bibliothèque ; <code>reps</code> seul impose l’effort en répétitions,
+        <code>seconds</code> seul l’impose en durée ; une ligne sans <code>ex</code> est une pause
+        dont <code>rest</code> donne la durée. Les noms de champs sont insensibles à la casse et
+        les nombres acceptés sous forme de chaîne. Maximum 60 lignes.
+      </p>
+      <p>
+        Une réserve d’encodage propre à cette forme : le JSON voyage en clair dans la partie
+        requête de l’URL, donc <code>&amp;</code> et <code>#</code> doivent être encodés en
+        <code>%26</code> et <code>%23</code> — sinon le premier coupe le paramètre en deux et le
+        second tronque tout ce qui suit. Le plus sûr reste d’encoder l’ensemble de la valeur avec
+        un <code>encodeURIComponent</code>. Le paramètre <code>?s=</code> n’a pas ce problème :
+        le base64url n’utilise que des caractères sans signification dans une URL.
+      </p>
+
+      <h2>Consignes de rédaction d’une séance</h2>
+      <ul>
+        <li>Alterner les groupes musculaires plutôt que d’enchaîner deux fois le même.</li>
+        <li>Rester dans les ordres de grandeur des réglages par défaut ci-dessus : ce sont ceux d’une reprise sans matériel.</li>
+        <li>Préférer les clés de la bibliothèque aux exercices personnalisés : elles apportent une figure, un conseil d’exécution et une fiche détaillée.</li>
+        <li>Ne jamais poser de diagnostic ni prescrire à une personne blessée : proposer une séance, pas un traitement.</li>
+      </ul>
+
+      <footer>
+        <p class="disclaimer">${esc(dict.page.disclaimer)}</p>
+        <a href="${SITE_URL}/">Séance</a> — ${esc(dict.page.tagline)}
+      </footer>
+    </main>
+  </body>
+</html>
+`;
+}
+
+/**
+ * Miroir court du format, a `/SRCR/llms.txt`. CLAUDE.md documente que Google
+ * l'ignore pour la recherche, et ca reste vrai : ce n'est pas un levier SEO.
+ * Il est ici pour une autre raison — les outils agentiques (Claude Code,
+ * Cursor, Cline) le lisent quand on leur pointe une URL, ce qui est
+ * exactement l'usage vise. Derive des memes sources que la page de spec,
+ * donc sans risque de diverger.
+ */
+function renderLlmsTxt(dict: Translations): string {
+  const example = aiExample();
+  const keys = LIBRARY.map(
+    (e) =>
+      `- ${e.key} (${e.group}, ${e.mode}) — ${dict.exercise[e.key]?.name ?? e.key}`,
+  ).join('\n');
+
+  return `# Séance
+
+> Planificateur et minuteur de séance au poids du corps. Site statique, sans
+> backend, sans compte : tout vit dans le navigateur. Cinq langues.
+
+## Créer une séance par lien
+
+Cette application accepte une séance entière encodée dans son URL. Ouvrir le
+lien affiche un résumé et propose de l'importer — rien n'est enregistré sans
+confirmation de la personne.
+
+Forme : ${SITE_URL}/?s=<base64url du JSON>
+
+Enveloppe : {"v":1,"n":nom,"m":"c"|"x","p":pauseCircuit,"t":transition,"i":[lignes]}
+Exercice  : ["e", clé, groupe, "r"|"t", séries, reps, secondes, repos, nomPerso?]
+Pause     : ["r", secondes]
+
+"m" vaut "c" pour le mode classique (toutes les séries d'un exercice, puis le
+suivant) et "x" pour le circuit (les séries alternent les groupes musculaires).
+"r" mesure l'effort en répétitions, "t" en secondes. Un mouvement absent de la
+bibliothèque s'écrit avec la clé "custom" et son nom en neuvième position.
+
+base64url = base64 standard, + → -, / → _, remplissage = retiré.
+
+Exemple qui fonctionne :
+${example.json}
+${example.url}
+
+Repli si le base64 est incertain : ?plan= accepte le même contenu en JSON
+lisible non encodé, avec des noms de champs explicites (ex, sets, reps,
+seconds, rest, group, name, mode, pause). Dans cette forme, & et # doivent
+être encodés en %26 et %23, sinon l'URL est coupée. Voir la spécification
+complète.
+
+## Groupes musculaires
+
+${GROUP_IDS.map((id) => `- ${id} — ${dict.group[id]}`).join('\n')}
+
+## Clés d'exercice
+
+${keys}
+
+## Pages
+
+- [Spécification complète du format](${SITE_URL}/${AI_PAGE_SLUG}.html)
+- [Application](${SITE_URL}/)
+- [Sitemap, dont une fiche par exercice et par langue](${SITE_URL}/sitemap.xml)
+`;
+}
+
 function main(): void {
   const exercisesDir = join(DIST, 'exercises');
   rmSync(exercisesDir, { recursive: true, force: true });
@@ -313,6 +707,14 @@ function main(): void {
   // Feuille de style partagee, un seul exemplaire pour toutes les pages.
   const css = readFileSync(join(ROOT, 'src/content/exercise-page.css'), 'utf8');
   writeFileSync(join(exercisesDir, 'style.css'), css, 'utf8');
+
+  // Page de spec du format de lien + son miroir llms.txt. Avant le sitemap :
+  // la page doit pouvoir y pousser son URL.
+  const sourceDict = DICTIONARIES[SOURCE_LOCALE];
+  writeFileSync(join(DIST, `${AI_PAGE_SLUG}.html`), renderAiPlanPage(sourceDict), 'utf8');
+  sitemapUrls.push(`${SITE_URL}/${AI_PAGE_SLUG}.html`);
+  writeFileSync(join(DIST, 'llms.txt'), renderLlmsTxt(sourceDict), 'utf8');
+  console.log(`${AI_PAGE_SLUG}.html + llms.txt generes.`);
 
   // sitemap.xml : source unique desormais (public/sitemap.xml est supprime).
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

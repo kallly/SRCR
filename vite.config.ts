@@ -1,6 +1,7 @@
 import { defineConfig, type Plugin } from 'vite';
 
 import { DETAILS_BY_LOCALE } from './src/content/exercise-details';
+import { findLibraryEntry } from './src/data/library';
 import { fr as i18nFr } from './src/i18n/locales/fr';
 import type { ExerciseKey, Locale } from './src/core/types';
 
@@ -61,7 +62,16 @@ function injectExerciseIndex(): Plugin {
               return slug ? ` data-slug-${l}="${slug}"` : '';
             })
             .join('');
-          return `          <li><a href="exercises/${INDEX_LOCALE}/${e.slug}.html"${data}>${e.name}</a></li>`;
+          // La cle et le groupe de chaque exercice, en clair dans le HTML
+          // livre : c'est la table de reference qu'une IA lit pour ecrire un
+          // lien `?s=` (voir la section « Creer une seance par lien » de
+          // index.html). Injectes depuis LIBRARY, donc incapables de diverger
+          // — une seconde liste ecrite a la main serait le probleme
+          // `public/sitemap.xml` a nouveau. Aucun effet sur
+          // ui/guides-index.ts, qui ne lit que `dataset.slug*`.
+          const entry = findLibraryEntry(e.key);
+          const machine = entry ? ` data-key="${entry.key}" data-group="${entry.group}"` : '';
+          return `          <li><a href="exercises/${INDEX_LOCALE}/${e.slug}.html"${machine}${data}>${e.name}</a></li>`;
         })
         .join('\n');
 

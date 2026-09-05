@@ -12,8 +12,7 @@ export const fr = {
     title: 'Séance — reprise au poids du corps',
     eyebrow: 'Phase 1 · sans matériel',
     heading: 'Ma séance',
-    tagline:
-      'Construis ton entraînement, ordonne les exercices, règle les pauses. Tout reste enregistré sur cet appareil.',
+    tagline: 'Construis ton entraînement, ordonne les exercices, règle les pauses.',
     sourceCode: 'Code source',
   },
 
@@ -46,7 +45,16 @@ export const fr = {
       one: '« {name} » — {count} exercice.',
       other: '« {name} » — {count} exercices.',
     },
-    importConfirm: 'Importer',
+    importConfirm: 'Importer comme nouvelle séance',
+    importAppend: 'Ajouter à la séance active',
+    importReplace: 'Remplacer « {name} »',
+    importInvalid:
+      'Ce lien ne décrit pas une séance valide. S’il vient d’une intelligence artificielle, demandez-lui de le régénérer en suivant le format indiqué en bas de la page d’accueil.',
+    replaced: 'Séance remplacée',
+    appended: {
+      one: '{count} exercice ajouté',
+      other: '{count} exercices ajoutés',
+    },
   },
 
   about: {
@@ -57,6 +65,34 @@ export const fr = {
       'Deux façons d’enchaîner les séries. En mode classique, on fait toutes les séries d’un exercice avant de passer au suivant, avec le repos réglé sur chaque ligne. En mode circuit, les séries alternent les groupes musculaires et une pause n’apparaît que lorsque deux efforts du même groupe doivent forcément se suivre — l’aperçu affiche l’enchaînement calculé avant de commencer.',
     privacy:
       'Pendant la séance, un lecteur plein écran affiche le chrono, l’anneau de progression et la consigne d’exécution, garde l’écran allumé et signale la fin de chaque temps. Aucun compte, aucun serveur, aucune donnée envoyée : la séance et l’historique sont enregistrés dans le navigateur. L’interface existe en français, anglais, espagnol, allemand et italien.',
+  },
+
+  aiPlan: {
+    title: 'Créer une séance par lien (pour une IA)',
+    intro:
+      'Cette page sait recevoir une séance décrite dans son adresse : ouvrir un tel lien propose de l’importer, rien n’est enregistré sans confirmation. Une intelligence artificielle peut donc composer une séance et vous la livrer sous forme de lien, sans compte ni serveur. Donnez-lui simplement l’adresse de cette page.',
+    format:
+      'Le lien attendu est de la forme ci-dessous : un objet JSON qui porte le nom de la séance, le mode d’enchaînement et la liste des lignes, compressé en base64url dans le paramètre s.',
+    keys:
+      'La valeur à mettre dans le champ clé est l’attribut data-key des liens « Toutes les fiches d’exercice » ci-dessus, et data-group donne le groupe musculaire de chacun. Le groupe, le type d’effort et les valeurs manquantes sont déduits de la bibliothèque. Une clé inconnue devient un exercice personnalisé portant ce nom. Une ligne sans clé insère une pause.',
+    spec: 'Spécification complète du format',
+  },
+
+  aiHelp: {
+    trigger: 'IA',
+    triggerLabel: 'Créer ou modifier une séance avec une IA',
+    title: 'Créer ou modifier avec une IA',
+    intro: 'ChatGPT, Claude et Gemini peuvent créer ou modifier votre séance : donnez-leur un lien.',
+    createTitle: 'Créer une séance',
+    createText: 'Copiez ce message :',
+    createPrompt:
+      'Voici un site de séances au poids du corps : https://kallly.github.io/SRCR/. Crée-moi une séance haut du corps de 20 minutes, puis donne-moi le lien à ouvrir pour l’importer.',
+    modifyTitle: 'Modifier une séance',
+    modifyText: 'Utilisez le lien de partage de votre séance pour demander à l’IA de la modifier :',
+    modifyPrompt:
+      'Voici le lien de ma séance actuelle : {link}. Ajoute un exercice pour les mollets, puis renvoie-moi le lien mis à jour.',
+    linkMask: '[votre lien]',
+    copied: 'Message copié',
   },
 
   exerciseInfo: {
