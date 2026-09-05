@@ -1,6 +1,6 @@
 import { isLocale } from '../i18n';
 import { isGroupId } from '../data/groups';
-import { isLibraryKey } from '../data/library';
+import { findLibraryEntry, isLibraryKey } from '../data/library';
 import { defaultPlan, uid } from './plan';
 import type { ExerciseItem, Locale, PlanItem, RestItem, SavedPlan, SessionConfig } from './types';
 
@@ -101,7 +101,20 @@ function parseItem(raw: unknown): PlanItem | null {
   const customName =
     providedName || (!known && rawKey !== 'custom' ? humanizeUnknownKey(rawKey) : '');
 
-  const group = isGroupId(source['group']) ? source['group'] : 'core';
+  // Pour une cle connue, le groupe est intrinseque a l'exercice (LIBRARY),
+  // jamais une valeur a faire confiance depuis le payload : c'est deja
+  // l'invariant que l'UI applique (ui/planner.ts masque le selecteur de
+  // groupe pour tout exercice de la bibliotheque — seul un perso l'expose).
+  // Piege verifie : une IA a devine un groupe absent de nos 8 identifiants
+  // (« pull », usuel en musculation mais inexistant ici) pour des exercices
+  // par ailleurs correctement reconnus (wallSlides, superman, rotation) ;
+  // sans ce garde-fou, `isGroupId('pull')` est faux et le groupe retombait
+  // sur 'core' au lieu du vrai groupe de l'exercice (epaules, dos...).
+  const group = known
+    ? (findLibraryEntry(rawKey)?.group ?? 'core')
+    : isGroupId(source['group'])
+      ? source['group']
+      : 'core';
   const mode = source['mode'] === 'time' ? 'time' : 'reps';
 
   const item: ExerciseItem = {
