@@ -2,18 +2,23 @@
 name: seance-ui-module
 description: >
   Checklist for adding or changing an interactive UI module in Séance
-  (src/ui/*.ts) — the Context pattern, the two render tiers, transient text
-  vs. static HTML duplication, and the persisted-schema migration rule. Use
-  before writing a new ui/*.ts module, adding a field to Context, or changing
-  what happens on click/change in the planner, library, or runner.
+  (src/ui/*.ts) — the Context pattern, the two render tiers, transient vs.
+  static text, the persisted-schema migration rule, touch-target sizing and
+  card-control layout, the exercise info modal, the library search/filter, and
+  the monolith bugs that must not come back (audio, wake lock, textContent).
+  Use before writing or changing a ui/*.ts module, adding a field to Context,
+  changing what happens on click/change in the planner, library or runner, or
+  resizing/moving a button.
 ---
 
 # Adding or changing a UI module in Séance
 
-Read `CLAUDE.md` in full first — it documents the non-obvious rules this
-skill assumes. This is a checklist for applying them correctly, distilled
-from implementing the multi-plan / drag-reorder / undo-toast / light-theme
-changes.
+`CLAUDE.md` carries the always-loaded rules this skill assumes (the two
+render tiers, the persisted-schema migration rule, `fr.ts` as the source of
+truth). This is the checklist for applying them correctly, distilled from
+implementing the multi-plan / drag-reorder / undo-toast / light-theme
+changes, plus the interface rules that used to live in CLAUDE.md's SEO and
+exercise-page sections.
 
 ## The `Context` object (`src/ui/app.ts`)
 
@@ -39,21 +44,24 @@ it's never undefined) beats N call sites each doing their own lookup.
 
 ## Transient / generic UI text: build it in JS, don't touch `index.html`
 
-CLAUDE.md's `data-i18n` duplication rule (hardcode French text in
-`index.html` too) applies to **static chrome** — anything a crawler or a
-CLS measurement sees before `main.ts` runs. It does **not** apply to text
-that only ever exists after a JS interaction: a toast, a loading/error
-state inside an already-closed `<dialog>`, an inline form. For that kind of
-text, build the element with `el({ text: t('...') })` at the moment you need
-it, and skip `index.html` entirely — one less place to keep in sync, and no
-new CLS-reservation math to redo. Reuse `src/ui/dom.ts`'s `el()`/`byId()`
-rather than raw DOM calls.
+`index.html` is for **static chrome** — anything a crawler or a CLS
+measurement sees before `main.ts` runs. Its French text is filled at build
+time from `fr.ts` by `fillStaticTranslations()` (`vite.config.ts`), so a
+`data-i18n` element there must be written **empty**.
+
+None of that applies to text that only ever exists after a JS interaction: a
+toast, a loading/error state inside an already-closed `<dialog>`, an inline
+form. For that kind of text, build the element with `el({ text: t('...') })`
+at the moment you need it, and skip `index.html` entirely — no CLS-reservation
+math to redo. Reuse `src/ui/dom.ts`'s `el()`/`byId()` rather than raw DOM
+calls.
 
 If a new **always-visible** section is added to `index.html` (e.g. a new
 `<div id="foo"></div>` filled by JS on every load, not just after a click),
 treat it like `#plan`/`#library`: it needs an `#foo:empty { min-height: ... }`
 reservation sized to its real rendered height, or it reintroduces the CLS
-regression documented in CLAUDE.md ("Réservation de hauteur et CLS"). Measure
+regression documented in the `seance-seo-html` skill ("Réservation de hauteur
+et CLS"). Measure
 under network throttling with `wait_until="load"`, not `"networkidle"` — an
 estimate here is a stopgap, flag it in a comment if you can't measure for
 real, and say so out loud rather than reporting it as done.
@@ -94,3 +102,101 @@ Two things that bite:
   Fix: assign the narrowed value to a new `const` with an explicit
   non-nullable type annotation (`const el: HTMLElement = maybeNull;`) right
   after the check, and reference that one from the closures.
+
+---
+
+## Regles d'interface reprises de CLAUDE.md
+
+### Cibles tactiles et repartition des commandes d'une carte
+
+**Cibles tactiles.** Tout élément interactif vise `min-width`/`min-height:
+44px` (bonne pratique Lighthouse/Apple HIG — la norme réellement opposable,
+WCAG 2.5.8 AA, ne fixe que 24px). `min-height`/`min-width` plutôt que
+`height`/`width` : la zone tactile est garantie quelle que soit la métrique
+réelle de la police, pas déduite d'un calcul de padding. **Sur une carte du
+déroulé, les commandes sont réparties par fréquence d'usage** : le rail
+`.reorder` collé au bord gauche (monter / n° / descendre, `.mini` en 44×44,
+sans bordure puisque le rail porte déjà fond et séparateur), la suppression
+`.del` en badge du coin haut droit et l'info `.info-btn` en badge du coin bas
+droit. Ces deux badges de coin font **32px, en dessous du seuil de 44px —
+décision assumée** : ce sont des actions ponctuelles, contrairement aux
+flèches qu'on répète pour ordonner une séance. Deux designs abandonnés avant
+celui-là, pour mémoire : flèches et croix empilées à côté du nom (`.del` calé
+sur `.mini` × 2 + le `gap`, soit 96px), ce qui imposait 96px de haut à la
+rangée du nom et laissait un vide sous le badge de groupe ; puis les trois en
+rangée horizontale, qui poussait les champs à passer à la ligne sur les
+écrans étroits. Pour un lien texte
+court (`.quicknav a`, `.credit a`), la zone cliquable s'étend par `padding`
+seul — jamais de marge négative pour « rattraper » ce padding : le `gap` du
+conteneur flex mesure l'espace entre les boîtes (`border-box`), le padding
+est à l'intérieur de la boîte de chaque lien et ne le grignote pas ; une
+marge négative, elle, mord directement sur ce `gap` et resserre les liens
+plus qu'annoncé (piège vérifié : `gap:16px` + `margin:0 -4px` de chaque
+côté ramenait l'espace visible à 8px). L'indicateur de lien utilise
+`text-decoration`, jamais `border-bottom` : un border colle au bord de la
+boîte (donc loin du texte une fois la boîte à 44px), alors que
+text-decoration reste sur la ligne de base quelle que soit la hauteur de la
+zone tactile.
+
+### Modal d'info, bouton d'info, recherche et filtre
+
+**Modal d'info (`ui/exercise-info.ts`).** Un `<dialog>` natif (skeleton
+statique dans `index.html`, jamais construit en JS) : fermeture Échap et
+focus-trap gratuits. Un exercice `custom` n'a pas de bouton ⓘ —
+`isLibraryKey()` l'exclut, aucun contenu n'existe pour cette clé.
+`#infoName`/`#infoGroup`/`#infoMuscles`/`#infoPoints` restent vides dans le
+HTML statique, volontairement (contenu par exercice, pas du chrome — même
+statut que `#runName` dans le lecteur). Un `<dialog>` non ouvert est de
+toute façon masqué par défaut par le navigateur
+(`dialog:not([open]){display:none}`), donc invisible pour un crawler ou un
+lecteur d'écran tant qu'il n'est pas ouvert.
+
+Le repli français s'applique aussi ici, visiblement : si la langue active
+n'a pas encore de contenu long pour cet exercice, la modal affiche quand
+même le contenu (en français) plutôt que rien, avec la mention
+`exerciseInfo.unavailable` — jamais une modal vide sous prétexte que la
+traduction n'existe pas encore.
+
+**`.info-btn` : 32px, en dessous du seuil de 44px du reste de l'app —
+décision assumée**, pas un oubli. C'est une action secondaire (l'action
+principale d'une carte est de l'ajouter au déroulé, celle d'une ligne est
+de régler ses paramètres) dans un espace déjà dense (grille 2 colonnes,
+ligne à 4-5 champs). Un seul style de base partagé (`.info-btn`), deux
+contextes de positionnement (`.libcard .info-btn` en badge absolu sur la
+carte de bibliothèque, `.fields .info-btn` poussé au coin bas droit de la
+carte du déroulé). `.del` reprend le même gabarit 32px au coin haut droit —
+voir « Cibles tactiles » plus haut pour la répartition complète.
+
+**Recherche et filtre (`ui/library.ts`).** État local au module (`search`,
+`group`), volontairement **hors de `State`** — un filtre d'affichage n'a rien
+à faire dans ce qui est persisté en `localStorage`, et il doit repartir de
+zéro à chaque chargement de page. Il doit en revanche **survivre** aux
+appels à `renderAll()` déclenchés par autre chose (changement de langue,
+ajout d'un exercice au déroulé...) : `render()` réapplique l'état courant du
+filtre au lieu de le réinitialiser, `renderGrid()` s'en sert directement.
+
+Recherche insensible aux accents (`normalize()`, `\p{Diacritic}` sur une
+chaîne passée par `.normalize('NFD')`) : taper « epaule » doit trouver
+« Épaules ». Les options du `<select>` de groupe sont reconstruites à
+chaque `render()` — leur libellé doit suivre la langue active, comme tout
+le reste de l'interface.
+
+### Bugs du monolithe corriges au portage
+
+Trois d'entre eux sont encore des invariants vivants (1, 2 et 8) : les
+defaire reintroduirait le bug d'origine.
+
+1. `beep()` créait un `AudioContext` par appel ; les navigateurs en plafonnent le
+   nombre (~6), le son devenait muet après quelques séries. → contexte unique
+   dans `platform/audio.ts`.
+2. Le wake lock, relâché par le système à l'extinction de l'écran, n'était jamais
+   repris. → réacquisition sur `visibilitychange`.
+3. Le champ « Repos si imposé (s) » n'avait aucun effet en mode circuit. → masqué.
+4. `mk()` plantait sur une clé inconnue venue du stockage. → garde + migration.
+5. Chaque saisie reconstruisait toute la liste. → `renderDerived()`.
+6. `stop()` ne remettait pas la barre de progression à zéro.
+7. L'historique grandissait sans limite. → plafonné à 200 entrées.
+8. Le nom d'exercice perso passait par `innerHTML` avec un échappement
+   incomplet. → tout texte utilisateur passe par `textContent` (`el({ text })`).
+   `html` n'est réservé qu'aux figures SVG que nous produisons nous-mêmes.
+

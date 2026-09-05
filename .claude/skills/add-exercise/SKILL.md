@@ -15,7 +15,8 @@ This is the single most multi-file task in the codebase: one new
 figure, 5 long-content files, and (optionally) 1 image prompt. Miss one of
 the 5-language steps and the app still compiles for step 2 but silently
 falls back to French for step 4 (that fallback is intentional per
-CLAUDE.md — the point of this skill is to not need it by mistake).
+the `seance-fiches-generees` skill — the point of this skill is to not need it
+by mistake).
 
 ## 1. Pick the key
 
@@ -56,7 +57,8 @@ interface (documented in `fr.ts` of that directory): `slug`, `muscles`,
 `steps` (4–7), `mistakes` (2–4), `sensation`, `rangeOfMotion`, `tempo`,
 `anatomy`, `mechanics`, `benefits`, and optionally `progression`/
 `precautions` (omit entirely rather than filling them with filler text if
-they don't apply — see CLAUDE.md, "Champs optionnels = sections absentes").
+they don't apply — see the `seance-fiches-generees` skill, "Champs
+optionnels = sections absentes").
 
 **This contract is intentionally `Partial`, so a missing locale will not
 fail `npm run typecheck`.** `npm run exo <key>` is the check — and the way to
@@ -73,9 +75,10 @@ Run it **before** editing (to read only the lines it names, with `Read`'s
 `offset`/`limit`) and **after** (it reports any locale still missing, or any
 required field left empty).
 
-Writing rules (CLAUDE.md, "Règle de rédaction du contenu long"): only
-verifiable, stable anatomy/biomechanics/training-principle content — never a
-cited study, an EMG activation percentage, or a falsely precise number.
+Writing rules (`seance-fiches-generees` skill, "Règle de rédaction du contenu
+long"): only verifiable, stable anatomy/biomechanics/training-principle
+content — never a cited study, an EMG activation percentage, or a falsely
+precise number.
 Precautions are practical, never a diagnosis.
 
 **`slug` is translated per locale, and that is load-bearing.** Each locale's
@@ -94,8 +97,8 @@ Add a `<key>: '...'` entry to `SCENES`, in English, describing only the
 scene (the shared `ART_DIRECTION` prefix is applied automatically). Do
 **not** reference a generated image file in `renderPage()` or anywhere else
 until the image actually exists on disk — the page falls back to the SVG
-figure until then (CLAUDE.md: "Image Gemini : jamais référencée avant
-d'exister").
+figure until then (`seance-fiches-generees` skill: "Image Gemini : jamais
+référencée avant d'exister").
 
 ## 7. Build and verify
 
