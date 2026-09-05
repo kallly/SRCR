@@ -117,7 +117,7 @@
         </div>
       </header>
       <p class="tagline" data-i18n="app.tagline"></p>
-      <nav class="quicknav" aria-label="Sections">
+      <nav class="quicknav" aria-label="" data-i18n-aria-label="section.quicknav">
         <a href="#section-plan" data-i18n="section.plan"></a>
         <a href="#section-library" data-i18n="section.library"></a>
       </nav>
@@ -201,8 +201,13 @@
         dans un <dialog> ferme, donc invisibles pour un crawler. Ne pas
         remplir cette liste a la main.
       -->
-      <nav class="guides" aria-label="Fiches d’exercice">
-        <h2 data-i18n="section.allGuides"></h2>
+      <!--
+        aria-labelledby plutot qu'un aria-label traduit : ce nav porte deja son
+        titre visible, qui suit la langue active. Un libelle separe serait une
+        seconde chose a traduire, et a garder d'accord avec le titre.
+      -->
+      <nav class="guides" aria-labelledby="section-allGuides">
+        <h2 id="section-allGuides" data-i18n="section.allGuides"></h2>
         <!--EXERCISE_INDEX-->
       </nav>
 

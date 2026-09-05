@@ -120,6 +120,7 @@ export const es: Translations = {
     plan: 'Desarrollo',
     library: 'Biblioteca',
     allGuides: 'Todas las fichas de ejercicio',
+    quicknav: 'Secciones',
   },
 
   library: {

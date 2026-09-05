@@ -127,6 +127,8 @@ export const fr = {
     plan: 'Déroulé',
     library: 'Bibliothèque',
     allGuides: 'Toutes les fiches d’exercice',
+    /** Nom accessible du bloc de liens de navigation rapide (`nav.quicknav`). */
+    quicknav: 'Sections',
   },
 
   library: {

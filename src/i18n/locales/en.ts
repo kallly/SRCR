@@ -120,6 +120,7 @@ export const en: Translations = {
     plan: 'Running order',
     library: 'Library',
     allGuides: 'All exercise guides',
+    quicknav: 'Sections',
   },
 
   library: {

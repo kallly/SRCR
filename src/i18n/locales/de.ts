@@ -120,6 +120,7 @@ export const de: Translations = {
     plan: 'Ablauf',
     library: 'Bibliothek',
     allGuides: 'Alle Übungsanleitungen',
+    quicknav: 'Abschnitte',
   },
 
   library: {

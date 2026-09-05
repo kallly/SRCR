@@ -120,6 +120,7 @@ export const it: Translations = {
     plan: 'Svolgimento',
     library: 'Libreria',
     allGuides: 'Tutte le schede degli esercizi',
+    quicknav: 'Sezioni',
   },
 
   library: {
