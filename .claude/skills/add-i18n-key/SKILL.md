@@ -30,22 +30,23 @@ no less.
    text). A plural entry may use different plural categories per language
    than French does — only `other` is mandatory everywhere.
 4. **Re-run `npm run typecheck`** until it's clean.
-5. If the key is used in `index.html` static chrome (an element also
-   carrying `data-i18n`, per CLAUDE.md's SEO section) — anything reachable
-   before `main.ts` runs, i.e. app chrome, not a per-exercise value — update
-   the hardcoded French text in `index.html` too, so it matches the new
-   `fr.ts` value. Skip this step for text that is only ever built in JS
-   (dynamic modals, transient toasts, per-exercise values).
+5. **Nothing to mirror into `index.html`.** The French static text is filled at
+   build time by `fillStaticTranslations()` (`vite.config.ts`) from `fr.ts`, in
+   dev as in prod, so editing `fr.ts` is enough. If you are *adding* a new
+   always-visible element to `index.html`, write it **empty** —
+   `<h1 data-i18n="app.heading"></h1>`, and `aria-label=""` next to a
+   `data-i18n-aria-label` — or the build fails with the key name. Never put a
+   pluralized key on a `data-i18n` element: a plural has no static form and the
+   build rejects it; build that text in JS with `t()`.
 
 ## Common mistakes this catches
 
 - Forgetting one of the 4 other locales: typecheck fails immediately, can't
   be missed.
-- Adding a key only used dynamically (JS-built) but also duplicating it as
-  static `data-i18n` text in `index.html` "to be safe" — don't; that rule
-  only applies to chrome visible before JS runs. See CLAUDE.md's "SEO &
-  partage social" section for the exact list of `data-i18n` elements that
-  require a hardcoded French default.
+- Hand-copying the French text into `index.html` "to be safe" — don't. The
+  build fills it and rejects any non-empty `data-i18n` element. Transient text
+  (toasts, dialog states, per-exercise values) never belongs in `index.html`
+  at all; build it in JS with `t()`.
 - Using `t()` with a key that only exists in `src/content/exercise-details`
   content — that's a *separate*, intentionally partial contract
   (`Partial<Record<ExerciseKey, ExerciseDetail>>`), not part of

@@ -102,52 +102,50 @@
       aria-haspopup="dialog"
       data-i18n="aiHelp.trigger"
       data-i18n-aria-label="aiHelp.triggerLabel"
-      aria-label="Créer ou modifier une séance avec une IA"
-      >IA</button
+      aria-label=""
+      ></button
     >
 
     <main class="wrap">
       <header class="head">
         <div class="titles">
-          <p class="eyebrow" data-i18n="app.eyebrow">Phase 1 · sans matériel</p>
-          <h1 data-i18n="app.heading">Ma séance</h1>
+          <p class="eyebrow" data-i18n="app.eyebrow"></p>
+          <h1 data-i18n="app.heading"></h1>
         </div>
         <div class="lang">
-          <select id="locale" aria-label="Langue" data-i18n-aria-label="lang.label"></select>
+          <select id="locale" aria-label="" data-i18n-aria-label="lang.label"></select>
         </div>
       </header>
-      <p class="tagline" data-i18n="app.tagline">
-        Construis ton entraînement, ordonne les exercices, règle les pauses.
-      </p>
+      <p class="tagline" data-i18n="app.tagline"></p>
       <nav class="quicknav" aria-label="Sections">
-        <a href="#section-plan" data-i18n="section.plan">Déroulé</a>
-        <a href="#section-library" data-i18n="section.library">Bibliothèque</a>
+        <a href="#section-plan" data-i18n="section.plan"></a>
+        <a href="#section-library" data-i18n="section.library"></a>
       </nav>
 
-      <h2 id="section-sessions" data-i18n="section.sessions">Séances</h2>
+      <h2 id="section-sessions" data-i18n="section.sessions"></h2>
       <div id="planSwitcher"></div>
 
       <div class="modes">
-        <button id="modeClassic" type="button" data-i18n="mode.classic">Classique</button>
-        <button id="modeCircuit" type="button" data-i18n="mode.circuit">Circuit</button>
+        <button id="modeClassic" type="button" data-i18n="mode.classic"></button>
+        <button id="modeCircuit" type="button" data-i18n="mode.circuit"></button>
       </div>
       <p class="modehint" id="modeHint"></p>
 
       <div class="settings" id="settings">
         <div class="f">
-          <label for="setPause" data-i18n="settings.pause">Pause imposée (s)</label>
+          <label for="setPause" data-i18n="settings.pause"></label>
           <input type="number" id="setPause" min="10" max="300" step="10" />
         </div>
         <div class="f">
-          <label for="setTrans" data-i18n="settings.transition">Transition entre exercices (s)</label>
+          <label for="setTrans" data-i18n="settings.transition"></label>
           <input type="number" id="setTrans" min="0" max="120" step="5" />
         </div>
       </div>
 
-      <h2 id="section-plan" data-i18n="section.plan">Déroulé</h2>
+      <h2 id="section-plan" data-i18n="section.plan"></h2>
       <ul class="plan" id="plan"></ul>
       <div class="empty" id="empty">
-        <b data-i18n="empty.title">Aucun exercice pour l’instant</b><span data-i18n="empty.body">Choisis dans la liste ci-dessous pour construire ta séance.</span>
+        <b data-i18n="empty.title"></b><span data-i18n="empty.body"></span>
       </div>
 
       <!--
@@ -159,7 +157,7 @@
         l'utilisateur une section qu'il a sciemment refermee.
       -->
       <details class="preview" id="preview">
-        <summary data-i18n="preview.title">Enchaînement calculé</summary>
+        <summary data-i18n="preview.title"></summary>
         <p class="lead" id="previewLead"></p>
         <div class="seq" id="previewSeq"></div>
         <div class="pcount" id="previewCount"></div>
@@ -168,29 +166,29 @@
       <p class="saved" id="saved" role="status"></p>
 
       <div class="rowbtns">
-        <button class="ghost" type="button" id="addRest" data-i18n="actions.addRest">+ Ajouter une pause</button>
-        <button class="ghost" type="button" id="addCustom" data-i18n="actions.addCustom">+ Exercice perso</button>
+        <button class="ghost" type="button" id="addRest" data-i18n="actions.addRest"></button>
+        <button class="ghost" type="button" id="addCustom" data-i18n="actions.addCustom"></button>
       </div>
       <div class="rowbtns">
-        <button class="ghost" type="button" id="loadDefault" data-i18n="actions.loadDefault">Charger la séance type</button>
-        <button class="ghost" type="button" id="clearAll" data-i18n="actions.clearAll">Tout effacer</button>
+        <button class="ghost" type="button" id="loadDefault" data-i18n="actions.loadDefault"></button>
+        <button class="ghost" type="button" id="clearAll" data-i18n="actions.clearAll"></button>
       </div>
 
-      <h2 id="section-library" data-i18n="section.library">Bibliothèque</h2>
+      <h2 id="section-library" data-i18n="section.library"></h2>
       <div class="lib-filters">
         <input
           type="search"
           id="libSearch"
-          placeholder="Rechercher un exercice…"
+          placeholder=""
           data-i18n-placeholder="library.search"
-          aria-label="Rechercher un exercice…"
+          aria-label=""
           data-i18n-aria-label="library.search"
         />
-        <select id="libGroupFilter" aria-label="Filtrer par groupe musculaire" data-i18n-aria-label="library.filterLabel">
-          <option value="" data-i18n="library.filterAll">Tous les groupes</option>
+        <select id="libGroupFilter" aria-label="" data-i18n-aria-label="library.filterLabel">
+          <option value="" data-i18n="library.filterAll"></option>
         </select>
       </div>
-      <p class="lib-empty" id="libEmpty" data-i18n="library.noResults" hidden>Aucun exercice ne correspond à cette recherche.</p>
+      <p class="lib-empty" id="libEmpty" data-i18n="library.noResults" hidden></p>
       <div class="lib" id="library"></div>
 
       <p class="done" id="history"></p>
@@ -204,7 +202,7 @@
         remplir cette liste a la main.
       -->
       <nav class="guides" aria-label="Fiches d’exercice">
-        <h2 data-i18n="section.allGuides">Toutes les fiches d’exercice</h2>
+        <h2 data-i18n="section.allGuides"></h2>
         <!--EXERCISE_INDEX-->
       </nav>
 
@@ -215,28 +213,10 @@
         visiteurs et pour les robots.
       -->
       <details class="about" id="about" open>
-        <summary data-i18n="about.title">À propos de Séance</summary>
-        <p data-i18n="about.intro">
-          Séance est un planificateur et un minuteur d’entraînement au poids du corps, pensé pour
-          une reprise sans matériel. On compose son déroulé à partir d’une bibliothèque d’exercices
-          — pompes inclinées, squat sur chaise, wall sit, planche, dead bug, mollets debout,
-          rotation externe d’épaule, marche — puis on règle les séries, les répétitions ou les
-          durées, et les temps de repos.
-        </p>
-        <p data-i18n="about.modes">
-          Deux façons d’enchaîner les séries. En mode classique, on fait toutes les séries d’un
-          exercice avant de passer au suivant, avec le repos réglé sur chaque ligne. En mode
-          circuit, les séries alternent les groupes musculaires et une pause n’apparaît que
-          lorsque deux efforts du même groupe doivent forcément se suivre — l’aperçu affiche
-          l’enchaînement calculé avant de commencer.
-        </p>
-        <p data-i18n="about.privacy">
-          Pendant la séance, un lecteur plein écran affiche le chrono, l’anneau de progression et
-          la consigne d’exécution, garde l’écran allumé et signale la fin de chaque temps. Aucun
-          compte, aucun serveur, aucune donnée envoyée : la séance et l’historique sont enregistrés
-          dans le navigateur. L’interface existe en français, anglais, espagnol, allemand et
-          italien.
-        </p>
+        <summary data-i18n="about.title"></summary>
+        <p data-i18n="about.intro"></p>
+        <p data-i18n="about.modes"></p>
+        <p data-i18n="about.privacy"></p>
       </details>
 
       <!--
@@ -253,17 +233,9 @@
         et un gabarit d'URL n'est pas du texte traduisible.
       -->
       <details class="about" id="aiPlan" open>
-        <summary data-i18n="aiPlan.title">Créer une séance par lien (pour une IA)</summary>
-        <p data-i18n="aiPlan.intro">
-          Cette page sait recevoir une séance décrite dans son adresse : ouvrir un tel lien propose
-          de l’importer, rien n’est enregistré sans confirmation. Une intelligence artificielle peut
-          donc composer une séance et vous la livrer sous forme de lien, sans compte ni serveur.
-          Donnez-lui simplement l’adresse de cette page.
-        </p>
-        <p data-i18n="aiPlan.format">
-          Le lien attendu est de la forme ci-dessous : un objet JSON qui porte le nom de la séance,
-          le mode d’enchaînement et la liste des lignes, compressé en base64url dans le paramètre s.
-        </p>
+        <summary data-i18n="aiPlan.title"></summary>
+        <p data-i18n="aiPlan.intro"></p>
+        <p data-i18n="aiPlan.format"></p>
         <pre class="ai-code"><code>{"v":1,"n":"Haut du corps","m":"x","p":60,"t":0,"i":[
   ["e","kneePushup","push","r",4,12,30,60],
   ["e","plank","core","t",3,10,45,60]
@@ -277,29 +249,18 @@ Exercice : ["e", clé, groupe, "r" reps | "t" durée, séries, reps, secondes, r
 Pause    : ["r", secondes]
 
 https://kallly.github.io/SRCR/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsInQiOjAsImkiOltbImUiLCJrbmVlUHVzaHVwIiwicHVzaCIsInIiLDQsMTIsMzAsNjBdLFsiZSIsInBsYW5rIiwiY29yZSIsInQiLDMsMTAsNDUsNjBdXX0</code></pre>
-        <p data-i18n="aiPlan.keys">
-          La clé à utiliser pour chaque exercice est indiquée en petit sous son nom, dans la liste
-          « Toutes les fiches d’exercice » ci-dessus (par exemple catCow sous « Chat-vache ») — ce
-          n’est jamais le mot qui termine l’adresse de sa fiche. Le groupe musculaire, le type
-          d’effort et les valeurs manquantes sont déduits de la bibliothèque. Une clé inconnue
-          devient un exercice personnalisé portant ce nom. Une ligne sans clé insère une pause.
-        </p>
-        <p data-i18n="aiPlan.rawLink">
-          Donnez toujours ce lien tel quel — jamais enveloppé dans une recherche
-          (google.com/search) ni raccourci. Certains assistants ajoutent cette enveloppe
-          automatiquement : si le lien que vous vous apprêtez à donner en contient une, retirez-la
-          avant de répondre — l’import en un clic ne fonctionne qu’avec le lien exact.
-        </p>
+        <p data-i18n="aiPlan.keys"></p>
+        <p data-i18n="aiPlan.rawLink"></p>
         <p>
           <a href="creer-une-seance-par-lien.html" data-i18n="aiPlan.spec"
-            >Spécification complète du format</a
+            ></a
           >
         </p>
       </details>
 
       <footer class="credit">
         <a href="https://github.com/kallly/SRCR" target="_blank" rel="noopener" data-i18n="app.sourceCode"
-          >Code source</a
+          ></a
         >
       </footer>
     </main>
@@ -307,13 +268,13 @@ https://kallly.github.io/SRCR/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4Iiw
     <dialog class="info" id="exerciseInfo">
       <div class="info-head">
         <span class="chip" id="infoChip"><i></i><span id="infoGroup"></span></span>
-        <button class="info-close" type="button" id="infoClose" data-i18n="exerciseInfo.close">Fermer</button>
+        <button class="info-close" type="button" id="infoClose" data-i18n="exerciseInfo.close"></button>
       </div>
       <h3 id="infoName"></h3>
       <div class="info-fig" id="infoFig"></div>
-      <p class="info-muscles"><b data-i18n="exerciseInfo.muscles">Muscles sollicités</b> <span id="infoMuscles"></span></p>
-      <p class="info-unavailable" id="infoUnavailable" data-i18n="exerciseInfo.unavailable" hidden>Fiche détaillée bientôt disponible dans cette langue — affichage en français.</p>
-      <h4 data-i18n="exerciseInfo.keyPoints">Points clés</h4>
+      <p class="info-muscles"><b data-i18n="exerciseInfo.muscles"></b> <span id="infoMuscles"></span></p>
+      <p class="info-unavailable" id="infoUnavailable" data-i18n="exerciseInfo.unavailable" hidden></p>
+      <h4 data-i18n="exerciseInfo.keyPoints"></h4>
       <ul id="infoPoints"></ul>
       <!--
         href de repli : le JS le remplace par la fiche de l'exercice ouvert.
@@ -321,34 +282,34 @@ https://kallly.github.io/SRCR/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4Iiw
         href n'est ni focusable ni annonce comme lien) — l'index des fiches
         est la cible la plus sensee si le JS n'a pas encore renseigne l'URL.
       -->
-      <a class="info-more" id="infoMore" href="#section-library" target="_blank" rel="noopener" data-i18n="exerciseInfo.moreInfo">Plus d’informations</a>
+      <a class="info-more" id="infoMore" href="#section-library" target="_blank" rel="noopener" data-i18n="exerciseInfo.moreInfo"></a>
     </dialog>
 
     <dialog class="info" id="sharePlan">
       <div class="info-head">
-        <h3 data-i18n="share.title">Partager cette séance</h3>
-        <button class="info-close" type="button" id="shareClose" data-i18n="exerciseInfo.close">Fermer</button>
+        <h3 data-i18n="share.title"></h3>
+        <button class="info-close" type="button" id="shareClose" data-i18n="exerciseInfo.close"></button>
       </div>
       <div class="qr-card" id="shareQr"></div>
-      <p class="share-qr-error" id="shareQrError" data-i18n="share.qrTooLarge" hidden>Cette séance est trop grande pour un QR code : utilisez le lien ci-dessous.</p>
-      <p class="share-hint" data-i18n="share.hint">Scannez ce code avec un téléphone, ou copiez le lien ci-dessous.</p>
+      <p class="share-qr-error" id="shareQrError" data-i18n="share.qrTooLarge" hidden></p>
+      <p class="share-hint" data-i18n="share.hint"></p>
       <div class="share-link-row">
         <input
           type="text"
           id="shareLink"
           readonly
-          aria-label="Lien de partage"
+          aria-label=""
           data-i18n-aria-label="share.linkLabel"
         />
-        <button type="button" id="shareCopy" data-i18n="share.copy">Copier</button>
+        <button type="button" id="shareCopy" data-i18n="share.copy"></button>
       </div>
       <p class="share-copied" id="shareCopied" role="status" hidden></p>
     </dialog>
 
     <dialog class="info" id="importPlan">
       <div class="info-head">
-        <h3 data-i18n="share.importTitle">Importer une séance partagée</h3>
-        <button class="info-close" type="button" id="importClose" data-i18n="exerciseInfo.close">Fermer</button>
+        <h3 data-i18n="share.importTitle"></h3>
+        <button class="info-close" type="button" id="importClose" data-i18n="exerciseInfo.close"></button>
       </div>
       <p class="import-summary" id="importSummary"></p>
       <!--
@@ -358,39 +319,32 @@ https://kallly.github.io/SRCR/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4Iiw
         #importSummary : texte transitoire, rempli par ui/share.ts.
       -->
       <div class="rowbtns">
-        <button class="ghost" type="button" id="importCancel" data-i18n="actions.cancel">Annuler</button>
+        <button class="ghost" type="button" id="importCancel" data-i18n="actions.cancel"></button>
         <button class="ghost" type="button" id="importReplace" hidden></button>
-        <button class="ghost" type="button" id="importAppend" data-i18n="share.importAppend">Ajouter à la séance active</button>
-        <button class="go" type="button" id="importConfirm" data-i18n="share.importConfirm">Importer comme nouvelle séance</button>
+        <button class="ghost" type="button" id="importAppend" data-i18n="share.importAppend"></button>
+        <button class="go" type="button" id="importConfirm" data-i18n="share.importConfirm"></button>
       </div>
     </dialog>
 
     <dialog class="info" id="aiHelp">
       <div class="info-head">
-        <h3 data-i18n="aiHelp.title">Créer ou modifier avec une IA</h3>
-        <button class="info-close" type="button" id="aiHelpClose" data-i18n="exerciseInfo.close">Fermer</button>
+        <h3 data-i18n="aiHelp.title"></h3>
+        <button class="info-close" type="button" id="aiHelpClose" data-i18n="exerciseInfo.close"></button>
       </div>
-      <p data-i18n="aiHelp.intro">
-        ChatGPT, Claude et Gemini peuvent créer ou modifier votre séance : donnez-leur un lien.
-      </p>
+      <p data-i18n="aiHelp.intro"></p>
 
-      <h4 data-i18n="aiHelp.createTitle">Créer une séance</h4>
-      <p data-i18n="aiHelp.createText">Copiez ce message :</p>
+      <h4 data-i18n="aiHelp.createTitle"></h4>
+      <p data-i18n="aiHelp.createText"></p>
       <div class="ai-help-prompt-block">
-        <p class="ai-help-prompt" data-i18n="aiHelp.createPrompt">
-          Voici un site de séances au poids du corps : https://kallly.github.io/SRCR/. Crée-moi
-          une séance haut du corps de 20 minutes, puis donne-moi le lien à ouvrir pour l’importer.
-        </p>
+        <p class="ai-help-prompt" data-i18n="aiHelp.createPrompt"></p>
         <div class="ai-help-copy-row">
-          <button type="button" class="ai-help-copy" id="aiHelpCreateCopy" data-i18n="share.copy">Copier</button>
+          <button type="button" class="ai-help-copy" id="aiHelpCreateCopy" data-i18n="share.copy"></button>
           <span class="ai-help-copied" id="aiHelpCreateCopied" role="status" hidden></span>
         </div>
       </div>
 
-      <h4 data-i18n="aiHelp.modifyTitle">Modifier une séance</h4>
-      <p data-i18n="aiHelp.modifyText">
-        Utilisez le lien de partage de votre séance pour demander à l’IA de la modifier :
-      </p>
+      <h4 data-i18n="aiHelp.modifyTitle"></h4>
+      <p data-i18n="aiHelp.modifyText"></p>
       <!--
         #aiHelpModifyPrompt ne porte PAS de data-i18n. Son contenu affiche
         n'est pas le texte reel : le vrai lien de partage y est remplace par
@@ -404,7 +358,7 @@ https://kallly.github.io/SRCR/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4Iiw
       <div class="ai-help-prompt-block">
         <p class="ai-help-prompt" id="aiHelpModifyPrompt"></p>
         <div class="ai-help-copy-row">
-          <button type="button" class="ai-help-copy" id="aiHelpModifyCopy" data-i18n="share.copy">Copier</button>
+          <button type="button" class="ai-help-copy" id="aiHelpModifyCopy" data-i18n="share.copy"></button>
           <span class="ai-help-copied" id="aiHelpModifyCopied" role="status" hidden></span>
         </div>
       </div>
@@ -412,13 +366,13 @@ https://kallly.github.io/SRCR/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4Iiw
 
     <div class="bar">
       <div class="meta"><b id="barTitle"></b><span id="barSub"></span></div>
-      <button class="go" type="button" id="start" disabled data-i18n="bar.start">Démarrer</button>
+      <button class="go" type="button" id="start" disabled data-i18n="bar.start"></button>
     </div>
 
     <div class="run" id="run">
       <div class="rhead">
         <span id="runStep"></span>
-        <button class="x" type="button" id="runQuit" data-i18n="runner.quit">Quitter</button>
+        <button class="x" type="button" id="runQuit" data-i18n="runner.quit"></button>
       </div>
       <div class="prog"><i id="runProgress" style="width: 0"></i></div>
       <div class="rbody">

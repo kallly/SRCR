@@ -106,11 +106,142 @@ function stampBuildDate(): Plugin {
   };
 }
 
+/**
+ * Remplit le texte francais statique de chaque element `data-i18n` depuis
+ * `fr.ts`, en dev comme en prod.
+ *
+ * Pourquoi ce texte doit exister dans le HTML livre : tout element `data-i18n`
+ * est vide tant que `main.ts` n'a pas tourne, et les robots qui ne rendent pas
+ * le JS (previsualisation sociale, audits SEO) verraient une coquille vide —
+ * sans compter le CLS, ces elements passant de zero a leur hauteur reelle des
+ * qu'`applyStaticTranslations()` s'execute. Voir CLAUDE.md, « SEO & partage
+ * social ».
+ *
+ * Pourquoi l'injecter plutot que le recopier a la main : ce texte etait
+ * jusqu'ici duplique dans `index.html` en miroir de `fr.ts`, avec une regle de
+ * synchronisation manuelle listant les cles a repercuter. Une seule source
+ * desormais — la meme raison qui fait injecter l'index des fiches ci-dessus
+ * plutot que d'ecrire une seconde liste.
+ *
+ * Contrat sur la source : un element porteur de `data-i18n` doit etre **vide**
+ * dans `index.html`. C'est ce qui rend le remplacement non ambigu (on n'a qu'a
+ * reconnaitre la balise fermante qui suit immediatement) au lieu de faire
+ * traverser des balises imbriquees a une expression reguliere. Un element non
+ * vide est donc une erreur de build, pas un cas a gerer.
+ */
+function fillStaticTranslations(): Plugin {
+  // Toute balise ouvrante, les valeurs d'attributs entre guillemets pouvant
+  // elles-memes contenir un '>'.
+  const OPEN_TAG = /<([a-zA-Z][\w-]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>/g;
+
+  const keyOf = (attrs: string, attr: string): string | undefined =>
+    new RegExp(`\\s${attr}="([^"]+)"`).exec(attrs)?.[1];
+
+  /** Resout une cle pointee ("app.heading") dans le dictionnaire francais. */
+  const translate = (key: string): string => {
+    let node: unknown = i18nFr;
+    for (const part of key.split('.')) {
+      if (typeof node !== 'object' || node === null) break;
+      node = (node as Record<string, unknown>)[part];
+    }
+    if (node === undefined) {
+      throw new Error(
+        `index.html : data-i18n="${key}" ne correspond a aucune cle de fr.ts. ` +
+          `Ajoute-la dans fr.ts (les 4 autres langues deviendront alors des ` +
+          `erreurs de typecheck), ou corrige la cle ici.`,
+      );
+    }
+    if (typeof node !== 'string') {
+      throw new Error(
+        `index.html : data-i18n="${key}" resout vers un bloc ou une entree ` +
+          `pluralisee, pas vers une chaine. Un pluriel n'a pas de forme ` +
+          `statique — ce texte doit etre construit en JS avec t(), pas pose ` +
+          `dans index.html.`,
+      );
+    }
+    return node;
+  };
+
+  const escapeText = (s: string): string =>
+    s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const escapeAttr = (s: string): string => escapeText(s).replace(/"/g, '&quot;');
+
+  return {
+    name: 'fill-static-translations',
+    // `enforce: 'pre'` n'est pas necessaire : ce plugin ne touche qu'aux
+    // elements data-i18n ecrits a la main, jamais au HTML injecte par les
+    // autres plugins.
+    transformIndexHtml(html) {
+      let out = '';
+      let cursor = 0;
+      let filled = 0;
+
+      for (const m of html.matchAll(OPEN_TAG)) {
+        const [whole, tag = '', attrs = ''] = m;
+        const start = m.index;
+        const end = start + whole.length;
+
+        const textKey = keyOf(attrs, 'data-i18n');
+        const ariaKey = keyOf(attrs, 'data-i18n-aria-label');
+        const placeholderKey = keyOf(attrs, 'data-i18n-placeholder');
+        if (!textKey && !ariaKey && !placeholderKey) continue;
+
+        // Les attributs traduits sont remplacés *sur place*, valeur vide dans
+        // la source : l'ordre des attributs du HTML livre reste celui du
+        // fichier, et l'attribut reste visible a la lecture de `index.html`.
+        let newAttrs = attrs;
+        for (const [key, attr] of [
+          [ariaKey, 'aria-label'],
+          [placeholderKey, 'placeholder'],
+        ] as const) {
+          if (!key) continue;
+          const slot = new RegExp(`(\\s${attr}=")[^"]*(")`);
+          if (!slot.test(newAttrs)) {
+            throw new Error(
+              `index.html : <${tag}> porte data-i18n-${attr}="${key}" mais pas ` +
+                `d'attribut ${attr}="" a remplir. Ajoute ${attr}="" a cote.`,
+            );
+          }
+          newAttrs = newAttrs.replace(slot, `$1${escapeAttr(translate(key))}$2`);
+        }
+
+        out += html.slice(cursor, start) + `<${tag}${newAttrs}>`;
+        cursor = end;
+
+        if (textKey) {
+          // Prettier coupe volontiers une balise fermante en `</a\n  >` :
+          // on tolere l'espace avant le chevron, mais rien entre `>` et `</`.
+          const closing = new RegExp(`^</${tag}\\s*>`).exec(html.slice(end));
+          if (!closing) {
+            throw new Error(
+              `index.html : <${tag} data-i18n="${textKey}"> n'est pas vide. ` +
+                `Le texte francais est injecte au build depuis fr.ts — laisse ` +
+                `l'element vide (<${tag} data-i18n="${textKey}"></${tag}>).`,
+            );
+          }
+          out += escapeText(translate(textKey));
+          filled++;
+        }
+      }
+      out += html.slice(cursor);
+
+      if (filled === 0) {
+        throw new Error(
+          `index.html : aucun element data-i18n rempli. Le marqueur a disparu ` +
+            `ou le fichier a change de forme — l'accueil serait publie sans ` +
+            `texte pour les robots qui n'executent pas le JS.`,
+        );
+      }
+      return out;
+    },
+  };
+}
+
 export default defineConfig({
   // Chemins relatifs : le build fonctionne sur user.github.io/<depot>/
   // sans avoir a coder le nom du depot en dur.
   base: './',
-  plugins: [stampBuildDate(), injectExerciseIndex()],
+  plugins: [stampBuildDate(), injectExerciseIndex(), fillStaticTranslations()],
   // `host: true` expose le serveur sur le reseau local : la seance se teste
   // depuis le telephone, qui est l'appareil vise.
   server: { port: 8000, host: true, strictPort: true },

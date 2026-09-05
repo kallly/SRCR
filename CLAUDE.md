@@ -443,30 +443,33 @@ rel="canonical">`, les blocs Open Graph et Twitter Card, le JSON-LD, et le
 texte français figé à l'intérieur de l'eyebrow, du `<h1>`, de la tagline, des
 deux `<h2>`, du `<h3>` de l'aperçu et de la section « À propos ».
 
-**Pourquoi le texte est dupliqué.** Tout élément `data-i18n` est vide tant que
-`main.ts` n'a pas tourné (`applyStaticTranslations()`, `src/ui/dom.ts`). Un
-navigateur normal comble ce vide en quelques millisecondes, mais les robots qui
-lisent le HTML brut sans exécuter de JavaScript — la plupart des bots de
-prévisualisation sociale (Facebook, LinkedIn, Discord…) et certains outils
-d'audit SEO — voient la coquille vide. On donne donc aux éléments porteurs de
-sens un texte français par défaut écrit en dur dans `index.html`, en plus de
-leur `data-i18n` qui continue à les retraduire normalement au chargement.
+**Pourquoi ce texte doit exister dans le HTML livré.** Tout élément `data-i18n`
+est vide tant que `main.ts` n'a pas tourné (`applyStaticTranslations()`,
+`src/ui/dom.ts`). Un navigateur normal comble ce vide en quelques
+millisecondes, mais les robots qui lisent le HTML brut sans exécuter de
+JavaScript — la plupart des bots de prévisualisation sociale (Facebook,
+LinkedIn, Discord…) et certains outils d'audit SEO — voient la coquille vide.
 
-**Règle : si on change l'une de ces clés dans `fr.ts`, il faut répercuter le
-même texte dans `index.html`** — `app.eyebrow`, `app.heading`, `app.tagline`,
-`app.sourceCode`, `section.plan`, `section.library`, `section.allGuides`,
-`preview.title`, les
-quatre clés `about.*`, les six clés `aiPlan.*`, `share.importAppend` et
-`aiHelp.trigger`/`.triggerLabel` (respectivement section « Créer une séance
-par lien », dialogue d'import, et étiquette fixe `#aiHelpTab` — voir
-« Écriture par lien » plus haut), `exerciseInfo.close`/`.keyPoints`/`.moreInfo` (la
-modal d'info sur un exercice), et `library.search`/`.filterLabel`/
-`.filterAll`/`.noResults` (recherche et filtre de la bibliothèque — y
-compris le `placeholder` et l'`aria-label` du champ de recherche, qui
-portent la même clé `library.search` que le texte visible). Même logique
-pour l'`aria-label="Langue"` statique du sélecteur de langue, que
-`applyStaticTranslations()` écrase
-ensuite.
+**Il n'est plus recopié à la main : `fillStaticTranslations()`
+(`vite.config.ts`) le remplit au build depuis `fr.ts`, en dev comme en prod**
+— troisième plugin `transformIndexHtml` de la même famille que
+`injectExerciseIndex()` et `stampBuildDate()`. Il n'y a donc **plus de règle
+de synchronisation à tenir** : changer un texte dans `fr.ts` suffit, et la
+liste d'une vingtaine de clés à répercuter qui vivait ici a disparu avec elle.
+
+**Contrat sur la source, en contrepartie : un élément portant `data-i18n` doit
+être vide dans `index.html`** (`<h1 data-i18n="app.heading"></h1>`), et un
+élément portant `data-i18n-aria-label`/`data-i18n-placeholder` doit poser
+l'attribut correspondant **vide** à l'endroit voulu (`aria-label=""`) — c'est
+ce qui rend le remplissage non ambigu et garde l'ordre des attributs du
+fichier. Le plugin échoue le build, avec le nom de la clé, si l'élément n'est
+pas vide, si la clé est absente de `fr.ts`, si elle résout vers une entrée
+pluralisée (un pluriel n'a pas de forme statique : il se construit en JS avec
+`t()`), ou si l'attribut à remplir manque.
+
+Corollaire pratique : ouvrir `index.html` directement en `file://` montre un
+chrome vide. Ça n'a jamais été un usage supporté (l'app a besoin du bundle),
+mais autant le savoir avant de conclure à une régression.
 
 **`#infoName`/`#infoGroup`/`#infoMuscles`/`#infoPoints` restent vides dans le
 HTML statique, volontairement** : ce sont des valeurs par exercice, pas du
