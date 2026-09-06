@@ -2,8 +2,8 @@ import type { Translations } from '../index';
 
 export const es: Translations = {
   app: {
-    title: 'Sesión — vuelta con peso corporal',
-    eyebrow: 'Fase 1 · sin material',
+    title: 'Sesión — planificador y cronómetro de entrenamiento',
+    eyebrow: 'Con o sin material',
     heading: 'Mi sesión',
     tagline: 'Construye tu entrenamiento, ordena los ejercicios, ajusta las pausas.',
     sourceCode: 'Código fuente',
@@ -53,7 +53,7 @@ export const es: Translations = {
   about: {
     title: 'Acerca de Séance',
     intro:
-      'Séance es un planificador y cronómetro de entrenamiento con el peso corporal, pensado para retomar la actividad sin material. Compones tu sesión a partir de una biblioteca de ejercicios — flexiones inclinadas, sentadillas a la silla, sentadilla isométrica en pared, plancha, dead bug, elevación de gemelos, rotación externa de hombro, caminata — y luego ajustas las series, las repeticiones o las duraciones, y los descansos.',
+      'Séance es un planificador y cronómetro de entrenamiento. Compones tu sesión a partir de una biblioteca de ejercicios que puedes filtrar según el material del que dispones — peso corporal, banda elástica, mancuernas, máquina — o según el momento de la sesión, calentamiento y estiramientos incluidos. Cada línea se ajusta después en series, repeticiones o duración, con su propio descanso.',
     modes:
       'Dos formas de encadenar las series. En modo clásico, haces todas las series de un ejercicio antes de pasar al siguiente, con el descanso ajustado en cada línea. En modo circuito, las series alternan los grupos musculares y solo aparece una pausa cuando dos esfuerzos del mismo grupo tienen que seguirse forzosamente — la vista previa muestra la secuencia calculada antes de empezar.',
     privacy:
@@ -81,7 +81,7 @@ export const es: Translations = {
     createTitle: 'Crear una sesión',
     createText: 'Copia este mensaje:',
     createPrompt:
-      'Este es un sitio de sesiones a peso corporal: https://kallly.github.io/SRCR/. Crea una sesión de tren superior de 20 minutos y dame el enlace para importarla.',
+      'Este es un sitio para componer sesiones de entrenamiento: https://kallly.github.io/SRCR/. Crea una sesión de tren superior de 20 minutos y dame el enlace para importarla.',
     modifyTitle: 'Modificar una sesión',
     modifyText: 'Usa el enlace de tu sesión para pedirle a la IA que la modifique:',
     modifyPrompt:
@@ -93,6 +93,7 @@ export const es: Translations = {
   exerciseInfo: {
     trigger: 'Información del ejercicio',
     close: 'Cerrar',
+    equipment: 'Equipamiento',
     muscles: 'Músculos trabajados',
     keyPoints: 'Puntos clave',
     moreInfo: 'Más información',
@@ -127,6 +128,7 @@ export const es: Translations = {
     search: 'Buscar un ejercicio…',
     filterLabel: 'Filtrar por grupo muscular',
     filterAll: 'Todos los grupos',
+    filterCategoryLabel: 'Filtrar por equipamiento',
     noResults: 'Ningún ejercicio coincide con esta búsqueda.',
   },
 
@@ -191,14 +193,24 @@ export const es: Translations = {
   },
 
   group: {
-    push: 'Pecho / brazos',
+    push: 'Pecho',
     shoulders: 'Hombros',
     back: 'Espalda',
+    arms: 'Brazos',
     legs: 'Muslos',
     calves: 'Gemelos',
     core: 'Core',
     cardio: 'Cardio',
     glutes: 'Glúteos',
+  },
+
+  category: {
+    warmup: 'Calentamiento',
+    stretching: 'Estiramientos',
+    bodyweight: 'Peso corporal',
+    band: 'Banda elástica',
+    dumbbell: 'Mancuernas',
+    machine: 'Máquina',
   },
 
   duration: {
@@ -290,7 +302,7 @@ export const es: Translations = {
     readyWhen: 'Pasar al siguiente nivel',
     precautions: 'Precauciones',
     similar: 'Ejercicios similares',
-    tagline: 'planificador y cronómetro de entrenamiento con el peso corporal.',
+    tagline: 'planificador y cronómetro de entrenamiento, con o sin material.',
     disclaimer:
       'Esta información es de carácter general y no sustituye el consejo de un profesional sanitario. Si tienes dolor, una lesión o una patología conocida, consulta a un médico antes de empezar.',
   },
@@ -407,6 +419,142 @@ export const es: Translations = {
     buttKickMarch: {
       name: 'Marcha talón-glúteo',
       cue: 'Marcha en el sitio, lleva los talones hacia los glúteos a ritmo moderado.',
+    },
+    bandPullApart: {
+      name: 'Apertura con banda elástica',
+      cue: 'Brazos extendidos al frente, banda tensa entre las manos, ábrelos apretando los omóplatos.',
+    },
+    bandSquat: {
+      name: 'Sentadilla con banda',
+      cue: 'Banda bajo los pies y sobre los hombros, baja como en una sentadilla normal, espalda recta.',
+    },
+    dumbbellGobletSquat: {
+      name: 'Sentadilla goblet',
+      cue: 'Mancuerna sujeta con ambas manos contra el pecho, baja manteniendo los codos entre las rodillas.',
+    },
+    dumbbellRow: {
+      name: 'Remo con mancuerna a un brazo',
+      cue: 'Una rodilla y una mano apoyadas en un banco, tira de la mancuerna hacia la cadera manteniendo la espalda plana.',
+    },
+    legPressMachine: {
+      name: 'Prensa de piernas',
+      cue: 'Pies apoyados en la placa, separados al ancho de los hombros, empuja sin bloquear del todo las rodillas.',
+    },
+    latPulldownMachine: {
+      name: 'Jalón al pecho',
+      cue: 'Agarra la barra más ancho que los hombros y tira hacia la parte alta del pecho manteniendo el torso recto.',
+    },
+    hamstringStretch: {
+      name: 'Estiramiento de isquiotibiales',
+      cue: 'Talón apoyado en un soporte, pierna estirada, inclina el torso hacia adelante sin curvar la espalda.',
+    },
+    chestDoorwayStretch: {
+      name: 'Estiramiento de pecho en el marco de la puerta',
+      cue: 'Antebrazo contra el marco de la puerta, codo a la altura del hombro, avanza el torso suavemente.',
+    },
+    squat: {
+      name: 'Sentadilla',
+      cue: 'Pies al ancho de las caderas, empuja las caderas atrás y baja hasta que los muslos queden casi horizontales, torso recto.',
+    },
+    pushup: {
+      name: 'Flexiones',
+      cue: 'Manos bajo los hombros, cuerpo alineado de talones a cabeza, baja hasta rozar el suelo.',
+    },
+    pikePushup: {
+      name: 'Flexiones en pica',
+      cue: 'Cadera alta en V invertida, baja la coronilla hacia el suelo entre las manos.',
+    },
+    mountainClimber: {
+      name: 'Escalador',
+      cue: 'En posición de flexión, lleva una rodilla al pecho alternando, sin subir las caderas.',
+    },
+    legSwing: {
+      name: 'Balanceo de pierna',
+      cue: 'Apóyate con una mano y balancea una pierna adelante y atrás, ganando amplitud, cadera estable.',
+    },
+    torsoTwist: {
+      name: 'Rotaciones de torso',
+      cue: 'De pie, pies fijos, gira el torso a un lado y al otro con los brazos relajados.',
+    },
+    quadStretch: {
+      name: 'Estiramiento de cuádriceps de pie',
+      cue: 'De pie, agarra el tobillo y lleva el talón al glúteo, rodillas juntas.',
+    },
+    gluteStretch: {
+      name: 'Estiramiento de glúteo (figura 4)',
+      cue: 'Tumbado, tobillo sobre la rodilla opuesta, tira del muslo de apoyo hacia ti.',
+    },
+    calfStretch: {
+      name: 'Estiramiento de gemelos en pared',
+      cue: 'Manos en la pared, pierna trasera estirada, talón en el suelo, adelanta la cadera.',
+    },
+    childPose: {
+      name: 'Postura del niño',
+      cue: 'De rodillas, siéntate sobre los talones y estira los brazos al frente, frente hacia el suelo.',
+    },
+    tricepsStretch: {
+      name: 'Estiramiento de tríceps',
+      cue: 'Codo doblado apuntando al techo, mano entre las escápulas, empuja el codo suavemente con la otra mano.',
+    },
+    bandChestPress: {
+      name: 'Press de pecho con banda',
+      cue: 'Banda por la espalda, manos a la altura del pecho, empuja al frente hasta estirar los brazos.',
+    },
+    bandLateralRaise: {
+      name: 'Elevaciones laterales con banda',
+      cue: 'Banda bajo los pies, sube los brazos estirados por los lados hasta la altura del hombro.',
+    },
+    bandLateralWalk: {
+      name: 'Marcha lateral con banda',
+      cue: 'Banda por encima de las rodillas, media sentadilla, da pasos laterales sin que las rodillas se cierren.',
+    },
+    bandCurl: {
+      name: 'Curl de bíceps con banda',
+      cue: 'Banda bajo los pies, codos pegados al cuerpo, sube las manos hacia los hombros.',
+    },
+    dumbbellShoulderPress: {
+      name: 'Press militar con mancuernas',
+      cue: 'Mancuernas a la altura de los hombros, empuja por encima de la cabeza sin arquear la zona lumbar.',
+    },
+    dumbbellFloorPress: {
+      name: 'Press con mancuernas en el suelo',
+      cue: 'Tumbado en el suelo, rodillas dobladas, empuja las mancuernas hacia arriba; los codos tocan el suelo abajo.',
+    },
+    dumbbellRomanianDeadlift: {
+      name: 'Peso muerto rumano',
+      cue: 'Rodillas apenas flexionadas, empuja las caderas atrás y baja las mancuernas por las piernas, espalda plana.',
+    },
+    dumbbellCalfRaise: {
+      name: 'Elevación de gemelos con mancuernas',
+      cue: 'Mancuernas a los lados, sube de puntillas y baja despacio.',
+    },
+    dumbbellCurl: {
+      name: 'Curl de bíceps con mancuernas',
+      cue: 'Codos pegados al cuerpo, sube la mancuerna sin balancear el torso.',
+    },
+    dumbbellTricepsExtension: {
+      name: 'Extensión de tríceps',
+      cue: 'Mancuerna con ambas manos sobre la cabeza, bájala tras la nuca manteniendo los codos cerrados.',
+    },
+    chestPressMachine: {
+      name: 'Press de pecho en máquina',
+      cue: 'Espalda apoyada, agarres a la altura del pecho, empuja sin bloquear del todo los codos.',
+    },
+    legCurlMachine: {
+      name: 'Curl femoral',
+      cue: 'Rodillo sobre la parte baja de los gemelos, flexiona las rodillas con control, cadera pegada.',
+    },
+    treadmill: {
+      name: 'Cinta de correr',
+      cue: 'Un ritmo en el que hablar siga siendo posible pero algo entrecortado; no te agarres a las barras.',
+    },
+    stationaryBike: {
+      name: 'Bicicleta estática',
+      cue: 'Sillín ajustado para que la rodilla mantenga una ligera flexión abajo; cadencia regular.',
+    },
+    rowingMachine: {
+      name: 'Máquina de remo',
+      cue: 'Empuja primero con las piernas, luego abre el torso, luego tira con los brazos — y al revés al volver.',
     },
     custom: {
       name: 'Ejercicio propio',

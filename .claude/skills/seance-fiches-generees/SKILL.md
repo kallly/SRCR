@@ -1,7 +1,7 @@
 ---
 name: seance-fiches-generees
 description: >
-  Pipeline des 140 pages d'exercice statiques de Seance (une par exercice et
+  Pipeline des 310 pages d'exercice statiques de Seance (une par exercice et
   par langue) et regles de redaction du contenu long. A charger avant de
   toucher a scripts/build-exercise-pages.ts, src/content/exercise-details/*,
   src/content/exercise-page.css ou src/content/image-prompts.ts — c'est-a-dire
@@ -10,7 +10,7 @@ description: >
   carrousel d'exercices similaires.
 ---
 
-# Les 140 pages d'exercice generees
+# Les 310 pages d'exercice generees
 
 Pour *ajouter* un exercice de bout en bout, c'est la skill `add-exercise` :
 celle-ci porte le pipeline et les regles de redaction qu'elle suppose.
@@ -20,7 +20,7 @@ dans les cinq langues — a lancer avant d'ouvrir ces fichiers, qui font 1 100
 lignes chacun.
 
 **Pourquoi un fichier HTML statique par exercice, et pas une route JS.**
-Choix délibéré, pas une contrainte technique : ces 28 (bientôt plus) pages
+Choix délibéré, pas une contrainte technique : ces 36 (bientôt plus) pages
 sont un vrai gain SEO — chacune a sa propre URL indexable individuellement
 dans le sitemap, son propre `<title>`/description/canonical, un contenu
 complet visible sans exécuter la moindre ligne de JS (donc lisible par
@@ -40,10 +40,10 @@ efface le dossier avant de le reconstruire. **Éditer un fichier dans
 `dist/exercises/` directement est une perte de temps garantie** — le
 prochain build l'écrase sans avertissement.
 
-**Pour une modification groupée (touchant les 28 pages à la fois), un seul
+**Pour une modification groupée (touchant les 36 pages à la fois), un seul
 endroit à toucher selon la nature du changement :**
 
-| Ce qui change sur les 140 pages | Où éditer |
+| Ce qui change sur les 310 pages | Où éditer |
 |---|---|
 | Structure HTML, balises meta, JSON-LD, carrousel | `renderPage()` dans `scripts/build-exercise-pages.ts` |
 | Couleurs, typographie, mise en page, carrousel (CSS) | `src/content/exercise-page.css` |
@@ -52,7 +52,7 @@ endroit à toucher selon la nature du changement :**
 | Sélection des exercices « similaires » | la fonction `similar` dans `renderPage()` |
 
 Après toute modification de l'un de ces fichiers, `npm run build` régénère
-les 140 pages en une fois — jamais besoin (et jamais correct) de modifier un
+les 310 pages en une fois — jamais besoin (et jamais correct) de modifier un
 fichier `dist/exercises/**/*.html` à la main pour propager un changement.
 
 Chaque exercice a deux niveaux de texte, dans deux systèmes différents :
@@ -66,7 +66,7 @@ Chaque exercice a deux niveaux de texte, dans deux systèmes différents :
   (`Partial<Record<ExerciseKey, ExerciseDetail>>`, pas `Translations`) — une
   langue peut légitimement ne pas encore avoir traduit ce contenu, contrairement
   à un bouton qui ne doit jamais être vide. **Les 5 langues sont aujourd'hui
-  complètes** (28 exercices chacune), mais le contrat reste volontairement
+  complètes** (62 exercices chacune), mais le contrat reste volontairement
   partiel : c'est ce qui a permis de les livrer une par une, et ce qui
   permettra d'en ajouter une sixième sans bloquer le build. Le repli sur le
   français dans `exerciseDetail()` n'est donc plus emprunté en pratique —
@@ -89,7 +89,7 @@ problème hreflang déjà documenté plus haut pour l'app elle-même.
 
 **L'index des fiches sur l'accueil est injecté au build, pas écrit à la
 main.** `index.html` porte un marqueur `<!--EXERCISE_INDEX-->` que
-`injectExerciseIndex()` remplace par la liste des 28 liens dans
+`injectExerciseIndex()` remplace par la liste des 36 liens dans
 `dist/index.html`. Sans lui, **aucune fiche n'est atteignable depuis
 l'accueil en HTML brut** : les seuls liens vers les fiches sont ceux de la
 modal, générés en JS dans un `<dialog>` fermé — donc invisibles pour un

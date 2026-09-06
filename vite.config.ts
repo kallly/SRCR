@@ -1,7 +1,7 @@
 import { defineConfig, type Plugin } from 'vite';
 
 import { DETAILS_BY_LOCALE } from './src/content/exercise-details';
-import { findLibraryEntry } from './src/data/library';
+import { LIBRARY, findLibraryEntry } from './src/data/library';
 import { fr as i18nFr } from './src/i18n/locales/fr';
 import type { ExerciseKey, Locale } from './src/core/types';
 
@@ -102,6 +102,33 @@ function stampBuildDate(): Plugin {
     transformIndexHtml(html) {
       const today = new Date().toISOString().slice(0, 10);
       return html.replace('__BUILD_DATE__', today);
+    },
+  };
+}
+
+/**
+ * Injecte le nombre de rangees de la grille bibliotheque, dont depend la
+ * reservation de hauteur `#library:empty` (planner.css).
+ *
+ * Ces trois constantes etaient ecrites a la main, mesurees a 28 exercices :
+ * a 36 elles reservaient deja 22 % de trop peu, et personne ne s'en apercoit
+ * puisque rien ne casse — le CLS remonte, silencieusement. Comme `.libcard`
+ * a desormais une hauteur fixe (voir `.libcard .ln`), le seul terme variable
+ * est le nombre de rangees, qui se deduit de LIBRARY.length.
+ *
+ * Injecte dans le <head> plutot qu'ecrit dans la CSS : le CSS est un fichier
+ * statique servi tel quel, alors que le HTML passe deja par cette famille de
+ * plugins. La CSS garde des valeurs de repli, sans lesquelles une injection
+ * ratee produirait une declaration invalide donc AUCUNE reservation.
+ */
+function injectLibraryRows(): Plugin {
+  return {
+    name: 'inject-library-rows',
+    transformIndexHtml(html) {
+      const style =
+        `<style>:root{--lib-rows-2:${Math.ceil(LIBRARY.length / 2)};` +
+        `--lib-rows-3:${Math.ceil(LIBRARY.length / 3)}}</style>`;
+      return html.replace('</head>', `    ${style}\n  </head>`);
     },
   };
 }
@@ -241,7 +268,7 @@ export default defineConfig({
   // Chemins relatifs : le build fonctionne sur user.github.io/<depot>/
   // sans avoir a coder le nom du depot en dur.
   base: './',
-  plugins: [stampBuildDate(), injectExerciseIndex(), fillStaticTranslations()],
+  plugins: [stampBuildDate(), injectExerciseIndex(), fillStaticTranslations(), injectLibraryRows()],
   // `host: true` expose le serveur sur le reseau local : la seance se teste
   // depuis le telephone, qui est l'appareil vise.
   server: { port: 8000, host: true, strictPort: true },

@@ -158,7 +158,7 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     benefits: [
       'Desarrolla la resistencia a la fuerza en los muslos, la cualidad que se agota al bajar escaleras o al estar mucho rato de pie.',
       'Carga el cuádriceps sin movimiento articular, lo que a menudo lo hace tolerable cuando un movimiento completo todavía no lo es.',
-      'El progreso se mide en segundos, una unidad más clara que "una repetición más" para seguir una vuelta al entrenamiento.',
+      'El progreso se mide en segundos, una unidad más clara que "una repetición más" para seguir tu progreso.',
     ],
     progression: {
       easier: 'Abre el ángulo de la rodilla a 110-120°, o divide el tiempo en dos series más cortas.',
@@ -312,7 +312,7 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     anatomy:
       'Todos los músculos de la cadena posterior contribuyen en alternancia: glúteos e isquiotibiales para propulsar, cuádriceps para amortiguar, gemelos para el empuje final. El core estabiliza la pelvis en cada apoyo sobre una pierna, y la musculatura del pie gestiona la recepción.',
     mechanics:
-      'Locomoción cíclica en cadena cerrada alternante: cada pierna pasa por una fase de apoyo y otra de oscilación. A diferencia de correr, siempre hay un pie en el suelo, y esa ausencia de fase de vuelo es lo que elimina el impacto y hace que caminar sea accesible en una vuelta al entrenamiento.',
+      'Locomoción cíclica en cadena cerrada alternante: cada pierna pasa por una fase de apoyo y otra de oscilación. A diferencia de correr, siempre hay un pie en el suelo, y esa ausencia de fase de vuelo es lo que elimina el impacto y permite caminar a diario.',
     benefits: [
       'Desarrolla la capacidad cardiovascular sin impacto articular, lo que la hace practicable casi a diario.',
       'Es la única actividad de esta biblioteca que se acumula de forma natural con la vida diaria: trayectos, recados, escaleras.',
@@ -617,7 +617,7 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     mechanics:
       'Un ejercicio antirrotación y antiextensión: el peso de las extremidades opuestas crea un par que tiende a girar y arquear el tronco, y toda la tarea consiste en impedirlo. Es control motor cruzado, el mismo patrón que al caminar.',
     benefits: [
-      'Fortalece la estabilidad lumbar sin carga compresiva sobre la columna, lo que suele hacerlo bien tolerado en una vuelta al entrenamiento.',
+      'Fortalece la estabilidad lumbar sin carga compresiva sobre la columna, lo que suele hacerlo bien tolerado incluso con una espalda sensible.',
       'Entrena la coordinación cruzada de brazo y pierna contrarios, directamente transferible a caminar.',
       'Revela las asimetrías de inmediato: un lado suele ser bastante menos estable que el otro.',
     ],
@@ -692,7 +692,7 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     benefits: [
       'Trabaja cada pierna por separado, lo que revela y corrige las asimetrías que una sentadilla oculta.',
       'Exige mucho al equilibrio y a los estabilizadores de la cadera, esenciales para caminar y para las escaleras.',
-      'La versión hacia atrás es bastante más amable con la rodilla que la zancada hacia delante, lo que encaja mejor en una vuelta al entrenamiento.',
+      'La versión hacia atrás es bastante más amable con la rodilla que la zancada hacia delante, lo que encaja mejor con una rodilla sensible.',
     ],
     progression: {
       easier: 'Mantén una mano en una pared o en el respaldo de una silla, y reduce la profundidad.',
@@ -1039,7 +1039,7 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     benefits: [
       'Eleva la frecuencia cardiaca sin desplazamiento y sin material, en un solo metro cuadrado.',
       'Sirve como calentamiento completo al inicio de la sesión, o como impulso cardiovascular entre dos ejercicios de fuerza.',
-      'Sin impacto, a diferencia de los saltos: practicable en un piso y compatible con una vuelta al entrenamiento.',
+      'Sin impacto, a diferencia de los saltos: practicable en un piso y a cualquier hora.',
     ],
     progression: {
       easier: 'Baja las rodillas y el ritmo, hasta quedarte en una simple marcha en el sitio.',
@@ -1085,5 +1085,1254 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Un calambre en la parte posterior del muslo suele indicar un calentamiento insuficiente: empieza con una simple marcha en el sitio antes de añadir amplitud.',
+  },
+
+  bandPullApart: {
+    slug: 'apertura-con-banda-elastica',
+    muscles: { primary: 'Deltoides posterior, romboides', secondary: 'Trapecio medio' },
+    steps: [
+      'Sujeta la banda con ambas manos, brazos extendidos al frente a la altura del pecho, con una ligera tensión ya presente.',
+      'Separa los brazos hacia los lados, manteniendo los codos extendidos, hasta que la banda toque el pecho.',
+      'Junta las escápulas al final del movimiento.',
+      'Vuelve lentamente a la posición inicial controlando la tensión de la banda.',
+    ],
+    mistakes: [
+      'Doblar los codos al separar los brazos: convierte el movimiento en un remo y reduce el trabajo de la parte posterior del hombro.',
+      'Usar impulso del torso para ayudar a separar los brazos.',
+      'Soltar bruscamente al volver en lugar de controlar la tensión de la banda.',
+    ],
+    sensation:
+      'El trabajo se siente entre las escápulas y en la parte posterior de los hombros, no en los antebrazos ni en los bíceps. Una tensión en la parte alta del trapecio indica que los hombros suben en lugar de mantenerse bajos.',
+    rangeOfMotion:
+      'Separa los brazos hasta que la banda toque el pecho o la parte alta del torso, sin buscar más: más allá, la tensión cae y los hombros compensan.',
+    tempo:
+      'Uno o dos segundos para separar, dos o tres para volver controlando la tensión. Exhala al separar, inhala al volver.',
+    anatomy:
+      'El deltoides posterior y los romboides acercan las escápulas a la columna, el trapecio medio e inferior estabilizan la escápula contra la caja torácica. Los extensores del codo permanecen contraídos isométricamente para mantener los brazos rectos todo el recorrido.',
+    mechanics:
+      'Abducción horizontal de hombro en el plano transversal, contra una resistencia creciente: la tensión de la banda es mínima con los brazos al frente y máxima con los brazos separados, al contrario que una carga con el propio peso, constante en todo el recorrido.',
+    benefits: [
+      'Fortalece la parte posterior del hombro, a menudo poco trabajada frente a la parte anterior en los gestos cotidianos.',
+      'Equilibra los hombros cuando ya hay varios movimientos de empuje (flexiones, press) en la sesión.',
+      'Solo requiere una banda y un metro cuadrado de espacio.',
+    ],
+    progression: {
+      easier: 'Usa una banda menos tensa, o sujétala más ancha para reducir la resistencia.',
+      harder: 'Usa una banda más tensa, o ralentiza la vuelta a cuatro segundos.',
+      readyWhen: 'Cuando completes tres series de quince sin que los hombros suban hacia las orejas.',
+    },
+    precautions:
+      'Detén el movimiento si aparece dolor en la parte anterior del hombro en vez de entre las escápulas: es señal de una mala posición del hombro.',
+  },
+
+  bandSquat: {
+    slug: 'sentadilla-con-banda',
+    muscles: { primary: 'Cuádriceps, glúteos', secondary: 'Glúteo medio, isquiotibiales' },
+    steps: [
+      'Coloca la banda justo por encima de las rodillas, pies separados al ancho de las caderas.',
+      'Empuja las caderas hacia atrás y baja como en una sentadilla normal, las rodillas empujando la banda hacia afuera.',
+      'Baja hasta que los muslos queden cerca de la horizontal, peso sobre los talones.',
+      'Sube empujando con los talones hasta la extensión completa, sin dejar que las rodillas se cierren hacia adentro.',
+    ],
+    mistakes: [
+      'Dejar que las rodillas se cierren hacia adentro en lugar de empujar la banda hacia afuera.',
+      'Bajar sin control, dejando que la banda arrastre las rodillas de golpe hacia adentro.',
+      'Inclinar demasiado el torso hacia adelante.',
+    ],
+    sensation:
+      'El trabajo se siente en la parte delantera de los muslos y en el lateral de los glúteos, que deben empujar activamente la banda. Una tensión en la rodilla indica que no se mantiene la alineación rodilla-pie.',
+    rangeOfMotion:
+      'Baja hasta que los muslos queden cerca de la horizontal, sin sobrepasar lo que permite una movilidad de cadera cómoda.',
+    tempo:
+      'Tres segundos para bajar, uno o dos para subir. Inhala al bajar, exhala al empujar con los talones.',
+    anatomy:
+      'El cuádriceps y el glúteo mayor siguen siendo los motores principales de la sentadilla; la banda añade una resistencia lateral que el glúteo medio debe contrarrestar continuamente para evitar que la rodilla se cierre, algo que una sentadilla sin banda no exige de la misma forma.',
+    mechanics:
+      'Doble flexión y luego doble extensión de cadera y rodilla en el plano sagital, combinada con una resistencia a la abducción de cadera impuesta por la banda en el plano frontal.',
+    benefits: [
+      'Refuerza la sentadilla clásica añadiendo trabajo activo del glúteo medio, útil para la estabilidad de la rodilla al caminar y correr.',
+      'Da una señal táctil inmediata sobre la alineación de la rodilla: si la banda se afloja, la rodilla se ha cerrado.',
+      'Equipo ligero y económico, fácil de llevar a cualquier parte.',
+    ],
+    progression: {
+      easier: 'Usa una banda menos resistente, o reduce la profundidad de bajada.',
+      harder: 'Usa una banda más resistente, o añade una pausa de dos segundos abajo.',
+      readyWhen: 'Cuando completes tres series de quince sin que la banda se afloje en ningún momento.',
+    },
+    precautions:
+      'Elige una resistencia que te permita mantener las rodillas alineadas durante toda la serie: una banda demasiado fuerte que las obligue a cerrarse es contraproducente.',
+  },
+
+  dumbbellGobletSquat: {
+    slug: 'sentadilla-goblet',
+    muscles: { primary: 'Cuádriceps, glúteos', secondary: 'Core, espalda alta' },
+    steps: [
+      'Sujeta una mancuerna en vertical con ambas manos contra el pecho, codos apuntando hacia abajo.',
+      'Pies un poco más separados que el ancho de las caderas, puntas ligeramente hacia afuera.',
+      'Baja empujando las caderas hacia atrás, los codos rozando el interior de las rodillas.',
+      'Sube empujando con los talones hasta la extensión completa de las piernas.',
+    ],
+    mistakes: [
+      'El torso se derrumba hacia adelante por el peso de la mancuerna.',
+      'Los talones se levantan al bajar.',
+      'Bajada incompleta por falta de movilidad de tobillo en vez de por elección.',
+    ],
+    sensation:
+      'El trabajo se siente en la parte delantera de los muslos y los glúteos, con una tensión isométrica adicional en la espalda alta y los antebrazos que sujetan la mancuerna. El torso debe permanecer vertical de principio a fin.',
+    rangeOfMotion:
+      'Baja hasta que los codos toquen o rocen el interior de las rodillas: sujetar la carga delante del cuerpo permite de forma natural una bajada más profunda que con las manos libres.',
+    tempo:
+      'Dos o tres segundos para bajar, uno o dos para subir. Inhala al bajar, exhala al empujar con los talones.',
+    anatomy:
+      'El cuádriceps y el glúteo mayor siguen siendo los motores principales; sujetar la carga contra el pecho obliga a los erectores espinales y al abdomen a mantener el torso vertical frente a la tendencia a inclinarse hacia adelante, un trabajo de core que la sentadilla sin peso no exige en el mismo grado.',
+    mechanics:
+      'Doble flexión y luego doble extensión de cadera y rodilla en el plano sagital. La carga sujeta cerca del centro de gravedad, contra el pecho, mantiene el torso más vertical que una sentadilla con carga en la espalda.',
+    benefits: [
+      'Añade una carga externa progresiva a un movimiento ya dominado con el propio peso: el siguiente paso lógico cuando la sentadilla con silla resulta fácil.',
+      'La posición de la carga contra el pecho enseña una postura de sentadilla vertical, útil para todas las sentadillas cargadas que vengan después.',
+      'Solo requiere una mancuerna o una carga equivalente (una botella con peso, una kettlebell).',
+    ],
+    progression: {
+      easier: 'Usa una carga más ligera, o vuelve temporalmente a la sentadilla con silla sin peso.',
+      harder: 'Aumenta la carga progresivamente, o ralentiza la bajada a cuatro segundos.',
+      readyWhen: 'Cuando completes tres series de diez con el torso vertical y los talones sin despegarse nunca.',
+    },
+    precautions:
+      'Aumenta la carga en pequeños incrementos: la profundidad y el control deben mantenerse intactos primero, no el peso que marque la mancuerna.',
+  },
+
+  dumbbellRow: {
+    slug: 'remo-con-mancuerna-a-un-brazo',
+    muscles: { primary: 'Dorsal ancho, trapecio', secondary: 'Bíceps, core' },
+    steps: [
+      'Apoya una rodilla y la mano del mismo lado sobre un banco o una silla estable, espalda paralela al suelo.',
+      'Sujeta la mancuerna con la otra mano, brazo extendido hacia el suelo.',
+      'Tira de la mancuerna hacia la cadera manteniendo el codo cerca del cuerpo, la escápula acercándose a la columna.',
+      'Baja con control hasta la extensión completa del brazo.',
+    ],
+    mistakes: [
+      'Rotar el torso para ayudar a tirar de la mancuerna en lugar de dejar que trabaje la espalda.',
+      'El codo se separa del cuerpo, convirtiendo el remo en un movimiento de hombro.',
+      'La espalda se curva en lugar de mantenerse plana.',
+    ],
+    sensation:
+      'El trabajo se siente en el centro de la espalda y bajo la axila, con la escápula acercándose claramente a la columna en la parte alta del movimiento. Una tensión en la zona lumbar indica que el apoyo en el banco no sostiene suficiente el torso.',
+    rangeOfMotion:
+      'Tira hasta que la mancuerna toque o roce la cadera, el codo sobrepasando ligeramente la espalda. Baja hasta la extensión completa del brazo para usar todo el recorrido disponible.',
+    tempo:
+      'Un segundo para tirar, dos o tres para bajar controlando la carga. Exhala al tirar, inhala al bajar.',
+    anatomy:
+      'El dorsal ancho y el redondo mayor acercan el brazo al cuerpo y lo extienden hacia atrás, los romboides y el trapecio medio acercan la escápula a la columna, el bíceps asiste flexionando el codo. El apoyo de rodilla y mano en el banco estabiliza el torso para aislar el trabajo de la espalda.',
+    mechanics:
+      'Extensión y aducción de hombro en el plano sagital, junto con retracción escapular. El apoyo unilateral en el banco elimina la contribución de las piernas presente en un remo de pie.',
+    benefits: [
+      'Fortalece el patrón de tracción, poco presente en una sesión con el propio peso donde los ejercicios de espalda son isométricos (superman, perro de caza).',
+      'El apoyo unilateral permite trabajar cada lado de forma independiente y detectar diferencias de fuerza entre los brazos.',
+      'Un contrapeso útil frente a los movimientos de empuje (flexiones, press) ya presentes en la mayoría de las sesiones.',
+    ],
+    progression: {
+      easier: 'Usa una carga más ligera, o mantén el torso más horizontal para reducir el recorrido.',
+      harder: 'Aumenta la carga, o mantén una pausa de un segundo en la parte alta del movimiento.',
+      readyWhen: 'Cuando completes tres series de diez sin rotación del torso, en ambos lados.',
+    },
+    precautions:
+      'Mantén la espalda plana de principio a fin: si el torso tiene que curvarse para subir la carga, es demasiado pesada.',
+  },
+
+  legPressMachine: {
+    slug: 'prensa-de-piernas',
+    muscles: { primary: 'Cuádriceps, glúteos', secondary: 'Isquiotibiales' },
+    steps: [
+      'Siéntate en la máquina, espalda y cabeza bien apoyadas en el respaldo.',
+      'Coloca los pies planos sobre la placa, al ancho de las caderas.',
+      'Libera los seguros y baja doblando las rodillas hasta un ángulo cercano a 90°.',
+      'Empuja con los pies hasta la extensión de las piernas, sin bloquear del todo las rodillas.',
+    ],
+    mistakes: [
+      'Bloquear del todo las rodillas al final del empuje, trasladando la carga a la articulación.',
+      'La zona lumbar se despega del respaldo al bajar.',
+      'Bajar demasiado, con las rodillas superando ampliamente el pecho.',
+    ],
+    sensation:
+      'El trabajo se siente en la parte delantera de los muslos y los glúteos, sin tensión en la zona lumbar: el respaldo sostiene todo el torso. Una molestia lumbar indica una amplitud demasiado grande para la movilidad de cadera del momento.',
+    rangeOfMotion:
+      'Baja hasta un ángulo de rodilla cercano a 90°, o menos si la zona lumbar se despega antes: la máquina permite fijar este límite con precisión de una sesión a otra.',
+    tempo:
+      'Dos o tres segundos para bajar, uno para empujar. Inhala al bajar, exhala al empujar.',
+    anatomy:
+      'El cuádriceps extiende la rodilla, el glúteo mayor extiende la cadera: los mismos motores que en una sentadilla, pero el respaldo de la máquina elimina todo el trabajo de core y estabilización que la sentadilla exige al torso.',
+    mechanics:
+      'Doble extensión de cadera y rodilla en el plano sagital, sobre una trayectoria guiada: a diferencia de la sentadilla, el torso permanece fijo y solo se mueve la carga.',
+    benefits: [
+      'Permite cargar mucho las piernas sin exigir core ni equilibrio, útil como complemento o sustituto temporal de la sentadilla.',
+      'La trayectoria guiada reduce el riesgo de error técnico frente a un movimiento libre cargado.',
+      'Facilita el ajuste fino de la carga, paso a paso.',
+    ],
+    progression: {
+      easier: 'Reduce la carga, o limita el ángulo de bajada a 70-80° de flexión.',
+      harder: 'Aumenta la carga, o ralentiza la bajada a cuatro segundos.',
+      readyWhen: 'Cuando completes tres series de diez sin que la zona lumbar se despegue del respaldo.',
+    },
+    precautions:
+      'Nunca bloquees del todo las rodillas al final del empuje, y nunca dejes que la zona lumbar se despegue del respaldo: son los dos puntos de seguridad de esta máquina.',
+  },
+
+  latPulldownMachine: {
+    slug: 'jalon-al-pecho',
+    muscles: { primary: 'Dorsal ancho', secondary: 'Bíceps, trapecio' },
+    steps: [
+      'Siéntate frente a la máquina, muslos calzados bajo los rodillos si la máquina los tiene.',
+      'Agarra la barra más ancho que los hombros, brazos extendidos.',
+      'Tira de la barra hacia la parte alta del pecho manteniendo el torso recto, los codos bajando hacia las caderas.',
+      'Sube con control hasta la extensión completa de los brazos.',
+    ],
+    mistakes: [
+      'Inclinarse mucho hacia atrás para ayudar a tirar de la barra.',
+      'Tirar de la barra por detrás de la nuca en lugar de por delante del pecho.',
+      'Subir demasiado rápido, sin controlar la carga.',
+    ],
+    sensation:
+      'El trabajo se siente en el centro y la parte baja de la espalda, hasta debajo de la axila. Una tensión en la parte alta del trapecio o el cuello indica que los hombros suben en lugar de mantenerse bajos.',
+    rangeOfMotion:
+      'Tira hasta que la barra toque la parte alta del pecho, los codos bajando junto al cuerpo. Sube hasta la extensión completa de los brazos para usar todo el recorrido.',
+    tempo:
+      'Uno o dos segundos para tirar, dos o tres para subir controlando la carga. Exhala al tirar, inhala al subir.',
+    anatomy:
+      'El dorsal ancho aduce y extiende el hombro, los romboides y el trapecio medio acercan la escápula a la columna, el bíceps asiste flexionando el codo. Es el equivalente en tracción vertical de la dominada, en versión guiada y con carga ajustable progresivamente.',
+    mechanics:
+      'Aducción y extensión de hombro en el plano sagital, junto con depresión y retracción escapular, sobre una trayectoria guiada por la máquina.',
+    benefits: [
+      'Construye la fuerza de tracción vertical necesaria para progresar hacia la dominada en barra, un movimiento que el propio peso por sí solo hace difícil de alcanzar.',
+      'Permite dosificar la carga con precisión, a diferencia de una dominada con el propio peso donde solo puede ajustarse el peso total.',
+      'Fortalece la espalda como espejo de los movimientos de empuje ya presentes en la mayoría de las sesiones.',
+    ],
+    progression: {
+      easier: 'Reduce la carga, o usa un agarre más estrecho para acortar el brazo de palanca.',
+      harder: 'Aumenta la carga, o mantén una pausa de un segundo en la parte baja del movimiento.',
+      readyWhen: 'Cuando completes tres series de diez sin que el torso se incline hacia atrás.',
+    },
+    precautions:
+      'Tira siempre de la barra por delante del pecho, nunca por detrás de la nuca: esa variante antigua coloca el hombro en una posición de riesgo para una ganancia mínima.',
+  },
+
+  hamstringStretch: {
+    slug: 'estiramiento-isquiotibiales',
+    muscles: { primary: 'Isquiotibiales' },
+    steps: [
+      'Apoya un talón sobre un soporte estable (un escalón, una silla baja), pierna extendida.',
+      'Mantén la otra pierna ligeramente flexionada, pie bien apoyado en el suelo.',
+      'Inclina el torso hacia adelante desde las caderas, espalda plana, hasta sentir tensión en la parte posterior del muslo.',
+      'Mantén la posición sin rebotes, respirando con calma.',
+    ],
+    mistakes: [
+      'Curvar la espalda para ganar más amplitud en lugar de inclinarse desde las caderas.',
+      'Rebotar en el estiramiento en lugar de mantener una posición estable.',
+      'Bloquear del todo la rodilla de la pierna extendida.',
+    ],
+    sensation:
+      'La tensión debe sentirse a lo largo de toda la parte posterior del muslo, nunca en la rodilla ni en la zona lumbar. Un dolor agudo en lugar de tensión indica detenerse y reducir la amplitud.',
+    rangeOfMotion:
+      'Inclínate hasta sentir una tensión clara pero tolerable, nunca dolorosa. La amplitud cómoda aumenta de forma natural de una sesión a otra.',
+    tempo:
+      'Sin ritmo de ejecución: la posición se mantiene inmóvil. Respira lenta y profundamente durante todo el mantenimiento.',
+    anatomy:
+      'Los isquiotibiales, que flexionan la rodilla y extienden la cadera, quedan bajo tensión pasiva por la flexión de cadera combinada con la extensión de rodilla. No se busca ninguna contracción muscular activa, solo una liberación progresiva bajo tensión.',
+    mechanics:
+      'Puesta en tensión pasiva de los isquiotibiales mediante flexión de cadera y extensión de rodilla simultáneas, en el plano sagital, sin carga ni movimiento repetido.',
+    benefits: [
+      'Mantiene la flexibilidad de la parte posterior del muslo, a menudo acortada por estar sentado mucho tiempo.',
+      'Facilita la amplitud de los movimientos de flexión de cadera (zancadas, sentadillas profundas) realizados en otras partes de la sesión.',
+      'Se practica en cualquier lugar con un simple escalón o borde como apoyo.',
+    ],
+    precautions:
+      'Nunca fuerces más allá de una tensión tolerable, y evita este estiramiento en frío antes de un esfuerzo intenso: encaja mejor al final de la sesión o alejado del esfuerzo.',
+  },
+
+  chestDoorwayStretch: {
+    slug: 'estiramiento-pecho-marco-de-puerta',
+    muscles: { primary: 'Pectorales', secondary: 'Deltoides anterior' },
+    steps: [
+      'Colócate en el marco de una puerta, antebrazo contra el marco, codo a la altura del hombro.',
+      'Pies ligeramente escalonados, uno delante del otro para mayor estabilidad.',
+      'Avanza suavemente el torso a través del marco hasta sentir tensión en la parte anterior del hombro y en el pectoral.',
+      'Mantén la posición sin rebotes, respirando con calma.',
+    ],
+    mistakes: [
+      'Codo colocado demasiado alto o demasiado bajo, lo que desplaza la tensión hacia el hombro en lugar del pectoral.',
+      'Avanzar demasiado bruscamente en lugar de progresar poco a poco.',
+      'Arquear en exceso la zona lumbar para ganar más amplitud.',
+    ],
+    sensation:
+      'La tensión debe sentirse en la parte anterior del hombro y en el pectoral del brazo implicado, nunca en la propia articulación. Un dolor en la parte anterior del hombro indica retroceder ligeramente.',
+    rangeOfMotion:
+      'Avanza hasta sentir una tensión clara pero tolerable. La altura del codo cambia la zona estirada: más abajo, el estiramiento baja hacia la parte inferior del pectoral; más arriba, sube hacia la parte superior del pectoral y el hombro.',
+    tempo:
+      'Sin ritmo de ejecución: la posición se mantiene inmóvil. Respira lentamente; exhalar suele ayudar a soltar un poco más la tensión.',
+    anatomy:
+      'El pectoral mayor, que aduce y flexiona el hombro hacia adelante, queda bajo tensión pasiva por la posición de apertura que impone el marco. El deltoides anterior, a menudo acortado por los mismos gestos repetitivos, se estira en la misma posición.',
+    mechanics:
+      'Puesta en tensión pasiva del pectoral mediante una extensión horizontal de hombro fijada por el punto de apoyo del marco, sin carga ni movimiento repetido.',
+    benefits: [
+      'Compensa el acortamiento del pectoral causado por posiciones prolongadas de cierre (pantallas, volante, empuje repetido).',
+      'Facilita la amplitud de los movimientos de empuje y apertura del torso realizados en otras partes de la sesión.',
+      'No requiere ningún equipo, solo el marco de una puerta.',
+    ],
+    precautions:
+      'Nunca fuerces más allá de una tensión tolerable, sobre todo si ya existe una molestia conocida en el hombro: retrocede primero la posición del brazo antes de renunciar al estiramiento.',
+  },
+
+  squat: {
+    slug: 'sentadilla',
+    muscles: { primary: 'Cuádriceps, glúteos', secondary: 'Isquiotibiales, core' },
+    steps: [
+      'De pie, pies al ancho de las caderas, puntas ligeramente abiertas.',
+      'Empuja las caderas hacia atrás y flexiona las rodillas, que siguen la línea de los pies.',
+      'Baja hasta que los muslos queden cerca de la horizontal, con el peso repartido en todo el pie.',
+      'Mantén el torso recto y la mirada al frente, sin curvar la zona lumbar.',
+      'Sube empujando con los talones hasta la extensión completa de las caderas.',
+    ],
+    mistakes: [
+      'Rodillas que se cierran hacia dentro al subir.',
+      'Talones que se levantan: señal de poca movilidad de tobillo, no de falta de fuerza.',
+      'Zona lumbar que se curva abajo, cuando la profundidad supera la movilidad de cadera.',
+    ],
+    sensation:
+      'El trabajo se siente en la parte delantera de los muslos y los glúteos, con un apoyo firme en todo el pie. Una tensión aislada en la parte delantera de la rodilla indica que las caderas no retroceden lo suficiente y el movimiento sale solo de la rodilla.',
+    rangeOfMotion:
+      'Baja tanto como permita tu movilidad sin que la zona lumbar se curve: la referencia es la espalda, no un ángulo teórico. Con los muslos cerca de la horizontal ya trabajas toda la cadena.',
+    tempo:
+      'Dos o tres segundos para bajar, uno o dos para subir. Inhala al bajar, exhala al empujar con los talones.',
+    anatomy:
+      'El cuádriceps extiende la rodilla y el glúteo mayor extiende la cadera: ambos motores trabajan juntos. Isquiotibiales y aductores estabilizan, el glúteo medio evita que la rodilla se cierre, y los erectores espinales con la pared abdominal mantienen el torso firme.',
+    mechanics:
+      'Doble flexión y luego doble extensión de cadera y rodilla en el plano sagital, en cadena cerrada. La bajada es excéntrica y la subida concéntrica. Sin silla ni referencia externa, son la movilidad de tobillo y de cadera las que fijan la profundidad alcanzable.',
+    benefits: [
+      'El movimiento base de toda la cadena inferior: es la versión libre que prepara la sentadilla a la silla.',
+      'No requiere material ni apoyo, así que se practica en cualquier sitio una vez dominada la profundidad.',
+      'Sirve de base a todas las variantes con carga — sentadilla goblet, prensa — que cambian la carga, no el gesto.',
+    ],
+    progression: {
+      easier: 'Vuelve a la sentadilla a la silla, que da una referencia de profundidad constante.',
+      harder: 'Ralentiza la bajada a cinco segundos, haz una pausa abajo, o pasa a la sentadilla goblet con carga.',
+      readyWhen: 'Cuando completes tres series de quince sin que las rodillas se cierren ni los talones se levanten, añade carga.',
+    },
+    precautions:
+      'Si la rodilla duele, reduce la profundidad antes que el número de repeticiones: un recorrido parcial sin dolor vale más que un recorrido completo que duele.',
+  },
+
+  pushup: {
+    slug: 'flexiones',
+    muscles: { primary: 'Pectorales, tríceps', secondary: 'Hombros, core' },
+    steps: [
+      'Apóyate en las manos y las puntas de los pies, manos algo más anchas que los hombros y bajo su línea.',
+      'Aprieta glúteos y abdomen para alinear el cuerpo de talones a cabeza.',
+      'Baja con los codos a unos 45° del torso, hasta rozar el suelo con el pecho.',
+      'Sube empujando hasta la extensión completa de los brazos, sin arquear la espalda.',
+    ],
+    mistakes: [
+      'Cadera que se hunde: el core cede antes que los brazos y lo paga la zona lumbar.',
+      'Codos abiertos a 90° hacia los lados, lo que coloca el hombro en mala posición.',
+      'Recorrido corto por falta de fuerza, cuando una variante más fácil en recorrido completo progresa mejor.',
+    ],
+    sensation:
+      'El trabajo se siente en el pecho, la parte posterior del brazo y el core, que sostiene la línea del cuerpo de principio a fin. Una tensión lumbar indica que la cadera se ha hundido.',
+    rangeOfMotion:
+      'Baja hasta rozar el suelo con el pecho y sube hasta estirar los brazos sin bloquear los codos de golpe. El recorrido completo es lo que distingue una flexión de un movimiento parcial.',
+    tempo:
+      'Dos segundos para bajar, uno para subir. Inhala al bajar, exhala al empujar.',
+    anatomy:
+      'El pectoral mayor y el tríceps braquial son los motores, con el deltoides anterior asistiendo. El serrato anterior mantiene la escápula pegada a la caja torácica; abdominales y glúteos impiden que la cadera se hunda, lo que hace de la flexión tanto un ejercicio de core como de empuje.',
+    mechanics:
+      'Flexión y extensión de codo combinadas con aducción horizontal de hombro, en cadena cerrada, con el cuerpo moviéndose alrededor de un apoyo fijo. Es el último escalón de la escalera que preparan las flexiones en pared, inclinadas y de rodillas: la palanca se alarga en cada paso, así que la carga relativa sube sin cambiar el gesto.',
+    benefits: [
+      'El movimiento de empuje de referencia, sin material ni apoyo: es la meta a la que llevan todas las variantes asistidas.',
+      'Fortalece a la vez el empuje y el core, cosa que ninguna máquina de press hace.',
+      'Se dosifica con precisión cambiando la altura del apoyo, sin añadir carga.',
+    ],
+    progression: {
+      easier: 'Vuelve a las flexiones de rodillas o inclinadas: la línea del cuerpo no cambia, solo se acorta la palanca.',
+      harder: 'Eleva los pies, ralentiza la bajada a cuatro segundos, o haz una pausa abajo.',
+      readyWhen: 'Cuando completes tres series de doce con el cuerpo alineado de principio a fin, eleva los pies.',
+    },
+    precautions:
+      'Una muñeca dolorida suele aliviarse apoyando sobre los puños cerrados o sobre agarres, lo que mantiene la muñeca alineada con el antebrazo.',
+  },
+
+  pikePushup: {
+    slug: 'flexiones-en-pica',
+    muscles: { primary: 'Hombros', secondary: 'Tríceps, core' },
+    steps: [
+      'Parte en posición de flexión y acerca los pies empujando la cadera hacia arriba, cuerpo en V invertida.',
+      'Manos algo más anchas que los hombros, cabeza relajada entre los brazos.',
+      'Flexiona los codos para bajar la coronilla hacia el suelo, entre las manos.',
+      'Sube empujando hasta estirar los brazos, con la cadera todavía alta.',
+    ],
+    mistakes: [
+      'Cadera que baja durante la serie: el movimiento vuelve a ser una flexión normal y deja de trabajar los hombros.',
+      'Codos muy abiertos en lugar de seguir la línea del movimiento.',
+      'Bajar hasta la frente en vez de hasta la coronilla, lo que acorta el recorrido.',
+    ],
+    sensation:
+      'El trabajo se siente claramente en los hombros y la parte posterior de los brazos, no en el pecho. Si el pecho domina, la cadera no está lo bastante alta.',
+    rangeOfMotion:
+      'Baja hasta rozar el suelo con la coronilla. Cuanto más cerca estén los pies de las manos, más peso pasa por los hombros: ese es el ajuste de dificultad.',
+    tempo:
+      'Dos segundos para bajar, uno para subir. Exhala al empujar.',
+    anatomy:
+      'El deltoides anterior y el tríceps son los motores, mientras el trapecio superior y el serrato anterior estabilizan la escápula al pasar el brazo por encima de la cabeza. El core mantiene la posición en V, que es lo que dirige la carga al hombro en lugar del pecho.',
+    mechanics:
+      'Empuje vertical en cadena cerrada: el equivalente a peso corporal del press por encima de la cabeza, donde la inclinación del torso sustituye a la selección de carga. Flexión-extensión de codo combinada con flexión de hombro por encima de la cabeza.',
+    benefits: [
+      'El único ejercicio de hombros a peso corporal de esta biblioteca: sin él, filtrar por «peso corporal» no ofrecía ningún trabajo de hombro.',
+      'Prepara el empuje por encima de la cabeza sin necesidad de mancuernas.',
+      'Se ajusta con precisión acercando o alejando los pies, sin material.',
+    ],
+    progression: {
+      easier: 'Apoya las manos en una superficie elevada: pasa menos peso por los hombros.',
+      harder: 'Acerca los pies a las manos, o eleva los pies para verticalizar más el torso.',
+      readyWhen: 'Cuando completes tres series de doce con la cadera alta todo el rato, eleva los pies.',
+    },
+    precautions:
+      'Este movimiento lleva los brazos por encima de la cabeza: si el hombro duele ahí, mantén el empuje en un recorrido más corto en lugar de forzar la posición en V.',
+  },
+
+  mountainClimber: {
+    slug: 'escalador',
+    muscles: { primary: 'Cardio, core', secondary: 'Hombros, flexores de cadera' },
+    steps: [
+      'Colócate en posición de flexión con los brazos estirados, manos bajo los hombros, cuerpo alineado.',
+      'Lleva una rodilla al pecho sin que la cadera suba ni se hunda.',
+      'Vuelve a apoyar el pie y encadena de inmediato con la otra pierna.',
+      'Mantén un ritmo constante durante toda la duración, respirando sin parar.',
+    ],
+    mistakes: [
+      'Cadera que sube en cada cambio de pierna: el core ha cedido y el ejercicio se vuelve un rebote.',
+      'Manos demasiado adelantadas respecto a los hombros, lo que carga muñeca y hombro sin motivo.',
+      'Ritmo demasiado rápido a costa del recorrido de la rodilla.',
+    ],
+    sensation:
+      'La respiración sube deprisa y el core trabaja sin descanso para impedir que la cadera se mueva. Los hombros aguantan el peso del tren superior durante toda la serie.',
+    rangeOfMotion:
+      'Lleva la rodilla tan lejos como la cadera pueda mantenerse quieta: es la cadera la que fija el recorrido, no las ganas de llegar más lejos.',
+    tempo:
+      'Un ritmo constante y sostenible durante toda la duración, mejor que una salida rápida seguida de un derrumbe. Respira sin parar: bloquear la respiración es la primera señal de que el ritmo es excesivo.',
+    anatomy:
+      'Los flexores de cadera acercan la rodilla al pecho, mientras los abdominales y el glúteo mayor del lado de apoyo impiden que la pelvis bascule. Hombros y tríceps trabajan en isometría para sostener la plancha alta.',
+    mechanics:
+      'Flexión y extensión alternas de cadera en cadena abierta, sobre una base de plancha alta, es decir con apoyo cerrado en las manos. Es un ejercicio cardiovascular cuya principal exigencia sigue siendo la estabilidad del tronco: el ritmo sube las pulsaciones, el core decide la calidad.',
+    benefits: [
+      'Sube las pulsaciones sin desplazarse y sin material, en muy poco espacio.',
+      'Combina trabajo cardiovascular y core dinámico, cosa que ni caminar ni la plancha hacen por separado.',
+      'Se regula por el ritmo y no por la carga, así que se adapta a cualquier nivel sin cambiar nada.',
+    ],
+    progression: {
+      easier: 'Ralentiza claramente, o apoya las manos en una superficie elevada para aligerar los hombros.',
+      harder: 'Sube el ritmo o alarga la duración, mientras la cadera siga quieta.',
+      readyWhen: 'Cuando completes tres rondas de cuarenta segundos sin que la cadera suba, alarga la duración.',
+    },
+    precautions:
+      'Muñecas u hombros sensibles: eleva las manos sobre un banco o un escalón, lo que reduce mucho la carga del apoyo sin cambiar el trabajo de las piernas.',
+  },
+
+  legSwing: {
+    slug: 'balanceo-de-pierna',
+    muscles: { primary: 'Caderas, movilidad', secondary: 'Glúteos, isquiotibiales' },
+    steps: [
+      'Colócate de lado respecto a una pared o al respaldo de una silla, con una mano apoyada.',
+      'Pasa el peso a la pierna interior y deja la otra libre para balancear.',
+      'Balancea la pierna libre adelante y atrás, sin forzar al final del recorrido.',
+      'Aumenta la amplitud poco a poco a lo largo de las repeticiones, con la pelvis quieta.',
+      'Cambia de lado a la mitad del tiempo previsto.',
+    ],
+    mistakes: [
+      'Pelvis que bascula para ganar amplitud, en vez de dejar trabajar sola a la cadera.',
+      'Amplitud máxima desde el primer movimiento, cuando debe abrirse progresivamente.',
+      'Zona lumbar que se arquea cuando la pierna va hacia atrás.',
+    ],
+    sensation:
+      'Una cadera que se suelta, sin esfuerzo muscular marcado. Es puesta en movimiento, no fortalecimiento: si tira fuerte, la amplitud ya es excesiva para el inicio de una sesión.',
+    rangeOfMotion:
+      'Llega hasta donde la pelvis pueda quedarse quieta. La amplitud del día debe aumentar durante la propia serie, igual que en el gato-vaca.',
+    tempo:
+      'Un balanceo regular y controlado, nunca lanzado. El movimiento sigue dirigido, no dejado a la inercia.',
+    anatomy:
+      'Los flexores de cadera y el glúteo mayor alternan contracción y elongación dinámicas, mientras la pierna de apoyo y el core estabilizan la pelvis. El trabajo es de movilidad articular de la cadera, no de fuerza.',
+    mechanics:
+      'Flexión y extensión alternas de cadera en cadena abierta, en el plano sagital y sin carga. El movimiento balístico controlado prepara la amplitud que después usarán con carga las zancadas y las sentadillas.',
+    benefits: [
+      'Prepara la cadera antes de cualquier trabajo de piernas, algo que ningún otro calentamiento de esta biblioteca hacía: todos eran de tren superior.',
+      'Se hace en cualquier sitio con un simple apoyo, en treinta segundos por lado.',
+      'Abre la amplitud de cadera que usan las zancadas, sentadillas y subidas al escalón que vienen después.',
+    ],
+    precautions:
+      'Nada de tirones al final del recorrido: es un balanceo dirigido, no un lanzamiento. Si la cadera se engancha, reduce la amplitud en vez de insistir.',
+  },
+
+  torsoTwist: {
+    slug: 'rotaciones-de-torso',
+    muscles: { primary: 'Oblicuos, movilidad del tronco', secondary: 'Columna vertebral' },
+    steps: [
+      'De pie, pies al ancho de los hombros y bien apoyados en el suelo.',
+      'Flexiona ligeramente las rodillas y deja los brazos relajados a los lados.',
+      'Gira el torso hacia un lado, dejando que los brazos sigan el movimiento sin lanzarlos.',
+      'Encadena hacia el otro lado a ritmo constante, con la pelvis mirando al frente.',
+    ],
+    mistakes: [
+      'Pelvis que gira con el torso: la rotación deja de ocurrir en el tronco y pasa a las caderas.',
+      'Brazos lanzados que arrastran el torso en vez de seguirlo.',
+      'Ritmo demasiado rápido, que convierte una movilización en una sacudida.',
+    ],
+    sensation:
+      'Una rotación que se libera poco a poco a lo largo del tronco, sin esfuerzo muscular marcado y sin tirones en la zona lumbar.',
+    rangeOfMotion:
+      'Gira hasta el límite del confort, sin forzar. Como en toda movilidad, la amplitud se abre a lo largo de las repeticiones.',
+    tempo:
+      'Regular y moderado, aproximadamente una rotación por segundo. Respira con libertad, sin bloquear el aire al final del giro.',
+    anatomy:
+      'Los oblicuos externos e internos producen la rotación del tronco, y los músculos profundos intersegmentarios movilizan cada nivel vertebral. Glúteos y piernas estabilizan la pelvis, que es justo lo que obliga a que la rotación venga del tronco.',
+    mechanics:
+      'Rotación alterna de la columna en el plano transversal, con carga ligera (solo el peso del torso). La pelvis fija es la referencia: es lo que distingue una verdadera rotación de tronco de un simple giro de caderas.',
+    benefits: [
+      'El único calentamiento de tronco de esta biblioteca, complementario del gato-vaca, que trabaja flexión y extensión pero no rotación.',
+      'Prepara los ejercicios de core antirrotación como el dead bug y el perro de caza.',
+      'Se hace de pie, sin material ni esterilla.',
+    ],
+    precautions:
+      'La zona lumbar nunca debe ser el motor de la rotación: si aparece molestia ahí, reduce la amplitud y comprueba que la pelvis siga mirando al frente.',
+  },
+
+  quadStretch: {
+    slug: 'estiramiento-cuadriceps-de-pie',
+    muscles: { primary: 'Cuádriceps' },
+    steps: [
+      'De pie, apóyate con una mano en la pared para mantener el equilibrio.',
+      'Agarra el tobillo del mismo lado que la pierna a estirar y lleva el talón hacia el glúteo.',
+      'Mantén las dos rodillas juntas y la pelvis ligeramente retrovertida.',
+      'Sostén la posición sin tirones, respirando con calma, y cambia de lado.',
+    ],
+    mistakes: [
+      'La rodilla estirada se va hacia delante o hacia fuera, lo que desplaza la tensión fuera del cuádriceps.',
+      'Arquear la zona lumbar para ganar amplitud.',
+      'Tirar del tobillo a golpes en vez de mantener una posición estable.',
+    ],
+    sensation:
+      'La tensión se siente en toda la cara anterior del muslo, nunca en la propia rodilla. Un dolor delante de la rodilla indica soltar de inmediato.',
+    rangeOfMotion:
+      'Lleva el talón hasta sentir una tensión clara pero tolerable. Acercar la rodilla a la otra y llevar la pelvis ligeramente adelante aumenta el estiramiento sin cargar la articulación.',
+    tempo:
+      'Sin ritmo: la posición se mantiene inmóvil. Respira despacio durante todo el mantenimiento.',
+    anatomy:
+      'El cuádriceps, que extiende la rodilla, se pone en tensión pasiva por la flexión de rodilla; el recto femoral, el único vientre que cruza también la cadera, se estira más cuando la cadera está en extensión, de ahí el interés de no dejar que la rodilla se vaya adelante.',
+    mechanics:
+      'Puesta en tensión pasiva mediante flexión de rodilla y extensión de cadera simultáneas, en el plano sagital, sin carga ni movimiento repetido.',
+    benefits: [
+      'Completa el estiramiento de isquiotibiales para cubrir las dos caras del muslo.',
+      'Mantiene la amplitud de flexión de rodilla, a menudo reducida por estar sentado mucho tiempo.',
+      'Solo requiere un apoyo para el equilibrio.',
+    ],
+    precautions:
+      'Si no llegas al tobillo, pasa una cinta o una toalla alrededor del pie en lugar de inclinar el torso hacia atrás para alcanzarlo.',
+  },
+
+  gluteStretch: {
+    slug: 'estiramiento-gluteo-figura-4',
+    muscles: { primary: 'Glúteos', secondary: 'Rotadores de cadera' },
+    steps: [
+      'Túmbate boca arriba, con las rodillas dobladas y los pies en el suelo.',
+      'Apoya el tobillo de un lado sobre la rodilla opuesta, formando un 4.',
+      'Pasa las manos por detrás del muslo de apoyo y tira suavemente hacia ti.',
+      'Mantén cabeza y hombros en el suelo, y luego cambia de lado.',
+    ],
+    mistakes: [
+      'Cabeza y hombros despegados del suelo, lo que tensa el cuello sin añadir nada al estiramiento.',
+      'Tirar a golpes en vez de instalar una tracción constante.',
+      'Empujar hacia dentro la rodilla cruzada, lo que cierra la cadera en lugar de abrirla.',
+    ],
+    sensation:
+      'La tensión se siente profunda en el glúteo del lado cruzado, a veces hacia la parte externa de la cadera. Nada debe tirar en la rodilla cruzada.',
+    rangeOfMotion:
+      'Tira del muslo de apoyo hasta una tensión clara pero tolerable. Cuanto más se acerca el muslo al pecho, más marcado es el estiramiento.',
+    tempo:
+      'Sin ritmo: la posición se mantiene inmóvil, con respiración lenta. Exhalar suele ayudar a soltar un poco más.',
+    anatomy:
+      'El glúteo mayor y los rotadores externos profundos de la cadera, entre ellos el piramidal, se ponen en tensión pasiva por la combinación de flexión y rotación externa de cadera que crea la posición en 4.',
+    mechanics:
+      'Puesta en tensión pasiva mediante flexión de cadera asociada a rotación externa, en descarga completa: la espalda permanece en el suelo, lo que evita cualquier compresión de la columna durante el estiramiento.',
+    benefits: [
+      'Trabaja una zona que los estiramientos de muslo no alcanzan y que se agarrota con la posición sentada prolongada.',
+      'Se practica en el suelo, sin equilibrio que mantener, así que es accesible incluso con la cadera rígida.',
+      'Completa el trabajo de glúteos (puente, abducción) con la movilidad correspondiente.',
+    ],
+    precautions:
+      'Si la cadera cruzada se engancha o pellizca, reduce la tracción: una posición menos profunda y sin dolor vale más que una forzada.',
+  },
+
+  calfStretch: {
+    slug: 'estiramiento-gemelos-en-pared',
+    muscles: { primary: 'Gemelos' },
+    steps: [
+      'Coloca las manos planas en la pared, a la altura del pecho.',
+      'Lleva una pierna atrás, estirada, con el talón en el suelo y el pie recto.',
+      'Flexiona la pierna delantera y adelanta la cadera hasta notar el estiramiento en el gemelo trasero.',
+      'Mantén la posición sin tirones y cambia de pierna.',
+    ],
+    mistakes: [
+      'El talón trasero se levanta: el estiramiento desaparece al instante.',
+      'Pie trasero girado hacia fuera, lo que traslada la tensión al tobillo.',
+      'Cadera que retrocede en lugar de avanzar, lo que anula la puesta en tensión.',
+    ],
+    sensation:
+      'La tensión se siente en la parte posterior de la pierna trasera, desde detrás de la rodilla hasta el talón. Flexionar ligeramente la rodilla trasera desplaza la tensión hacia la parte baja del gemelo.',
+    rangeOfMotion:
+      'Adelanta la cadera hasta una tensión clara pero tolerable, con el talón siempre en el suelo: es el talón el que fija el límite, no la distancia entre los pies.',
+    tempo:
+      'Sin ritmo: posición inmóvil y respiración lenta y regular.',
+    anatomy:
+      'El tríceps sural — gemelos y sóleo — se pone en tensión por la flexión dorsal de tobillo. Con la rodilla trasera estirada la tensión recae sobre todo en los gemelos, que cruzan también la rodilla; con la rodilla algo flexionada se desplaza al sóleo.',
+    mechanics:
+      'Puesta en tensión pasiva mediante flexión dorsal de tobillo contra un apoyo fijo, sin carga ni movimiento repetido.',
+    benefits: [
+      'Mantiene la flexión dorsal de tobillo, cuya falta es la primera causa de que los talones se levanten en la sentadilla.',
+      'Saca a los gemelos de su aislamiento: era el único grupo con un solo ejercicio en la biblioteca.',
+      'No requiere más que una pared.',
+    ],
+    precautions:
+      'Una tensión viva y localizada en el tendón de Aquiles no es el estiramiento buscado: retrasa la cadera y reduce la amplitud.',
+  },
+
+  childPose: {
+    slug: 'postura-del-nino',
+    muscles: { primary: 'Espalda, movilidad', secondary: 'Caderas, hombros' },
+    steps: [
+      'Ponte a cuatro patas, con las rodillas al ancho de las caderas.',
+      'Siéntate progresivamente sobre los talones dejando las manos donde están.',
+      'Estira los brazos lejos hacia delante y deja bajar la frente hacia el suelo.',
+      'Respira despacio dejando que la espalda se redondee un poco más en cada exhalación.',
+    ],
+    mistakes: [
+      'Hombros encogidos hacia las orejas en lugar de dejar que el torso se relaje.',
+      'Forzar las caderas hacia los talones cuando la movilidad de tobillo o rodilla no lo permite.',
+      'Respiración bloqueada, cuando es ella la que va abriendo la posición.',
+    ],
+    sensation:
+      'Un estiramiento difuso a lo largo de la espalda y en la parte posterior de los hombros, con sensación de soltar más que de tirar. Nada debe tirar en las rodillas.',
+    rangeOfMotion:
+      'Baja hasta donde permita la comodidad; la separación de las rodillas regula el espacio que queda para el torso. La posición se abre sola a lo largo de las respiraciones.',
+    tempo:
+      'Sin ritmo de ejecución: la posición se mantiene. Son las exhalaciones las que ganan amplitud, no la fuerza.',
+    anatomy:
+      'No es un fortalecimiento: los erectores espinales y el dorsal ancho se alargan de forma pasiva mientras las caderas van a flexión completa. Es la contraparte estática del gato-vaca, que moviliza la misma zona en dinámico.',
+    mechanics:
+      'Flexión global de columna y caderas en descarga, con el peso del cuerpo apoyado en los muslos y los brazos en lugar de en la columna.',
+    benefits: [
+      'El único estiramiento de espalda de esta biblioteca, complemento estático del gato-vaca.',
+      'Sirve de transición al final de la sesión, o de recuperación entre dos series exigentes para la espalda.',
+      'No requiere material, solo un suelo cómodo.',
+    ],
+    precautions:
+      'Una rodilla dolorida en esta posición se alivia deslizando un cojín entre las caderas y los talones, en lugar de renunciar a la postura.',
+  },
+
+  tricepsStretch: {
+    slug: 'estiramiento-triceps',
+    muscles: { primary: 'Tríceps', secondary: 'Hombros' },
+    steps: [
+      'De pie o sentado, levanta un brazo y dobla el codo para colocar la mano entre las escápulas.',
+      'El codo apunta al techo, lo más cerca posible de la cabeza.',
+      'Agarra ese codo con la otra mano y empújalo suavemente hacia atrás.',
+      'Mantén sin tirones y cambia de brazo.',
+    ],
+    mistakes: [
+      'Arquear la zona lumbar para dar la ilusión de un codo más atrasado.',
+      'Empujar el codo a golpes en lugar de aplicar una presión constante.',
+      'Dejar que el brazo empuje la cabeza hacia delante, lo que tensa el cuello.',
+    ],
+    sensation:
+      'La tensión se siente en la parte posterior del brazo, del codo hacia el hombro. Una molestia en la propia articulación del hombro indica reducir el empuje.',
+    rangeOfMotion:
+      'Empuja el codo hasta una tensión clara pero tolerable. Lo que limita es la amplitud del hombro por encima de la cabeza, no la fuerza de la mano que empuja.',
+    tempo:
+      'Sin ritmo: posición inmóvil y respiración lenta.',
+    anatomy:
+      'El tríceps braquial, único extensor del codo, se tensa con la flexión completa del codo; su porción larga, que cruza también el hombro, se estira más con el brazo levantado por encima de la cabeza, de ahí la posición del codo hacia el techo.',
+    mechanics:
+      'Puesta en tensión pasiva mediante flexión de codo y flexión de hombro por encima de la cabeza, sin carga ni movimiento repetido.',
+    benefits: [
+      'Completa el trabajo de empuje (flexiones, fondos, press) estirando el músculo que más trabaja en él.',
+      'Se practica de pie o sentado, sin material y sin espacio.',
+      'Mantiene la amplitud del hombro por encima de la cabeza, útil para las flexiones en pica y los press.',
+    ],
+    precautions:
+      'Si levantar el brazo por encima de la cabeza duele, mantén el codo más bajo y empuja menos: esta posición no merece forzarse.',
+  },
+
+  bandChestPress: {
+    slug: 'press-de-pecho-con-banda',
+    muscles: { primary: 'Pectorales, tríceps', secondary: 'Hombros' },
+    steps: [
+      'Pasa la banda por la espalda, a la altura de las escápulas, y sujeta un extremo en cada mano.',
+      'Manos a la altura del pecho, codos flexionados y cerca del torso, un pie algo adelantado para estabilizar.',
+      'Empuja las manos hacia delante hasta la extensión completa de los brazos.',
+      'Vuelve despacio controlando la tensión hasta que las manos regresen al pecho.',
+    ],
+    mistakes: [
+      'Torso que se va hacia delante para ayudar al empuje: se mueve el cuerpo en vez de los brazos.',
+      'Codos que suben a la altura de los hombros, lo que coloca el hombro en mala posición.',
+      'Retorno soltado de golpe en lugar de frenado.',
+    ],
+    sensation:
+      'El trabajo se siente en el pecho y la parte posterior de los brazos, con una resistencia que aumenta a medida que los brazos se extienden. Una tensión lumbar indica que el torso está compensando.',
+    rangeOfMotion:
+      'Empuja hasta estirar los brazos sin bloquear los codos, y deja que las manos vuelvan al pecho. El recorrido es el de cualquier press; solo cambia el perfil de resistencia.',
+    tempo:
+      'Uno o dos segundos para empujar, dos o tres para volver frenando. Exhala al empujar.',
+    anatomy:
+      'El pectoral mayor y el tríceps son los motores, el deltoides anterior asiste y el serrato anterior mantiene la escápula pegada. El core y la pierna adelantada resisten el tirón de la banda, que lleva el torso hacia atrás.',
+    mechanics:
+      'Aducción horizontal de hombro con extensión de codo contra una resistencia creciente: la banda está más tensa con los brazos extendidos, justo donde el peso corporal o una mancuerna serían más fáciles. Es exactamente el perfil inverso al de una flexión.',
+    benefits: [
+      'Aporta empuje horizontal sin suelo ni material pesado, útil cuando las flexiones no son practicables.',
+      'La resistencia creciente carga el final del movimiento, donde una flexión se vuelve fácil.',
+      'Una banda se transporta a cualquier parte, a diferencia de un par de mancuernas.',
+    ],
+    progression: {
+      easier: 'Usa una banda menos tensa, o separa más las manos sobre ella.',
+      harder: 'Usa una banda más tensa, adelanta más el pie de apoyo, o ralentiza el retorno a cuatro segundos.',
+      readyWhen: 'Cuando completes tres series de quince sin que el torso avance, sube la resistencia.',
+    },
+    precautions:
+      'Revisa el estado de la banda antes de cada serie: una banda gastada puede romperse de golpe, y está tensa a la altura de la cara.',
+  },
+
+  bandLateralRaise: {
+    slug: 'elevaciones-laterales-con-banda',
+    muscles: { primary: 'Hombros' },
+    steps: [
+      'De pie sobre el centro de la banda, con uno o los dos pies, un extremo en cada mano.',
+      'Brazos a los lados, codos apenas flexionados, palmas hacia dentro.',
+      'Sube los brazos por los lados hasta la altura del hombro, no más.',
+      'Baja despacio controlando el retroceso de la banda.',
+    ],
+    mistakes: [
+      'Subir por encima del hombro, lo que pasa el relevo al trapecio superior.',
+      'Impulso del torso para lanzar los brazos.',
+      'Hombros que suben hacia las orejas durante la subida.',
+    ],
+    sensation:
+      'El trabajo se siente en el lateral del hombro. Una tensión en el trapecio superior o el cuello indica que los hombros suben en vez de mantenerse bajos.',
+    rangeOfMotion:
+      'Sube hasta que los brazos queden horizontales, no más allá: ahí termina el trabajo del deltoides medio y otros músculos tomarían el relevo.',
+    tempo:
+      'Uno o dos segundos para subir, dos o tres para bajar. Exhala al subir.',
+    anatomy:
+      'El deltoides medio es el motor principal de la abducción del brazo; el supraespinoso inicia los primeros grados. El trapecio inferior y medio deben mantener la escápula baja, y por eso dejar subir los hombros desplaza el trabajo.',
+    mechanics:
+      'Abducción de hombro en el plano frontal contra una resistencia que crece con la elevación: la banda se tensa justo cuando el brazo de palanca es más largo, lo que hace el final del movimiento bastante más duro que con una mancuerna.',
+    benefits: [
+      'El único trabajo de aislamiento de hombro accesible sin mancuernas de la biblioteca.',
+      'Complementa los movimientos de empuje, que cargan sobre todo la parte anterior del hombro.',
+      'Se dosifica con precisión cambiando la longitud de banda sujeta, sin cambiar de material.',
+    ],
+    progression: {
+      easier: 'Sujeta la banda más arriba en su longitud, o pisa con un solo pie.',
+      harder: 'Acorta la longitud sujeta, pisa con los dos pies, o mantén una pausa de un segundo arriba.',
+      readyWhen: 'Cuando completes tres series de quince sin que los hombros suban, acorta la banda.',
+    },
+    precautions:
+      'Este movimiento va sin carga pesada por definición: si el hombro pellizca arriba, reduce el recorrido en vez de insistir; un pinzamiento no se entrena.',
+  },
+
+  bandLateralWalk: {
+    slug: 'marcha-lateral-con-banda',
+    muscles: { primary: 'Glúteo medio', secondary: 'Cuádriceps, glúteo mayor' },
+    steps: [
+      'Coloca la banda justo por encima de las rodillas, pies al ancho de las caderas.',
+      'Flexiona ligeramente rodillas y caderas en media sentadilla, torso recto.',
+      'Da un paso lateral empujando activamente la rodilla hacia fuera contra la banda.',
+      'Acerca el otro pie sin dejar que la banda se afloje, y sigue en la misma dirección antes de volver.',
+    ],
+    mistakes: [
+      'Rodillas que se cierran al apoyar el pie: la banda gana y el glúteo medio deja de trabajar.',
+      'Torso que se endereza del todo, lo que aligera el trabajo de los glúteos.',
+      'Pasos demasiado largos, que hacen perder el control de la alineación.',
+    ],
+    sensation:
+      'El trabajo se siente en el lateral de la cadera y del glúteo, con un ardor que sube poco a poco. Nada debe tirar en la rodilla.',
+    rangeOfMotion:
+      'Da pasos de aproximadamente el ancho de los hombros, manteniendo constante la tensión de la banda durante toda la serie: es la tensión continua la que trabaja, no la longitud del paso.',
+    tempo:
+      'Regular y controlado, cada paso apoyado sin rebote. Respira con normalidad: es un ejercicio de tensión continua, no un sprint.',
+    anatomy:
+      'El glúteo medio y el menor abducen la cadera y estabilizan la pelvis en cada apoyo; el tensor de la fascia lata asiste. La media sentadilla mantiene cuádriceps y glúteo mayor en isometría durante toda la marcha.',
+    mechanics:
+      'Abducción de cadera en el plano frontal contra resistencia elástica, con apoyo alterno. Es uno de los pocos ejercicios de la biblioteca que trabaja ese plano, mientras sentadillas y zancadas trabajan casi todo en el plano sagital.',
+    benefits: [
+      'Fortalece el estabilizador lateral de la cadera, directamente implicado en la alineación de la rodilla al caminar y correr.',
+      'Da una señal táctil inmediata: si la banda se afloja, la rodilla se ha cerrado.',
+      'Completa la sentadilla con banda aislando el componente lateral que aquella solo resiste.',
+    ],
+    progression: {
+      easier: 'Baja la banda por encima de los tobillos en lugar de las rodillas, o usa una banda más suave.',
+      harder: 'Sube la banda por encima de las rodillas, baja más en la media sentadilla, o alarga la serie.',
+      readyWhen: 'Cuando completes tres series de quince pasos por lado sin que la banda se afloje, sube la resistencia.',
+    },
+    precautions:
+      'Si la parte externa de la rodilla arde más que la cadera, el movimiento sale de la rodilla: baja la banda y retoma con pasos más cortos.',
+  },
+
+  bandCurl: {
+    slug: 'curl-de-biceps-con-banda',
+    muscles: { primary: 'Bíceps', secondary: 'Antebrazos' },
+    steps: [
+      'De pie sobre el centro de la banda, con uno o los dos pies, un extremo en cada mano.',
+      'Brazos a los lados, codos pegados a las costillas, palmas hacia delante.',
+      'Sube las manos hacia los hombros manteniendo los codos quietos.',
+      'Baja despacio hasta la extensión completa de los brazos.',
+    ],
+    mistakes: [
+      'Codos que se adelantan al subir: el movimiento deja el bíceps y pasa al hombro.',
+      'Torso que se balancea para lanzar la carga.',
+      'Bajada soltada, cuando la parte frenada es la que más trabajo produce.',
+    ],
+    sensation:
+      'El trabajo se siente en la parte anterior del brazo, del codo al hombro. Los antebrazos también arden, y es normal: son los que sujetan la banda.',
+    rangeOfMotion:
+      'Sube hasta que las manos se acerquen a los hombros y baja hasta los brazos completamente estirados. Acortar la bajada es la forma más común de reducir el trabajo sin darse cuenta.',
+    tempo:
+      'Un segundo para subir, dos o tres para bajar frenando. Exhala al subir.',
+    anatomy:
+      'El bíceps braquial flexiona el codo y participa en la supinación del antebrazo; el braquial, situado debajo, es el flexor más constante sea cual sea la posición de la mano. El braquiorradial del antebrazo asiste.',
+    mechanics:
+      'Flexión de codo en cadena abierta contra una resistencia creciente: la banda está más tensa arriba, donde el brazo de palanca es corto, lo que da un perfil de carga casi inverso al de una mancuerna.',
+    benefits: [
+      'El primer ejercicio de bíceps de la biblioteca, en un grupo «Brazos» que no existía antes de este lote.',
+      'Complementa los movimientos de tracción (remo, jalón), donde el bíceps solo asiste.',
+      'No requiere más que una banda y cabe en una bolsa.',
+    ],
+    progression: {
+      easier: 'Sujeta la banda más arriba en su longitud, o pisa con un solo pie.',
+      harder: 'Acorta la longitud sujeta, o mantén una pausa de un segundo arriba en cada repetición.',
+      readyWhen: 'Cuando completes tres series de quince sin que los codos se adelanten, acorta la banda.',
+    },
+    precautions:
+      'Un dolor en el pliegue del codo no es el ardor buscado: reduce la resistencia y comprueba que la bajada se frena en lugar de soltarse.',
+  },
+
+  dumbbellShoulderPress: {
+    slug: 'press-militar-con-mancuernas',
+    muscles: { primary: 'Hombros', secondary: 'Tríceps, core' },
+    steps: [
+      'De pie o sentado, una mancuerna en cada mano a la altura de los hombros, palmas al frente.',
+      'Aprieta glúteos y abdomen para bloquear la pelvis.',
+      'Empuja las mancuernas por encima de la cabeza hasta extender los brazos, sin arquear.',
+      'Baja con control hasta que los codos pasen por debajo de la altura de los hombros.',
+    ],
+    mistakes: [
+      'Zona lumbar arqueada para compensar la falta de amplitud de hombro.',
+      'Codos muy abiertos hacia los lados en vez de quedar algo por delante del torso.',
+      'Bajada acortada, que elimina la parte más útil del movimiento.',
+    ],
+    sensation:
+      'El trabajo se siente en los hombros y la parte posterior de los brazos, con el core activo de principio a fin. Una tensión lumbar indica que la pelvis ya no está bloqueada.',
+    rangeOfMotion:
+      'Baja hasta que los codos pasen por debajo de la altura de los hombros y sube hasta estirar los brazos sin bloquearlos de golpe. Sentado con respaldo alto, la zona lumbar queda protegida mecánicamente.',
+    tempo:
+      'Uno o dos segundos para empujar, dos o tres para bajar controlando. Exhala al empujar.',
+    anatomy:
+      'El deltoides anterior y el tríceps son los motores, con el deltoides medio asistiendo. El trapecio y el serrato anterior rotan la escápula hacia arriba, condición para que el brazo suba libremente; los abdominales impiden el arqueo compensatorio.',
+    mechanics:
+      'Flexión de hombro por encima de la cabeza combinada con extensión de codo, en cadena abierta y con carga constante en todo el recorrido, a diferencia de la banda, cuya resistencia crece al final.',
+    benefits: [
+      'El movimiento de empuje vertical de referencia en cuanto hay un par de mancuernas.',
+      'Carga los hombros de forma progresiva, algo que las flexiones en pica solo logran cambiando la posición del cuerpo.',
+      'Trabaja cada brazo por separado, así que el lado fuerte no compensa al débil.',
+    ],
+    progression: {
+      easier: 'Reduce la carga, o siéntate con respaldo para eliminar el trabajo de core.',
+      harder: 'Aumenta la carga, o mantén una pausa de un segundo arriba en cada repetición.',
+      readyWhen: 'Cuando completes tres series de doce sin arquear, aumenta la carga.',
+    },
+    precautions:
+      'Si levantar los brazos por encima de la cabeza duele, reduce el recorrido o gira las palmas hacia dentro: esta posición no se fuerza.',
+  },
+
+  dumbbellFloorPress: {
+    slug: 'press-con-mancuernas-en-el-suelo',
+    muscles: { primary: 'Pectorales, tríceps', secondary: 'Hombros' },
+    steps: [
+      'Túmbate boca arriba, rodillas dobladas, pies apoyados, una mancuerna en cada mano.',
+      'Codos en el suelo a unos 45° del torso, mancuernas a la altura del pecho.',
+      'Empuja las mancuernas hacia el techo hasta extender los brazos.',
+      'Baja con control hasta que los codos toquen el suelo, haz una pausa y vuelve a empujar.',
+    ],
+    mistakes: [
+      'Dejar que los codos reboten en el suelo en lugar de hacer una pausa.',
+      'Codos abiertos a 90°, que colocan el hombro en mala posición.',
+      'Zona lumbar despegada del suelo en vez de mantener el contacto.',
+    ],
+    sensation:
+      'El trabajo se siente en el pecho y la parte posterior de los brazos. El suelo da una referencia de profundidad constante que un press en banco no tiene.',
+    rangeOfMotion:
+      'El suelo limita la bajada: eso es justamente lo interesante, fija la misma profundidad en cada repetición e impide que el hombro vaya demasiado lejos en extensión.',
+    tempo:
+      'Uno o dos segundos para empujar, dos o tres para bajar. Una pausa de un segundo al tocar el suelo elimina cualquier rebote.',
+    anatomy:
+      'El pectoral mayor y el tríceps son los motores, con el deltoides anterior asistiendo. Al estar el recorrido limitado por el suelo, el hombro nunca entra en extensión excesiva, y eso hace esta variante más tolerante que el press en banco.',
+    mechanics:
+      'Aducción horizontal de hombro con extensión de codo, en cadena abierta y carga constante. El suelo trunca la parte baja del movimiento, convirtiendo un recorrido libre en uno acotado y reproducible de una sesión a otra.',
+    benefits: [
+      'Aporta el press horizontal con carga sin banco, con un simple par de mancuernas y una esterilla.',
+      'La referencia del suelo hace que la profundidad sea idéntica en cada serie, así que el progreso es medible.',
+      'Cada brazo trabaja por separado, a diferencia de una barra.',
+    ],
+    progression: {
+      easier: 'Reduce la carga, o empuja un brazo cada vez para centrarte en la trayectoria.',
+      harder: 'Aumenta la carga, alarga la pausa en el suelo, o ralentiza la bajada a cuatro segundos.',
+      readyWhen: 'Cuando completes tres series de doce con una pausa limpia en el suelo en cada repetición, aumenta la carga.',
+    },
+    precautions:
+      'No dejes nunca que los codos caigan en caída libre: el contacto con el suelo debe apoyarse, no encajarse.',
+  },
+
+  dumbbellRomanianDeadlift: {
+    slug: 'peso-muerto-rumano',
+    muscles: { primary: 'Glúteos, isquiotibiales', secondary: 'Zona lumbar, core' },
+    steps: [
+      'De pie, una mancuerna en cada mano delante de los muslos, pies al ancho de las caderas.',
+      'Flexiona apenas las rodillas y mantén ese ángulo constante durante todo el movimiento.',
+      'Empuja las caderas hacia atrás y baja las mancuernas por las piernas, con la espalda plana.',
+      'Baja hasta notar la tensión en la parte posterior de los muslos y vuelve empujando las caderas hacia delante.',
+    ],
+    mistakes: [
+      'Flexionar las rodillas poco a poco durante la bajada: el movimiento se convierte en sentadilla y deja los isquiotibiales.',
+      'Espalda que se curva en cuanto se agota la movilidad de cadera.',
+      'Mancuernas que se alejan de las piernas, lo que aumenta la carga sobre la zona lumbar.',
+    ],
+    sensation:
+      'Una tensión clara en la parte posterior de los muslos al bajar, y luego los glúteos tomando el relevo al subir. La zona lumbar trabaja en isometría, nunca como motor.',
+    rangeOfMotion:
+      'Baja hasta el final del estiramiento de los isquiotibiales, no más: la flexibilidad posterior fija el recorrido, no la altura de las mancuernas. El día que la espalda se curva, se ha pasado el límite.',
+    tempo:
+      'Tres segundos para bajar, uno o dos para subir. Inhala al bajar, exhala al empujar las caderas hacia delante.',
+    anatomy:
+      'Los isquiotibiales y el glúteo mayor extienden la cadera: son los motores. Los erectores espinales trabajan en isometría para mantener la espalda plana; nunca deben producir el movimiento, solo impedirlo. Es el único ejercicio de la biblioteca que entrena la bisagra de cadera con carga.',
+    mechanics:
+      'Bisagra de cadera pura: flexión y luego extensión de cadera con la rodilla casi fija, en el plano sagital. Ahí está la diferencia con la sentadilla: la sentadilla dobla cadera Y rodilla, la bisagra solo la cadera.',
+    benefits: [
+      'Enseña la bisagra de cadera, el patrón que protege la espalda cada vez que se recoge algo del suelo.',
+      'Carga los isquiotibiales en extensión de cadera, complemento directo del curl femoral que los trabaja en flexión de rodilla.',
+      'Fortalece toda la cadena posterior con un solo movimiento.',
+    ],
+    progression: {
+      easier: 'Reduce la carga, o baja menos para quedarte en el recorrido donde la espalda sigue plana.',
+      harder: 'Aumenta la carga, o ralentiza la bajada a cinco segundos.',
+      readyWhen: 'Cuando completes tres series de doce con la espalda plana en todo el recorrido, aumenta la carga.',
+    },
+    precautions:
+      'La espalda plana no es negociable: si mantener la posición obliga a curvarla, la carga es excesiva o el recorrido demasiado amplio.',
+  },
+
+  dumbbellCalfRaise: {
+    slug: 'elevacion-de-gemelos-con-mancuernas',
+    muscles: { primary: 'Gemelos' },
+    steps: [
+      'De pie, una mancuerna en cada mano a los lados, pies al ancho de las caderas.',
+      'Sube despacio de puntillas, lo más alto posible.',
+      'Haz una pausa arriba, con los gemelos contraídos.',
+      'Baja despacio hasta que los talones toquen el suelo.',
+    ],
+    mistakes: [
+      'Rebotar abajo en lugar de controlar la bajada.',
+      'Tobillos que se van hacia fuera: el peso debe quedarse sobre el dedo gordo.',
+      'Recorrido acortado arriba, que es justo donde el gemelo más se contrae.',
+    ],
+    sensation:
+      'Un ardor claro en el gemelo, que sube rápido. La carga también se siente en los antebrazos, que sujetan las mancuernas durante toda la serie.',
+    rangeOfMotion:
+      'Sube tan alto como permita el tobillo y baja hasta tocar el suelo. De pie en un escalón, con los talones al aire, el recorrido se alarga aún más hacia abajo.',
+    tempo:
+      'Uno o dos segundos para subir, una pausa arriba, dos o tres para bajar. Es la lentitud la que hace el trabajo, no la carga.',
+    anatomy:
+      'El tríceps sural — gemelos y sóleo — produce la flexión plantar. Con la rodilla estirada dominan los gemelos, y por eso la versión de pie complementa bien cualquier trabajo sentado, donde toma el relevo el sóleo.',
+    mechanics:
+      'Flexión plantar del tobillo en cadena cerrada, con una carga externa que se suma al peso corporal. El recorrido es corto por naturaleza, lo que hace el tiempo bajo tensión más determinante que el número de repeticiones.',
+    benefits: [
+      'Carga los gemelos más allá del peso corporal, algo que la versión sin mancuernas ya no permite cuando quince repeticiones resultan fáciles.',
+      'Saca a los gemelos de su aislamiento en la biblioteca, junto al estiramiento correspondiente.',
+      'Fortalece el empuje final de la marcha y la carrera.',
+    ],
+    progression: {
+      easier: 'Hazlo sin mancuernas, o sujétate con una mano para manejar un solo peso.',
+      harder: 'Aumenta la carga, súbete a un escalón para alargar el recorrido, o pasa a una sola pierna.',
+      readyWhen: 'Cuando completes tres series de veinte con pausa arriba, aumenta la carga o pasa a una pierna.',
+    },
+    precautions:
+      'Un calambre al final de la serie es frecuente en este músculo: reduce el recorrido y alarga el descanso en vez de forzar la repetición siguiente.',
+  },
+
+  dumbbellCurl: {
+    slug: 'curl-de-biceps-con-mancuernas',
+    muscles: { primary: 'Bíceps', secondary: 'Antebrazos' },
+    steps: [
+      'De pie, una mancuerna en cada mano, brazos a los lados, palmas al frente.',
+      'Codos pegados a las costillas, hombros bajos y torso quieto.',
+      'Sube la mancuerna hacia el hombro sin que el codo se adelante.',
+      'Baja despacio hasta la extensión completa del brazo.',
+    ],
+    mistakes: [
+      'Balanceo del torso para lanzar la carga: trabaja la espalda, no el bíceps.',
+      'Codos que se adelantan al final de la subida, lo que mete al hombro.',
+      'Bajada soltada, cuando la fase frenada es la más productiva.',
+    ],
+    sensation:
+      'El trabajo se siente en la parte anterior del brazo, del pliegue del codo al hombro. El torso debe quedarse totalmente quieto: es el mejor indicador de una carga adecuada.',
+    rangeOfMotion:
+      'Sube hasta que la mancuerna se acerque al hombro y baja hasta el brazo completamente estirado. Acortar abajo es la forma más común de hacer trampa sin darse cuenta.',
+    tempo:
+      'Un segundo para subir, dos o tres para bajar. Exhala al subir.',
+    anatomy:
+      'El bíceps braquial flexiona el codo y supina el antebrazo, de ahí la palma al frente, que lo coloca en posición favorable. El braquial, bajo el bíceps, flexiona el codo sea cual sea la posición de la mano; el braquiorradial asiste.',
+    mechanics:
+      'Flexión de codo en cadena abierta con carga constante: a diferencia de la banda, la resistencia no varía, pero el brazo de palanca es máximo con el antebrazo horizontal, que es donde el movimiento resulta más duro.',
+    benefits: [
+      'El movimiento de bíceps más directo, con una carga ajustable con precisión.',
+      'Completa los tirones (remo, jalón), donde el bíceps es solo secundario.',
+      'Cada brazo trabaja por separado, lo que revela y corrige un desequilibrio.',
+    ],
+    progression: {
+      easier: 'Reduce la carga, o apoya la espalda en una pared para eliminar cualquier balanceo.',
+      harder: 'Aumenta la carga, ralentiza la bajada a cuatro segundos, o haz una pausa a media altura.',
+      readyWhen: 'Cuando completes tres series de doce sin que el torso se mueva, aumenta la carga.',
+    },
+    precautions:
+      'Un dolor en el pliegue del codo, distinto del ardor muscular, obliga a reducir la carga: los tendones del codo toleran mal la sobrecarga brusca en este movimiento.',
+  },
+
+  dumbbellTricepsExtension: {
+    slug: 'extension-de-triceps',
+    muscles: { primary: 'Tríceps' },
+    steps: [
+      'De pie o sentado, sujeta una mancuerna con ambas manos, brazos estirados sobre la cabeza.',
+      'Codos cerrados hacia delante, lo más cerca posible de las orejas.',
+      'Flexiona los codos para bajar la mancuerna tras la nuca, sin abrirlos.',
+      'Sube hasta la extensión completa de los brazos, con los codos aún cerrados.',
+    ],
+    mistakes: [
+      'Codos que se abren hacia fuera, lo que traslada la carga del tríceps al hombro.',
+      'Zona lumbar arqueada para compensar la falta de amplitud de hombro.',
+      'Bajada demasiado rápida, con la carga detrás de la cabeza.',
+    ],
+    sensation:
+      'El trabajo se siente en la parte posterior del brazo, del codo al hombro. Una molestia en la articulación del hombro indica que los codos se han abierto o que la carga es excesiva.',
+    rangeOfMotion:
+      'Baja hasta notar el estiramiento en la parte posterior del brazo, sin forzar, y sube hasta estirar los brazos. Con los brazos sobre la cabeza, la porción larga del tríceps ya está preestirada, así que el recorrido útil es más corto de lo que parece.',
+    tempo:
+      'Uno o dos segundos para subir, dos o tres para bajar controlando. Exhala al empujar.',
+    anatomy:
+      'El tríceps braquial es el único extensor del codo. Su porción larga cruza también el hombro: la posición con los brazos sobre la cabeza la pone en tensión antes incluso de empezar el movimiento, y por eso esta variante la solicita más que una extensión con el brazo al costado.',
+    mechanics:
+      'Extensión de codo en cadena abierta, con el hombro flexionado sobre la cabeza y mantenido fijo. Ese es el papel del core y de los codos cerrados: impedir que el hombro participe, para que solo se mueva el codo.',
+    benefits: [
+      'Trabaja el tríceps en una posición que los fondos y las flexiones no reproducen.',
+      'Se hace con una sola mancuerna, de pie o sentado, sin banco.',
+      'Completa el curl para cubrir las dos caras del brazo en el grupo «Brazos».',
+    ],
+    progression: {
+      easier: 'Reduce la carga, o haz el movimiento con un brazo cada vez para controlar mejor la trayectoria.',
+      harder: 'Aumenta la carga, o mantén una pausa de un segundo en la posición baja.',
+      readyWhen: 'Cuando completes tres series de doce sin que los codos se abran, aumenta la carga.',
+    },
+    precautions:
+      'Empieza ligero: la carga queda detrás de la cabeza, y perder el control ahí es más delicado que en un movimiento por delante del cuerpo. Sentado con respaldo, la zona lumbar queda mejor protegida.',
+  },
+
+  chestPressMachine: {
+    slug: 'press-de-pecho-en-maquina',
+    muscles: { primary: 'Pectorales, tríceps', secondary: 'Hombros' },
+    steps: [
+      'Ajusta la altura del asiento para que los agarres queden a la altura del pecho.',
+      'Siéntate con espalda y hombros bien apoyados en el respaldo, pies planos en el suelo.',
+      'Empuja los agarres hacia delante hasta extender los brazos, sin bloquear los codos.',
+      'Vuelve con control hasta que las manos queden de nuevo a la altura del pecho.',
+    ],
+    mistakes: [
+      'Hombros que se despegan del respaldo para ganar unos centímetros de empuje.',
+      'Bloquear los codos al final del empuje, lo que traslada la carga a la articulación.',
+      'Retorno demasiado rápido, cuando la fase frenada es la más productiva.',
+    ],
+    sensation:
+      'El trabajo se siente en el pecho y la parte posterior de los brazos, sin esfuerzo de estabilización: de eso se ocupa el respaldo. Es lo que distingue esta máquina de una flexión.',
+    rangeOfMotion:
+      'Vuelve hasta que las manos queden a la altura del pecho, no más allá: pasado ese punto el hombro entra en extensión excesiva contra una carga guiada, y eso no aporta nada.',
+    tempo:
+      'Uno o dos segundos para empujar, dos o tres para volver. Exhala al empujar.',
+    anatomy:
+      'El pectoral mayor y el tríceps son los motores, con el deltoides anterior asistiendo. El respaldo sustituye todo el trabajo de core que exige una flexión, lo que concentra el esfuerzo en los músculos del empuje y en nada más.',
+    mechanics:
+      'Aducción horizontal de hombro con extensión de codo, sobre una trayectoria impuesta por la máquina. Con el torso fijo, la variable es la carga y no la estabilidad: exactamente lo contrario de una flexión.',
+    benefits: [
+      'Permite cargar mucho el empuje horizontal sin compañero ni banco, con un ajuste fino de la carga.',
+      'La trayectoria guiada reduce el riesgo de error técnico frente a un movimiento libre cargado.',
+      'Útil como complemento de las flexiones, o como sustituto cuando la muñeca o el core son el límite.',
+    ],
+    progression: {
+      easier: 'Reduce la carga, o acorta el recorrido volviendo algo menos atrás.',
+      harder: 'Aumenta la carga, ralentiza el retorno a cuatro segundos, o haz una pausa en la posición baja.',
+      readyWhen: 'Cuando completes tres series de doce sin que los hombros se despeguen del respaldo, aumenta la carga.',
+    },
+    precautions:
+      'Mantén los hombros en contacto con el respaldo de principio a fin: ese contacto es lo que protege la articulación en una trayectoria impuesta.',
+  },
+
+  legCurlMachine: {
+    slug: 'curl-femoral',
+    muscles: { primary: 'Isquiotibiales', secondary: 'Gemelos' },
+    steps: [
+      'Ajusta la máquina para que el rodillo apoye en la parte baja de los gemelos, justo por encima de los talones.',
+      'Colócate con la cadera bien pegada al apoyo, piernas estiradas sin bloquear las rodillas.',
+      'Flexiona las rodillas para llevar los talones hacia los glúteos, con control.',
+      'Baja despacio hasta la extensión, sin dejar caer la carga.',
+    ],
+    mistakes: [
+      'Cadera que se despega para ayudar a la flexión: el movimiento deja los isquiotibiales.',
+      'Bajada sin frenar, con la carga cayendo sola.',
+      'Rodillo mal colocado, demasiado alto en el gemelo, que estorba en vez de cargar.',
+    ],
+    sensation:
+      'Una contracción clara en la parte posterior del muslo, de la rodilla hacia el glúteo. La zona lumbar no debe notar nada: si lo hace, la cadera se ha despegado.',
+    rangeOfMotion:
+      'Flexiona todo lo que permita la máquina sin que la cadera se mueva, y baja hasta la extensión completa pero sin bloquear. En este movimiento el recorrido completo importa más que la carga.',
+    tempo:
+      'Uno o dos segundos para flexionar, dos o tres para bajar frenando. Exhala al flexionar.',
+    anatomy:
+      'Los isquiotibiales flexionan la rodilla: es su acción principal, y precisamente la que ningún ejercicio a peso corporal de la biblioteca carga directamente. Los gemelos, que cruzan también la rodilla, asisten.',
+    mechanics:
+      'Flexión de rodilla en cadena abierta con la cadera fija, sobre una trayectoria guiada. Es el complemento exacto del peso muerto rumano, que carga los mismos músculos pero en extensión de cadera con la rodilla casi fija.',
+    benefits: [
+      'Cubre la única carencia evidente de la biblioteca: ningún ejercicio cargaba los isquiotibiales en flexión de rodilla.',
+      'Equilibra el trabajo de muslo, ampliamente dominado por el cuádriceps (sentadillas, zancadas, prensa).',
+      'Trayectoria guiada y carga ajustable, así que el progreso es medible.',
+    ],
+    progression: {
+      easier: 'Reduce la carga, o acorta el recorrido flexionando algo menos.',
+      harder: 'Aumenta la carga, ralentiza la bajada a cuatro segundos, o mantén una pausa de un segundo en flexión.',
+      readyWhen: 'Cuando completes tres series de doce sin que la cadera se despegue, aumenta la carga.',
+    },
+    precautions:
+      'Un calambre en la parte posterior del muslo es frecuente en este movimiento: reduce la carga y alarga el calentamiento en vez de insistir.',
+  },
+
+  treadmill: {
+    slug: 'cinta-de-correr',
+    muscles: { primary: 'Cardio, piernas' },
+    steps: [
+      'Súbete con la cinta parada o muy lenta, y acelera después progresivamente.',
+      'Elige un ritmo en el que hablar siga siendo posible pero algo entrecortado.',
+      'Mantén el torso recto y la mirada al frente, sin agarrarte a las barras.',
+      'Sostén el ritmo durante toda la duración y reduce poco a poco antes de bajarte.',
+    ],
+    mistakes: [
+      'Agarrarse a las barras laterales: parte del peso queda sostenido, así que el esfuerzo real baja aunque la velocidad de la pantalla no cambie.',
+      'Mirada clavada en la pantalla, lo que rompe la postura del cuello.',
+      'Arrancar demasiado rápido en vez de instalar el ritmo poco a poco.',
+    ],
+    sensation:
+      'Una falta de aire moderada y estable durante toda la duración: la conversación debe seguir siendo posible pero no cómoda.',
+    rangeOfMotion:
+      'No hay recorrido que ajustar, sino una zancada: apoya el talón, rueda el pie, y deja que los brazos oscilen libremente desde el hombro.',
+    tempo:
+      'Un ritmo regular y sostenido, mejor que acelerones seguidos de recuperaciones, salvo que los intervalos sean el objetivo del día.',
+    anatomy:
+      'La misma cadena muscular que al caminar: glúteos e isquiotibiales propulsan, cuádriceps amortiguan, gemelos dan el empuje final y el core estabiliza la pelvis en cada apoyo.',
+    mechanics:
+      'Locomoción cíclica sobre una cinta motorizada. Lo que la diferencia de caminar al aire libre es la pendiente regulable: es ella, más que la velocidad, la que aumenta el esfuerzo sin aumentar el impacto, un ajuste que el terreno exterior no ofrece a voluntad.',
+    benefits: [
+      'Permite fijar con precisión ritmo y pendiente, así que se puede reproducir exactamente el mismo esfuerzo de una sesión a otra.',
+      'La pendiente carga más glúteos y gemelos sin exigir correr más rápido.',
+      'Independiente del tiempo y de la hora, a diferencia de caminar al aire libre.',
+    ],
+    progression: {
+      easier: 'Reduce la velocidad antes que la duración: mejor quince minutos sostenidos que treinta sufridos.',
+      harder: 'Sube la pendiente a ritmo constante, alarga la duración, o alterna tramos más rápidos.',
+      readyWhen: 'Cuando veinte minutos a ritmo constante pasen manteniendo una conversación posible, sube la pendiente.',
+    },
+    precautions:
+      'Engancha la parada de emergencia antes de arrancar, y no bajes nunca de la cinta en marcha.',
+  },
+
+  stationaryBike: {
+    slug: 'bicicleta-estatica',
+    muscles: { primary: 'Cardio, muslos', secondary: 'Glúteos' },
+    steps: [
+      'Ajusta el sillín para que la rodilla mantenga una ligera flexión cuando el pedal está abajo del todo.',
+      'Siéntate con las manos apoyadas sin crispar, la espalda ni hundida ni arqueada.',
+      'Instala una cadencia regular y ajusta después la resistencia para encontrar tu esfuerzo de trabajo.',
+      'Mantén cadencia y resistencia durante toda la duración, y termina con unos minutos suaves.',
+    ],
+    mistakes: [
+      'Sillín demasiado bajo: la rodilla queda muy flexionada abajo, lo que carga la articulación sin necesidad.',
+      'Pelvis que se balancea de un lado a otro, señal de un sillín demasiado alto.',
+      'Resistencia casi nula con una cadencia altísima, que da la ilusión del esfuerzo sin producirlo.',
+    ],
+    sensation:
+      'Una falta de aire moderada y un calentamiento progresivo en los muslos. A diferencia de caminar o de la cinta, el peso del cuerpo nunca recae sobre las piernas.',
+    rangeOfMotion:
+      'No hay recorrido que ajustar, sino una altura de sillín: la rodilla conserva una ligera flexión abajo, sin que la pelvis tenga que bascular para alcanzar el pedal.',
+    tempo:
+      'Una cadencia regular sostenida durante toda la duración. La resistencia es el verdadero ajuste de intensidad, no la velocidad de pedaleo.',
+    anatomy:
+      'Cuádriceps y glúteo mayor producen la extensión de rodilla y cadera en cada empuje; isquiotibiales y gemelos participan en la subida cuando los pies están fijados. La posición sentada descarga por completo la columna y las articulaciones de carga.',
+    mechanics:
+      'Pedaleo cíclico en cadena cerrada, sin soportar peso: ese es el eje que distingue la bicicleta del resto del cardio de la biblioteca — el cuerpo lo sostiene el sillín, así que rodillas, caderas y espalda no sufren impacto ni compresión por el peso.',
+    benefits: [
+      'El único cardio de la biblioteca que no hace soportar peso a las piernas, así que sigue siendo practicable cuando caminar o correr molesta a una articulación.',
+      'La resistencia se ajusta con precisión, lo que hace la intensidad reproducible de una sesión a otra.',
+      'Permite mantener duraciones largas sin carga articular acumulada.',
+    ],
+    progression: {
+      easier: 'Baja la resistencia antes de recortar la duración, y mantén una cadencia cómoda.',
+      harder: 'Aumenta la resistencia a cadencia constante, alarga la duración, o alterna bloques más duros.',
+      readyWhen: 'Cuando veinte minutos pasen sin que la cadencia caiga al final, aumenta la resistencia.',
+    },
+    precautions:
+      'Una rodilla dolorida casi siempre viene del ajuste del sillín, no del esfuerzo: comprueba la altura antes de reducir la intensidad.',
+  },
+
+  rowingMachine: {
+    slug: 'maquina-de-remo',
+    muscles: { primary: 'Cardio, espalda, piernas', secondary: 'Brazos, core' },
+    steps: [
+      'Sujeta los pies, agarra la empuñadura con los brazos estirados, tibias verticales y torso algo adelantado: es la posición de ataque.',
+      'Empuja primero con fuerza con las piernas, con los brazos aún estirados y el torso quieto.',
+      'Cuando las piernas están casi extendidas, abre el torso hacia atrás y solo entonces tira de la empuñadura hacia la parte baja de las costillas.',
+      'Vuelve en orden inverso: estira los brazos, lleva el torso adelante y después dobla las piernas.',
+    ],
+    mistakes: [
+      'Tirar con los brazos antes de que las piernas hayan empujado: es el error más extendido y priva al movimiento de su principal fuente de potencia.',
+      'Abrir el torso demasiado pronto, lo que traslada la carga a la zona lumbar.',
+      'Espalda curvada en la posición de ataque, con la excusa de llegar más lejos.',
+    ],
+    sensation:
+      'Las piernas arden primero, luego la espalda y los brazos. Si los brazos se cansan antes que las piernas, el orden de la palada está invertido.',
+    rangeOfMotion:
+      'La empuñadura llega a la parte baja de las costillas, no al pecho ni al abdomen. En la posición de ataque las tibias están verticales: ir más lejos no aporta nada y fuerza la espalda.',
+    tempo:
+      'Un ritmo regular, con un retorno aproximadamente dos veces más lento que el empuje. Es esa proporción, no la cadencia, la que distingue una palada limpia de una precipitada.',
+    anatomy:
+      'Cuádriceps y glúteos producen la mayor parte de la potencia en el empuje; después el dorsal ancho, los romboides y el trapecio medio llevan la escápula hacia la columna; el bíceps termina. El core transmite la fuerza de las piernas al tren superior, lo que hace del remo un movimiento de cadena completa.',
+    mechanics:
+      'Secuencia en cuatro tiempos — ataque, empuje, final y retorno — que combina extensión de piernas, extensión de cadera y tracción horizontal. Es el único movimiento de la biblioteca donde el orden de los segmentos cuenta tanto como la fuerza producida: piernas, luego torso, luego brazos.',
+    benefits: [
+      'El único cardio de la biblioteca que es además un gesto técnico real: la calidad de la palada progresa junto con la condición física.',
+      'Trabaja la cadena de tracción, ausente en los demás ejercicios cardiovasculares.',
+      'Sin impacto, y solicitando bastante más masa muscular que caminar o pedalear.',
+    ],
+    progression: {
+      easier: 'Recorta la duración antes de subir la cadencia, y céntrate en el orden piernas-torso-brazos.',
+      harder: 'Alarga la duración, sube el ritmo manteniendo la proporción retorno/empuje, o trabaja por bloques.',
+      readyWhen: 'Cuando quince minutos pasen con el orden de palada respetado de principio a fin, alarga la duración.',
+    },
+    precautions:
+      'La zona lumbar no debe ser nunca el motor: si la fatiga se instala ahí, es que el torso se abre antes de que las piernas terminen de empujar. Retoma más despacio y más suave.',
   },
 };

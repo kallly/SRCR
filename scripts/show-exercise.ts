@@ -88,7 +88,7 @@ if (!key) {
     .slice(0, 8);
   console.error(`Cle inconnue : "${raw}".`);
   console.error(
-    near.length ? `Peut-etre : ${near.join(', ')}` : `Les 28 cles : ${LIBRARY.map((e) => e.key).join(', ')}`,
+    near.length ? `Peut-etre : ${near.join(', ')}` : `Les ${LIBRARY.length} cles : ${LIBRARY.map((e) => e.key).join(', ')}`,
   );
   process.exit(1);
 }

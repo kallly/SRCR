@@ -2,8 +2,8 @@ import type { Translations } from '../index';
 
 export const it: Translations = {
   app: {
-    title: 'Seduta — ripresa a corpo libero',
-    eyebrow: 'Fase 1 · senza attrezzi',
+    title: 'Seduta — pianificatore e cronometro di allenamento',
+    eyebrow: 'Con o senza attrezzi',
     heading: 'La mia seduta',
     tagline: 'Costruisci il tuo allenamento, ordina gli esercizi, regola le pause.',
     sourceCode: 'Codice sorgente',
@@ -53,7 +53,7 @@ export const it: Translations = {
   about: {
     title: 'Informazioni su Séance',
     intro:
-      'Séance è un pianificatore e un cronometro per l’allenamento a corpo libero, pensato per riprendere senza attrezzi. Componi il tuo svolgimento a partire da una libreria di esercizi — piegamenti inclinati, squat sulla sedia, wall sit, plank, dead bug, polpacci in piedi, rotazione esterna di spalla, camminata — poi regoli serie, ripetizioni o durate e i tempi di recupero.',
+      'Séance è un pianificatore e un cronometro di allenamento. Componi il tuo svolgimento a partire da una libreria di esercizi filtrabile in base all’attrezzatura di cui disponi — corpo libero, elastico, manubri, macchina — o in base al momento della seduta, riscaldamento e allungamento compresi. Ogni riga si regola poi in serie, ripetizioni o durata, con il proprio recupero.',
     modes:
       'Due modi di concatenare le serie. In modalità classica esegui tutte le serie di un esercizio prima di passare al successivo, con il recupero impostato su ogni riga. In modalità circuito le serie alternano i gruppi muscolari e una pausa compare solo quando due sforzi dello stesso gruppo devono per forza susseguirsi — l’anteprima mostra la sequenza calcolata prima di iniziare.',
     privacy:
@@ -81,7 +81,7 @@ export const it: Translations = {
     createTitle: 'Creare una seduta',
     createText: 'Copia questo messaggio:',
     createPrompt:
-      'Ecco un sito di sedute a corpo libero: https://kallly.github.io/SRCR/. Creami una seduta per la parte superiore del corpo di 20 minuti e dammi il link per importarla.',
+      'Ecco un sito per comporre sedute di allenamento: https://kallly.github.io/SRCR/. Creami una seduta per la parte superiore del corpo di 20 minuti e dammi il link per importarla.',
     modifyTitle: 'Modificare una seduta',
     modifyText: 'Usa il link di condivisione della tua seduta per chiedere all’IA di modificarla:',
     modifyPrompt:
@@ -93,6 +93,7 @@ export const it: Translations = {
   exerciseInfo: {
     trigger: 'Informazioni sull’esercizio',
     close: 'Chiudi',
+    equipment: 'Attrezzatura',
     muscles: 'Muscoli coinvolti',
     keyPoints: 'Punti chiave',
     moreInfo: 'Maggiori informazioni',
@@ -127,6 +128,7 @@ export const it: Translations = {
     search: 'Cerca un esercizio…',
     filterLabel: 'Filtra per gruppo muscolare',
     filterAll: 'Tutti i gruppi',
+    filterCategoryLabel: 'Filtra per attrezzatura',
     noResults: 'Nessun esercizio corrisponde a questa ricerca.',
   },
 
@@ -191,14 +193,24 @@ export const it: Translations = {
   },
 
   group: {
-    push: 'Petto / braccia',
+    push: 'Petto',
     shoulders: 'Spalle',
     back: 'Schiena',
+    arms: 'Braccia',
     legs: 'Cosce',
     calves: 'Polpacci',
     core: 'Core',
     cardio: 'Cardio',
     glutes: 'Glutei',
+  },
+
+  category: {
+    warmup: 'Riscaldamento',
+    stretching: 'Allungamento',
+    bodyweight: 'Corpo libero',
+    band: 'Elastico',
+    dumbbell: 'Manubri',
+    machine: 'Macchina',
   },
 
   duration: {
@@ -290,7 +302,7 @@ export const it: Translations = {
     readyWhen: 'Passare al livello successivo',
     precautions: 'Precauzioni',
     similar: 'Esercizi simili',
-    tagline: 'pianificatore e cronometro per l’allenamento a corpo libero.',
+    tagline: 'pianificatore e cronometro di allenamento, con o senza attrezzi.',
     disclaimer:
       'Queste informazioni sono di carattere generale e non sostituiscono il parere di un professionista sanitario. In caso di dolore, infortunio o patologia nota, chiedi un parere medico prima di iniziare.',
   },
@@ -407,6 +419,142 @@ export const it: Translations = {
     buttKickMarch: {
       name: 'Marcia sul posto calcio ai glutei',
       cue: 'Marcia sul posto, porta i talloni verso i glutei a ritmo moderato.',
+    },
+    bandPullApart: {
+      name: 'Apertura con elastico',
+      cue: 'Braccia tese davanti a te, elastico teso tra le mani, apri le braccia stringendo le scapole.',
+    },
+    bandSquat: {
+      name: 'Squat con elastico',
+      cue: 'Elastico sotto i piedi e sulle spalle, scendi come in uno squat classico, schiena dritta.',
+    },
+    dumbbellGobletSquat: {
+      name: 'Goblet squat',
+      cue: 'Manubrio tenuto con due mani contro il petto, scendi mantenendo i gomiti tra le ginocchia.',
+    },
+    dumbbellRow: {
+      name: 'Rematore con manubrio a un braccio',
+      cue: 'Un ginocchio e una mano in appoggio su una panca, tira il manubrio verso il fianco mantenendo la schiena piatta.',
+    },
+    legPressMachine: {
+      name: 'Leg press',
+      cue: 'Piedi piatti sulla pedana, larghezza spalle, spingi senza estendere del tutto le ginocchia.',
+    },
+    latPulldownMachine: {
+      name: 'Lat machine',
+      cue: 'Afferra la barra più larga delle spalle e tirala verso la parte alta del petto mantenendo il busto dritto.',
+    },
+    hamstringStretch: {
+      name: 'Allungamento dei femorali',
+      cue: 'Tallone appoggiato su un rialzo, gamba tesa, piega il busto in avanti senza inarcare la schiena.',
+    },
+    chestDoorwayStretch: {
+      name: 'Allungamento del petto sullo stipite',
+      cue: 'Avambraccio contro lo stipite della porta, gomito all’altezza della spalla, avanza il busto delicatamente.',
+    },
+    squat: {
+      name: 'Squat',
+      cue: 'Piedi alla larghezza dei fianchi, spingi i fianchi indietro e scendi finché le cosce sono quasi orizzontali, busto dritto.',
+    },
+    pushup: {
+      name: 'Piegamenti',
+      cue: 'Mani sotto le spalle, corpo allineato dai talloni alla testa, scendi fino a sfiorare il pavimento.',
+    },
+    pikePushup: {
+      name: 'Piegamenti a V',
+      cue: 'Bacino alto a V rovesciata, scendi con la sommità del capo verso il pavimento tra le mani.',
+    },
+    mountainClimber: {
+      name: 'Mountain climber',
+      cue: 'In posizione di piegamento, porta alternativamente un ginocchio al petto senza alzare i fianchi.',
+    },
+    legSwing: {
+      name: 'Slanci della gamba',
+      cue: 'Appoggiati con una mano e fai oscillare una gamba avanti e indietro, ampiezza progressiva, bacino fermo.',
+    },
+    torsoTwist: {
+      name: 'Rotazioni del busto',
+      cue: 'In piedi, piedi fermi, ruota il busto da un lato all’altro con le braccia rilassate.',
+    },
+    quadStretch: {
+      name: 'Allungamento dei quadricipiti in piedi',
+      cue: 'In piedi, afferra la caviglia e porta il tallone al gluteo, ginocchia affiancate.',
+    },
+    gluteStretch: {
+      name: 'Allungamento dei glutei (figura 4)',
+      cue: 'Sdraiato, caviglia sopra il ginocchio opposto, tira verso di te la coscia d’appoggio.',
+    },
+    calfStretch: {
+      name: 'Allungamento dei polpacci al muro',
+      cue: 'Mani al muro, gamba dietro tesa, tallone a terra, spingi il bacino in avanti.',
+    },
+    childPose: {
+      name: 'Posizione del bambino',
+      cue: 'In ginocchio, siediti sui talloni e allunga le braccia in avanti, fronte verso il pavimento.',
+    },
+    tricepsStretch: {
+      name: 'Allungamento dei tricipiti sopra la testa',
+      cue: 'Gomito piegato verso il soffitto, mano tra le scapole, spingi delicatamente il gomito con l’altra mano.',
+    },
+    bandChestPress: {
+      name: 'Spinte per il petto con elastico',
+      cue: 'Elastico dietro la schiena, mani all’altezza del petto, spingi in avanti fino a distendere le braccia.',
+    },
+    bandLateralRaise: {
+      name: 'Alzate laterali con elastico',
+      cue: 'Elastico sotto i piedi, alza le braccia tese lateralmente fino all’altezza delle spalle.',
+    },
+    bandLateralWalk: {
+      name: 'Camminata laterale con elastico',
+      cue: 'Elastico sopra le ginocchia, mezzo squat, passi laterali senza far cedere le ginocchia.',
+    },
+    bandCurl: {
+      name: 'Curl per i bicipiti con elastico',
+      cue: 'Elastico sotto i piedi, gomiti aderenti al corpo, porta le mani verso le spalle.',
+    },
+    dumbbellShoulderPress: {
+      name: 'Lento avanti con manubri',
+      cue: 'Manubri all’altezza delle spalle, spingi sopra la testa senza inarcare la zona lombare.',
+    },
+    dumbbellFloorPress: {
+      name: 'Distensioni con manubri a terra',
+      cue: 'Sdraiato a terra, ginocchia piegate, spingi i manubri verso l’alto; in basso i gomiti toccano il pavimento.',
+    },
+    dumbbellRomanianDeadlift: {
+      name: 'Stacco rumeno',
+      cue: 'Ginocchia appena flesse, spingi i fianchi indietro e scendi con i manubri lungo le gambe, schiena piatta.',
+    },
+    dumbbellCalfRaise: {
+      name: 'Calf raise con manubri',
+      cue: 'Manubri lungo i fianchi, sali sulle punte e scendi lentamente.',
+    },
+    dumbbellCurl: {
+      name: 'Curl per i bicipiti con manubri',
+      cue: 'Gomiti aderenti al corpo, solleva il manubrio senza slanciare il busto.',
+    },
+    dumbbellTricepsExtension: {
+      name: 'Estensione dei tricipiti',
+      cue: 'Manubrio con entrambe le mani sopra la testa, scendi dietro la nuca tenendo i gomiti stretti.',
+    },
+    chestPressMachine: {
+      name: 'Chest press',
+      cue: 'Schiena appoggiata, impugnature all’altezza del petto, spingi senza bloccare del tutto i gomiti.',
+    },
+    legCurlMachine: {
+      name: 'Leg curl',
+      cue: 'Rullo sulla parte bassa dei polpacci, fletti le ginocchia con controllo, bacino aderente.',
+    },
+    treadmill: {
+      name: 'Tapis roulant',
+      cue: 'Un ritmo in cui parlare resta possibile ma con un po’ di fiatone; non aggrapparti alle maniglie.',
+    },
+    stationaryBike: {
+      name: 'Cyclette',
+      cue: 'Sella regolata perché il ginocchio resti leggermente piegato in basso; cadenza regolare.',
+    },
+    rowingMachine: {
+      name: 'Vogatore',
+      cue: 'Spingi prima con le gambe, poi apri il busto, poi tira con le braccia — e l’inverso al ritorno.',
     },
     custom: {
       name: 'Esercizio personale',

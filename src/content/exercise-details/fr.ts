@@ -201,7 +201,7 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     benefits: [
       'Développe l’endurance de force des cuisses, celle qui manque dans une descente d’escalier ou une station debout prolongée.',
       'Charge les quadriceps sans mouvement articulaire, ce qui en fait souvent une option tolérable quand un mouvement complet ne l’est pas encore.',
-      'Le progrès se mesure en secondes, une unité plus lisible que « une répétition de plus » pour suivre une reprise.',
+      'Le progrès se mesure en secondes, une unité plus lisible que « une répétition de plus » pour suivre sa progression.',
     ],
     progression: {
       easier: 'Ouvre l’angle du genou à 110-120°, ou fractionne en deux maintiens plus courts.',
@@ -356,7 +356,7 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     anatomy:
       'Tous les muscles de la chaîne postérieure participent en alternance : fessiers et ischio-jambiers pour propulser, quadriceps pour amortir, mollets pour la poussée finale. Le gainage stabilise le bassin à chaque appui unipodal, et les muscles du pied gèrent l’amorti.',
     mechanics:
-      'Locomotion cyclique en chaîne fermée alternée : chaque jambe passe par une phase d’appui puis une phase oscillante. Contrairement à la course, un pied reste toujours au sol — c’est cette absence de phase aérienne qui supprime l’impact et rend la marche accessible en reprise.',
+      'Locomotion cyclique en chaîne fermée alternée : chaque jambe passe par une phase d’appui puis une phase oscillante. Contrairement à la course, un pied reste toujours au sol — c’est cette absence de phase aérienne qui supprime l’impact et permet de la pratiquer quotidiennement.',
     benefits: [
       'Développe la capacité cardiovasculaire sans impact articulaire, ce qui la rend praticable quasiment tous les jours.',
       'Reste la seule activité de cette liste qui se cumule naturellement avec le quotidien : trajets, courses, escaliers.',
@@ -437,7 +437,7 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     benefits: [
       'Rend le mouvement de pompe praticable dès le premier jour, quel que soit le niveau de départ.',
       'Permet d’apprendre le placement des coudes et l’alignement du corps sans être limité par la force.',
-      'Se pratique partout, sans matériel ni sol au propre, ce qui en fait un bon exercice de reprise progressive.',
+      'Se pratique partout, sans matériel ni sol au propre, ce qui en fait un bon point de départ pour construire la poussée.',
     ],
     progression: {
       easier: 'Rapproche les pieds du mur, jusqu’à être presque debout.',
@@ -660,7 +660,7 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     mechanics:
       'Exercice d’anti-rotation et d’anti-extension : le poids des membres opposés crée un couple qui tend à faire pivoter et cambrer le tronc, et tout le travail consiste à l’en empêcher. C’est un contrôle moteur croisé, le même schéma que celui de la marche.',
     benefits: [
-      'Renforce la stabilité lombaire sans aucune charge en compression sur la colonne, ce qui le rend souvent bien toléré en reprise.',
+      'Renforce la stabilité lombaire sans aucune charge en compression sur la colonne, ce qui le rend souvent bien toléré même avec un dos sensible.',
       'Entraîne la coordination croisée bras-jambe opposés, directement transférable à la marche.',
       'Révèle immédiatement les asymétries : un côté sera souvent nettement moins stable que l’autre.',
     ],
@@ -736,7 +736,7 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     benefits: [
       'Travaille chaque jambe séparément, ce qui révèle et corrige les asymétries qu’un squat masque.',
       'Sollicite fortement l’équilibre et les stabilisateurs de hanche, essentiels à la marche et aux escaliers.',
-      'La version arrière est nettement plus douce pour le genou que la fente avant, ce qui la rend plus adaptée à une reprise.',
+      'La version arrière est nettement plus douce pour le genou que la fente avant, ce qui la rend plus adaptée quand le genou est sensible.',
     ],
     progression: {
       easier: 'Garde une main en appui sur un mur ou un dossier, et réduis la profondeur de descente.',
@@ -1089,7 +1089,7 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     benefits: [
       'Élève le rythme cardiaque sans aucun déplacement ni matériel, dans un espace d’un mètre carré.',
       'Sert d’échauffement complet en début de séance, ou de relance cardio entre deux exercices de force.',
-      'Sans impact, contrairement aux sauts : praticable en appartement et compatible avec une reprise.',
+      'Sans impact, contrairement aux sauts : praticable en appartement et à toute heure.',
     ],
     progression: {
       easier: 'Réduis la hauteur des genoux et le rythme, jusqu’à une simple marche sur place.',
@@ -1134,5 +1134,1254 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Une crampe à l’arrière de la cuisse indique généralement un manque d’échauffement : commence par une marche sur place simple avant d’ajouter l’amplitude.',
+  },
+
+  bandPullApart: {
+    slug: 'ecarte-elastique',
+    muscles: { primary: 'Deltoïdes postérieurs, rhomboïdes', secondary: 'Trapèzes moyens' },
+    steps: [
+      'Tiens l’élastique à deux mains, bras tendus devant toi à hauteur de poitrine, une légère tension déjà présente.',
+      'Écarte les bras vers l’extérieur en gardant les coudes tendus, jusqu’à ce que l’élastique touche la poitrine.',
+      'Serre les omoplates l’une vers l’autre au point final du mouvement.',
+      'Reviens lentement à la position de départ en contrôlant la tension.',
+    ],
+    mistakes: [
+      'Coudes qui se plient pendant l’écartement : ça transforme le mouvement en tirage et réduit le travail de l’arrière d’épaule.',
+      'Élan du buste pour aider à écarter les bras.',
+      'Relâchement brusque au retour au lieu de contrôler la tension de l’élastique.',
+    ],
+    sensation:
+      'Le travail se sent entre les omoplates et à l’arrière des épaules, pas dans les avant-bras ni les biceps. Une tension dans le haut du trapèze signale que les épaules montent au lieu de rester basses.',
+    rangeOfMotion:
+      'Écarte jusqu’à ce que l’élastique touche la poitrine ou le haut du buste, sans chercher davantage : au-delà, la tension retombe et les épaules compensent.',
+    tempo:
+      'Une à deux secondes pour écarter, deux à trois pour revenir en contrôlant la tension. Souffle en écartant, inspire en revenant.',
+    anatomy:
+      'Les deltoïdes postérieurs et les rhomboïdes rapprochent les omoplates de la colonne, les trapèzes moyens et inférieurs stabilisent l’omoplate contre la cage thoracique. Les extenseurs du coude restent contractés en isométrie pour garder les bras tendus tout du long.',
+    mechanics:
+      'Abduction horizontale des épaules dans le plan transversal, contre une résistance croissante : la tension de l’élastique est la plus faible bras tendus devant soi, la plus forte bras écartés — l’inverse d’une charge au poids du corps, constante sur toute l’amplitude.',
+    benefits: [
+      'Renforce l’arrière de l’épaule, souvent sous-sollicité par rapport à l’avant dans les gestes du quotidien.',
+      'Équilibre les épaules quand plusieurs mouvements de poussée (pompes, développé) sont déjà présents dans la séance.',
+      'Ne demande qu’un élastique et un mètre carré au sol.',
+    ],
+    progression: {
+      easier: 'Prends un élastique moins tendu, ou tiens-le plus large pour réduire la résistance.',
+      harder: 'Prends un élastique plus tendu, ou ralentis le retour à quatre secondes.',
+      readyWhen: 'Quand trois séries de quinze passent sans que les épaules remontent vers les oreilles.',
+    },
+    precautions:
+      'Arrête le mouvement si une douleur apparaît à l’avant de l’épaule plutôt qu’entre les omoplates : c’est le signe d’une mauvaise position de l’épaule.',
+  },
+
+  bandSquat: {
+    slug: 'squat-elastique',
+    muscles: { primary: 'Quadriceps, fessiers', secondary: 'Moyen fessier, ischio-jambiers' },
+    steps: [
+      'Place l’élastique juste au-dessus des genoux, pieds écartés à la largeur des hanches.',
+      'Pousse les hanches vers l’arrière et descends comme un squat classique, genoux qui repoussent l’élastique vers l’extérieur.',
+      'Descends jusqu’à ce que les cuisses soient proches de l’horizontale, poids sur les talons.',
+      'Remonte en poussant dans les talons jusqu’à l’extension complète, sans laisser les genoux rentrer.',
+    ],
+    mistakes: [
+      'Laisser les genoux rentrer vers l’intérieur au lieu de repousser l’élastique.',
+      'Descendre sans contrôle, en laissant l’élastique ramener brutalement les genoux.',
+      'Buste qui bascule trop en avant.',
+    ],
+    sensation:
+      'Le travail se sent dans l’avant des cuisses et sur le côté des fessiers, qui doivent activement repousser l’élastique. Une tension au genou signale que l’alignement genou-pied n’est pas maintenu.',
+    rangeOfMotion:
+      'Descends jusqu’à ce que les cuisses soient proches de l’horizontale, sans dépasser ce que permet une mobilité de hanche confortable.',
+    tempo:
+      'Trois secondes pour descendre, une à deux pour remonter. Inspire en descendant, souffle en poussant dans les talons.',
+    anatomy:
+      'Les quadriceps et le grand fessier restent les moteurs principaux du squat ; l’élastique ajoute une résistance latérale que le moyen fessier doit contrer en continu pour empêcher le genou de rentrer, ce qu’un squat au poids du corps ne sollicite pas de la même façon.',
+    mechanics:
+      'Double flexion puis double extension de la hanche et du genou dans le plan sagittal, combinée à une résistance en abduction de hanche imposée par l’élastique dans le plan frontal.',
+    benefits: [
+      'Renforce le squat classique en ajoutant un travail actif du moyen fessier, utile pour la stabilité du genou à la marche et à la course.',
+      'Donne un retour tactile immédiat sur l’alignement du genou : si l’élastique se relâche, le genou est rentré.',
+      'Équipement léger et peu coûteux, facile à emporter.',
+    ],
+    progression: {
+      easier: 'Utilise un élastique moins résistant, ou réduis la profondeur de la descente.',
+      harder: 'Prends un élastique plus résistant, ou ajoute un temps d’arrêt de deux secondes en bas.',
+      readyWhen: 'Quand trois séries de quinze passent sans que l’élastique se relâche à aucun moment.',
+    },
+    precautions:
+      'Choisis une résistance qui permette de garder les genoux alignés sur toute la série : un élastique trop fort qui force à les laisser rentrer est contre-productif.',
+  },
+
+  dumbbellGobletSquat: {
+    slug: 'squat-gobelet',
+    muscles: { primary: 'Quadriceps, fessiers', secondary: 'Gainage, haut du dos' },
+    steps: [
+      'Tiens un haltère verticalement à deux mains contre la poitrine, coudes pointant vers le bas.',
+      'Pieds écartés un peu plus que la largeur des hanches, pointes légèrement ouvertes.',
+      'Descends en poussant les hanches vers l’arrière, coudes qui viennent frôler l’intérieur des genoux.',
+      'Remonte en poussant dans les talons jusqu’à l’extension complète des jambes.',
+    ],
+    mistakes: [
+      'Buste qui s’effondre vers l’avant sous le poids de l’haltère.',
+      'Talons qui décollent en descente.',
+      'Descente incomplète par manque de mobilité de cheville plutôt que par choix.',
+    ],
+    sensation:
+      'Le travail se sent dans l’avant des cuisses et les fessiers, avec en plus une tension isométrique dans le haut du dos et les avant-bras qui tiennent l’haltère. Le buste doit rester vertical du début à la fin.',
+    rangeOfMotion:
+      'Descends jusqu’à ce que les coudes touchent ou frôlent l’intérieur des genoux : la charge tenue devant le corps permet naturellement une descente plus profonde qu’un squat à mains libres.',
+    tempo:
+      'Deux à trois secondes pour descendre, une à deux pour remonter. Inspire en descendant, souffle en poussant dans les talons.',
+    anatomy:
+      'Les quadriceps et le grand fessier restent les moteurs principaux ; tenir la charge devant la poitrine oblige les érecteurs du rachis et les abdominaux à maintenir le buste vertical contre la tendance à basculer en avant, un travail de gainage que le squat au poids du corps ne demande pas au même degré.',
+    mechanics:
+      'Double flexion puis double extension de la hanche et du genou dans le plan sagittal. La charge tenue près du centre de gravité, contre la poitrine, garde le buste plus vertical qu’un squat avec charge dans le dos.',
+    benefits: [
+      'Ajoute une charge externe progressive à un mouvement déjà maîtrisé au poids du corps, la suite logique quand le squat sur chaise devient facile.',
+      'La position de la charge contre la poitrine enseigne une posture de squat verticale, utile pour tous les squats chargés à venir.',
+      'Ne demande qu’un seul haltère ou une charge équivalente (bouteille lestée, kettlebell).',
+    ],
+    progression: {
+      easier: 'Utilise une charge plus légère, ou reviens temporairement au squat sur chaise sans charge.',
+      harder: 'Augmente la charge progressivement, ou ralentis la descente à quatre secondes.',
+      readyWhen: 'Quand trois séries de dix passent avec un buste qui reste vertical et des talons qui ne décollent jamais.',
+    },
+    precautions:
+      'Augmente la charge par petits paliers : c’est la profondeur et le contrôle qui doivent rester intacts en premier, pas le poids affiché.',
+  },
+
+  dumbbellRow: {
+    slug: 'rowing-haltere-un-bras',
+    muscles: { primary: 'Grand dorsal, trapèzes', secondary: 'Biceps, gainage' },
+    steps: [
+      'Place un genou et la main du même côté sur un banc ou une chaise stable, dos parallèle au sol.',
+      'Tiens l’haltère dans l’autre main, bras tendu vers le sol.',
+      'Tire l’haltère vers la hanche en gardant le coude proche du corps, omoplate qui se rapproche de la colonne.',
+      'Redescends avec contrôle jusqu’à l’extension complète du bras.',
+    ],
+    mistakes: [
+      'Rotation du buste pour aider à tirer l’haltère plutôt que de laisser le dos faire le travail.',
+      'Coude qui s’écarte du corps, transformant le rowing en mouvement d’épaule.',
+      'Dos qui s’arrondit au lieu de rester plat.',
+    ],
+    sensation:
+      'Le travail se sent dans le milieu du dos et sous l’aisselle, avec l’omoplate qui se rapproche nettement de la colonne au sommet du mouvement. Une tension dans le bas du dos signale que l’appui sur le banc ne soutient pas assez le buste.',
+    rangeOfMotion:
+      'Tire jusqu’à ce que l’haltère touche ou frôle la hanche, coude qui dépasse légèrement le dos. Redescends jusqu’à l’extension complète du bras pour utiliser toute l’amplitude disponible.',
+    tempo:
+      'Une seconde pour tirer, deux à trois pour redescendre en contrôlant la charge. Souffle en tirant, inspire en redescendant.',
+    anatomy:
+      'Le grand dorsal et le grand rond rapprochent le bras du corps et l’étendent vers l’arrière, les rhomboïdes et le trapèze moyen rapprochent l’omoplate de la colonne, le biceps assiste en fléchissant le coude. L’appui genou-main sur le banc stabilise le buste pour isoler le travail du dos.',
+    mechanics:
+      'Extension et adduction de l’épaule dans le plan sagittal, associée à une rétraction de l’omoplate. L’appui unilatéral sur le banc élimine la contribution des jambes présente dans un rowing debout.',
+    benefits: [
+      'Renforce le tirage, un schéma de mouvement peu présent dans une séance au poids du corps où les exercices de dos restent isométriques (superman, oiseau-chien).',
+      'L’appui unilatéral permet de travailler chaque côté indépendamment et de repérer une différence de force entre les deux bras.',
+      'Contrepoids utile face aux mouvements de poussée (pompes, développé) déjà présents dans la plupart des séances.',
+    ],
+    progression: {
+      easier: 'Utilise une charge plus légère, ou fais reposer le buste plus horizontalement pour réduire l’amplitude.',
+      harder: 'Augmente la charge, ou marque un temps d’arrêt d’une seconde en haut du mouvement.',
+      readyWhen: 'Quand trois séries de dix passent sans rotation du buste, des deux côtés.',
+    },
+    precautions:
+      'Garde le dos plat du début à la fin : si le buste doit s’arrondir pour tirer la charge, elle est trop lourde.',
+  },
+
+  legPressMachine: {
+    slug: 'presse-a-cuisses',
+    muscles: { primary: 'Quadriceps, fessiers', secondary: 'Ischio-jambiers' },
+    steps: [
+      'Assieds-toi sur la machine, dos et tête bien calés contre le dossier.',
+      'Place les pieds à plat sur la plaque, à la largeur des hanches.',
+      'Déverrouille les cales de sécurité et descends en pliant les genoux jusqu’à un angle proche de 90°.',
+      'Pousse dans les pieds jusqu’à l’extension des jambes, sans verrouiller complètement les genoux.',
+    ],
+    mistakes: [
+      'Verrouiller complètement les genoux en fin de poussée, ce qui reporte la charge sur l’articulation.',
+      'Bas du dos qui décolle du dossier en descente.',
+      'Descendre trop profondément, genoux qui dépassent largement la poitrine.',
+    ],
+    sensation:
+      'Le travail se sent dans l’avant des cuisses et les fessiers, sans tension dans le bas du dos : le dossier soutient tout le buste. Une gêne au bas du dos signale une amplitude trop importante pour la mobilité de hanche du moment.',
+    rangeOfMotion:
+      'Descends jusqu’à un angle de genou proche de 90°, ou moins si le bas du dos décolle avant : la machine permet de fixer précisément cette limite d’une séance à l’autre.',
+    tempo:
+      'Deux à trois secondes pour descendre, une pour pousser. Inspire en descendant, souffle en poussant.',
+    anatomy:
+      'Les quadriceps étendent le genou, le grand fessier étend la hanche : les mêmes moteurs qu’un squat, mais le dossier de la machine élimine tout le travail de gainage et de stabilisation que le squat demande au buste.',
+    mechanics:
+      'Double extension de la hanche et du genou dans le plan sagittal, sur une trajectoire guidée : contrairement au squat, le buste reste fixe et seule la charge se déplace.',
+    benefits: [
+      'Permet de charger fortement les jambes sans solliciter le gainage ni l’équilibre, utile en complément ou en remplacement temporaire du squat.',
+      'La trajectoire guidée réduit le risque d’erreur technique par rapport à un mouvement libre chargé.',
+      'Facilite l’ajustement fin de la charge, palier par palier.',
+    ],
+    progression: {
+      easier: 'Réduis la charge, ou limite l’angle de descente à 70-80° de flexion.',
+      harder: 'Augmente la charge, ou ralentis la descente à quatre secondes.',
+      readyWhen: 'Quand trois séries de dix passent sans que le bas du dos décolle du dossier.',
+    },
+    precautions:
+      'Ne verrouille jamais complètement les genoux en fin de poussée, et ne laisse jamais le bas du dos décoller du dossier : ce sont les deux points de sécurité de cette machine.',
+  },
+
+  latPulldownMachine: {
+    slug: 'tirage-vertical',
+    muscles: { primary: 'Grand dorsal', secondary: 'Biceps, trapèzes' },
+    steps: [
+      'Assieds-toi face à la machine, cuisses calées sous les rouleaux si la machine en a.',
+      'Saisis la barre plus large que les épaules, bras tendus.',
+      'Tire la barre vers le haut de la poitrine en gardant le buste droit, coudes qui descendent vers les hanches.',
+      'Remonte avec contrôle jusqu’à l’extension complète des bras.',
+    ],
+    mistakes: [
+      'Se pencher fortement en arrière pour aider à tirer la barre.',
+      'Tirer la barre derrière la nuque plutôt que devant la poitrine.',
+      'Remontée trop rapide, sans contrôler la charge.',
+    ],
+    sensation:
+      'Le travail se sent dans le milieu et le bas du dos, jusque sous l’aisselle. Une tension dans le haut du trapèze ou la nuque signale que les épaules remontent au lieu de rester basses.',
+    rangeOfMotion:
+      'Tire jusqu’à ce que la barre touche le haut de la poitrine, coudes qui descendent le long du corps. Remonte jusqu’à l’extension complète des bras pour utiliser toute l’amplitude.',
+    tempo:
+      'Une à deux secondes pour tirer, deux à trois pour remonter en contrôlant la charge. Souffle en tirant, inspire en remontant.',
+    anatomy:
+      'Le grand dorsal adduit et étend l’épaule, les rhomboïdes et le trapèze moyen rapprochent l’omoplate de la colonne, le biceps assiste en fléchissant le coude. C’est l’équivalent en tirage vertical du mouvement de traction, en version guidée et chargeable progressivement.',
+    mechanics:
+      'Adduction et extension de l’épaule dans le plan sagittal, associée à une dépression et une rétraction de l’omoplate, sur une trajectoire guidée par la machine.',
+    benefits: [
+      'Construit la force de traction verticale utile pour progresser vers la traction à la barre fixe, un mouvement que le poids du corps seul rend difficile d’accès.',
+      'Permet de doser précisément la charge, contrairement à une traction au poids du corps où seul le poids total peut être ajusté.',
+      'Renforce le dos en miroir des mouvements de poussée déjà présents dans la plupart des séances.',
+    ],
+    progression: {
+      easier: 'Réduis la charge, ou utilise une prise plus étroite pour raccourcir le bras de levier.',
+      harder: 'Augmente la charge, ou marque un temps d’arrêt d’une seconde en bas du mouvement.',
+      readyWhen: 'Quand trois séries de dix passent sans que le buste bascule en arrière.',
+    },
+    precautions:
+      'Tire toujours la barre devant la poitrine, jamais derrière la nuque : cette variante ancienne place l’épaule dans une position à risque pour un gain minime.',
+  },
+
+  hamstringStretch: {
+    slug: 'etirement-ischio-jambiers',
+    muscles: { primary: 'Ischio-jambiers' },
+    steps: [
+      'Place un talon sur un support stable (marche, chaise basse), jambe tendue.',
+      'Garde l’autre jambe légèrement fléchie, pied bien ancré au sol.',
+      'Penche le buste vers l’avant depuis les hanches, dos plat, jusqu’à sentir une tension à l’arrière de la cuisse.',
+      'Maintiens la position sans à-coups, en respirant calmement.',
+    ],
+    mistakes: [
+      'Arrondir le dos pour aller chercher plus d’amplitude au lieu de plier depuis les hanches.',
+      'Rebondir dans l’étirement au lieu de tenir une position stable.',
+      'Verrouiller complètement le genou de la jambe tendue.',
+    ],
+    sensation:
+      'La tension doit se sentir sur toute la longueur de l’arrière de la cuisse, jamais dans le genou ni le bas du dos. Une douleur vive plutôt qu’une tension signale d’arrêter et de réduire l’amplitude.',
+    rangeOfMotion:
+      'Penche-toi jusqu’à sentir une tension nette mais tolérable, jamais douloureuse. L’amplitude confortable augmente naturellement d’une séance à l’autre.',
+    tempo:
+      'Aucun rythme d’exécution : la position se tient immobile. Respire lentement et profondément pendant toute la durée du maintien.',
+    anatomy:
+      'Les ischio-jambiers, qui fléchissent le genou et étendent la hanche, sont mis en tension passive par la flexion de hanche combinée à l’extension du genou. Aucune contraction musculaire active n’est recherchée ici, seulement un relâchement progressif sous tension.',
+    mechanics:
+      'Mise en tension passive des ischio-jambiers par flexion de hanche et extension de genou simultanées, dans le plan sagittal, sans charge ni mouvement répété.',
+    benefits: [
+      'Entretient la souplesse de l’arrière de cuisse, souvent raccourcie par la position assise prolongée.',
+      'Facilite l’amplitude des mouvements de flexion de hanche (fentes, squats profonds) réalisés ailleurs dans la séance.',
+      'Se pratique n’importe où avec une simple marche ou un rebord comme support.',
+    ],
+    precautions:
+      'Ne force jamais au-delà d’une tension tolérable, et évite cet étirement à froid avant un effort intense : il trouve mieux sa place en fin de séance ou à distance de l’effort.',
+  },
+
+  chestDoorwayStretch: {
+    slug: 'etirement-pectoraux-cadre-de-porte',
+    muscles: { primary: 'Pectoraux', secondary: 'Deltoïdes antérieurs' },
+    steps: [
+      'Place-toi dans l’encadrement d’une porte, avant-bras contre le montant, coude à hauteur d’épaule.',
+      'Pieds légèrement décalés, un pied devant l’autre pour la stabilité.',
+      'Avance doucement le buste à travers l’encadrement jusqu’à sentir une tension à l’avant de l’épaule et sur le pectoral.',
+      'Maintiens la position sans à-coups, en respirant calmement.',
+    ],
+    mistakes: [
+      'Coude placé trop haut ou trop bas, ce qui déplace la tension vers l’épaule plutôt que le pectoral.',
+      'Avancer trop brusquement au lieu de progresser doucement.',
+      'Cambrer excessivement le bas du dos pour aller chercher plus d’amplitude.',
+    ],
+    sensation:
+      'La tension doit se sentir à l’avant de l’épaule et sur le pectoral du bras engagé, jamais dans l’articulation elle-même. Une douleur à l’avant de l’épaule signale de reculer légèrement.',
+    rangeOfMotion:
+      'Avance jusqu’à sentir une tension nette mais tolérable. La hauteur du coude change la zone étirée : plus bas, l’étirement descend vers le bas du pectoral, plus haut, il remonte vers le haut du pectoral et l’épaule.',
+    tempo:
+      'Aucun rythme d’exécution : la position se tient immobile. Respire lentement, l’expiration aide souvent à relâcher un peu plus la tension.',
+    anatomy:
+      'Le grand pectoral, qui adduit et fléchit l’épaule vers l’avant, est mis en tension passive par la position d’ouverture imposée par le cadre. Le deltoïde antérieur, souvent raccourci par les mêmes gestes répétitifs, est étiré dans la même position.',
+    mechanics:
+      'Mise en tension passive du pectoral par une extension horizontale de l’épaule fixée par le point d’appui du cadre, sans charge ni mouvement répété.',
+    benefits: [
+      'Compense le raccourcissement du pectoral causé par les positions prolongées en fermeture (écrans, volant, poussée répétée).',
+      'Facilite l’amplitude des mouvements de poussée et d’ouverture du buste réalisés ailleurs dans la séance.',
+      'Ne demande aucun équipement, juste un encadrement de porte.',
+    ],
+    precautions:
+      'Ne force jamais au-delà d’une tension tolérable, surtout en cas de gêne déjà connue à l’épaule : recule d’abord la position du bras avant de renoncer à l’étirement.',
+  },
+
+  squat: {
+    slug: 'squat',
+    muscles: { primary: 'Quadriceps, fessiers', secondary: 'Ischio-jambiers, gainage' },
+    steps: [
+      'Debout, pieds écartés à la largeur des hanches, pointes légèrement ouvertes.',
+      'Pousse les hanches vers l’arrière puis fléchis les genoux, qui restent dans l’axe des pieds.',
+      'Descends jusqu’à ce que les cuisses soient proches de l’horizontale, poids réparti sur tout le pied.',
+      'Garde le buste droit et le regard devant, sans arrondir le bas du dos.',
+      'Remonte en poussant dans les talons jusqu’à l’extension complète des hanches.',
+    ],
+    mistakes: [
+      'Genoux qui rentrent vers l’intérieur pendant la remontée.',
+      'Talons qui décollent : signe d’un manque de mobilité de cheville, pas d’un manque de force.',
+      'Bas du dos qui s’arrondit en fin de descente, quand la profondeur dépasse la mobilité de hanche.',
+    ],
+    sensation:
+      'Le travail se sent dans l’avant des cuisses et les fessiers, avec un appui franc dans tout le pied. Une tension isolée à l’avant du genou signale que les hanches ne reculent pas assez et que le mouvement part du genou seul.',
+    rangeOfMotion:
+      'Descends aussi bas que la mobilité le permet sans que le bas du dos s’arrondisse — le repère est le dos, pas un angle théorique. Cuisses proches de l’horizontale suffisent à travailler toute la chaîne.',
+    tempo:
+      'Deux à trois secondes pour descendre, une à deux pour remonter. Inspire en descendant, souffle en poussant dans les talons.',
+    anatomy:
+      'Les quadriceps étendent le genou, le grand fessier étend la hanche : les deux moteurs travaillent ensemble. Les ischio-jambiers et les adducteurs stabilisent, le moyen fessier empêche le genou de rentrer, et les érecteurs du rachis avec la sangle abdominale maintiennent le buste gainé.',
+    mechanics:
+      'Double flexion puis double extension de la hanche et du genou dans le plan sagittal, en chaîne fermée. La descente est excentrique, la remontée concentrique. Sans chaise ni repère externe, c’est la mobilité de cheville et de hanche qui fixe la profondeur atteignable.',
+    benefits: [
+      'Le mouvement de base de toute la chaîne inférieure : c’est la version libre que le squat sur chaise prépare.',
+      'Ne demande ni matériel ni appui, donc praticable partout dès que la profondeur est maîtrisée.',
+      'Sert de socle à toutes les variantes chargées — squat gobelet, presse à cuisses — qui ne changent que la charge, pas le geste.',
+    ],
+    progression: {
+      easier: 'Reviens au squat sur chaise, qui donne un repère de profondeur constant.',
+      harder: 'Ralentis la descente à cinq secondes, marque un arrêt en bas, ou passe au squat gobelet avec charge.',
+      readyWhen: 'Quand trois séries de quinze passent sans que les genoux rentrent ni que les talons décollent, ajoute une charge.',
+    },
+    precautions:
+      'Si le genou est douloureux, réduis la profondeur plutôt que le nombre de répétitions : une amplitude partielle indolore vaut mieux qu’une amplitude complète qui fait mal.',
+  },
+
+  pushup: {
+    slug: 'pompes',
+    muscles: { primary: 'Pectoraux, triceps', secondary: 'Épaules, gainage' },
+    steps: [
+      'En appui sur les mains et les pointes de pieds, mains un peu plus larges que les épaules, sous la ligne des épaules.',
+      'Serre les fessiers et la sangle abdominale pour aligner le corps des talons à la tête.',
+      'Descends en pliant les coudes à environ 45° du buste, jusqu’à frôler le sol de la poitrine.',
+      'Remonte en poussant dans les mains jusqu’à l’extension complète des bras, sans creuser le dos.',
+    ],
+    mistakes: [
+      'Bassin qui s’affaisse : le gainage lâche avant les bras, et le bas du dos encaisse.',
+      'Coudes qui partent à 90° sur les côtés, ce qui met l’épaule en position défavorable.',
+      'Descente partielle par manque de force, alors qu’une variante plus facile en amplitude complète progresse mieux.',
+    ],
+    sensation:
+      'Le travail se sent dans la poitrine, l’arrière du bras et le gainage, qui tient la ligne du corps du début à la fin. Une tension dans le bas du dos signale que le bassin s’est affaissé.',
+    rangeOfMotion:
+      'Descends jusqu’à ce que la poitrine frôle le sol, puis remonte jusqu’aux bras tendus sans verrouiller brutalement les coudes. L’amplitude complète est ce qui distingue une pompe d’un mouvement partiel.',
+    tempo:
+      'Deux secondes pour descendre, une pour remonter. Inspire en descendant, souffle en poussant.',
+    anatomy:
+      'Le grand pectoral et le triceps brachial sont les moteurs, l’avant de l’épaule assiste. Le grand dentelé maintient l’omoplate plaquée contre la cage thoracique ; abdominaux et fessiers empêchent le bassin de s’affaisser, ce qui fait de la pompe autant un exercice de gainage qu’un exercice de poussée.',
+    mechanics:
+      'Flexion puis extension du coude combinées à une adduction horizontale de l’épaule, en chaîne fermée, le corps se déplaçant autour d’un appui fixe. C’est le dernier barreau de l’échelle que les pompes contre le mur, inclinées puis à genoux préparent : le levier s’allonge à chaque étape, la charge relative augmente sans changer le geste.',
+    benefits: [
+      'Le mouvement de poussée de référence, sans matériel ni appui : c’est la cible vers laquelle mènent toutes les variantes assistées.',
+      'Renforce simultanément la poussée et le gainage, ce qu’aucune machine de développé ne fait.',
+      'Se dose finement en changeant la hauteur des appuis, sans avoir à ajouter de charge.',
+    ],
+    progression: {
+      easier: 'Reviens aux pompes à genoux ou aux pompes inclinées : la ligne du corps reste la même, seul le levier raccourcit.',
+      harder: 'Surélève les pieds, ralentis la descente à quatre secondes, ou marque un arrêt en bas.',
+      readyWhen: 'Quand trois séries de douze passent avec le corps aligné du début à la fin, surélève les pieds.',
+    },
+    precautions:
+      'Un poignet douloureux se soulage souvent en appuyant sur les poings fermés ou sur des poignées, ce qui garde le poignet dans l’axe de l’avant-bras.',
+  },
+
+  pikePushup: {
+    slug: 'pompes-piquees',
+    muscles: { primary: 'Épaules', secondary: 'Triceps, gainage' },
+    steps: [
+      'Pars en position de pompe puis recule les pieds en poussant les hanches vers le haut, corps en V renversé.',
+      'Mains un peu plus larges que les épaules, tête relâchée entre les bras.',
+      'Fléchis les coudes pour descendre le sommet du crâne vers le sol, entre les mains.',
+      'Remonte en poussant dans les mains jusqu’à l’extension des bras, hanches toujours hautes.',
+    ],
+    mistakes: [
+      'Hanches qui redescendent en cours de série : le mouvement redevient une pompe classique et quitte les épaules.',
+      'Coudes qui s’écartent largement au lieu de rester dans l’axe du mouvement.',
+      'Descente jusqu’au front plutôt que jusqu’au sommet du crâne, ce qui raccourcit l’amplitude.',
+    ],
+    sensation:
+      'Le travail se sent nettement dans les épaules et l’arrière des bras, pas dans la poitrine. Si la poitrine domine, c’est que les hanches ne sont pas assez hautes.',
+    rangeOfMotion:
+      'Descends jusqu’à frôler le sol du sommet du crâne. Plus les pieds sont proches des mains, plus la part du poids qui passe sur les épaules augmente : c’est le réglage de difficulté.',
+    tempo:
+      'Deux secondes pour descendre, une pour remonter. Souffle en poussant.',
+    anatomy:
+      'Le deltoïde antérieur et le triceps sont les moteurs, le trapèze supérieur et le grand dentelé stabilisent l’omoplate pendant que le bras passe au-dessus de la tête. Le gainage maintient la position en V, qui est ce qui oriente la charge vers l’épaule plutôt que vers la poitrine.',
+    mechanics:
+      'Poussée verticale en chaîne fermée : c’est l’équivalent au poids du corps du développé au-dessus de la tête, l’inclinaison du buste remplaçant le réglage de la charge. Flexion-extension du coude combinée à une flexion d’épaule au-dessus de la tête.',
+    benefits: [
+      'Le seul exercice d’épaules au poids du corps de cette bibliothèque : sans lui, filtrer « poids du corps » ne proposait aucun travail d’épaule.',
+      'Prépare la poussée au-dessus de la tête sans avoir besoin d’haltères.',
+      'Se règle finement en avançant ou reculant les pieds, sans matériel.',
+    ],
+    progression: {
+      easier: 'Pose les mains sur une surface surélevée : moins de poids passe sur les épaules.',
+      harder: 'Rapproche les pieds des mains, ou surélève les pieds pour verticaliser davantage le buste.',
+      readyWhen: 'Quand trois séries de douze passent avec les hanches hautes du début à la fin, surélève les pieds.',
+    },
+    precautions:
+      'Ce mouvement demande de lever les bras au-dessus de la tête : si l’épaule y est douloureuse, garde le développé sur une amplitude plus courte plutôt que de forcer la position en V.',
+  },
+
+  mountainClimber: {
+    slug: 'grimpeur',
+    muscles: { primary: 'Cardio, gainage', secondary: 'Épaules, fléchisseurs de hanche' },
+    steps: [
+      'Place-toi en position de pompe bras tendus, mains sous les épaules, corps aligné.',
+      'Ramène un genou vers la poitrine sans que les hanches montent ni ne s’affaissent.',
+      'Repose le pied et enchaîne immédiatement avec l’autre jambe.',
+      'Garde un rythme régulier sur toute la durée prévue, la respiration continue.',
+    ],
+    mistakes: [
+      'Hanches qui montent à chaque changement de jambe : le gainage a lâché, l’exercice devient un rebond.',
+      'Mains trop en avant des épaules, ce qui charge inutilement le poignet et l’épaule.',
+      'Rythme trop rapide au détriment de l’amplitude du genou.',
+    ],
+    sensation:
+      'Le souffle monte vite, et le gainage travaille en continu pour empêcher le bassin de bouger. Les épaules encaissent le poids du haut du corps pendant toute la série.',
+    rangeOfMotion:
+      'Ramène le genou aussi loin que le bassin peut rester immobile — c’est le bassin qui fixe l’amplitude, pas la volonté d’aller loin.',
+    tempo:
+      'Un rythme régulier et tenable sur toute la durée, plutôt qu’un départ rapide suivi d’un effondrement. Respire en continu : bloquer le souffle est le premier signe d’un rythme trop élevé.',
+    anatomy:
+      'Les fléchisseurs de hanche amènent le genou vers la poitrine, pendant que les abdominaux et le grand fessier du côté en appui empêchent le bassin de basculer. Les épaules et le triceps travaillent en isométrie pour tenir la position de planche haute.',
+    mechanics:
+      'Flexion-extension alternée de la hanche en chaîne ouverte, sur une base de planche haute donc en appui fermé sur les mains. C’est un exercice cardio dont la contrainte principale reste la stabilité du tronc : le rythme monte le rythme cardiaque, le gainage décide de la qualité.',
+    benefits: [
+      'Fait monter le rythme cardiaque sans se déplacer et sans matériel, dans très peu d’espace.',
+      'Combine travail cardio et gainage dynamique, ce que ni la marche ni la planche ne font seuls.',
+      'Se règle par le rythme plutôt que par la charge, donc s’adapte à tous les niveaux sans rien changer au matériel.',
+    ],
+    progression: {
+      easier: 'Ralentis franchement, ou pose les mains sur une surface surélevée pour alléger les épaules.',
+      harder: 'Augmente le rythme ou allonge la durée, tant que le bassin reste immobile.',
+      readyWhen: 'Quand trois fois quarante secondes passent sans que les hanches montent, allonge la durée.',
+    },
+    precautions:
+      'Poignets ou épaules sensibles : surélève les mains sur un banc ou une marche, ce qui réduit nettement la charge sur l’appui sans changer le travail des jambes.',
+  },
+
+  legSwing: {
+    slug: 'balancements-de-jambe',
+    muscles: { primary: 'Hanches, mobilité', secondary: 'Fessiers, ischio-jambiers' },
+    steps: [
+      'Place-toi de côté par rapport à un mur ou un dossier, une main en appui.',
+      'Transfère le poids sur la jambe intérieure, l’autre jambe libre de balancer.',
+      'Balance la jambe libre d’avant en arrière, sans forcer en fin d’amplitude.',
+      'Augmente progressivement l’amplitude au fil des répétitions, bassin immobile.',
+      'Change de côté à la moitié du temps prévu.',
+    ],
+    mistakes: [
+      'Bassin qui bascule pour aller chercher de l’amplitude, au lieu de laisser la hanche travailler seule.',
+      'Amplitude maximale d’emblée, alors qu’elle doit s’ouvrir progressivement.',
+      'Bas du dos qui se cambre quand la jambe part en arrière.',
+    ],
+    sensation:
+      'Une hanche qui se délie, sans effort musculaire marqué. C’est une mise en mouvement, pas un renforcement : si ça tire fort, l’amplitude est déjà trop grande pour un début de séance.',
+    rangeOfMotion:
+      'Va jusqu’où le bassin reste immobile. L’amplitude du jour est censée augmenter pendant la série elle-même, exactement comme pour le chat-vache.',
+    tempo:
+      'Un balancement régulier et contrôlé, jamais lancé. Le mouvement reste piloté, pas laissé à l’élan.',
+    anatomy:
+      'Les fléchisseurs de hanche et le grand fessier alternent contraction et étirement dynamiques, pendant que la jambe d’appui et le gainage stabilisent le bassin. Le travail porte sur la mobilité articulaire de la hanche, pas sur la force.',
+    mechanics:
+      'Flexion et extension alternées de la hanche en chaîne ouverte, dans le plan sagittal, sans charge. Le mouvement balistique contrôlé prépare l’amplitude que les fentes et les squats vont ensuite utiliser sous charge.',
+    benefits: [
+      'Prépare la hanche avant tout travail de jambes, ce qu’aucun autre échauffement de cette bibliothèque ne faisait — ils portaient tous sur le haut du corps.',
+      'Se fait n’importe où avec un simple appui, en trente secondes par côté.',
+      'Ouvre l’amplitude de hanche utile aux fentes, squats et montées de chaise qui suivent.',
+    ],
+    precautions:
+      'Aucun à-coup en fin d’amplitude : c’est un balancement piloté, pas un lancer. Si la hanche accroche, réduis l’amplitude plutôt que d’insister.',
+  },
+
+  torsoTwist: {
+    slug: 'rotations-du-buste',
+    muscles: { primary: 'Obliques, mobilité du tronc', secondary: 'Colonne vertébrale' },
+    steps: [
+      'Debout, pieds écartés à la largeur des épaules et bien ancrés au sol.',
+      'Fléchis légèrement les genoux et laisse les bras relâchés le long du corps.',
+      'Fais pivoter le buste d’un côté, en laissant les bras suivre le mouvement sans les lancer.',
+      'Enchaîne de l’autre côté, à un rythme régulier, le bassin restant face à l’avant.',
+    ],
+    mistakes: [
+      'Bassin qui pivote avec le buste : la rotation ne se fait plus dans le tronc mais dans les hanches.',
+      'Bras lancés qui entraînent le buste au lieu de le suivre.',
+      'Rythme trop rapide, qui transforme une mobilisation en secousse.',
+    ],
+    sensation:
+      'Une rotation qui se libère progressivement le long du tronc, sans effort musculaire marqué et sans à-coup dans le bas du dos.',
+    rangeOfMotion:
+      'Tourne jusqu’au bout du confort, sans forcer. Comme pour toute mobilité, l’amplitude s’ouvre au fil des répétitions.',
+    tempo:
+      'Régulier et modéré, une rotation par seconde environ. Respire librement, sans bloquer le souffle en fin de rotation.',
+    anatomy:
+      'Les obliques externes et internes produisent la rotation du tronc, les muscles profonds intersegmentaires mobilisent chaque étage vertébral. Les fessiers et les jambes stabilisent le bassin, ce qui est précisément ce qui oblige la rotation à venir du tronc.',
+    mechanics:
+      'Rotation alternée du rachis dans le plan transversal, en charge légère (le poids du buste seul). Le bassin fixe sert de référence : c’est lui qui distingue une vraie rotation du tronc d’un simple pivot des hanches.',
+    benefits: [
+      'Le seul échauffement du tronc de cette bibliothèque, complémentaire du chat-vache qui travaille la flexion-extension et non la rotation.',
+      'Prépare les exercices de gainage anti-rotation comme le dead bug et le chien-oiseau.',
+      'Se fait debout, sans matériel ni tapis.',
+    ],
+    precautions:
+      'Le bas du dos ne doit jamais être le moteur de la rotation : si une gêne y apparaît, réduis l’amplitude et vérifie que le bassin reste bien face à l’avant.',
+  },
+
+  quadStretch: {
+    slug: 'etirement-quadriceps-debout',
+    muscles: { primary: 'Quadriceps' },
+    steps: [
+      'Debout, appuie-toi d’une main à un mur pour l’équilibre.',
+      'Attrape la cheville du même côté que la jambe à étirer et ramène le talon vers la fesse.',
+      'Garde les deux genoux côte à côte et le bassin en rétroversion légère.',
+      'Maintiens la position sans à-coups, en respirant calmement, puis change de côté.',
+    ],
+    mistakes: [
+      'Genou étiré qui part vers l’avant ou sur le côté, ce qui déplace la tension hors du quadriceps.',
+      'Bas du dos cambré pour gagner de l’amplitude.',
+      'Tirer sur la cheville par à-coups au lieu de tenir une position stable.',
+    ],
+    sensation:
+      'La tension se sent sur toute la face avant de la cuisse, jamais dans le genou lui-même. Une douleur à l’avant du genou signale de relâcher immédiatement.',
+    rangeOfMotion:
+      'Ramène le talon jusqu’à sentir une tension nette mais tolérable. Rapprocher le genou de l’autre et pousser légèrement le bassin en avant augmente l’étirement sans forcer sur l’articulation.',
+    tempo:
+      'Aucun rythme : la position se tient immobile. Respire lentement pendant tout le maintien.',
+    anatomy:
+      'Le quadriceps, qui étend le genou, est mis en tension passive par la flexion du genou ; le droit fémoral, seul chef à croiser aussi la hanche, l’est davantage encore quand la hanche est en extension — d’où l’intérêt de ne pas laisser le genou partir en avant.',
+    mechanics:
+      'Mise en tension passive par flexion de genou et extension de hanche simultanées, dans le plan sagittal, sans charge ni mouvement répété.',
+    benefits: [
+      'Complète l’étirement des ischio-jambiers pour couvrir les deux faces de la cuisse.',
+      'Entretient l’amplitude de flexion du genou, souvent réduite par la position assise prolongée.',
+      'Ne demande qu’un appui pour l’équilibre.',
+    ],
+    precautions:
+      'Si attraper la cheville est impossible, passe une sangle ou une serviette autour du pied plutôt que de tirer le buste vers l’arrière pour aller la chercher.',
+  },
+
+  gluteStretch: {
+    slug: 'etirement-fessier-figure-4',
+    muscles: { primary: 'Fessiers', secondary: 'Rotateurs de hanche' },
+    steps: [
+      'Allonge-toi sur le dos, genoux fléchis, pieds au sol.',
+      'Pose la cheville d’un côté sur le genou opposé, en formant un 4.',
+      'Passe les mains derrière la cuisse d’appui et tire-la doucement vers toi.',
+      'Garde la tête et les épaules au sol, puis change de côté.',
+    ],
+    mistakes: [
+      'Épaules et tête décollées du sol, ce qui crispe la nuque sans rien ajouter à l’étirement.',
+      'Tirer par à-coups au lieu d’installer une traction constante.',
+      'Genou de la jambe croisée poussé vers l’intérieur, ce qui ferme la hanche au lieu de l’ouvrir.',
+    ],
+    sensation:
+      'La tension se sent profondément dans la fesse du côté croisé, parfois jusqu’à l’extérieur de la hanche. Rien ne doit tirer dans le genou croisé.',
+    rangeOfMotion:
+      'Tire la cuisse d’appui jusqu’à une tension nette mais tolérable. Plus la cuisse vient vers la poitrine, plus l’étirement est marqué.',
+    tempo:
+      'Aucun rythme : la position se tient immobile, respiration lente. L’expiration aide souvent à relâcher un peu plus.',
+    anatomy:
+      'Le grand fessier et les rotateurs externes profonds de la hanche, dont le piriforme, sont mis en tension passive par la combinaison flexion + rotation externe de hanche que produit la position en 4.',
+    mechanics:
+      'Mise en tension passive par flexion de hanche associée à une rotation externe, en décharge complète — le dos reste au sol, ce qui évite toute compression de la colonne pendant l’étirement.',
+    benefits: [
+      'Cible une zone que les étirements de cuisse ne touchent pas, et qui se raidit avec la position assise prolongée.',
+      'Se pratique au sol, sans équilibre à tenir, donc accessible même quand la hanche est raide.',
+      'Complète le travail des fessiers (pont, abduction) par la mobilité correspondante.',
+    ],
+    precautions:
+      'Si la hanche croisée accroche ou pince, réduis la traction : une position moins profonde et indolore vaut mieux qu’une position forcée.',
+  },
+
+  calfStretch: {
+    slug: 'etirement-mollets-au-mur',
+    muscles: { primary: 'Mollets' },
+    steps: [
+      'Place les mains à plat sur un mur, à hauteur de poitrine.',
+      'Recule une jambe, tendue, talon posé au sol et pied dans l’axe.',
+      'Fléchis la jambe avant et avance le bassin jusqu’à sentir l’étirement dans le mollet arrière.',
+      'Maintiens la position sans à-coups, puis change de jambe.',
+    ],
+    mistakes: [
+      'Talon arrière qui décolle : l’étirement disparaît instantanément.',
+      'Pied arrière tourné vers l’extérieur, ce qui reporte la contrainte sur la cheville.',
+      'Bassin qui recule au lieu d’avancer, ce qui annule la mise en tension.',
+    ],
+    sensation:
+      'La tension se sent à l’arrière de la jambe arrière, du creux du genou jusqu’au talon. Fléchir légèrement le genou arrière déplace la tension vers le bas du mollet.',
+    rangeOfMotion:
+      'Avance le bassin jusqu’à une tension nette mais tolérable, talon toujours au sol — c’est le talon qui fixe la limite, pas la distance des pieds.',
+    tempo:
+      'Aucun rythme : position tenue immobile, respiration lente et régulière.',
+    anatomy:
+      'Le triceps sural — gastrocnémiens et soléaire — est mis en tension par la flexion dorsale de cheville. Genou arrière tendu, la tension porte surtout sur les gastrocnémiens, qui croisent aussi le genou ; genou légèrement fléchi, elle se déplace vers le soléaire.',
+    mechanics:
+      'Mise en tension passive par flexion dorsale de cheville contre un appui fixe, sans charge ni mouvement répété.',
+    benefits: [
+      'Entretient la flexion dorsale de cheville, dont le manque est la première cause de talons qui décollent au squat.',
+      'Sort les mollets de leur isolement : c’était le seul groupe avec un unique exercice dans la bibliothèque.',
+      'Ne demande qu’un mur.',
+    ],
+    precautions:
+      'Une tension vive et localisée au tendon d’Achille n’est pas l’étirement recherché : recule le bassin et réduis l’amplitude.',
+  },
+
+  childPose: {
+    slug: 'posture-de-l-enfant',
+    muscles: { primary: 'Dos, mobilité', secondary: 'Hanches, épaules' },
+    steps: [
+      'Place-toi à quatre pattes, genoux écartés à la largeur des hanches.',
+      'Assieds-toi progressivement sur les talons en laissant les mains posées devant toi.',
+      'Allonge les bras loin devant et laisse le front descendre vers le sol.',
+      'Respire lentement en laissant le dos s’arrondir à chaque expiration.',
+    ],
+    mistakes: [
+      'Épaules crispées vers les oreilles au lieu de laisser le buste se relâcher.',
+      'Forcer les fesses vers les talons quand la mobilité de cheville ou de genou ne le permet pas.',
+      'Respiration bloquée, alors que c’est elle qui ouvre progressivement la position.',
+    ],
+    sensation:
+      'Un étirement diffus le long du dos et à l’arrière des épaules, avec une sensation de relâchement plutôt que de traction. Rien ne doit tirer dans les genoux.',
+    rangeOfMotion:
+      'Descends jusqu’où le confort le permet ; l’écart des genoux règle la place laissée au buste. La position s’ouvre d’elle-même au fil des respirations.',
+    tempo:
+      'Aucun rythme d’exécution : la position se tient. Ce sont les expirations qui font progresser l’amplitude, pas la force.',
+    anatomy:
+      'Ce n’est pas un renforcement : les érecteurs du rachis et le grand dorsal sont mis en allongement passif, pendant que les hanches partent en flexion complète. C’est le pendant statique du chat-vache, qui mobilise la même zone en dynamique.',
+    mechanics:
+      'Flexion globale du rachis et des hanches en décharge, le poids du corps reposant sur les cuisses et les bras plutôt que sur la colonne.',
+    benefits: [
+      'Le seul étirement du dos de cette bibliothèque, complément statique du chat-vache.',
+      'Sert de transition en fin de séance, ou de récupération entre deux séries exigeantes pour le dos.',
+      'Ne demande aucun matériel, juste un sol confortable.',
+    ],
+    precautions:
+      'Un genou douloureux dans cette position se soulage en glissant un coussin entre les fesses et les talons, plutôt qu’en renonçant à la posture.',
+  },
+
+  tricepsStretch: {
+    slug: 'etirement-triceps',
+    muscles: { primary: 'Triceps', secondary: 'Épaules' },
+    steps: [
+      'Debout ou assis, lève un bras et plie le coude pour poser la main entre les omoplates.',
+      'Le coude pointe vers le plafond, le plus près possible de la tête.',
+      'Attrape ce coude avec l’autre main et pousse-le doucement vers l’arrière.',
+      'Maintiens sans à-coups, puis change de bras.',
+    ],
+    mistakes: [
+      'Cambrer le bas du dos pour donner l’illusion d’un coude plus reculé.',
+      'Pousser le coude par à-coups au lieu d’une pression constante.',
+      'Tête poussée vers l’avant par le bras, ce qui crispe la nuque.',
+    ],
+    sensation:
+      'La tension se sent à l’arrière du bras, du coude vers l’épaule. Une gêne dans l’articulation de l’épaule elle-même signale de réduire la poussée.',
+    rangeOfMotion:
+      'Pousse le coude jusqu’à une tension nette mais tolérable. C’est l’amplitude de l’épaule au-dessus de la tête qui limite, pas la force de la main qui pousse.',
+    tempo:
+      'Aucun rythme : position tenue immobile, respiration lente.',
+    anatomy:
+      'Le triceps brachial, seul extenseur du coude, est mis en tension par la flexion complète du coude ; sa longue portion, qui croise aussi l’épaule, l’est davantage quand le bras est levé au-dessus de la tête — ce qui explique la position du coude vers le plafond.',
+    mechanics:
+      'Mise en tension passive par flexion de coude et flexion d’épaule au-dessus de la tête, sans charge ni mouvement répété.',
+    benefits: [
+      'Complète le travail de poussée (pompes, dips, développés) par l’étirement du muscle qui y travaille le plus.',
+      'Se pratique debout comme assis, sans matériel et sans place.',
+      'Entretient l’amplitude de l’épaule au-dessus de la tête, utile aux pompes piquées et aux développés.',
+    ],
+    precautions:
+      'Si lever le bras au-dessus de la tête est douloureux, garde le coude plus bas et pousse moins : la position ne vaut pas la peine d’être forcée.',
+  },
+
+  bandChestPress: {
+    slug: 'developpe-poitrine-elastique',
+    muscles: { primary: 'Pectoraux, triceps', secondary: 'Épaules' },
+    steps: [
+      'Passe l’élastique dans le dos, au niveau des omoplates, et tiens une extrémité dans chaque main.',
+      'Mains à hauteur de poitrine, coudes fléchis et proches du buste, un pied légèrement avancé pour la stabilité.',
+      'Pousse les mains vers l’avant jusqu’à l’extension complète des bras.',
+      'Reviens lentement en contrôlant la tension jusqu’à ce que les mains retrouvent la poitrine.',
+    ],
+    mistakes: [
+      'Buste qui part en avant pour aider la poussée : c’est le corps qui bouge au lieu des bras.',
+      'Coudes qui montent à hauteur d’épaules, ce qui met l’épaule en position défavorable.',
+      'Retour relâché d’un coup au lieu d’un retour freiné.',
+    ],
+    sensation:
+      'Le travail se sent dans la poitrine et l’arrière des bras, avec une résistance qui augmente à mesure que les bras s’étendent. Une tension dans le bas du dos signale que le buste compense.',
+    rangeOfMotion:
+      'Pousse jusqu’aux bras tendus sans verrouiller les coudes, et laisse revenir les mains jusqu’à la poitrine. L’amplitude est la même qu’en développé ; seul le profil de résistance change.',
+    tempo:
+      'Une à deux secondes pour pousser, deux à trois pour revenir en freinant. Souffle en poussant.',
+    anatomy:
+      'Le grand pectoral et le triceps sont les moteurs, l’avant de l’épaule assiste, et le grand dentelé maintient l’omoplate plaquée. Le gainage et la jambe avancée résistent au rappel de l’élastique, qui tire le buste vers l’arrière.',
+    mechanics:
+      'Adduction horizontale de l’épaule avec extension du coude, contre une résistance croissante : l’élastique est le plus tendu bras tendus, là où le poids du corps ou un haltère seraient au contraire les plus faciles. C’est l’inverse exact du profil d’une pompe.',
+    benefits: [
+      'Apporte un travail de poussée horizontale sans sol ni matériel lourd, utile quand les pompes ne sont pas praticables.',
+      'La résistance croissante charge la fin du mouvement, là où une pompe devient facile.',
+      'Un élastique se transporte partout, contrairement à une paire d’haltères.',
+    ],
+    progression: {
+      easier: 'Prends un élastique moins tendu, ou écarte davantage les mains sur la bande.',
+      harder: 'Prends un élastique plus tendu, avance le pied d’appui, ou ralentis le retour à quatre secondes.',
+      readyWhen: 'Quand trois séries de quinze passent sans que le buste avance, augmente la résistance.',
+    },
+    precautions:
+      'Vérifie l’état de l’élastique avant chaque série : une bande usée peut céder brutalement, et elle est tendue à hauteur de visage.',
+  },
+
+  bandLateralRaise: {
+    slug: 'elevations-laterales-elastique',
+    muscles: { primary: 'Épaules' },
+    steps: [
+      'Place-toi debout au milieu de l’élastique, un pied ou les deux dessus, une extrémité dans chaque main.',
+      'Bras le long du corps, coudes à peine fléchis, paumes vers l’intérieur.',
+      'Monte les bras sur les côtés jusqu’à hauteur d’épaule, pas plus haut.',
+      'Redescends lentement en contrôlant le rappel de l’élastique.',
+    ],
+    mistakes: [
+      'Monter plus haut que l’épaule, ce qui fait prendre le relais au trapèze supérieur.',
+      'Élan du buste pour lancer les bras.',
+      'Épaules qui remontent vers les oreilles pendant la montée.',
+    ],
+    sensation:
+      'Le travail se sent sur le côté de l’épaule. Une tension dans le haut du trapèze ou la nuque signale que les épaules montent au lieu de rester basses.',
+    rangeOfMotion:
+      'Monte jusqu’à ce que les bras soient à l’horizontale, pas au-delà : c’est là que le deltoïde moyen finit son travail et que d’autres muscles prendraient le relais.',
+    tempo:
+      'Une à deux secondes pour monter, deux à trois pour redescendre. Souffle en montant.',
+    anatomy:
+      'Le deltoïde moyen est le moteur principal de l’abduction du bras ; le sus-épineux initie le mouvement sur les premiers degrés. Les trapèzes inférieur et moyen doivent maintenir l’omoplate basse, ce qui explique pourquoi laisser monter les épaules déplace le travail.',
+    mechanics:
+      'Abduction de l’épaule dans le plan frontal, contre une résistance qui croît avec l’élévation — l’élastique se tend au moment exact où le bras de levier est le plus long, ce qui rend la fin du mouvement nettement plus dure qu’avec un haltère.',
+    benefits: [
+      'Le seul travail d’isolation de l’épaule accessible sans haltères de la bibliothèque.',
+      'Complète les mouvements de poussée, qui sollicitent surtout l’avant de l’épaule.',
+      'Se dose finement en changeant la longueur d’élastique tenue, sans changer de matériel.',
+    ],
+    progression: {
+      easier: 'Tiens l’élastique plus haut sur sa longueur, ou pose un seul pied dessus.',
+      harder: 'Raccourcis la longueur tenue, mets les deux pieds sur la bande, ou marque un arrêt d’une seconde en haut.',
+      readyWhen: 'Quand trois séries de quinze passent sans que les épaules montent, raccourcis l’élastique.',
+    },
+    precautions:
+      'Ce mouvement se fait sans charge lourde par définition : si l’épaule pince en haut, réduis l’amplitude plutôt que d’insister — la douleur d’un pincement ne se travaille pas.',
+  },
+
+  bandLateralWalk: {
+    slug: 'marche-laterale-elastique',
+    muscles: { primary: 'Moyen fessier', secondary: 'Quadriceps, grand fessier' },
+    steps: [
+      'Place l’élastique juste au-dessus des genoux, pieds à la largeur des hanches.',
+      'Fléchis légèrement les genoux et les hanches, en demi-squat, buste droit.',
+      'Fais un pas de côté en poussant activement le genou vers l’extérieur contre l’élastique.',
+      'Ramène l’autre pied sans laisser l’élastique se détendre, et enchaîne dans la même direction avant de revenir.',
+    ],
+    mistakes: [
+      'Genoux qui rentrent quand le pied se repose : l’élastique reprend le dessus et le moyen fessier lâche.',
+      'Buste qui se redresse complètement, ce qui allège le travail des fessiers.',
+      'Pas trop grands, qui font perdre le contrôle de l’alignement.',
+    ],
+    sensation:
+      'Le travail se sent sur le côté de la hanche et de la fesse, avec une brûlure qui monte progressivement. Rien ne doit tirer dans le genou.',
+    rangeOfMotion:
+      'Fais des pas d’une largeur d’épaules environ, en gardant la tension de l’élastique constante sur toute la série — c’est la tension continue qui fait le travail, pas l’amplitude du pas.',
+    tempo:
+      'Régulier et contrôlé, chaque pas posé sans rebond. Respire normalement : c’est un exercice de tension continue, pas un sprint.',
+    anatomy:
+      'Le moyen fessier et le petit fessier abduisent la hanche et stabilisent le bassin à chaque appui ; le tenseur du fascia lata assiste. Le demi-squat maintient quadriceps et grand fessier sous tension en isométrie pendant toute la marche.',
+    mechanics:
+      'Abduction de hanche dans le plan frontal contre résistance élastique, en appui alterné. C’est un des rares exercices de la bibliothèque à travailler ce plan, alors que squats et fentes travaillent presque tous dans le plan sagittal.',
+    benefits: [
+      'Renforce le stabilisateur latéral de la hanche, directement impliqué dans l’alignement du genou à la marche et à la course.',
+      'Donne un retour tactile immédiat : si l’élastique se détend, le genou est rentré.',
+      'Complète le squat élastique en isolant la composante latérale que celui-ci ne fait que résister.',
+    ],
+    progression: {
+      easier: 'Descends l’élastique au-dessus des chevilles plutôt que des genoux, ou prends une bande plus souple.',
+      harder: 'Remonte l’élastique au-dessus des genoux, descends plus bas en demi-squat, ou allonge la série.',
+      readyWhen: 'Quand trois séries de quinze pas par côté passent sans que l’élastique se détende, augmente la résistance.',
+    },
+    precautions:
+      'Si l’extérieur du genou chauffe plus que la hanche, c’est que le mouvement part du genou : rabaisse l’élastique et repars sur une amplitude plus courte.',
+  },
+
+  bandCurl: {
+    slug: 'curl-biceps-elastique',
+    muscles: { primary: 'Biceps', secondary: 'Avant-bras' },
+    steps: [
+      'Debout au milieu de l’élastique, un pied ou les deux dessus, une extrémité dans chaque main.',
+      'Bras le long du corps, coudes collés aux côtes, paumes vers l’avant.',
+      'Remonte les mains vers les épaules en gardant les coudes immobiles.',
+      'Redescends lentement jusqu’à l’extension complète des bras.',
+    ],
+    mistakes: [
+      'Coudes qui avancent pendant la montée : le mouvement quitte le biceps pour l’épaule.',
+      'Buste qui se balance pour lancer la charge.',
+      'Descente relâchée, alors que c’est la partie freinée qui fait le plus de travail.',
+    ],
+    sensation:
+      'Le travail se sent à l’avant du bras, du coude à l’épaule. Les avant-bras chauffent aussi, ce qui est normal : ce sont eux qui tiennent l’élastique.',
+    rangeOfMotion:
+      'Monte jusqu’à ce que les mains approchent les épaules, redescends jusqu’aux bras complètement tendus. Écourter la descente est la façon la plus répandue de réduire le travail sans s’en rendre compte.',
+    tempo:
+      'Une seconde pour monter, deux à trois pour redescendre en freinant. Souffle en montant.',
+    anatomy:
+      'Le biceps brachial fléchit le coude et participe à la supination de l’avant-bras ; le brachial, situé dessous, est le fléchisseur le plus constant quelle que soit la position de la main. Le brachio-radial de l’avant-bras assiste.',
+    mechanics:
+      'Flexion du coude en chaîne ouverte contre une résistance croissante : l’élastique est le plus tendu en haut, là où le bras de levier est court, ce qui donne un profil de charge presque inverse de celui d’un haltère.',
+    benefits: [
+      'Le premier exercice de biceps de la bibliothèque, dans un groupe « Bras » qui n’existait pas avant ce lot.',
+      'Complète les mouvements de tirage (rowing, tirage vertical), où le biceps ne travaille qu’en assistance.',
+      'Ne demande qu’un élastique et tient dans un sac.',
+    ],
+    progression: {
+      easier: 'Tiens l’élastique plus haut sur sa longueur, ou pose un seul pied dessus.',
+      harder: 'Raccourcis la longueur tenue, ou marque un arrêt d’une seconde en haut de chaque répétition.',
+      readyWhen: 'Quand trois séries de quinze passent sans que les coudes avancent, raccourcis l’élastique.',
+    },
+    precautions:
+      'Une douleur au pli du coude n’est pas la brûlure recherchée : réduis la résistance et vérifie que la descente est freinée plutôt que subie.',
+  },
+
+  dumbbellShoulderPress: {
+    slug: 'developpe-militaire-halteres',
+    muscles: { primary: 'Épaules', secondary: 'Triceps, gainage' },
+    steps: [
+      'Debout ou assis, un haltère dans chaque main à hauteur d’épaules, paumes vers l’avant.',
+      'Serre les fessiers et la sangle abdominale pour verrouiller le bassin.',
+      'Pousse les haltères au-dessus de la tête jusqu’à l’extension des bras, sans cambrer.',
+      'Redescends avec contrôle jusqu’à ce que les coudes repassent sous la hauteur des épaules.',
+    ],
+    mistakes: [
+      'Bas du dos cambré pour compenser un manque d’amplitude d’épaule.',
+      'Coudes qui partent loin sur les côtés au lieu de rester légèrement en avant du buste.',
+      'Descente écourtée, qui supprime la partie la plus utile du mouvement.',
+    ],
+    sensation:
+      'Le travail se sent dans les épaules et l’arrière des bras, avec un gainage actif du début à la fin. Une tension dans le bas du dos signale que le bassin n’est plus verrouillé.',
+    rangeOfMotion:
+      'Descends jusqu’à ce que les coudes passent sous la hauteur des épaules, remonte jusqu’aux bras tendus sans verrouiller brutalement. Assis dossier haut, le bas du dos est mécaniquement protégé.',
+    tempo:
+      'Une à deux secondes pour pousser, deux à trois pour descendre en contrôlant. Souffle en poussant.',
+    anatomy:
+      'Le deltoïde antérieur et le triceps sont les moteurs, le deltoïde moyen assiste. Le trapèze et le grand dentelé font tourner l’omoplate vers le haut, condition pour que le bras monte librement au-dessus de la tête ; les abdominaux empêchent la cambrure compensatoire.',
+    mechanics:
+      'Flexion d’épaule au-dessus de la tête associée à une extension du coude, en chaîne ouverte, avec une charge constante sur toute l’amplitude — contrairement à l’élastique, dont la résistance croît en fin de mouvement.',
+    benefits: [
+      'Le mouvement de poussée verticale de référence dès qu’une paire d’haltères est disponible.',
+      'Charge progressivement les épaules, ce que les pompes piquées ne permettent qu’en changeant la position du corps.',
+      'Travaille chaque bras indépendamment, ce qui empêche le côté fort de compenser le faible.',
+    ],
+    progression: {
+      easier: 'Réduis la charge, ou passe en position assise avec dossier pour supprimer le travail de gainage.',
+      harder: 'Augmente la charge, ou marque un arrêt d’une seconde en haut de chaque répétition.',
+      readyWhen: 'Quand trois séries de douze passent sans cambrure, augmente la charge.',
+    },
+    precautions:
+      'Si lever les bras au-dessus de la tête est douloureux, réduis l’amplitude ou tourne les paumes vers l’intérieur : la position ne se force pas.',
+  },
+
+  dumbbellFloorPress: {
+    slug: 'developpe-halteres-au-sol',
+    muscles: { primary: 'Pectoraux, triceps', secondary: 'Épaules' },
+    steps: [
+      'Allonge-toi sur le dos, genoux fléchis, pieds à plat, un haltère dans chaque main.',
+      'Coudes au sol à environ 45° du buste, haltères à hauteur de poitrine.',
+      'Pousse les haltères vers le plafond jusqu’à l’extension des bras.',
+      'Redescends avec contrôle jusqu’à ce que les coudes touchent le sol, marque un temps, puis repousse.',
+    ],
+    mistakes: [
+      'Laisser les coudes rebondir sur le sol au lieu de marquer un arrêt.',
+      'Coudes ouverts à 90°, qui placent l’épaule en position défavorable.',
+      'Bas du dos décollé du sol au lieu de rester en contact.',
+    ],
+    sensation:
+      'Le travail se sent dans la poitrine et l’arrière des bras. Le sol donne un repère de profondeur constant qu’un développé sur banc n’a pas.',
+    rangeOfMotion:
+      'Le sol limite la descente : c’est précisément l’intérêt, il fixe la même profondeur à chaque répétition et empêche d’aller trop loin en extension d’épaule.',
+    tempo:
+      'Une à deux secondes pour pousser, deux à trois pour descendre. Un temps d’arrêt d’une seconde au contact du sol supprime tout rebond.',
+    anatomy:
+      'Le grand pectoral et le triceps sont les moteurs, l’avant de l’épaule assiste. L’amplitude étant bornée par le sol, l’épaule ne part jamais en extension excessive — c’est ce qui rend cette variante plus tolérante que le développé couché sur banc.',
+    mechanics:
+      'Adduction horizontale de l’épaule avec extension du coude, en chaîne ouverte et charge constante. Le sol tronque le bas du mouvement, transformant une amplitude libre en amplitude bornée, reproductible d’une séance à l’autre.',
+    benefits: [
+      'Apporte le développé horizontal chargé sans banc, avec une simple paire d’haltères et un tapis.',
+      'Le repère du sol rend la profondeur identique à chaque série, donc la progression mesurable.',
+      'Chaque bras travaille indépendamment, contrairement à une barre.',
+    ],
+    progression: {
+      easier: 'Réduis la charge, ou pousse un bras après l’autre pour te concentrer sur la trajectoire.',
+      harder: 'Augmente la charge, allonge le temps d’arrêt au sol, ou ralentis la descente à quatre secondes.',
+      readyWhen: 'Quand trois séries de douze passent avec un arrêt net au sol à chaque répétition, augmente la charge.',
+    },
+    precautions:
+      'Ne laisse jamais les coudes retomber en chute libre : le contact avec le sol doit être posé, pas encaissé.',
+  },
+
+  dumbbellRomanianDeadlift: {
+    slug: 'souleve-de-terre-jambes-tendues',
+    muscles: { primary: 'Fessiers, ischio-jambiers', secondary: 'Bas du dos, gainage' },
+    steps: [
+      'Debout, un haltère dans chaque main devant les cuisses, pieds à la largeur des hanches.',
+      'Fléchis à peine les genoux et garde cet angle constant sur tout le mouvement.',
+      'Pousse les hanches vers l’arrière et descends les haltères le long des jambes, dos plat.',
+      'Descends jusqu’à sentir la tension à l’arrière des cuisses, puis reviens en poussant les hanches vers l’avant.',
+    ],
+    mistakes: [
+      'Fléchir les genoux progressivement pendant la descente : le mouvement devient un squat et quitte les ischio-jambiers.',
+      'Dos qui s’arrondit dès que la mobilité de hanche est dépassée.',
+      'Haltères qui s’éloignent des jambes, ce qui augmente la contrainte sur le bas du dos.',
+    ],
+    sensation:
+      'Une tension nette à l’arrière des cuisses pendant la descente, puis les fessiers qui prennent le relais à la remontée. Le bas du dos travaille en gainage, jamais en mouvement.',
+    rangeOfMotion:
+      'Descends jusqu’au bout de l’étirement des ischio-jambiers, pas plus bas : c’est la souplesse de l’arrière de cuisse qui fixe l’amplitude, pas la hauteur des haltères. Le jour où le dos s’arrondit, la limite est dépassée.',
+    tempo:
+      'Trois secondes pour descendre, une à deux pour remonter. Inspire en descendant, souffle en poussant les hanches vers l’avant.',
+    anatomy:
+      'Les ischio-jambiers et le grand fessier étendent la hanche : ce sont les moteurs. Les érecteurs du rachis travaillent en isométrie pour garder le dos plat — ils ne doivent jamais produire le mouvement, seulement l’empêcher. C’est le seul exercice de la bibliothèque à travailler la charnière de hanche sous charge.',
+    mechanics:
+      'Charnière de hanche pure : flexion puis extension de hanche à genou quasi fixe, dans le plan sagittal. La distinction avec le squat est là — le squat plie hanche ET genou, la charnière ne plie que la hanche.',
+    benefits: [
+      'Apprend la charnière de hanche, le schéma moteur qui protège le dos dès qu’on ramasse quelque chose au sol.',
+      'Sollicite les ischio-jambiers en extension de hanche, complément direct du leg curl qui les travaille en flexion de genou.',
+      'Renforce toute la chaîne postérieure avec un seul mouvement.',
+    ],
+    progression: {
+      easier: 'Réduis la charge, ou descends moins bas pour rester dans l’amplitude où le dos reste plat.',
+      harder: 'Augmente la charge, ou ralentis la descente à cinq secondes.',
+      readyWhen: 'Quand trois séries de douze passent avec le dos plat sur toute l’amplitude, augmente la charge.',
+    },
+    precautions:
+      'Le dos plat n’est pas négociable : si maintenir la position demande de plier le dos, la charge est trop lourde ou l’amplitude trop grande.',
+  },
+
+  dumbbellCalfRaise: {
+    slug: 'mollets-debout-avec-halteres',
+    muscles: { primary: 'Mollets' },
+    steps: [
+      'Debout, un haltère dans chaque main le long du corps, pieds à la largeur des hanches.',
+      'Monte lentement sur la pointe des pieds, le plus haut possible.',
+      'Marque un temps en haut, mollets contractés.',
+      'Redescends lentement jusqu’à ce que les talons touchent le sol.',
+    ],
+    mistakes: [
+      'Rebondir en bas au lieu de contrôler la descente.',
+      'Chevilles qui basculent vers l’extérieur : le poids doit rester sur le gros orteil.',
+      'Amplitude écourtée en haut, alors que c’est là que le mollet se contracte le plus.',
+    ],
+    sensation:
+      'Une brûlure nette dans le mollet, qui monte vite. La charge se sent aussi dans les avant-bras, qui tiennent les haltères sur toute la série.',
+    rangeOfMotion:
+      'Monte aussi haut que la cheville le permet et redescends jusqu’au contact du sol. Debout sur une marche, talons dans le vide, l’amplitude s’allonge encore vers le bas.',
+    tempo:
+      'Une à deux secondes pour monter, un temps d’arrêt en haut, deux à trois pour redescendre. C’est la lenteur qui fait le travail, pas la charge.',
+    anatomy:
+      'Le triceps sural — gastrocnémiens et soléaire — produit la flexion plantaire. Genou tendu, les gastrocnémiens dominent ; c’est pourquoi la version debout complète bien tout travail assis, où le soléaire prend le relais.',
+    mechanics:
+      'Flexion plantaire de la cheville en chaîne fermée, avec une charge externe qui s’ajoute au poids du corps. L’amplitude est courte par nature, ce qui rend le temps sous tension plus déterminant que le nombre de répétitions.',
+    benefits: [
+      'Charge les mollets au-delà du poids du corps, ce que la version sans haltères ne permet plus une fois quinze répétitions faciles.',
+      'Sort les mollets de leur isolement dans la bibliothèque, avec l’étirement correspondant.',
+      'Renforce la poussée finale de la marche et de la course.',
+    ],
+    progression: {
+      easier: 'Fais-le sans haltères, ou tiens-toi d’une main pour ne gérer qu’un seul poids.',
+      harder: 'Augmente la charge, monte sur une marche pour allonger l’amplitude, ou passe sur une seule jambe.',
+      readyWhen: 'Quand trois séries de vingt passent avec un temps d’arrêt en haut, augmente la charge ou passe sur une jambe.',
+    },
+    precautions:
+      'Une crampe en fin de série est fréquente sur ce muscle : réduis l’amplitude et allonge le repos plutôt que de forcer la répétition suivante.',
+  },
+
+  dumbbellCurl: {
+    slug: 'curl-biceps-halteres',
+    muscles: { primary: 'Biceps', secondary: 'Avant-bras' },
+    steps: [
+      'Debout, un haltère dans chaque main, bras le long du corps, paumes vers l’avant.',
+      'Coudes collés aux côtes, épaules basses et buste immobile.',
+      'Remonte l’haltère vers l’épaule sans que le coude avance.',
+      'Redescends lentement jusqu’à l’extension complète du bras.',
+    ],
+    mistakes: [
+      'Balancement du buste pour lancer la charge : c’est le dos qui travaille, plus le biceps.',
+      'Coudes qui avancent en fin de montée, ce qui fait intervenir l’épaule.',
+      'Descente relâchée, alors que la phase freinée est la plus productive.',
+    ],
+    sensation:
+      'Le travail se sent à l’avant du bras, du pli du coude à l’épaule. Le buste doit rester parfaitement immobile : c’est le meilleur indicateur d’une charge adaptée.',
+    rangeOfMotion:
+      'Monte jusqu’à ce que l’haltère approche l’épaule, redescends jusqu’au bras complètement tendu. Écourter le bas est la façon la plus courante de tricher sans s’en apercevoir.',
+    tempo:
+      'Une seconde pour monter, deux à trois pour redescendre. Souffle en montant.',
+    anatomy:
+      'Le biceps brachial fléchit le coude et supine l’avant-bras — d’où la paume vers l’avant, qui le place en position favorable. Le brachial, sous le biceps, fléchit le coude quelle que soit la position de la main ; le brachio-radial assiste.',
+    mechanics:
+      'Flexion du coude en chaîne ouverte à charge constante : contrairement à l’élastique, la résistance ne varie pas, mais le bras de levier, lui, est maximal quand l’avant-bras est à l’horizontale — c’est là que le mouvement est le plus dur.',
+    benefits: [
+      'Le mouvement de biceps le plus direct, avec une charge réglable finement.',
+      'Complète les tirages (rowing, tirage vertical), où le biceps n’est que secondaire.',
+      'Chaque bras travaille séparément, ce qui révèle et corrige un déséquilibre.',
+    ],
+    progression: {
+      easier: 'Réduis la charge, ou appuie le dos contre un mur pour supprimer toute possibilité de balancement.',
+      harder: 'Augmente la charge, ralentis la descente à quatre secondes, ou marque un arrêt à mi-hauteur.',
+      readyWhen: 'Quand trois séries de douze passent sans que le buste bouge, augmente la charge.',
+    },
+    precautions:
+      'Une douleur au pli du coude, distincte de la brûlure musculaire, demande de réduire la charge : les tendons du coude tolèrent mal la surcharge brutale sur ce mouvement.',
+  },
+
+  dumbbellTricepsExtension: {
+    slug: 'extension-triceps',
+    muscles: { primary: 'Triceps' },
+    steps: [
+      'Debout ou assis, tiens un haltère à deux mains, bras tendus au-dessus de la tête.',
+      'Coudes serrés vers l’avant, le plus proches possible des oreilles.',
+      'Fléchis les coudes pour descendre l’haltère derrière la nuque, sans écarter les coudes.',
+      'Remonte jusqu’à l’extension complète des bras, coudes toujours serrés.',
+    ],
+    mistakes: [
+      'Coudes qui s’écartent vers l’extérieur, ce qui déplace la charge du triceps vers l’épaule.',
+      'Bas du dos cambré pour compenser un manque d’amplitude d’épaule.',
+      'Descente trop rapide, alors que la charge est derrière la tête.',
+    ],
+    sensation:
+      'Le travail se sent à l’arrière du bras, du coude à l’épaule. Une gêne dans l’articulation de l’épaule signale que les coudes se sont écartés ou que la charge est trop lourde.',
+    rangeOfMotion:
+      'Descends jusqu’à sentir l’étirement à l’arrière du bras, sans forcer, puis remonte jusqu’aux bras tendus. Bras au-dessus de la tête, la longue portion du triceps est déjà pré-étirée : l’amplitude utile est donc plus courte qu’il n’y paraît.',
+    tempo:
+      'Une à deux secondes pour monter, deux à trois pour descendre en contrôlant. Souffle en poussant.',
+    anatomy:
+      'Le triceps brachial est le seul extenseur du coude. Sa longue portion croise aussi l’épaule : la position bras au-dessus de la tête la met en tension avant même le début du mouvement, ce qui explique que cette variante la sollicite plus qu’une extension bras le long du corps.',
+    mechanics:
+      'Extension du coude en chaîne ouverte, épaule fléchie au-dessus de la tête et maintenue fixe. C’est le rôle du gainage et des coudes serrés : empêcher l’épaule de participer, pour que seul le coude bouge.',
+    benefits: [
+      'Cible le triceps dans une position que les dips et les pompes ne reproduisent pas.',
+      'Se fait avec un seul haltère, debout ou assis, sans banc.',
+      'Complète le curl pour couvrir les deux faces du bras dans le groupe « Bras ».',
+    ],
+    progression: {
+      easier: 'Réduis la charge, ou fais le mouvement un bras à la fois pour mieux contrôler la trajectoire.',
+      harder: 'Augmente la charge, ou marque un arrêt d’une seconde en position basse.',
+      readyWhen: 'Quand trois séries de douze passent sans que les coudes s’écartent, augmente la charge.',
+    },
+    precautions:
+      'Commence léger : la charge est derrière la tête, et une perte de contrôle y est plus délicate que sur un mouvement devant le corps. Assis avec un dossier, le bas du dos est mieux protégé.',
+  },
+
+  chestPressMachine: {
+    slug: 'developpe-poitrine-machine',
+    muscles: { primary: 'Pectoraux, triceps', secondary: 'Épaules' },
+    steps: [
+      'Règle la hauteur du siège pour que les poignées arrivent à hauteur de poitrine.',
+      'Assieds-toi, dos et épaules bien calés contre le dossier, pieds à plat au sol.',
+      'Pousse les poignées vers l’avant jusqu’à l’extension des bras, sans verrouiller les coudes.',
+      'Reviens avec contrôle jusqu’à ce que les mains repassent au niveau de la poitrine.',
+    ],
+    mistakes: [
+      'Épaules qui décollent du dossier pour gagner quelques centimètres de poussée.',
+      'Verrouiller les coudes en fin de poussée, ce qui reporte la charge sur l’articulation.',
+      'Retour trop rapide, alors que la phase freinée est la plus productive.',
+    ],
+    sensation:
+      'Le travail se sent dans la poitrine et l’arrière des bras, sans effort de stabilisation : le dossier s’en charge. C’est ce qui distingue cette machine d’une pompe.',
+    rangeOfMotion:
+      'Reviens jusqu’à ce que les mains soient au niveau de la poitrine, pas au-delà — au-delà, l’épaule part en extension excessive contre une charge guidée, ce qui n’apporte rien.',
+    tempo:
+      'Une à deux secondes pour pousser, deux à trois pour revenir. Souffle en poussant.',
+    anatomy:
+      'Le grand pectoral et le triceps sont les moteurs, l’avant de l’épaule assiste. Le dossier remplace tout le travail de gainage qu’une pompe demande, ce qui concentre l’effort sur les muscles de la poussée et rien d’autre.',
+    mechanics:
+      'Adduction horizontale de l’épaule avec extension du coude, sur une trajectoire imposée par la machine. Le buste étant fixé, la variable est la charge, pas la stabilité — l’inverse exact d’une pompe.',
+    benefits: [
+      'Permet de charger la poussée horizontale lourdement sans partenaire ni banc, avec un réglage fin de la charge.',
+      'La trajectoire guidée réduit le risque d’erreur technique par rapport à un mouvement libre chargé.',
+      'Utile en complément des pompes, ou en remplacement quand le poignet ou le gainage limitent.',
+    ],
+    progression: {
+      easier: 'Réduis la charge, ou raccourcis l’amplitude en revenant un peu moins loin.',
+      harder: 'Augmente la charge, ralentis le retour à quatre secondes, ou marque un arrêt en position basse.',
+      readyWhen: 'Quand trois séries de douze passent sans que les épaules décollent du dossier, augmente la charge.',
+    },
+    precautions:
+      'Garde les épaules en contact avec le dossier du début à la fin : c’est ce contact qui protège l’articulation sur une trajectoire imposée.',
+  },
+
+  legCurlMachine: {
+    slug: 'leg-curl',
+    muscles: { primary: 'Ischio-jambiers', secondary: 'Mollets' },
+    steps: [
+      'Règle la machine pour que le rouleau repose sur le bas des mollets, juste au-dessus des talons.',
+      'Installe-toi, bassin bien plaqué contre l’appui, jambes tendues sans verrouiller les genoux.',
+      'Fléchis les genoux pour amener les talons vers les fessiers, avec contrôle.',
+      'Redescends lentement jusqu’à l’extension, sans laisser la charge retomber.',
+    ],
+    mistakes: [
+      'Bassin qui décolle pour aider la flexion : le mouvement quitte les ischio-jambiers.',
+      'Descente non freinée, la charge retombant seule.',
+      'Rouleau mal placé, trop haut sur le mollet, ce qui gêne au lieu de charger.',
+    ],
+    sensation:
+      'Une contraction nette à l’arrière de la cuisse, du genou vers la fesse. Le bas du dos ne doit rien ressentir : si c’est le cas, le bassin s’est décollé.',
+    rangeOfMotion:
+      'Fléchis autant que la machine le permet sans que le bassin bouge, et redescends jusqu’à l’extension complète mais sans verrouiller. L’amplitude complète compte plus que la charge sur ce mouvement.',
+    tempo:
+      'Une à deux secondes pour fléchir, deux à trois pour redescendre en freinant. Souffle en fléchissant.',
+    anatomy:
+      'Les ischio-jambiers fléchissent le genou : c’est leur action principale, et c’est précisément celle qu’aucun exercice au poids du corps de la bibliothèque ne charge directement. Les gastrocnémiens, qui croisent aussi le genou, assistent.',
+    mechanics:
+      'Flexion du genou en chaîne ouverte, hanche fixe, sur une trajectoire guidée. C’est le complément exact du soulevé de terre jambes tendues, qui sollicite les mêmes muscles mais en extension de hanche, genou quasi fixe.',
+    benefits: [
+      'Comble le seul manque criant de la bibliothèque : aucun exercice ne chargeait les ischio-jambiers en flexion de genou.',
+      'Équilibre le travail des cuisses, largement dominé par les quadriceps (squats, fentes, presse).',
+      'Trajectoire guidée et charge réglable, donc progression mesurable.',
+    ],
+    progression: {
+      easier: 'Réduis la charge, ou raccourcis l’amplitude en fléchissant un peu moins.',
+      harder: 'Augmente la charge, ralentis la descente à quatre secondes, ou marque un arrêt d’une seconde en position fléchie.',
+      readyWhen: 'Quand trois séries de douze passent sans que le bassin décolle, augmente la charge.',
+    },
+    precautions:
+      'Une crampe à l’arrière de la cuisse est fréquente sur ce mouvement : réduis la charge et allonge l’échauffement plutôt que d’insister.',
+  },
+
+  treadmill: {
+    slug: 'tapis-de-course',
+    muscles: { primary: 'Cardio, jambes' },
+    steps: [
+      'Monte sur le tapis à l’arrêt ou à vitesse très lente, avant d’accélérer progressivement.',
+      'Choisis une allure où parler reste possible mais devient un peu essoufflé.',
+      'Garde le buste droit, le regard loin devant, sans t’accrocher aux barres.',
+      'Maintiens l’allure sur toute la durée prévue, puis ralentis progressivement avant de descendre.',
+    ],
+    mistakes: [
+      'S’accrocher aux barres latérales : le poids est en partie porté, l’effort réel chute sans que la vitesse affichée bouge.',
+      'Regard rivé à l’écran, ce qui casse la posture du cou.',
+      'Démarrer trop vite au lieu d’installer l’allure progressivement.',
+    ],
+    sensation:
+      'Un essoufflement modéré, stable sur toute la durée : la conversation doit rester possible mais pas confortable.',
+    rangeOfMotion:
+      'Pas d’amplitude à régler, mais une foulée : pose le talon, déroule le pied, laisse les bras balancer librement depuis l’épaule.',
+    tempo:
+      'Une allure régulière et tenue, plutôt que des accélérations suivies de récupérations — sauf si les intervalles sont l’objectif du jour.',
+    anatomy:
+      'La même chaîne musculaire que la marche : fessiers et ischio-jambiers propulsent, quadriceps amortissent, mollets assurent la poussée finale, et le gainage stabilise le bassin à chaque appui.',
+    mechanics:
+      'Locomotion cyclique sur un tapis motorisé. La différence avec la marche extérieure tient à la pente réglable : c’est elle, plus que la vitesse, qui augmente l’effort sans augmenter l’impact — un réglage que le terrain extérieur ne donne pas à volonté.',
+    benefits: [
+      'Permet de fixer précisément allure et pente, donc de reproduire exactement le même effort d’une séance à l’autre.',
+      'La pente charge davantage fessiers et mollets sans exiger de courir plus vite.',
+      'Indépendant de la météo et de l’heure, contrairement à la marche extérieure.',
+    ],
+    progression: {
+      easier: 'Réduis la vitesse avant de réduire la durée : mieux vaut quinze minutes tenues que trente subies.',
+      harder: 'Monte la pente à allure constante, allonge la durée, ou alterne des portions plus rapides.',
+      readyWhen: 'Quand vingt minutes à allure constante passent en gardant une conversation possible, augmente la pente.',
+    },
+    precautions:
+      'Règle l’arrêt d’urgence (pince aimantée) avant de démarrer, et ne descends jamais du tapis en marche.',
+  },
+
+  stationaryBike: {
+    slug: 'velo-d-appartement',
+    muscles: { primary: 'Cardio, cuisses', secondary: 'Fessiers' },
+    steps: [
+      'Règle la selle pour que le genou garde un léger pli quand la pédale est au plus bas.',
+      'Assieds-toi, mains posées sans crispation, dos ni cassé ni cambré.',
+      'Installe une cadence régulière, puis ajuste la résistance pour trouver l’allure de travail.',
+      'Maintiens cadence et résistance sur toute la durée, puis termine par quelques minutes légères.',
+    ],
+    mistakes: [
+      'Selle trop basse : le genou reste trop fléchi en bas, ce qui charge inutilement l’articulation.',
+      'Bassin qui se balance d’un côté à l’autre, signe d’une selle trop haute.',
+      'Résistance quasi nulle avec une cadence très élevée, qui donne l’illusion de l’effort sans le produire.',
+    ],
+    sensation:
+      'Un essoufflement modéré et une chauffe progressive dans les cuisses. Contrairement à la marche ou au tapis, le poids du corps ne repose jamais sur les jambes.',
+    rangeOfMotion:
+      'Pas d’amplitude à régler, mais un réglage de selle : le genou garde un léger pli en bas de course, sans que le bassin ait à basculer pour atteindre la pédale.',
+    tempo:
+      'Une cadence régulière tenue sur toute la durée. La résistance est le vrai réglage d’intensité, pas la vitesse de pédalage.',
+    anatomy:
+      'Quadriceps et grand fessier produisent l’extension du genou et de la hanche à chaque poussée ; les ischio-jambiers et les mollets participent sur la remontée quand les pieds sont fixés. La position assise décharge complètement la colonne et les articulations porteuses.',
+    mechanics:
+      'Pédalage cyclique en chaîne fermée, sans mise en charge : c’est l’axe qui distingue le vélo de tout le reste du cardio de la bibliothèque — le corps est porté par la selle, donc les genoux, les hanches et le dos ne subissent aucun impact ni compression liée au poids.',
+    benefits: [
+      'Le seul cardio de la bibliothèque qui ne fait porter aucun poids aux jambes, donc praticable quand la marche ou la course gênent une articulation.',
+      'La résistance se règle finement, ce qui rend l’intensité reproductible d’une séance à l’autre.',
+      'Permet de tenir de longues durées sans contrainte articulaire cumulée.',
+    ],
+    progression: {
+      easier: 'Baisse la résistance avant de réduire la durée, et garde une cadence confortable.',
+      harder: 'Augmente la résistance à cadence constante, allonge la durée, ou alterne des blocs plus résistants.',
+      readyWhen: 'Quand vingt minutes passent sans que la cadence chute en fin de séance, augmente la résistance.',
+    },
+    precautions:
+      'Un genou douloureux vient presque toujours d’un réglage de selle, pas de l’effort : vérifie la hauteur avant de réduire l’intensité.',
+  },
+
+  rowingMachine: {
+    slug: 'rameur',
+    muscles: { primary: 'Cardio, dos, jambes', secondary: 'Bras, gainage' },
+    steps: [
+      'Attache les pieds, saisis la poignée bras tendus, tibias verticaux, buste légèrement en avant : c’est la position d’attaque.',
+      'Pousse d’abord fort avec les jambes, bras encore tendus et buste immobile.',
+      'Quand les jambes sont presque tendues, ouvre le buste vers l’arrière, puis seulement là tire la poignée vers le bas des côtes.',
+      'Reviens dans l’ordre inverse : tends les bras, ramène le buste vers l’avant, puis plie les jambes.',
+    ],
+    mistakes: [
+      'Tirer avec les bras avant que les jambes aient poussé : c’est l’erreur la plus répandue, et elle prive le mouvement de sa principale source de puissance.',
+      'Ouvrir le buste trop tôt, ce qui reporte la charge sur le bas du dos.',
+      'Dos arrondi en position d’attaque, sous prétexte d’aller chercher plus loin.',
+    ],
+    sensation:
+      'Les jambes brûlent en premier, puis le dos et les bras. Si les bras fatiguent avant les jambes, l’ordre du coup est inversé.',
+    rangeOfMotion:
+      'La poignée arrive au bas des côtes, pas à la poitrine ni au ventre. En position d’attaque, les tibias sont verticaux : aller plus loin ne gagne rien et force le dos.',
+    tempo:
+      'Un rythme régulier, avec un retour environ deux fois plus lent que la poussée. C’est ce rapport, pas la cadence, qui distingue un coup propre d’un coup précipité.',
+    anatomy:
+      'Quadriceps et fessiers produisent l’essentiel de la puissance sur la poussée ; le grand dorsal, les rhomboïdes et le trapèze moyen tirent ensuite l’omoplate vers la colonne ; le biceps termine. Le gainage transmet la force des jambes au haut du corps, ce qui fait du rameur un mouvement de chaîne complète.',
+    mechanics:
+      'Séquence en quatre temps — attaque, poussée, finale, retour — combinant extension de jambes, extension de hanche et tirage horizontal. C’est le seul mouvement de la bibliothèque où l’ordre des segments compte autant que la force produite : jambes, puis buste, puis bras.',
+    benefits: [
+      'Le seul cardio de la bibliothèque qui est aussi un vrai geste technique : la qualité du coup progresse en même temps que la condition physique.',
+      'Fait travailler la chaîne de tirage, absente des autres exercices cardio.',
+      'Sans impact, tout en sollicitant nettement plus de masse musculaire que la marche ou le vélo.',
+    ],
+    progression: {
+      easier: 'Réduis la durée avant d’augmenter la cadence, et concentre-toi sur l’ordre jambes-buste-bras.',
+      harder: 'Allonge la durée, augmente le rythme en gardant le rapport retour/poussée, ou travaille par blocs.',
+      readyWhen: 'Quand quinze minutes passent avec un ordre de coup respecté du début à la fin, allonge la durée.',
+    },
+    precautions:
+      'Le bas du dos ne doit jamais être le moteur : si la fatigue s’y installe, c’est que le buste s’ouvre avant que les jambes aient fini de pousser. Reprends plus lentement, moins fort.',
   },
 };

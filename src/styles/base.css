@@ -268,7 +268,7 @@ h2::after {
 .guides a {
   display: inline-flex;
   align-items: center;
-  /* 44px comme le reste de l'app : ce sont 28 liens adjacents dans une
+  /* 44px comme le reste de l'app : ce sont autant de liens adjacents dans une
      grille dense, donc exactement le cas ou une cible trop petite provoque
      des erreurs de frappe. */
   min-height: 44px;

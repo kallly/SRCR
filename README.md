@@ -1,7 +1,7 @@
 # Séance
 
-Planificateur et minuteur de séance au poids du corps, pensé pour une reprise
-sans matériel.
+Planificateur et minuteur de séance, avec ou sans matériel : poids du corps,
+élastique, haltères ou machine.
 
 - **Deux modes d'enchaînement.** *Classique* : toutes les séries d'un exercice,
   puis le suivant. *Circuit* : les séries alternent les groupes musculaires, et

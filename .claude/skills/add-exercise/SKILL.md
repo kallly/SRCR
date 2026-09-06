@@ -45,7 +45,7 @@ Add a `<key>: '...'` entry to the `FIGURES` record: raw SVG body (no `<svg>`
 wrapper) in a `200x118` viewBox, using only the existing shared classes (`s`
 = stroke/limbs, `obj` = static object like a chair or wall, `gr` = ground
 line, `hd` = head circle, `ar`/`arh` = motion arrow + arrowhead) so it stays
-colorable by CSS and consistent with the other 28 figures. Copy the
+colorable by CSS and consistent with the other 61 figures. Copy the
 structure of a similar existing exercise (same equipment/pose) as a
 starting point rather than drawing from scratch.
 

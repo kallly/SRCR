@@ -69,7 +69,7 @@ export function installWebMcp(ctx: Context, share: Share): void {
     {
       name: 'list_exercises',
       description:
-        "Liste les exercices de la bibliotheque : cle a utiliser dans une seance, nom traduit dans la langue active, groupe musculaire, type d'effort et reglages par defaut.",
+        "Liste les exercices de la bibliotheque : cle a utiliser dans une seance, nom traduit dans la langue active, groupe musculaire, materiel requis, type d'effort et reglages par defaut.",
       inputSchema: { type: 'object', properties: {} },
       execute: async () =>
         text({
@@ -78,6 +78,10 @@ export function installWebMcp(ctx: Context, share: Share): void {
             key: entry.key,
             name: t(`exercise.${entry.key}.name`),
             group: entry.group,
+            // Sans ca, une IA a qui on demande une seance « avec ce que j'ai
+            // sous la main » ne peut pas distinguer un exercice au poids du
+            // corps d'un exercice qui suppose une machine.
+            category: entry.category,
             mode: entry.mode,
             sets: entry.sets,
             reps: entry.reps,

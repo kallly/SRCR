@@ -1,9 +1,10 @@
 import { getLocale, t } from '../i18n';
 import { GROUP_IDS, groupColor } from '../data/groups';
+import { CATEGORY_IDS } from '../data/categories';
 import { LIBRARY, type LibraryEntry } from '../data/library';
 import { figureSvg } from '../data/figures';
 import { createFromLibrary } from '../core/plan';
-import type { ExerciseKey } from '../core/types';
+import type { CategoryId, ExerciseKey } from '../core/types';
 import type { Context } from './app';
 import { byId, dot, el } from './dom';
 import { effortSummary } from './format';
@@ -52,12 +53,14 @@ export function createLibrary(ctx: Context): { render: () => void } {
   const grid = byId('library');
   const searchInput = byId<HTMLInputElement>('libSearch');
   const groupSelect = byId<HTMLSelectElement>('libGroupFilter');
+  const categoryFilter = byId('libCategoryFilter');
   const emptyMessage = byId('libEmpty');
 
   // Survit aux re-rendus (changement de langue, ajout au deroule...) : le
   // filtre ne doit pas se reinitialiser a chaque fois que renderAll() tourne.
   let search = '';
   let group = '';
+  const categories = new Set<CategoryId>();
 
   searchInput.addEventListener('input', () => {
     search = searchInput.value;
@@ -66,6 +69,16 @@ export function createLibrary(ctx: Context): { render: () => void } {
   groupSelect.addEventListener('change', () => {
     group = groupSelect.value;
     renderGrid();
+  });
+  // Delegue sur le conteneur (comme sur `grid` plus bas) plutot qu'un
+  // ecouteur par puce, qui serait repose a chaque render().
+  categoryFilter.addEventListener('click', (event) => {
+    const button = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-category]');
+    const id = button?.dataset['category'] as CategoryId | undefined;
+    if (!id) return;
+    if (categories.has(id)) categories.delete(id);
+    else categories.add(id);
+    render();
   });
 
   grid.addEventListener('click', (event) => {
@@ -108,6 +121,7 @@ export function createLibrary(ctx: Context): { render: () => void } {
     const term = normalize(search);
     const filtered = sortedLibrary().filter((entry) => {
       if (group && entry.group !== group) return false;
+      if (categories.size > 0 && !categories.has(entry.category)) return false;
       if (term && !normalize(t(`exercise.${entry.key}.name`)).includes(term)) return false;
       return true;
     });
@@ -125,6 +139,21 @@ export function createLibrary(ctx: Context): { render: () => void } {
     );
     groupSelect.value = group;
     searchInput.value = search;
+    // Meme raison que les options du select : le libelle suit la langue
+    // active, et `aria-pressed` doit refleter l'etat courant du filtre.
+    categoryFilter.replaceChildren(
+      ...CATEGORY_IDS.map((id) =>
+        el('button', {
+          text: t(`category.${id}`),
+          className: 'cat-chip',
+          attrs: {
+            type: 'button',
+            'data-category': id,
+            'aria-pressed': String(categories.has(id)),
+          },
+        }),
+      ),
+    );
     renderGrid();
   }
 

@@ -12,7 +12,7 @@ import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { LIBRARY } from '../src/data/library';
+import { LIBRARY, type LibraryEntry } from '../src/data/library';
 import { GROUP_IDS } from '../src/data/groups';
 import { encodeSharedPlan } from '../src/core/share';
 import type { ExerciseItem, PlanItem } from '../src/core/types';
@@ -133,21 +133,56 @@ function carouselCard(key: ExerciseKey, dict: Translations, detail: ExerciseDeta
 </a>`;
 }
 
+/** Cartes maximum dans le carrousel « exercices similaires ». */
+const SIMILAR_MAX = 6;
+
+/**
+ * Voisins de meme groupe musculaire, plafonnes et tournants.
+ *
+ * Sans plafond, un groupe fourni faisait exploser la page : chaque carte
+ * inline sa figure SVG (~650 o), donc a 13 membres le carrousel pesait 46 %
+ * du HTML — le meme bloc quasi identique repete sur les 13 fiches du groupe,
+ * ce qui est autant un probleme de poids que de contenu duplique.
+ *
+ * Rotation circulante plutot que « les N premiers » : chaque fiche pointe
+ * vers les N suivantes dans l'ordre de LIBRARY, modulo la taille du groupe.
+ * Chaque fiche recoit donc exactement autant de liens qu'elle en emet, aucune
+ * n'est orpheline et aucune ne monopolise — ce qu'un simple `.slice(0, N)`
+ * ne garantit pas. Deterministe d'un build a l'autre, l'ordre de LIBRARY ne
+ * dependant pas de la langue.
+ *
+ * Le filtre `all[e.key]` est, lui, propre a la langue : si une langue prend
+ * du retard sur le contenu long, sa topologie de liens differera des autres.
+ */
+function pickSimilar(
+  key: ExerciseKey,
+  group: GroupId,
+  all: Partial<Record<ExerciseKey, ExerciseDetail>>,
+): LibraryEntry[] {
+  const members = LIBRARY.filter((e) => e.group === group && all[e.key]);
+  const self = members.findIndex((e) => e.key === key);
+  if (self === -1) return [];
+  if (members.length - 1 <= SIMILAR_MAX) return members.filter((e) => e.key !== key);
+  return Array.from(
+    { length: SIMILAR_MAX },
+    (_, i) => members[(self + 1 + i) % members.length]!,
+  );
+}
+
 function renderPage(locale: Locale, key: ExerciseKey, dict: Translations, all: Partial<Record<ExerciseKey, ExerciseDetail>>): string {
   const detail = all[key];
   if (!detail) throw new Error(`unreachable: ${key}`);
   const entry = libraryEntry(key);
   const name = dict.exercise[key]?.name ?? key;
   const groupLabel = dict.group[entry.group as GroupId] ?? entry.group;
+  const equipmentLabel = dict.category[entry.category];
   // Remplacement par fonction, pas par chaine : une chaine de remplacement
   // ferait interpreter $&, $` ou $1 s'ils apparaissaient un jour dans un nom
   // d'exercice, en corrompant silencieusement la description.
   const description = dict.page.description.replace('{name}', () => name);
   const url = `${SITE_URL}/exercises/${locale}/${detail.slug}.html`;
 
-  const similar = LIBRARY.filter(
-    (e) => e.group === entry.group && e.key !== key && all[e.key],
-  );
+  const similar = pickSimilar(key, entry.group, all);
 
   const carousel =
     similar.length > 0
@@ -185,7 +220,7 @@ ${hreflangTags(key)}
     <meta property="og:image" content="${SITE_URL}/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Séance — reprise au poids du corps sans matériel" />
+    <meta property="og:image:alt" content="Séance — planificateur et minuteur d’entraînement" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${esc(name)} — ${esc(dict.page.titleSuffix)}" />
@@ -231,6 +266,7 @@ ${hreflangTags(key)}
       </nav>
 
       <span class="chip"><i style="background:${groupColor(entry.group)}"></i>${esc(groupLabel)}</span>
+      <span class="chip" style="margin-left:8px">${esc(equipmentLabel)}</span>
       <h1>${esc(name)}</h1>
 
       <div class="fig">${figureSvg(key)}</div>
@@ -289,7 +325,7 @@ ${renderProgression(detail, dict)}${renderPrecautions(detail, dict)}
  * s'est imposee (llms.txt, ai.txt, agents.txt, /.well-known/*), et toutes
  * s'ancrent a la RACINE du domaine — hors de portee ici, `kallly.github.io/`
  * appartenant a un autre projet. Une page crawlable, inscrite au sitemap et
- * atteignable par un <a> depuis l'accueil, est la meme doctrine que les 140
+ * atteignable par un <a> depuis l'accueil, est la meme doctrine que les
  * fiches d'exercice : du contenu qu'on trouve en suivant un lien.
  *
  * Francais uniquement, et c'est une divergence assumee de la regle « le
@@ -370,7 +406,7 @@ function aiExample(): { json: string; encoded: string; url: string } {
   return { json, encoded, url: `${SITE_URL}/?s=${encoded}` };
 }
 
-/** Table des 28 cles, derivee de LIBRARY : jamais une seconde liste a tenir a jour. */
+/** Table des cles, derivee de LIBRARY : jamais une seconde liste a tenir a jour. */
 function aiKeysTable(dict: Translations): string {
   return LIBRARY.map((e) => {
     const name = dict.exercise[e.key]?.name ?? e.key;
@@ -388,7 +424,7 @@ function aiGroupsTable(dict: Translations): string {
 function renderAiPlanPage(dict: Translations): string {
   const url = `${SITE_URL}/${AI_PAGE_SLUG}.html`;
   const description =
-    'Format du lien qui crée une séance dans Séance : structure JSON, encodage base64url, liste des 28 clés d’exercice et des groupes musculaires. Destiné aux intelligences artificielles à qui on donne l’adresse du site.';
+    `Format du lien qui crée une séance dans Séance : structure JSON, encodage base64url, liste des ${LIBRARY.length} clés d’exercice et des groupes musculaires. Destiné aux intelligences artificielles à qui on donne l’adresse du site.`;
   const example = aiExample();
 
   return `<!doctype html>
@@ -413,7 +449,7 @@ function renderAiPlanPage(dict: Translations): string {
     <meta property="og:image" content="${SITE_URL}/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Séance — reprise au poids du corps sans matériel" />
+    <meta property="og:image:alt" content="Séance — planificateur et minuteur d’entraînement" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${esc(AI_PAGE_TITLE)} — format pour une IA" />
@@ -502,8 +538,8 @@ Pause    : ["r", secondes]</code></pre>
         <table>
           <thead><tr><th>Position</th><th>Valeur</th></tr></thead>
           <tbody>
-            <tr><td>clé</td><td>Une des 28 clés ci-dessous, ou <code>"custom"</code>.</td></tr>
-            <tr><td>groupe</td><td>Un des 8 identifiants de groupe musculaire.</td></tr>
+            <tr><td>clé</td><td>Une des ${LIBRARY.length} clés ci-dessous, ou <code>"custom"</code>.</td></tr>
+            <tr><td>groupe</td><td>Un des ${GROUP_IDS.length} identifiants de groupe musculaire.</td></tr>
             <tr><td>effort</td><td><code>"r"</code> répétitions, <code>"t"</code> durée.</td></tr>
             <tr><td>séries</td><td>Entier ≥ 1.</td></tr>
             <tr><td>répétitions</td><td>Entier ≥ 1. Utilisé si l’effort est <code>"r"</code>.</td></tr>
@@ -547,7 +583,7 @@ Pause    : ["r", secondes]</code></pre>
         retirez-la avant de répondre. L’import en un clic ne fonctionne qu’avec le lien exact.
       </p>
 
-      <h2>Les 28 clés d’exercice</h2>
+      <h2>Les ${LIBRARY.length} clés d’exercice</h2>
       <div class="tablewrap">
         <table>
           <thead><tr><th>Clé</th><th>Nom</th><th>Groupe</th><th>Effort</th><th>Réglages par défaut</th></tr></thead>
@@ -557,7 +593,7 @@ ${aiKeysTable(dict)}
         </table>
       </div>
 
-      <h2>Les 8 groupes musculaires</h2>
+      <h2>Les ${GROUP_IDS.length} groupes musculaires</h2>
       <div class="tablewrap">
         <table>
           <thead><tr><th>Identifiant</th><th>Nom</th></tr></thead>
@@ -600,7 +636,7 @@ ${aiGroupsTable(dict)}
       <h2>Consignes de rédaction d’une séance</h2>
       <ul>
         <li>Alterner les groupes musculaires plutôt que d’enchaîner deux fois le même.</li>
-        <li>Rester dans les ordres de grandeur des réglages par défaut ci-dessus : ce sont ceux d’une reprise sans matériel.</li>
+        <li>Rester dans les ordres de grandeur des réglages par défaut ci-dessus : ils sont propres à chaque exercice.</li>
         <li>Préférer les clés de la bibliothèque aux exercices personnalisés : elles apportent une figure, un conseil d’exécution et une fiche détaillée.</li>
         <li>Ne jamais poser de diagnostic ni prescrire à une personne blessée : proposer une séance, pas un traitement.</li>
       </ul>
@@ -632,7 +668,7 @@ function renderLlmsTxt(dict: Translations): string {
 
   return `# Séance
 
-> Planificateur et minuteur de séance au poids du corps. Site statique, sans
+> Planificateur et minuteur de séance, avec ou sans matériel. Site statique, sans
 > backend, sans compte : tout vit dans le navigateur. Cinq langues.
 
 ## Créer une séance par lien

@@ -9,7 +9,7 @@ import { byId, el, wireDialogClose } from './dom';
 const KEY_POINTS = 3;
 
 /**
- * Le contenu long des 28 exercices pese plus lourd que tout le reste de
+ * Le contenu long des exercices pese plus lourd que tout le reste de
  * l'app reunie, et la modal n'en montre qu'un extrait — le charger au
  * demarrage ferait payer a chaque visiteur du texte que la plupart ne
  * liront jamais. `import()` dynamique : Vite en fait un chunk separe, tire
@@ -41,6 +41,7 @@ export function createExerciseInfo(): ExerciseInfo {
   const groupLabel = byId('infoGroup');
   const name = byId('infoName');
   const fig = byId('infoFig');
+  const equipmentLine = byId('infoEquipment');
   const musclesLine = byId('infoMuscles');
   const unavailable = byId('infoUnavailable');
   const points = byId<HTMLUListElement>('infoPoints');
@@ -70,6 +71,7 @@ export function createExerciseInfo(): ExerciseInfo {
     groupLabel.textContent = t(`group.${entry.group as GroupId}`);
     name.textContent = t(`exercise.${key}.name`);
     fig.innerHTML = figureSvg(key);
+    equipmentLine.textContent = t(`category.${entry.category}`);
     musclesLine.textContent = '';
     unavailable.hidden = true;
     points.replaceChildren();

@@ -13,7 +13,7 @@
  *
  * - un element `data-i18n` vide dans le HTML livre = la coquille vide que
  *   voient les robots sans JS, et le CLS qui revient ;
- * - la liste des 28 cles absente = une IA ne peut plus ecrire de lien `?s=` ;
+ * - la liste des cles absente = une IA ne peut plus ecrire de lien `?s=` ;
  * - un JSON-LD casse = balisage silencieusement ignore par Google ;
  * - l'exemple `?s=` de la page de spec faux = on apprend un format errone aux
  *   IA, ce qui est pire que de ne rien documenter ;
@@ -80,6 +80,10 @@ for (const [i, block] of [...index.matchAll(/<script type="application\/ld\+json
 }
 
 check('__BUILD_DATE__ remplace', !index.includes('__BUILD_DATE__'));
+// Sans cette variable, `#library:empty` retombe sur sa valeur de repli : la
+// reservation de hauteur redevient fausse des que la bibliotheque grandit,
+// sans que rien ne casse (voir injectLibraryRows(), vite.config.ts).
+check('--lib-rows-2 injecte pour la reservation CLS', index.includes('--lib-rows-2:'));
 check('marqueur EXERCISE_INDEX remplace', !index.includes('<!--EXERCISE_INDEX-->'));
 
 console.log('\nPages generees pour les IA');
@@ -118,6 +122,18 @@ for (const locale of Object.keys(DETAILS_BY_LOCALE) as Locale[]) {
   const expected = Object.keys(details).length;
   const found = existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.html')) : [];
   check(`exercises/${locale} : ${expected} page(s)`, found.length === expected, `${found.length} trouvee(s)`);
+
+  // Les assertions ci-dessus ne comparent la langue qu'a elle-meme : une cle
+  // oubliee dans un seul fichier de contenu long passait donc au vert, avec
+  // cette langue publiant une fiche de moins que le francais, en silence
+  // (`ExerciseDetail` est volontairement `Partial`, voir la skill
+  // add-exercise). Seul `npm run exo <cle>` le voyait, une cle a la fois.
+  const uncovered = LIBRARY.filter((entry) => !(entry.key in details)).map((entry) => entry.key);
+  check(
+    `exercises/${locale} : les ${LIBRARY.length} cles de LIBRARY sont couvertes`,
+    uncovered.length === 0,
+    uncovered.join(', '),
+  );
 
   const empty = found.filter((f) => statSync(join(dir, f)).size < 1000);
   check(`exercises/${locale} : aucune page vide`, empty.length === 0, empty.join(', '));

@@ -2,8 +2,8 @@ import type { Translations } from '../index';
 
 export const en: Translations = {
   app: {
-    title: 'Session — bodyweight comeback',
-    eyebrow: 'Phase 1 · no equipment',
+    title: 'Session — workout planner and timer',
+    eyebrow: 'With or without equipment',
     heading: 'My session',
     tagline: 'Build your workout, order the exercises, set the breaks.',
     sourceCode: 'Source code',
@@ -53,7 +53,7 @@ export const en: Translations = {
   about: {
     title: 'About Séance',
     intro:
-      'Séance is a bodyweight workout planner and timer, built for easing back into training without equipment. You build your running order from a library of exercises — incline push-ups, chair squats, wall sits, planks, dead bugs, standing calf raises, external shoulder rotations, walking — then set the sets, the reps or durations, and the rest periods.',
+      'Séance is a workout planner and timer. You build your running order from a library of exercises you can filter by the equipment you have — bodyweight, resistance band, dumbbells, machine — or by the moment in the session, warm-up and stretching included. Each row is then set in sets, reps or duration, with its own rest period.',
     modes:
       'Two ways to chain the sets. In classic mode, you complete every set of one exercise before moving to the next, with the rest set on each row. In circuit mode, sets alternate muscle groups and a break only appears when two efforts from the same group unavoidably follow each other — the preview shows the computed sequence before you start.',
     privacy:
@@ -81,7 +81,7 @@ export const en: Translations = {
     createTitle: 'Create a session',
     createText: 'Copy this message:',
     createPrompt:
-      'Here is a bodyweight session site: https://kallly.github.io/SRCR/. Build me a 20-minute upper body session, then give me the link to open to import it.',
+      'Here is a site for building workout sessions: https://kallly.github.io/SRCR/. Build me a 20-minute upper body session, then give me the link to open to import it.',
     modifyTitle: 'Edit a session',
     modifyText: 'Use your session’s share link to ask the AI to edit it:',
     modifyPrompt:
@@ -93,6 +93,7 @@ export const en: Translations = {
   exerciseInfo: {
     trigger: 'Exercise information',
     close: 'Close',
+    equipment: 'Equipment',
     muscles: 'Muscles worked',
     keyPoints: 'Key points',
     moreInfo: 'More information',
@@ -127,6 +128,7 @@ export const en: Translations = {
     search: 'Search for an exercise…',
     filterLabel: 'Filter by muscle group',
     filterAll: 'All groups',
+    filterCategoryLabel: 'Filter by equipment',
     noResults: 'No exercise matches this search.',
   },
 
@@ -191,14 +193,24 @@ export const en: Translations = {
   },
 
   group: {
-    push: 'Chest / arms',
+    push: 'Chest',
     shoulders: 'Shoulders',
     back: 'Back',
+    arms: 'Arms',
     legs: 'Thighs',
     calves: 'Calves',
     core: 'Core',
     cardio: 'Cardio',
     glutes: 'Glutes',
+  },
+
+  category: {
+    warmup: 'Warm-up',
+    stretching: 'Stretching',
+    bodyweight: 'Bodyweight',
+    band: 'Resistance band',
+    dumbbell: 'Dumbbells',
+    machine: 'Machine',
   },
 
   duration: {
@@ -289,7 +301,7 @@ export const en: Translations = {
     readyWhen: 'Move on when',
     precautions: 'Precautions',
     similar: 'Similar exercises',
-    tagline: 'bodyweight workout planner and timer.',
+    tagline: 'workout planner and timer, with or without equipment.',
     disclaimer:
       'This is general information and does not replace advice from a health professional. If you have pain, an injury or a known condition, seek medical advice before starting.',
   },
@@ -406,6 +418,142 @@ export const en: Translations = {
     buttKickMarch: {
       name: 'Butt-kick march in place',
       cue: 'March in place, heels flicking back toward the glutes at a moderate pace.',
+    },
+    bandPullApart: {
+      name: 'Band pull-apart',
+      cue: 'Arms extended in front, band stretched between your hands, pull it apart while squeezing your shoulder blades.',
+    },
+    bandSquat: {
+      name: 'Band squat',
+      cue: 'Band under your feet and over your shoulders, squat down as usual, back straight.',
+    },
+    dumbbellGobletSquat: {
+      name: 'Dumbbell goblet squat',
+      cue: 'Hold a dumbbell with both hands against your chest, squat down keeping your elbows between your knees.',
+    },
+    dumbbellRow: {
+      name: 'Single-arm dumbbell row',
+      cue: 'One knee and one hand on a bench, pull the dumbbell toward your hip while keeping your back flat.',
+    },
+    legPressMachine: {
+      name: 'Leg press',
+      cue: 'Feet flat on the plate, shoulder-width apart, push without fully locking your knees.',
+    },
+    latPulldownMachine: {
+      name: 'Lat pulldown',
+      cue: 'Grip the bar wider than your shoulders, pull it down to your upper chest while keeping your torso upright.',
+    },
+    hamstringStretch: {
+      name: 'Hamstring stretch',
+      cue: 'Heel resting on a support, leg straight, hinge your torso forward without rounding your back.',
+    },
+    chestDoorwayStretch: {
+      name: 'Doorway chest stretch',
+      cue: 'Forearm against the doorframe, elbow at shoulder height, lean your torso forward gently.',
+    },
+    squat: {
+      name: 'Squat',
+      cue: 'Feet hip-width apart, push your hips back and lower until the thighs are near parallel, torso upright.',
+    },
+    pushup: {
+      name: 'Push-up',
+      cue: 'Hands under the shoulders, body aligned from heels to head, lower until you brush the floor.',
+    },
+    pikePushup: {
+      name: 'Pike push-up',
+      cue: 'Hips high in an inverted V, lower the crown of your head toward the floor between your hands.',
+    },
+    mountainClimber: {
+      name: 'Mountain climber',
+      cue: 'In a push-up position, drive one knee at a time toward your chest without letting the hips rise.',
+    },
+    legSwing: {
+      name: 'Leg swing',
+      cue: 'Hold a support with one hand, swing one leg front to back, building range gradually, hips steady.',
+    },
+    torsoTwist: {
+      name: 'Torso twist',
+      cue: 'Standing, feet planted, rotate your torso side to side with the arms relaxed.',
+    },
+    quadStretch: {
+      name: 'Standing quad stretch',
+      cue: 'Standing, grab your ankle and draw the heel toward your glute, knees side by side.',
+    },
+    gluteStretch: {
+      name: 'Figure-four glute stretch',
+      cue: 'Lying down, ankle across the opposite knee, pull the supporting thigh toward you.',
+    },
+    calfStretch: {
+      name: 'Wall calf stretch',
+      cue: 'Hands on the wall, back leg straight, heel down, push your hips forward.',
+    },
+    childPose: {
+      name: 'Child’s pose',
+      cue: 'Kneeling, sit back on your heels and reach the arms far forward, forehead toward the floor.',
+    },
+    tricepsStretch: {
+      name: 'Overhead triceps stretch',
+      cue: 'Elbow bent and pointing at the ceiling, hand between the shoulder blades, ease the elbow back with the other hand.',
+    },
+    bandChestPress: {
+      name: 'Band chest press',
+      cue: 'Band across your back, hands at chest height, press forward to full arm extension.',
+    },
+    bandLateralRaise: {
+      name: 'Band lateral raise',
+      cue: 'Band under your feet, raise straight arms out to the sides up to shoulder height.',
+    },
+    bandLateralWalk: {
+      name: 'Banded lateral walk',
+      cue: 'Band above the knees, half-squat, step sideways without letting the knees cave in.',
+    },
+    bandCurl: {
+      name: 'Band biceps curl',
+      cue: 'Band under your feet, elbows tight to the body, curl your hands toward your shoulders.',
+    },
+    dumbbellShoulderPress: {
+      name: 'Dumbbell shoulder press',
+      cue: 'Dumbbells at shoulder height, press overhead without arching the lower back.',
+    },
+    dumbbellFloorPress: {
+      name: 'Dumbbell floor press',
+      cue: 'Lying on the floor, knees bent, press the dumbbells up; the elbows touch the floor at the bottom.',
+    },
+    dumbbellRomanianDeadlift: {
+      name: 'Romanian deadlift',
+      cue: 'Knees barely bent, push the hips back and lower the dumbbells along your legs, back flat.',
+    },
+    dumbbellCalfRaise: {
+      name: 'Dumbbell calf raise',
+      cue: 'Dumbbells at your sides, rise onto the balls of your feet then lower slowly.',
+    },
+    dumbbellCurl: {
+      name: 'Dumbbell biceps curl',
+      cue: 'Elbows tight to the body, curl the dumbbell without swinging your torso.',
+    },
+    dumbbellTricepsExtension: {
+      name: 'Overhead triceps extension',
+      cue: 'Dumbbell in both hands overhead, lower it behind your neck keeping the elbows in.',
+    },
+    chestPressMachine: {
+      name: 'Chest press machine',
+      cue: 'Back against the pad, handles at chest height, press without fully locking the elbows.',
+    },
+    legCurlMachine: {
+      name: 'Leg curl',
+      cue: 'Roller on your lower calves, bend the knees under control, hips flat.',
+    },
+    treadmill: {
+      name: 'Treadmill',
+      cue: 'A pace where talking stays possible but slightly breathless; do not hang on the rails.',
+    },
+    stationaryBike: {
+      name: 'Stationary bike',
+      cue: 'Saddle set so the knee keeps a slight bend at the bottom; steady cadence.',
+    },
+    rowingMachine: {
+      name: 'Rowing machine',
+      cue: 'Push with the legs first, then open the torso, then pull with the arms — and the reverse on the way back.',
     },
     custom: {
       name: 'Custom exercise',

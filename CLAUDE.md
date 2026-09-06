@@ -1,6 +1,6 @@
 # Séance
 
-Planificateur et minuteur de séance au poids du corps. Site statique, multilingue
+Planificateur et minuteur de séance, avec ou sans matériel. Site statique, multilingue
 (fr, en, es, de, it), sans backend : tout l'état vit dans le `localStorage` du
 navigateur et rien ne quitte l'appareil.
 
@@ -23,8 +23,8 @@ progression + bip).
 `npm run typecheck` est ce qui tient le projet : il vérifie le code **et** le fait
 que les cinq langues exposent exactement les mêmes clés. `npm run check` couvre
 l'autre moitié, celle qu'aucun type ne peut voir : le texte français bien présent
-pour les robots sans JS, les 28 clés d'exercice lisibles par une IA, le JSON-LD
-valide, l'exemple `?s=` de la page de spec réellement décodable, et les 140 fiches
+pour les robots sans JS, les 62 clés d'exercice lisibles par une IA, le JSON-LD
+valide, l'exemple `?s=` de la page de spec réellement décodable, et les 310 fiches
 non vides et inscrites au sitemap.
 
 ## Architecture
@@ -40,8 +40,9 @@ src/
     share.ts       format dense du lien/QR de partage (?s=), base64url
     ai-plan.ts     format JSON lisible (?plan=), le filet du pilotage par une IA
   data/            donnees sans texte
-    groups.ts      ids + couleurs des groupes musculaires
-    library.ts     28 exercices : reglages seulement
+    groups.ts      ids + couleurs des 9 groupes musculaires
+    library.ts     62 exercices : reglages seulement
+    categories.ts  ids des categories d'equipement (filtre bibliotheque)
     figures.ts     figures SVG
   content/
     exercise-details/     contenu long par langue (fr, en, es, de, it) :

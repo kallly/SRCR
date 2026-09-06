@@ -77,6 +77,74 @@ const SCENES: Record<ExerciseKey, string> = {
     'Person marching on the spot, one knee lifted to hip height, arms in motion, side view.',
   buttKickMarch:
     'Person marching on the spot, one heel drawn up towards the glute, chest upright, side view.',
+  bandPullApart:
+    'Person standing, arms extended forward at chest height holding a resistance band stretched between the hands, pulling it apart, front view.',
+  bandSquat:
+    'Person in a squat, a resistance band looped around the ankles and stretched taut, knees pressing outward against it, side view.',
+  dumbbellGobletSquat:
+    'Person in a squat, holding a single dumbbell with both hands close to the chest, elbows tracking inside the knees, side view.',
+  dumbbellRow:
+    'Person bracing one knee and hand on a bench, the other arm pulling a dumbbell up towards the hip, back flat, side view.',
+  legPressMachine:
+    'Person seated on a leg press machine, back against the padded seat, feet pressing a weighted plate forward, side view.',
+  latPulldownMachine:
+    'Person seated at a lat pulldown machine, pulling a wide bar down towards the upper chest, torso upright, side view.',
+  hamstringStretch:
+    'Person with one heel resting on a raised support, leg straight, hinging the torso forward over it, standing leg planted, side view.',
+  chestDoorwayStretch:
+    'Person standing in a doorway, forearm braced against the frame at shoulder height, torso leaning gently forward, side view.',
+  squat:
+    'Person at the bottom of a bodyweight squat, thighs near parallel, hips pushed back, chest upright, side view.',
+  pushup:
+    'Person in a full push-up, body in a straight line from heels to head, chest near the floor, elbows at 45°, side view.',
+  pikePushup:
+    'Person in a pike push-up, hips high in an inverted V, head lowering toward the floor between the hands, side view.',
+  mountainClimber:
+    'Person in a push-up position driving one knee toward the chest, hips level, side view.',
+  legSwing:
+    'Person holding a support with one hand, one leg swinging forward and back, motion arc shown, side view.',
+  torsoTwist:
+    'Person standing with feet planted, torso rotated to one side, arms relaxed and following the turn, front view.',
+  quadStretch:
+    'Person standing on one leg, holding the other ankle with the heel drawn to the glute, knees side by side, side view.',
+  gluteStretch:
+    'Person lying on their back, one ankle crossed over the opposite knee in a figure four, hands pulling the supporting thigh, side view.',
+  calfStretch:
+    'Person with hands on a wall, back leg straight with the heel down, hips pushed forward, side view.',
+  childPose:
+    'Person kneeling with hips on the heels, arms stretched far forward on the floor, forehead down, side view.',
+  tricepsStretch:
+    'Person standing with one elbow bent and pointing at the ceiling, opposite hand easing the elbow back, front view.',
+  bandChestPress:
+    'Person standing with a resistance band behind the back, pressing both hands forward at chest height to full extension, side view.',
+  bandLateralRaise:
+    'Person standing on a resistance band, raising straight arms out to the sides to shoulder height, front view.',
+  bandLateralWalk:
+    'Person in a half squat with a band above the knees, stepping sideways with the band stretched taut, front view.',
+  bandCurl:
+    'Person standing on a resistance band, elbows tight to the body, curling both hands toward the shoulders, side view.',
+  dumbbellShoulderPress:
+    'Person pressing two dumbbells overhead from shoulder height, torso upright, front view.',
+  dumbbellFloorPress:
+    'Person lying on the floor with knees bent, pressing two dumbbells up from elbows resting on the floor, side view.',
+  dumbbellRomanianDeadlift:
+    'Person hinging at the hips with barely bent knees, dumbbells lowered along the front of the legs, back flat, side view.',
+  dumbbellCalfRaise:
+    'Person standing on the balls of the feet holding a dumbbell in each hand at the sides, heels raised, side view.',
+  dumbbellCurl:
+    'Person standing curling a dumbbell toward the shoulder, elbow tight to the body, torso still, side view.',
+  dumbbellTricepsExtension:
+    'Person holding a single dumbbell with both hands overhead, lowering it behind the neck with elbows kept close, side view.',
+  chestPressMachine:
+    'Person seated at a chest press machine, back against the pad, pressing the handles forward, side view.',
+  legCurlMachine:
+    'Person lying face down on a leg curl machine, heels curling the roller toward the glutes, side view.',
+  treadmill:
+    'Person walking briskly on a treadmill, upright posture, hands off the rails, side view.',
+  stationaryBike:
+    'Person pedalling a stationary bike, upright posture, knee slightly bent at the bottom of the stroke, side view.',
+  rowingMachine:
+    'Person mid-drive on a rowing machine, legs extending and torso opening, arms still straight, side view.',
   custom: '',
 };
 

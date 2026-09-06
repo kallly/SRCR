@@ -649,6 +649,35 @@
   background-position: right 10px center;
 }
 
+.lib-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+/*
+  Puces a bascule (choix multiple) plutot qu'un <select multiple> ou des
+  cases a cocher nues : ni l'un ni l'autre ne donne une cible de 44px par
+  option au doigt. `aria-pressed` porte l'etat, pas une classe — voir
+  ui/library.ts.
+*/
+.cat-chip {
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--surface-2);
+  color: var(--paper-dim);
+  font-size: 13.5px;
+  font-family: var(--sans);
+}
+
+.cat-chip[aria-pressed='true'] {
+  border-color: var(--lime);
+  color: var(--lime);
+}
+
 .lib-empty {
   border: 1px dashed var(--line);
   border-radius: var(--radius);
@@ -820,11 +849,24 @@
   padding: 9px 10px 11px;
 }
 
+/*
+  Exactement deux lignes, toujours — un nom court en occupe deux, un nom long
+  est tronque a deux. C'est ce qui rend la hauteur d'une carte CONSTANTE
+  (146,35px : 2 de bordures + 69 de figure + 20 de padding + 35,1 ici +
+  20,25 de `.ld`), donc la reservation `#library:empty` calculable au lieu
+  d'etre mesuree — sans quoi elle depend de la longueur des libelles, donc de
+  la langue, de la largeur d'ecran et du prochain exercice ajoute.
+*/
 .libcard .ln {
   font-weight: 700;
   font-size: 13.5px;
   line-height: 1.3;
-  display: block;
+  min-height: calc(13.5px * 1.3 * 2);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
 }
 
 .libcard .ld {
@@ -961,8 +1003,21 @@
   le conteneur soit vraiment vide dans index.html, espaces compris — ne pas
   reformater `<ul class="plan" id="plan"></ul>` sur plusieurs lignes.
 
-  `#library:empty` reste sur ses valeurs mesurees (28 cartes en 2 colonnes) :
-  a reprendre si le nombre d'exercices ou la hauteur des cartes changent.
+  `#library:empty` ne se mesure plus : depuis que `.libcard .ln` fait
+  exactement deux lignes, une carte mesure 146,35px quelle que soit la
+  largeur ou la langue, donc une rangee vaut 156,35px avec sa gouttiere et
+  N rangees valent N x 156,35 - 10. Le nombre de rangees est injecte au build
+  depuis LIBRARY.length (`injectLibraryRows()`, vite.config.ts), ce qui evite
+  de reperimer trois constantes a chaque exercice ajoute.
+
+  Les valeurs de repli (18 et 12) comptent : si l'injection echouait, une
+  `var()` sans repli rendrait la declaration invalide et supprimerait TOUTE
+  reservation — soit le CLS de 0,43 de retour, en silence. `check-build.ts`
+  verifie en plus que la variable est bien presente dans dist/index.html.
+
+  Sur-reserver n'est pas plus sur que sous-reserver : quand le contenu
+  arrive, `:empty` cesse de s'appliquer et tout ce qui suit REMONTE, ce qui
+  compte dans le CLS exactement comme un decalage vers le bas.
 
   `#plan:empty` en revanche a suivi la refonte des cartes du deroule (champs
   compacts, actions dans la rangee des champs) : les valeurs ci-dessous sont
@@ -982,7 +1037,7 @@
     sur deux lignes, d'ou la marge sous 390px)
 */
 #library:empty {
-  min-height: 2140px;
+  min-height: calc(var(--lib-rows-2, 18) * 156.35px - 10px);
 }
 
 #plan:empty {
@@ -990,11 +1045,9 @@
 }
 
 @media (max-width: 389px) {
-  /* Les noms longs passent sur deux lignes : cartes et lignes plus hautes. */
-  #library:empty {
-    min-height: 2175px;
-  }
-
+  /* Seul #plan reste concerne : ses cartes, elles, grandissent quand un nom
+     long passe sur deux lignes. #library ne bouge plus (`.libcard .ln` fait
+     toujours exactement deux lignes). */
   #plan:empty {
     min-height: 1400px;
   }
@@ -1006,14 +1059,9 @@
   }
 }
 
-/*
-  A la difference des valeurs ci-dessus (mesurees), celle-ci est une
-  estimation arithmetique (28 cartes en 3 colonnes ~= 10 rangees, contre 14
-  en 2 colonnes) : a corriger avec une vraie mesure reseau bride avant de
-  s'y fier (voir CLAUDE.md, section CLS — le piege est la mesure).
-*/
+/* Trois colonnes : meme hauteur de rangee, simplement moins de rangees. */
 @media (min-width: 900px) {
   #library:empty {
-    min-height: 1550px;
+    min-height: calc(var(--lib-rows-3, 12) * 156.35px - 10px);
   }
 }

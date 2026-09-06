@@ -111,7 +111,7 @@ la même contrainte que pour `robots.txt` et le sitemap. Le choix retenu est
 donc une **page HTML crawlable maillée depuis l'accueil**
 (`dist/creer-une-seance-par-lien.html`, générée par
 `scripts/build-exercise-pages.ts`, inscrite au sitemap) : la doctrine déjà
-assumée pour les 140 fiches, du contenu qu'on trouve en suivant un lien.
+assumée pour les 310 fiches, du contenu qu'on trouve en suivant un lien.
 Trois surfaces secondaires l'accompagnent : `potentialAction`/`EntryPoint`
 dans le JSON-LD de l'accueil (le seul vocabulaire normé pour déclarer une
 URL-gabarit ; Google n'en fait aucun résultat enrichi, et beaucoup de
@@ -119,7 +119,7 @@ convertisseurs HTML→markdown suppriment les `<script type="application/ld+json
 — c'est une ceinture, pas la fonction), `dist/llms.txt`, et WebMCP.
 
 **`data-key`/`data-group` sur l'index des fiches** (`injectExerciseIndex()`,
-`vite.config.ts`) : la liste des 28 clés lisible par une IA existe **une
+`vite.config.ts`) : la liste des 62 clés lisible par une IA existe **une
 seule fois**, injectée depuis `LIBRARY`. Ne jamais écrire une seconde liste à
 la main dans `index.html` — ce serait le problème `public/sitemap.xml` à
 nouveau. La section `#aiPlan` porte la phrase qui fait le lien (« la valeur
@@ -197,7 +197,7 @@ que l'UI applique déjà — `ui/planner.ts` masque le sélecteur de groupe pour
 tout exercice de la bibliothèque, seul un perso l'expose, au motif que « le
 groupe musculaire d'un exercice de la bibliothèque est intrinsèque à
 l'exercice » — mais rien ne le garantissait côté import. Piège vérifié :
-une IA a deviné un groupe absent de nos 8 identifiants (« pull », usuel en
+une IA a deviné un groupe absent de nos identifiants (« pull », usuel en
 musculation push/pull/legs mais inexistant ici) pour des exercices par
 ailleurs correctement reconnus (`wallSlides`, `superman`, `rotation`) ; sans
 ce garde-fou, `isGroupId('pull')` est faux et le groupe retombait sur

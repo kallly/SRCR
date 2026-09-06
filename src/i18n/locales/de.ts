@@ -2,8 +2,8 @@ import type { Translations } from '../index';
 
 export const de: Translations = {
   app: {
-    title: 'Einheit — Wiedereinstieg mit Körpergewicht',
-    eyebrow: 'Phase 1 · ohne Geräte',
+    title: 'Einheit — Trainingsplaner und Timer',
+    eyebrow: 'Mit oder ohne Geräte',
     heading: 'Meine Einheit',
     tagline: 'Stell dein Training zusammen, ordne die Übungen, leg die Pausen fest.',
     sourceCode: 'Quellcode',
@@ -53,7 +53,7 @@ export const de: Translations = {
   about: {
     title: 'Über Séance',
     intro:
-      'Séance ist ein Planer und Timer für das Training mit dem eigenen Körpergewicht, gedacht für den Wiedereinstieg ohne Geräte. Du stellst deinen Ablauf aus einer Übungsbibliothek zusammen — erhöhte Liegestütze, Kniebeuge zum Stuhl, Wandsitz, Unterarmstütz, Dead Bug, Wadenheben, Außenrotation der Schulter, Gehen — und legst dann Sätze, Wiederholungen oder Dauer sowie die Pausen fest.',
+      'Séance ist ein Trainingsplaner und Timer. Du stellst deinen Ablauf aus einer Übungsbibliothek zusammen, die sich nach der verfügbaren Ausrüstung filtern lässt — Körpergewicht, Widerstandsband, Kurzhanteln, Gerät — oder nach dem Moment der Einheit, Aufwärmen und Dehnen eingeschlossen. Jede Zeile wird danach in Sätzen, Wiederholungen oder Dauer eingestellt, mit ihrer eigenen Pause.',
     modes:
       'Zwei Arten, die Sätze aneinanderzureihen. Im klassischen Modus absolvierst du alle Sätze einer Übung, bevor die nächste folgt, mit der Pause aus der jeweiligen Zeile. Im Zirkelmodus wechseln die Sätze die Muskelgruppen, und eine Pause erscheint nur, wenn zwei Belastungen derselben Gruppe zwangsläufig aufeinanderfolgen — die Vorschau zeigt die berechnete Abfolge vor dem Start.',
     privacy:
@@ -81,7 +81,7 @@ export const de: Translations = {
     createTitle: 'Eine Einheit erstellen',
     createText: 'Kopiere diese Nachricht:',
     createPrompt:
-      'Hier ist eine Seite für Körpergewichtseinheiten: https://kallly.github.io/SRCR/. Erstelle mir eine 20-minütige Oberkörper-Einheit und gib mir den Link zum Importieren.',
+      'Hier ist eine Seite zum Zusammenstellen von Trainingseinheiten: https://kallly.github.io/SRCR/. Erstelle mir eine 20-minütige Oberkörper-Einheit und gib mir den Link zum Importieren.',
     modifyTitle: 'Eine Einheit ändern',
     modifyText: 'Nutze den Freigabelink deiner Einheit, um die KI um eine Änderung zu bitten:',
     modifyPrompt:
@@ -93,6 +93,7 @@ export const de: Translations = {
   exerciseInfo: {
     trigger: 'Informationen zur Übung',
     close: 'Schließen',
+    equipment: 'Ausrüstung',
     muscles: 'Beanspruchte Muskeln',
     keyPoints: 'Wichtigste Punkte',
     moreInfo: 'Mehr erfahren',
@@ -127,6 +128,7 @@ export const de: Translations = {
     search: 'Übung suchen…',
     filterLabel: 'Nach Muskelgruppe filtern',
     filterAll: 'Alle Gruppen',
+    filterCategoryLabel: 'Nach Ausrüstung filtern',
     noResults: 'Keine Übung entspricht dieser Suche.',
   },
 
@@ -191,14 +193,24 @@ export const de: Translations = {
   },
 
   group: {
-    push: 'Brust / Arme',
+    push: 'Brust',
     shoulders: 'Schultern',
     back: 'Rücken',
+    arms: 'Arme',
     legs: 'Oberschenkel',
     calves: 'Waden',
     core: 'Rumpf',
     cardio: 'Ausdauer',
     glutes: 'Gesäß',
+  },
+
+  category: {
+    warmup: 'Aufwärmen',
+    stretching: 'Dehnen',
+    bodyweight: 'Körpergewicht',
+    band: 'Widerstandsband',
+    dumbbell: 'Kurzhanteln',
+    machine: 'Gerät',
   },
 
   duration: {
@@ -291,7 +303,7 @@ export const de: Translations = {
     readyWhen: 'Weitergehen, wenn',
     precautions: 'Vorsichtsmaßnahmen',
     similar: 'Ähnliche Übungen',
-    tagline: 'Planer und Timer für das Training mit dem eigenen Körpergewicht.',
+    tagline: 'Trainingsplaner und Timer, mit oder ohne Geräte.',
     disclaimer:
       'Diese Informationen sind allgemeiner Art und ersetzen keine ärztliche Beratung. Bei Schmerzen, Verletzungen oder bekannten Vorerkrankungen hole vor dem Start ärztlichen Rat ein.',
   },
@@ -408,6 +420,142 @@ export const de: Translations = {
     buttKickMarch: {
       name: 'Anfersen auf der Stelle',
       cue: 'Auf der Stelle marschieren, Fersen im moderaten Tempo Richtung Gesäß führen.',
+    },
+    bandPullApart: {
+      name: 'Band Pull-Apart',
+      cue: 'Arme vor dem Körper gestreckt, Band zwischen den Händen gespannt, auseinanderziehen und Schulterblätter zusammenziehen.',
+    },
+    bandSquat: {
+      name: 'Kniebeuge mit Band',
+      cue: 'Band unter den Füßen und über den Schultern, wie bei einer normalen Kniebeuge absenken, Rücken gerade.',
+    },
+    dumbbellGobletSquat: {
+      name: 'Goblet Squat',
+      cue: 'Kurzhantel mit beiden Händen vor der Brust halten, absenken und Ellbogen zwischen den Knien führen.',
+    },
+    dumbbellRow: {
+      name: 'Einarmiges Kurzhantelrudern',
+      cue: 'Ein Knie und eine Hand auf einer Bank abstützen, Kurzhantel zur Hüfte ziehen, Rücken dabei flach halten.',
+    },
+    legPressMachine: {
+      name: 'Beinpresse',
+      cue: 'Füße flach auf der Platte, schulterbreit, drücken ohne die Knie ganz durchzustrecken.',
+    },
+    latPulldownMachine: {
+      name: 'Latzug',
+      cue: 'Stange breiter als schulterbreit greifen und zur oberen Brust ziehen, Oberkörper dabei aufrecht halten.',
+    },
+    hamstringStretch: {
+      name: 'Dehnung der Beinrückseite',
+      cue: 'Ferse auf einer Erhöhung ablegen, Bein gestreckt, Oberkörper nach vorne beugen ohne den Rücken zu runden.',
+    },
+    chestDoorwayStretch: {
+      name: 'Brustdehnung im Türrahmen',
+      cue: 'Unterarm gegen den Türrahmen, Ellbogen auf Schulterhöhe, Oberkörper sanft nach vorne bewegen.',
+    },
+    squat: {
+      name: 'Kniebeuge',
+      cue: 'Füße hüftbreit, Hüfte nach hinten schieben und absenken, bis die Oberschenkel fast waagerecht sind, Oberkörper aufrecht.',
+    },
+    pushup: {
+      name: 'Liegestütz',
+      cue: 'Hände unter den Schultern, Körper von Fersen bis Kopf gerade, absenken bis knapp über den Boden.',
+    },
+    pikePushup: {
+      name: 'Pike-Liegestütz',
+      cue: 'Hüfte hoch im umgekehrten V, den Scheitel zwischen den Händen Richtung Boden senken.',
+    },
+    mountainClimber: {
+      name: 'Bergsteiger',
+      cue: 'In der Liegestützposition abwechselnd ein Knie zur Brust ziehen, ohne die Hüfte anzuheben.',
+    },
+    legSwing: {
+      name: 'Beinpendeln',
+      cue: 'Mit einer Hand abstützen, ein Bein vor und zurück schwingen, Umfang steigern, Becken ruhig.',
+    },
+    torsoTwist: {
+      name: 'Rumpfrotation',
+      cue: 'Im Stand, Füße fest, den Oberkörper abwechselnd zur Seite drehen, Arme locker.',
+    },
+    quadStretch: {
+      name: 'Quadrizepsdehnung im Stand',
+      cue: 'Im Stand den Knöchel greifen und die Ferse zum Gesäß ziehen, Knie nebeneinander.',
+    },
+    gluteStretch: {
+      name: 'Gesäßdehnung (Vierer-Position)',
+      cue: 'In Rückenlage den Knöchel über das andere Knie legen und den stützenden Oberschenkel zu dir ziehen.',
+    },
+    calfStretch: {
+      name: 'Wadendehnung an der Wand',
+      cue: 'Hände an die Wand, hinteres Bein gestreckt, Ferse am Boden, Becken nach vorne schieben.',
+    },
+    childPose: {
+      name: 'Stellung des Kindes',
+      cue: 'Im Knien auf die Fersen setzen und die Arme weit nach vorne strecken, Stirn Richtung Boden.',
+    },
+    tricepsStretch: {
+      name: 'Trizepsdehnung über Kopf',
+      cue: 'Ellbogen gebeugt zur Decke, Hand zwischen die Schulterblätter, den Ellbogen mit der anderen Hand sanft schieben.',
+    },
+    bandChestPress: {
+      name: 'Brustdrücken mit Band',
+      cue: 'Band um den Rücken, Hände auf Brusthöhe, nach vorne bis zur vollen Armstreckung drücken.',
+    },
+    bandLateralRaise: {
+      name: 'Seitheben mit Band',
+      cue: 'Band unter den Füßen, gestreckte Arme seitlich bis auf Schulterhöhe heben.',
+    },
+    bandLateralWalk: {
+      name: 'Seitschritte mit Band',
+      cue: 'Band über den Knien, halbe Kniebeuge, Schritte zur Seite ohne die Knie einknicken zu lassen.',
+    },
+    bandCurl: {
+      name: 'Bizepscurl mit Band',
+      cue: 'Band unter den Füßen, Ellbogen am Körper, die Hände zu den Schultern führen.',
+    },
+    dumbbellShoulderPress: {
+      name: 'Schulterdrücken mit Kurzhanteln',
+      cue: 'Kurzhanteln auf Schulterhöhe, über den Kopf drücken ohne im unteren Rücken ins Hohlkreuz zu gehen.',
+    },
+    dumbbellFloorPress: {
+      name: 'Kurzhantel-Bodendrücken',
+      cue: 'Auf dem Boden liegend, Knie gebeugt, Kurzhanteln nach oben drücken; unten berühren die Ellbogen den Boden.',
+    },
+    dumbbellRomanianDeadlift: {
+      name: 'Rumänisches Kreuzheben',
+      cue: 'Knie nur leicht gebeugt, Hüfte nach hinten schieben und die Kurzhanteln an den Beinen entlang absenken, Rücken flach.',
+    },
+    dumbbellCalfRaise: {
+      name: 'Wadenheben mit Kurzhanteln',
+      cue: 'Kurzhanteln seitlich, auf die Fußballen hochgehen und langsam absenken.',
+    },
+    dumbbellCurl: {
+      name: 'Bizepscurl mit Kurzhantel',
+      cue: 'Ellbogen am Körper, die Kurzhantel ohne Schwung aus dem Oberkörper hochführen.',
+    },
+    dumbbellTricepsExtension: {
+      name: 'Trizepsstrecken über Kopf',
+      cue: 'Kurzhantel mit beiden Händen über dem Kopf, hinter den Nacken absenken, Ellbogen eng.',
+    },
+    chestPressMachine: {
+      name: 'Brustpresse',
+      cue: 'Rücken angelehnt, Griffe auf Brusthöhe, drücken ohne die Ellbogen ganz durchzustrecken.',
+    },
+    legCurlMachine: {
+      name: 'Beinbeuger',
+      cue: 'Rolle an den unteren Waden, die Knie kontrolliert beugen, Becken flach.',
+    },
+    treadmill: {
+      name: 'Laufband',
+      cue: 'Ein Tempo, bei dem Sprechen möglich, aber etwas außer Atem ist; nicht an den Griffen hängen.',
+    },
+    stationaryBike: {
+      name: 'Heimtrainer',
+      cue: 'Sattel so eingestellt, dass das Knie unten leicht gebeugt bleibt; gleichmäßige Trittfrequenz.',
+    },
+    rowingMachine: {
+      name: 'Rudergerät',
+      cue: 'Zuerst mit den Beinen drücken, dann den Oberkörper öffnen, dann mit den Armen ziehen — beim Zurück umgekehrt.',
     },
     custom: {
       name: 'Eigene Übung',

@@ -158,7 +158,7 @@ export const it: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     benefits: [
       'Sviluppa la resistenza alla forza nelle cosce, la qualità che si esaurisce scendendo le scale o restando a lungo in piedi.',
       'Carica il quadricipite senza movimento articolare, il che spesso lo rende tollerabile quando un movimento completo non lo è ancora.',
-      'Il progresso si misura in secondi, un’unità più chiara di "una ripetizione in più" per seguire un ritorno all’attività.',
+      'Il progresso si misura in secondi, un’unità più chiara di "una ripetizione in più" per seguire i propri progressi.',
     ],
     progression: {
       easier: 'Apri l’angolo del ginocchio a 110-120°, oppure dividi il tempo in due mantenimenti più brevi.',
@@ -312,7 +312,7 @@ export const it: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     anatomy:
       'Tutti i muscoli della catena posteriore contribuiscono in alternanza: glutei e femorali per propulsare, quadricipiti per ammortizzare, polpacci per la spinta finale. Il core stabilizza il bacino a ogni appoggio su una gamba, e la muscolatura del piede gestisce la ricezione.',
     mechanics:
-      'Locomozione ciclica in catena chiusa alternata: ogni gamba attraversa una fase di appoggio e una di volo dell’arto. A differenza della corsa, c’è sempre un piede a terra, e questa assenza di fase aerea elimina l’impatto e rende il camminare accessibile in un ritorno all’attività.',
+      'Locomozione ciclica in catena chiusa alternata: ogni gamba attraversa una fase di appoggio e una di volo dell’arto. A differenza della corsa, c’è sempre un piede a terra, e questa assenza di fase aerea elimina l’impatto e rende il camminare praticabile ogni giorno.',
     benefits: [
       'Sviluppa la capacità cardiovascolare senza impatto articolare, il che la rende praticabile quasi ogni giorno.',
       'È l’unica attività di questa libreria che si somma naturalmente alla vita quotidiana: spostamenti, commissioni, scale.',
@@ -393,7 +393,7 @@ export const it: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     benefits: [
       'Rende praticabile lo schema del piegamento fin dal primo giorno, qualunque sia il livello di partenza.',
       'Permette di imparare la posizione dei gomiti e l’allineamento del corpo senza essere limitati dalla forza.',
-      'Funziona ovunque, senza attrezzi e senza bisogno di un pavimento pulito, il che si adatta a un ritorno graduale.',
+      'Funziona ovunque, senza attrezzi e senza bisogno di un pavimento pulito, il che ne fa un buon punto di partenza per costruire la spinta.',
     ],
     progression: {
       easier: 'Avvicina i piedi al muro, fino a restare quasi in verticale.',
@@ -617,7 +617,7 @@ export const it: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     mechanics:
       'Un esercizio anti-rotazione e anti-estensione: il peso degli arti opposti crea un momento che tende a torcere e inarcare il tronco, e tutto il compito consiste nell’impedirlo. È controllo motorio incrociato, lo stesso schema del cammino.',
     benefits: [
-      'Rinforza la stabilità lombare senza carico compressivo sulla colonna, il che lo rende spesso ben tollerato in un ritorno all’attività.',
+      'Rinforza la stabilità lombare senza carico compressivo sulla colonna, il che lo rende spesso ben tollerato anche con una schiena sensibile.',
       'Allena la coordinazione incrociata di braccio e gamba opposti, direttamente trasferibile al cammino.',
       'Rivela subito le asimmetrie: un lato è spesso nettamente meno stabile dell’altro.',
     ],
@@ -692,7 +692,7 @@ export const it: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     benefits: [
       'Lavora ogni gamba separatamente, il che rivela e corregge le asimmetrie che uno squat nasconde.',
       'Sollecita molto l’equilibrio e gli stabilizzatori dell’anca, essenziali per il cammino e per le scale.',
-      'La versione all’indietro è nettamente più delicata per il ginocchio dell’affondo in avanti, il che si adatta meglio a un ritorno all’attività.',
+      'La versione all’indietro è nettamente più delicata per il ginocchio dell’affondo in avanti, il che si adatta meglio a un ginocchio sensibile.',
     ],
     progression: {
       easier: 'Tieni una mano a un muro o allo schienale di una sedia, e riduci la profondità.',
@@ -1039,7 +1039,7 @@ export const it: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     benefits: [
       'Alza la frequenza cardiaca senza spostamento e senza attrezzi, in un solo metro quadrato.',
       'Serve come riscaldamento completo a inizio sessione, o come spinta cardiovascolare tra due esercizi di forza.',
-      'Senza impatto, a differenza dei salti: praticabile in appartamento e compatibile con un ritorno all’attività.',
+      'Senza impatto, a differenza dei salti: praticabile in appartamento e a qualsiasi ora.',
     ],
     progression: {
       easier: 'Abbassa le ginocchia e il ritmo, fino a una semplice marcia sul posto.',
@@ -1085,5 +1085,1254 @@ export const it: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Un crampo nella parte posteriore della coscia segnala di solito un riscaldamento insufficiente: inizia con una semplice marcia sul posto prima di aggiungere ampiezza.',
+  },
+
+  bandPullApart: {
+    slug: 'apertura-con-elastico',
+    muscles: { primary: 'Deltoide posteriore, romboidi', secondary: 'Trapezio medio' },
+    steps: [
+      'Tieni l’elastico con entrambe le mani, braccia tese davanti a te all’altezza del petto, con una leggera tensione già presente.',
+      'Apri le braccia verso l’esterno mantenendo i gomiti tesi, finché l’elastico non tocca il petto.',
+      'Stringi le scapole tra loro al termine del movimento.',
+      'Torna lentamente alla posizione di partenza controllando la tensione dell’elastico.',
+    ],
+    mistakes: [
+      'Gomiti che si piegano durante l’apertura: trasforma il movimento in un rematore e riduce il lavoro della parte posteriore della spalla.',
+      'Usare lo slancio del busto per aiutare ad aprire le braccia.',
+      'Rilascio brusco al ritorno invece di controllare la tensione dell’elastico.',
+    ],
+    sensation:
+      'Il lavoro si sente tra le scapole e nella parte posteriore delle spalle, non negli avambracci né nei bicipiti. Una tensione nella parte alta del trapezio segnala che le spalle si alzano invece di restare basse.',
+    rangeOfMotion:
+      'Apri le braccia finché l’elastico tocca il petto o la parte alta del busto, senza cercare di più: oltre, la tensione cala e le spalle compensano.',
+    tempo:
+      'Uno o due secondi per aprire, due o tre per tornare controllando la tensione. Espira aprendo, inspira tornando.',
+    anatomy:
+      'Il deltoide posteriore e i romboidi avvicinano le scapole alla colonna, il trapezio medio e inferiore stabilizzano la scapola contro la gabbia toracica. Gli estensori del gomito restano contratti in isometria per mantenere le braccia tese per tutto il movimento.',
+    mechanics:
+      'Abduzione orizzontale della spalla nel piano trasversale, contro una resistenza crescente: la tensione dell’elastico è minima a braccia tese davanti al corpo e massima a braccia aperte — l’opposto di un carico a corpo libero, costante lungo tutta l’ampiezza.',
+    benefits: [
+      'Rinforza la parte posteriore della spalla, spesso poco sollecitata rispetto alla parte anteriore nei gesti quotidiani.',
+      'Bilancia le spalle quando nella seduta sono già presenti diversi movimenti di spinta (piegamenti, distensioni).',
+      'Richiede solo un elastico e un metro quadrato di spazio.',
+    ],
+    progression: {
+      easier: 'Usa un elastico meno teso, o tienilo più largo per ridurre la resistenza.',
+      harder: 'Usa un elastico più teso, o rallenta il ritorno a quattro secondi.',
+      readyWhen: 'Quando tre serie da quindici passano senza che le spalle salgano verso le orecchie.',
+    },
+    precautions:
+      'Interrompi il movimento se compare dolore nella parte anteriore della spalla invece che tra le scapole: è il segno di una posizione scorretta della spalla.',
+  },
+
+  bandSquat: {
+    slug: 'squat-con-elastico',
+    muscles: { primary: 'Quadricipiti, glutei', secondary: 'Medio gluteo, femorali' },
+    steps: [
+      'Posiziona l’elastico appena sopra le ginocchia, piedi larghi quanto le anche.',
+      'Spingi le anche indietro e scendi come in uno squat classico, le ginocchia spingono l’elastico verso l’esterno.',
+      'Scendi finché le cosce sono vicine all’orizzontale, peso sui talloni.',
+      'Risali spingendo sui talloni fino all’estensione completa, senza lasciare che le ginocchia cedano verso l’interno.',
+    ],
+    mistakes: [
+      'Lasciare che le ginocchia cedano verso l’interno invece di spingere l’elastico verso l’esterno.',
+      'Scendere senza controllo, lasciando che l’elastico riporti le ginocchia bruscamente verso l’interno.',
+      'Busto che si inclina troppo in avanti.',
+    ],
+    sensation:
+      'Il lavoro si sente nella parte anteriore delle cosce e sul lato dei glutei, che devono spingere attivamente l’elastico. Una tensione al ginocchio segnala che l’allineamento ginocchio-piede non viene mantenuto.',
+    rangeOfMotion:
+      'Scendi finché le cosce sono vicine all’orizzontale, senza superare ciò che consente una mobilità dell’anca confortevole.',
+    tempo:
+      'Tre secondi per scendere, uno o due per risalire. Inspira scendendo, espira spingendo sui talloni.',
+    anatomy:
+      'Il quadricipite e il grande gluteo restano i motori principali dello squat; l’elastico aggiunge una resistenza laterale che il medio gluteo deve contrastare in continuazione per impedire al ginocchio di cedere verso l’interno, cosa che uno squat a corpo libero non richiede allo stesso modo.',
+    mechanics:
+      'Doppia flessione poi doppia estensione di anca e ginocchio nel piano sagittale, combinata a una resistenza in abduzione d’anca imposta dall’elastico nel piano frontale.',
+    benefits: [
+      'Rinforza lo squat classico aggiungendo un lavoro attivo del medio gluteo, utile per la stabilità del ginocchio nella camminata e nella corsa.',
+      'Dà un riscontro tattile immediato sull’allineamento del ginocchio: se l’elastico si allenta, il ginocchio è ceduto verso l’interno.',
+      'Attrezzatura leggera ed economica, facile da portare ovunque.',
+    ],
+    progression: {
+      easier: 'Usa un elastico meno resistente, o riduci la profondità della discesa.',
+      harder: 'Usa un elastico più resistente, o aggiungi una pausa di due secondi in basso.',
+      readyWhen: 'Quando tre serie da quindici passano senza che l’elastico si allenti mai.',
+    },
+    precautions:
+      'Scegli una resistenza che permetta di mantenere le ginocchia allineate per tutta la serie: un elastico troppo forte che le costringe a cedere è controproducente.',
+  },
+
+  dumbbellGobletSquat: {
+    slug: 'goblet-squat',
+    muscles: { primary: 'Quadricipiti, glutei', secondary: 'Core, schiena alta' },
+    steps: [
+      'Tieni un manubrio in verticale con entrambe le mani contro il petto, gomiti rivolti verso il basso.',
+      'Piedi un po’ più larghi delle anche, punte leggermente aperte.',
+      'Scendi spingendo le anche indietro, gomiti che sfiorano l’interno delle ginocchia.',
+      'Risali spingendo sui talloni fino all’estensione completa delle gambe.',
+    ],
+    mistakes: [
+      'Il busto crolla in avanti sotto il peso del manubrio.',
+      'I talloni si sollevano durante la discesa.',
+      'Discesa incompleta per scarsa mobilità della caviglia invece che per scelta.',
+    ],
+    sensation:
+      'Il lavoro si sente nella parte anteriore delle cosce e nei glutei, con in più una tensione isometrica nella schiena alta e negli avambracci che tengono il manubrio. Il busto deve restare verticale dall’inizio alla fine.',
+    rangeOfMotion:
+      'Scendi finché i gomiti toccano o sfiorano l’interno delle ginocchia: tenere il carico davanti al corpo permette naturalmente una discesa più profonda rispetto a uno squat a mani libere.',
+    tempo:
+      'Due o tre secondi per scendere, uno o due per risalire. Inspira scendendo, espira spingendo sui talloni.',
+    anatomy:
+      'Il quadricipite e il grande gluteo restano i motori principali; tenere il carico contro il petto obbliga gli erettori spinali e gli addominali a mantenere il busto verticale contro la tendenza a inclinarsi in avanti, un lavoro di core che uno squat a corpo libero non richiede allo stesso grado.',
+    mechanics:
+      'Doppia flessione poi doppia estensione di anca e ginocchio nel piano sagittale. Il carico tenuto vicino al baricentro, contro il petto, mantiene il busto più verticale rispetto a uno squat con carico sulla schiena.',
+    benefits: [
+      'Aggiunge un carico esterno progressivo a un movimento già padroneggiato a corpo libero: il passo successivo logico quando lo squat sulla sedia diventa facile.',
+      'La posizione del carico contro il petto insegna una postura di squat verticale, utile per tutti gli squat caricati a venire.',
+      'Richiede solo un manubrio o un carico equivalente (una bottiglia zavorrata, un kettlebell).',
+    ],
+    progression: {
+      easier: 'Usa un carico più leggero, o torna temporaneamente allo squat sulla sedia senza peso.',
+      harder: 'Aumenta il carico gradualmente, o rallenta la discesa a quattro secondi.',
+      readyWhen: 'Quando tre serie da dieci passano con il busto verticale e i talloni che non si sollevano mai.',
+    },
+    precautions:
+      'Aumenta il carico a piccoli passi: profondità e controllo devono restare intatti per primi, non il peso indicato sul manubrio.',
+  },
+
+  dumbbellRow: {
+    slug: 'rematore-con-manubrio-a-un-braccio',
+    muscles: { primary: 'Grande dorsale, trapezio', secondary: 'Bicipiti, core' },
+    steps: [
+      'Appoggia un ginocchio e la mano dello stesso lato su una panca o una sedia stabile, schiena parallela al suolo.',
+      'Tieni il manubrio nell’altra mano, braccio teso verso il pavimento.',
+      'Tira il manubrio verso il fianco mantenendo il gomito vicino al corpo, la scapola che si avvicina alla colonna.',
+      'Scendi con controllo fino all’estensione completa del braccio.',
+    ],
+    mistakes: [
+      'Ruotare il busto per aiutare a tirare il manubrio invece di lasciar lavorare la schiena.',
+      'Il gomito si allontana dal corpo, trasformando il rematore in un movimento di spalla.',
+      'La schiena si incurva invece di restare piatta.',
+    ],
+    sensation:
+      'Il lavoro si sente al centro della schiena e sotto l’ascella, con la scapola che si avvicina chiaramente alla colonna nella parte alta del movimento. Una tensione nella parte bassa della schiena segnala che l’appoggio sulla panca non sostiene abbastanza il busto.',
+    rangeOfMotion:
+      'Tira finché il manubrio tocca o sfiora il fianco, gomito che supera leggermente la schiena. Scendi fino all’estensione completa del braccio per usare tutta l’ampiezza disponibile.',
+    tempo:
+      'Un secondo per tirare, due o tre per scendere controllando il carico. Espira tirando, inspira scendendo.',
+    anatomy:
+      'Il grande dorsale e il grande rotondo avvicinano il braccio al corpo e lo estendono all’indietro, i romboidi e il trapezio medio avvicinano la scapola alla colonna, il bicipite assiste flettendo il gomito. L’appoggio ginocchio-mano sulla panca stabilizza il busto per isolare il lavoro della schiena.',
+    mechanics:
+      'Estensione e adduzione della spalla nel piano sagittale, associata a una retrazione scapolare. L’appoggio unilaterale sulla panca elimina il contributo delle gambe presente in un rematore in piedi.',
+    benefits: [
+      'Rinforza lo schema di trazione, poco presente in una seduta a corpo libero dove gli esercizi per la schiena restano isometrici (superman, quadrupedia con estensione).',
+      'L’appoggio unilaterale permette di lavorare ogni lato in modo indipendente e di individuare differenze di forza tra le braccia.',
+      'Un contrappeso utile rispetto ai movimenti di spinta (piegamenti, distensioni) già presenti nella maggior parte delle sedute.',
+    ],
+    progression: {
+      easier: 'Usa un carico più leggero, o mantieni il busto più orizzontale per ridurre l’ampiezza.',
+      harder: 'Aumenta il carico, o mantieni una pausa di un secondo in alto.',
+      readyWhen: 'Quando tre serie da dieci passano senza rotazione del busto, su entrambi i lati.',
+    },
+    precautions:
+      'Mantieni la schiena piatta dall’inizio alla fine: se il busto deve incurvarsi per tirare su il carico, è troppo pesante.',
+  },
+
+  legPressMachine: {
+    slug: 'leg-press',
+    muscles: { primary: 'Quadricipiti, glutei', secondary: 'Femorali' },
+    steps: [
+      'Siediti sulla macchina, schiena e testa ben appoggiate allo schienale.',
+      'Posiziona i piedi piatti sulla pedana, larghi quanto le anche.',
+      'Sblocca i fermi di sicurezza e scendi piegando le ginocchia fino a un angolo vicino ai 90°.',
+      'Spingi con i piedi fino all’estensione delle gambe, senza bloccare completamente le ginocchia.',
+    ],
+    mistakes: [
+      'Bloccare completamente le ginocchia a fine spinta, spostando il carico sull’articolazione.',
+      'La parte bassa della schiena si stacca dallo schienale in discesa.',
+      'Scendere troppo in profondità, ginocchia che superano ampiamente il petto.',
+    ],
+    sensation:
+      'Il lavoro si sente nella parte anteriore delle cosce e nei glutei, senza tensione nella parte bassa della schiena: lo schienale sostiene tutto il busto. Un fastidio lombare segnala un’ampiezza eccessiva per la mobilità dell’anca del momento.',
+    rangeOfMotion:
+      'Scendi fino a un angolo del ginocchio vicino ai 90°, o meno se la parte bassa della schiena si stacca prima: la macchina permette di fissare questo limite con precisione da una seduta all’altra.',
+    tempo:
+      'Due o tre secondi per scendere, uno per spingere. Inspira scendendo, espira spingendo.',
+    anatomy:
+      'Il quadricipite estende il ginocchio, il grande gluteo estende l’anca: gli stessi motori di uno squat, ma lo schienale della macchina elimina tutto il lavoro di core e stabilizzazione che lo squat richiede al busto.',
+    mechanics:
+      'Doppia estensione di anca e ginocchio nel piano sagittale, su una traiettoria guidata: a differenza dello squat, il busto resta fisso e si muove solo il carico.',
+    benefits: [
+      'Permette di caricare fortemente le gambe senza sollecitare core o equilibrio, utile come complemento o sostituto temporaneo dello squat.',
+      'La traiettoria guidata riduce il rischio di errore tecnico rispetto a un movimento libero caricato.',
+      'Facilita la regolazione fine del carico, gradino per gradino.',
+    ],
+    progression: {
+      easier: 'Riduci il carico, o limita l’angolo di discesa a 70-80° di flessione.',
+      harder: 'Aumenta il carico, o rallenta la discesa a quattro secondi.',
+      readyWhen: 'Quando tre serie da dieci passano senza che la parte bassa della schiena si stacchi dallo schienale.',
+    },
+    precautions:
+      'Non bloccare mai completamente le ginocchia a fine spinta, e non lasciare mai che la parte bassa della schiena si stacchi dallo schienale: sono i due punti di sicurezza di questa macchina.',
+  },
+
+  latPulldownMachine: {
+    slug: 'lat-machine',
+    muscles: { primary: 'Grande dorsale', secondary: 'Bicipiti, trapezio' },
+    steps: [
+      'Siediti di fronte alla macchina, cosce bloccate sotto i rulli se presenti.',
+      'Afferra la barra più larga delle spalle, braccia tese.',
+      'Tira la barra verso la parte alta del petto mantenendo il busto dritto, gomiti che scendono verso i fianchi.',
+      'Risali con controllo fino all’estensione completa delle braccia.',
+    ],
+    mistakes: [
+      'Inclinarsi molto all’indietro per aiutare a tirare giù la barra.',
+      'Tirare la barra dietro la nuca invece che davanti al petto.',
+      'Risalita troppo rapida, senza controllare il carico.',
+    ],
+    sensation:
+      'Il lavoro si sente al centro e nella parte bassa della schiena, fino sotto l’ascella. Una tensione nella parte alta del trapezio o nel collo segnala che le spalle si alzano invece di restare basse.',
+    rangeOfMotion:
+      'Tira finché la barra tocca la parte alta del petto, gomiti che scendono lungo il corpo. Risali fino all’estensione completa delle braccia per usare tutta l’ampiezza.',
+    tempo:
+      'Uno o due secondi per tirare, due o tre per risalire controllando il carico. Espira tirando, inspira risalendo.',
+    anatomy:
+      'Il grande dorsale adduce ed estende la spalla, i romboidi e il trapezio medio avvicinano la scapola alla colonna, il bicipite assiste flettendo il gomito. È l’equivalente in trazione verticale della trazione alla sbarra, in versione guidata e caricabile progressivamente.',
+    mechanics:
+      'Adduzione ed estensione della spalla nel piano sagittale, associata a depressione e retrazione scapolare, su una traiettoria guidata dalla macchina.',
+    benefits: [
+      'Costruisce la forza di trazione verticale utile per progredire verso la trazione alla sbarra, un movimento che il corpo libero da solo rende difficile da raggiungere.',
+      'Permette di dosare con precisione il carico, a differenza di una trazione a corpo libero dove si può regolare solo il peso totale.',
+      'Rinforza la schiena come specchio dei movimenti di spinta già presenti nella maggior parte delle sedute.',
+    ],
+    progression: {
+      easier: 'Riduci il carico, o usa una presa più stretta per accorciare il braccio di leva.',
+      harder: 'Aumenta il carico, o mantieni una pausa di un secondo in basso.',
+      readyWhen: 'Quando tre serie da dieci passano senza che il busto si inclini all’indietro.',
+    },
+    precautions:
+      'Tira sempre la barra davanti al petto, mai dietro la nuca: questa variante datata mette la spalla in una posizione rischiosa per un guadagno minimo.',
+  },
+
+  hamstringStretch: {
+    slug: 'allungamento-dei-femorali',
+    muscles: { primary: 'Femorali' },
+    steps: [
+      'Appoggia un tallone su un rialzo stabile (uno scalino, una sedia bassa), gamba tesa.',
+      'Mantieni l’altra gamba leggermente piegata, piede ben saldo a terra.',
+      'Piega il busto in avanti dalle anche, schiena piatta, finché non senti tensione nella parte posteriore della coscia.',
+      'Mantieni la posizione senza rimbalzi, respirando con calma.',
+    ],
+    mistakes: [
+      'Incurvare la schiena per guadagnare più ampiezza invece di piegarsi dalle anche.',
+      'Rimbalzare nell’allungamento invece di mantenere una posizione stabile.',
+      'Bloccare completamente il ginocchio della gamba tesa.',
+    ],
+    sensation:
+      'La tensione deve sentirsi lungo tutta la parte posteriore della coscia, mai al ginocchio né nella parte bassa della schiena. Un dolore acuto invece di tensione segnala di fermarsi e ridurre l’ampiezza.',
+    rangeOfMotion:
+      'Piegati finché senti una tensione netta ma tollerabile, mai dolorosa. L’ampiezza confortevole aumenta naturalmente da una seduta all’altra.',
+    tempo:
+      'Nessun ritmo di esecuzione: la posizione si mantiene immobile. Respira lentamente e profondamente per tutta la durata del mantenimento.',
+    anatomy:
+      'I femorali, che flettono il ginocchio ed estendono l’anca, vengono messi in tensione passiva dalla flessione dell’anca combinata con l’estensione del ginocchio. Qui non si cerca alcuna contrazione muscolare attiva, solo un rilascio progressivo sotto tensione.',
+    mechanics:
+      'Messa in tensione passiva dei femorali tramite flessione dell’anca ed estensione del ginocchio simultanee, nel piano sagittale, senza carico né movimento ripetuto.',
+    benefits: [
+      'Mantiene la flessibilità della parte posteriore della coscia, spesso accorciata dalla posizione seduta prolungata.',
+      'Facilita l’ampiezza dei movimenti di flessione dell’anca (affondi, squat profondi) eseguiti in altre parti della seduta.',
+      'Si pratica ovunque con un semplice scalino o bordo come appoggio.',
+    ],
+    precautions:
+      'Non forzare mai oltre una tensione tollerabile, ed evita questo allungamento a freddo prima di uno sforzo intenso: trova posto meglio a fine seduta o lontano dallo sforzo.',
+  },
+
+  chestDoorwayStretch: {
+    slug: 'allungamento-del-petto-sullo-stipite',
+    muscles: { primary: 'Pettorali', secondary: 'Deltoide anteriore' },
+    steps: [
+      'Posizionati sullo stipite di una porta, avambraccio contro lo stipite, gomito all’altezza della spalla.',
+      'Piedi leggermente sfalsati, uno davanti all’altro per stabilità.',
+      'Avanza dolcemente il busto attraverso lo stipite finché non senti tensione nella parte anteriore della spalla e sul pettorale.',
+      'Mantieni la posizione senza rimbalzi, respirando con calma.',
+    ],
+    mistakes: [
+      'Gomito posizionato troppo in alto o troppo in basso, il che sposta la tensione verso la spalla invece che il pettorale.',
+      'Avanzare in modo troppo brusco invece di procedere gradualmente.',
+      'Inarcare eccessivamente la parte bassa della schiena per guadagnare più ampiezza.',
+    ],
+    sensation:
+      'La tensione deve sentirsi nella parte anteriore della spalla e sul pettorale del braccio coinvolto, mai nell’articolazione stessa. Un dolore nella parte anteriore della spalla segnala di arretrare leggermente.',
+    rangeOfMotion:
+      'Avanza finché senti una tensione netta ma tollerabile. L’altezza del gomito cambia la zona allungata: più in basso, l’allungamento scende verso la parte inferiore del pettorale; più in alto, sale verso la parte superiore del pettorale e la spalla.',
+    tempo:
+      'Nessun ritmo di esecuzione: la posizione si mantiene immobile. Respira lentamente: espirare aiuta spesso a rilasciare un po’ più la tensione.',
+    anatomy:
+      'Il grande pettorale, che adduce e flette la spalla in avanti, viene messo in tensione passiva dalla posizione di apertura imposta dallo stipite. Il deltoide anteriore, spesso accorciato dagli stessi gesti ripetitivi, viene allungato nella stessa posizione.',
+    mechanics:
+      'Messa in tensione passiva del pettorale tramite un’estensione orizzontale della spalla fissata dal punto d’appoggio sullo stipite, senza carico né movimento ripetuto.',
+    benefits: [
+      'Compensa l’accorciamento del pettorale causato da posizioni prolungate di chiusura in avanti (schermi, guida, spinta ripetuta).',
+      'Facilita l’ampiezza dei movimenti di spinta e apertura del busto eseguiti in altre parti della seduta.',
+      'Non richiede alcuna attrezzatura, solo lo stipite di una porta.',
+    ],
+    precautions:
+      'Non forzare mai oltre una tensione tollerabile, soprattutto in caso di fastidio già noto alla spalla: arretra prima la posizione del braccio prima di rinunciare all’allungamento.',
+  },
+
+  squat: {
+    slug: 'squat',
+    muscles: { primary: 'Quadricipiti, glutei', secondary: 'Femorali, core' },
+    steps: [
+      'In piedi, piedi alla larghezza dei fianchi, punte leggermente aperte.',
+      'Spingi i fianchi indietro e piega le ginocchia, che restano in linea con i piedi.',
+      'Scendi finché le cosce sono vicine all’orizzontale, con il peso distribuito su tutto il piede.',
+      'Mantieni il busto dritto e lo sguardo avanti, senza incurvare la zona lombare.',
+      'Risali spingendo sui talloni fino alla completa estensione delle anche.',
+    ],
+    mistakes: [
+      'Ginocchia che cedono verso l’interno durante la risalita.',
+      'Talloni che si sollevano: segno di poca mobilità di caviglia, non di forza mancante.',
+      'Zona lombare che si incurva in basso, quando la profondità supera la mobilità dell’anca.',
+    ],
+    sensation:
+      'Il lavoro si sente nella parte anteriore delle cosce e nei glutei, con un appoggio pieno su tutto il piede. Una tensione isolata davanti al ginocchio indica che le anche non arretrano abbastanza e che il movimento parte solo dal ginocchio.',
+    rangeOfMotion:
+      'Scendi quanto la mobilità consente senza che la zona lombare si incurvi: il riferimento è la schiena, non un angolo teorico. Cosce vicine all’orizzontale bastano a caricare tutta la catena.',
+    tempo:
+      'Due o tre secondi per scendere, uno o due per risalire. Inspira scendendo, espira spingendo sui talloni.',
+    anatomy:
+      'Il quadricipite estende il ginocchio e il grande gluteo estende l’anca: i due motori lavorano insieme. Femorali e adduttori stabilizzano, il medio gluteo impedisce al ginocchio di cedere, ed erettori spinali e parete addominale mantengono il busto compatto.',
+    mechanics:
+      'Doppia flessione poi doppia estensione di anca e ginocchio nel piano sagittale, in catena chiusa. La discesa è eccentrica, la risalita concentrica. Senza sedia né riferimento esterno, sono la mobilità di caviglia e anca a fissare la profondità raggiungibile.',
+    benefits: [
+      'Il movimento base di tutta la catena inferiore: è la versione libera che lo squat sulla sedia prepara.',
+      'Non richiede attrezzi né appoggi, quindi si pratica ovunque una volta padroneggiata la profondità.',
+      'Fa da base a tutte le varianti caricate — goblet squat, leg press — che cambiano il carico, non il gesto.',
+    ],
+    progression: {
+      easier: 'Torna allo squat sulla sedia, che dà un riferimento di profondità costante.',
+      harder: 'Rallenta la discesa a cinque secondi, fai una pausa in basso, o passa al goblet squat con carico.',
+      readyWhen: 'Quando tre serie da quindici passano senza che le ginocchia cedano né i talloni si sollevino, aggiungi carico.',
+    },
+    precautions:
+      'Se il ginocchio fa male, riduci la profondità prima del numero di ripetizioni: un’escursione parziale indolore vale più di una completa che fa male.',
+  },
+
+  pushup: {
+    slug: 'piegamenti',
+    muscles: { primary: 'Pettorali, tricipiti', secondary: 'Spalle, core' },
+    steps: [
+      'In appoggio su mani e punte dei piedi, mani poco più larghe delle spalle e sotto la loro linea.',
+      'Contrai glutei e addome per allineare il corpo dai talloni alla testa.',
+      'Scendi con i gomiti a circa 45° dal busto, fino a sfiorare il pavimento con il petto.',
+      'Risali spingendo fino alla completa estensione delle braccia, senza inarcare la schiena.',
+    ],
+    mistakes: [
+      'Bacino che cede: il core molla prima delle braccia, e la zona lombare ne paga il prezzo.',
+      'Gomiti aperti a 90° sui lati, il che mette la spalla in posizione sfavorevole.',
+      'Escursione ridotta per mancanza di forza, quando una variante più facile a escursione completa fa progredire meglio.',
+    ],
+    sensation:
+      'Il lavoro si sente nel petto, nella parte posteriore del braccio e nel core, che tiene la linea del corpo dall’inizio alla fine. Una tensione lombare indica che il bacino è ceduto.',
+    rangeOfMotion:
+      'Scendi fino a sfiorare il pavimento con il petto, poi risali a braccia tese senza bloccare di scatto i gomiti. L’escursione completa è ciò che distingue un piegamento da un movimento parziale.',
+    tempo:
+      'Due secondi per scendere, uno per risalire. Inspira scendendo, espira spingendo.',
+    anatomy:
+      'Il grande pettorale e il tricipite brachiale sono i motori, con il deltoide anteriore che assiste. Il dentato anteriore mantiene la scapola aderente alla gabbia toracica; addominali e glutei impediscono al bacino di cedere, il che rende il piegamento tanto un esercizio di core quanto di spinta.',
+    mechanics:
+      'Flessione ed estensione del gomito combinate con adduzione orizzontale della spalla, in catena chiusa, con il corpo che si muove attorno a un appoggio fisso. È l’ultimo gradino della scala che piegamenti al muro, inclinati e sulle ginocchia preparano: la leva si allunga a ogni passo, quindi il carico relativo sale senza che il gesto cambi.',
+    benefits: [
+      'Il movimento di spinta di riferimento, senza attrezzi né appoggi: è l’obiettivo verso cui portano tutte le varianti assistite.',
+      'Rinforza insieme la spinta e il core, cosa che nessuna macchina per le distensioni fa.',
+      'Si dosa con precisione cambiando l’altezza dell’appoggio, senza aggiungere carico.',
+    ],
+    progression: {
+      easier: 'Torna ai piegamenti sulle ginocchia o inclinati: la linea del corpo resta la stessa, si accorcia solo la leva.',
+      harder: 'Rialza i piedi, rallenta la discesa a quattro secondi, o fai una pausa in basso.',
+      readyWhen: 'Quando tre serie da dodici passano con il corpo allineato dall’inizio alla fine, rialza i piedi.',
+    },
+    precautions:
+      'Un polso dolorante si allevia spesso appoggiandosi sui pugni chiusi o su maniglie, il che mantiene il polso in linea con l’avambraccio.',
+  },
+
+  pikePushup: {
+    slug: 'piegamenti-a-v',
+    muscles: { primary: 'Spalle', secondary: 'Tricipiti, core' },
+    steps: [
+      'Parti in posizione di piegamento, poi avvicina i piedi spingendo il bacino in alto, corpo a V rovesciata.',
+      'Mani poco più larghe delle spalle, testa rilassata tra le braccia.',
+      'Piega i gomiti per abbassare la sommità del capo verso il pavimento, tra le mani.',
+      'Risali spingendo fino a braccia tese, con il bacino ancora alto.',
+    ],
+    mistakes: [
+      'Bacino che scende durante la serie: il movimento torna a essere un piegamento normale e lascia le spalle.',
+      'Gomiti molto aperti invece di restare nella linea del movimento.',
+      'Scendere fino alla fronte invece che alla sommità del capo, il che accorcia l’escursione.',
+    ],
+    sensation:
+      'Il lavoro si sente chiaramente nelle spalle e nella parte posteriore delle braccia, non nel petto. Se domina il petto, il bacino non è abbastanza alto.',
+    rangeOfMotion:
+      'Scendi fino a sfiorare il pavimento con la sommità del capo. Più i piedi sono vicini alle mani, più peso passa dalle spalle: è questa la regolazione della difficoltà.',
+    tempo:
+      'Due secondi per scendere, uno per risalire. Espira spingendo.',
+    anatomy:
+      'Il deltoide anteriore e il tricipite sono i motori, mentre il trapezio superiore e il dentato anteriore stabilizzano la scapola mentre il braccio passa sopra la testa. Il core mantiene la posizione a V, che è ciò che indirizza il carico alla spalla anziché al petto.',
+    mechanics:
+      'Spinta verticale in catena chiusa: l’equivalente a corpo libero della distensione sopra la testa, dove l’inclinazione del busto sostituisce la scelta del carico. Flessione-estensione del gomito combinata con flessione di spalla sopra la testa.',
+    benefits: [
+      'L’unico esercizio per le spalle a corpo libero di questa libreria: senza di esso, filtrare per «corpo libero» non offriva alcun lavoro di spalla.',
+      'Prepara la spinta sopra la testa senza bisogno di manubri.',
+      'Si regola con precisione avvicinando o allontanando i piedi, senza attrezzi.',
+    ],
+    progression: {
+      easier: 'Appoggia le mani su una superficie rialzata: meno peso passa dalle spalle.',
+      harder: 'Avvicina i piedi alle mani, o rialza i piedi per verticalizzare di più il busto.',
+      readyWhen: 'Quando tre serie da dodici passano con il bacino alto per tutta la durata, rialza i piedi.',
+    },
+    precautions:
+      'Questo movimento porta le braccia sopra la testa: se la spalla fa male in quella posizione, mantieni la spinta su un’escursione più corta invece di forzare la posizione a V.',
+  },
+
+  mountainClimber: {
+    slug: 'mountain-climber',
+    muscles: { primary: 'Cardio, core', secondary: 'Spalle, flessori dell’anca' },
+    steps: [
+      'Mettiti in posizione di piegamento a braccia tese, mani sotto le spalle, corpo allineato.',
+      'Porta un ginocchio verso il petto senza che i fianchi salgano né cedano.',
+      'Riappoggia il piede e passa subito all’altra gamba.',
+      'Mantieni un ritmo costante per tutta la durata, respirando senza interruzioni.',
+    ],
+    mistakes: [
+      'Fianchi che salgono a ogni cambio di gamba: il core ha ceduto e l’esercizio diventa un rimbalzo.',
+      'Mani troppo avanti rispetto alle spalle, il che carica inutilmente polso e spalla.',
+      'Ritmo troppo veloce a scapito dell’escursione del ginocchio.',
+    ],
+    sensation:
+      'Il respiro sale in fretta, e il core lavora di continuo per impedire al bacino di muoversi. Le spalle reggono il peso della parte superiore del corpo per tutta la serie.',
+    rangeOfMotion:
+      'Porta il ginocchio fin dove il bacino riesce a restare fermo: è il bacino a fissare l’escursione, non la voglia di arrivare più lontano.',
+    tempo:
+      'Un ritmo costante e sostenibile per tutta la durata, meglio di una partenza rapida seguita da un crollo. Respira senza interruzioni: bloccare il respiro è il primo segnale di un ritmo eccessivo.',
+    anatomy:
+      'I flessori dell’anca portano il ginocchio verso il petto, mentre gli addominali e il grande gluteo del lato in appoggio impediscono al bacino di ruotare. Spalle e tricipiti lavorano in isometria per tenere il plank alto.',
+    mechanics:
+      'Flessione ed estensione alternate dell’anca in catena aperta, su una base di plank alto, quindi con appoggio chiuso sulle mani. È un esercizio cardio il cui vincolo principale resta la stabilità del tronco: il ritmo alza le pulsazioni, il core decide la qualità.',
+    benefits: [
+      'Alza le pulsazioni senza spostarsi e senza attrezzi, in pochissimo spazio.',
+      'Unisce lavoro cardio e core dinamico, cosa che né la camminata né il plank fanno da soli.',
+      'Si regola sul ritmo anziché sul carico, quindi si adatta a ogni livello senza cambiare nulla.',
+    ],
+    progression: {
+      easier: 'Rallenta nettamente, o appoggia le mani su una superficie rialzata per alleggerire le spalle.',
+      harder: 'Aumenta il ritmo o allunga la durata, purché il bacino resti fermo.',
+      readyWhen: 'Quando tre round da quaranta secondi passano senza che i fianchi salgano, allunga la durata.',
+    },
+    precautions:
+      'Polsi o spalle sensibili: rialza le mani su una panca o uno scalino, il che riduce molto il carico sull’appoggio senza cambiare il lavoro delle gambe.',
+  },
+
+  legSwing: {
+    slug: 'slanci-della-gamba',
+    muscles: { primary: 'Anche, mobilità', secondary: 'Glutei, femorali' },
+    steps: [
+      'Mettiti di lato rispetto a un muro o allo schienale di una sedia, con una mano in appoggio.',
+      'Sposta il peso sulla gamba interna, lasciando l’altra libera di oscillare.',
+      'Fai oscillare la gamba libera avanti e indietro, senza forzare a fine escursione.',
+      'Aumenta gradualmente l’ampiezza nel corso delle ripetizioni, con il bacino fermo.',
+      'Cambia lato a metà del tempo previsto.',
+    ],
+    mistakes: [
+      'Bacino che si inclina per guadagnare ampiezza, invece di lasciar lavorare la sola anca.',
+      'Ampiezza massima fin dal primo slancio, quando deve aprirsi gradualmente.',
+      'Zona lombare che si inarca quando la gamba va indietro.',
+    ],
+    sensation:
+      'Un’anca che si scioglie, senza sforzo muscolare marcato. È una messa in movimento, non un rinforzo: se tira forte, l’ampiezza è già eccessiva per l’inizio di una seduta.',
+    rangeOfMotion:
+      'Arriva fin dove il bacino riesce a restare fermo. L’ampiezza del giorno deve crescere durante la serie stessa, esattamente come nel gatto-mucca.',
+    tempo:
+      'Un’oscillazione regolare e controllata, mai lanciata. Il movimento resta guidato, non affidato allo slancio.',
+    anatomy:
+      'I flessori dell’anca e il grande gluteo alternano contrazione e allungamento dinamici, mentre la gamba d’appoggio e il core stabilizzano il bacino. Il lavoro riguarda la mobilità articolare dell’anca, non la forza.',
+    mechanics:
+      'Flessione ed estensione alternate dell’anca in catena aperta, nel piano sagittale e senza carico. Il movimento balistico controllato prepara l’ampiezza che affondi e squat useranno poi sotto carico.',
+    benefits: [
+      'Prepara l’anca prima di ogni lavoro di gambe, cosa che nessun altro riscaldamento di questa libreria faceva: erano tutti per la parte alta.',
+      'Si fa ovunque con un semplice appoggio, in trenta secondi per lato.',
+      'Apre l’ampiezza d’anca utile agli affondi, agli squat e alle salite che seguono.',
+    ],
+    precautions:
+      'Nessuno strattone a fine escursione: è un’oscillazione guidata, non un lancio. Se l’anca si blocca, riduci l’ampiezza invece di insistere.',
+  },
+
+  torsoTwist: {
+    slug: 'rotazioni-del-busto',
+    muscles: { primary: 'Obliqui, mobilità del tronco', secondary: 'Colonna vertebrale' },
+    steps: [
+      'In piedi, piedi alla larghezza delle spalle e ben saldi a terra.',
+      'Fletti leggermente le ginocchia e lascia le braccia rilassate lungo i fianchi.',
+      'Ruota il busto da un lato, lasciando che le braccia seguano il movimento senza lanciarle.',
+      'Prosegui dall’altro lato a ritmo costante, con il bacino rivolto in avanti.',
+    ],
+    mistakes: [
+      'Bacino che ruota con il busto: la rotazione non avviene più nel tronco ma nelle anche.',
+      'Braccia lanciate che trascinano il busto invece di seguirlo.',
+      'Ritmo troppo veloce, che trasforma una mobilizzazione in uno scossone.',
+    ],
+    sensation:
+      'Una rotazione che si libera progressivamente lungo il tronco, senza sforzo muscolare marcato e senza strattoni nella zona lombare.',
+    rangeOfMotion:
+      'Ruota fino al limite del comfort, senza forzare. Come per ogni mobilità, l’ampiezza si apre nel corso delle ripetizioni.',
+    tempo:
+      'Regolare e moderato, circa una rotazione al secondo. Respira liberamente, senza bloccare il fiato a fine rotazione.',
+    anatomy:
+      'Gli obliqui esterni e interni producono la rotazione del tronco, mentre i muscoli profondi intersegmentari mobilizzano ogni livello vertebrale. Glutei e gambe stabilizzano il bacino, ed è proprio questo a costringere la rotazione a partire dal tronco.',
+    mechanics:
+      'Rotazione alternata del rachide nel piano trasversale, con carico leggero (il solo peso del busto). Il bacino fermo è il riferimento: è ciò che distingue una vera rotazione del tronco da una semplice torsione delle anche.',
+    benefits: [
+      'L’unico riscaldamento del tronco di questa libreria, complementare al gatto-mucca che lavora flessione ed estensione ma non la rotazione.',
+      'Prepara gli esercizi di core antirotazione come il dead bug e la quadrupedia con estensione.',
+      'Si fa in piedi, senza attrezzi né tappetino.',
+    ],
+    precautions:
+      'La zona lombare non deve mai essere il motore della rotazione: se compare un fastidio lì, riduci l’ampiezza e verifica che il bacino resti rivolto in avanti.',
+  },
+
+  quadStretch: {
+    slug: 'allungamento-quadricipiti-in-piedi',
+    muscles: { primary: 'Quadricipiti' },
+    steps: [
+      'In piedi, appoggia una mano al muro per l’equilibrio.',
+      'Afferra la caviglia dallo stesso lato della gamba da allungare e porta il tallone verso il gluteo.',
+      'Tieni le due ginocchia affiancate e il bacino leggermente retroverso.',
+      'Mantieni la posizione senza strattoni, respirando con calma, poi cambia lato.',
+    ],
+    mistakes: [
+      'Il ginocchio allungato che va in avanti o di lato, il che sposta la tensione fuori dal quadricipite.',
+      'Inarcare la zona lombare per guadagnare ampiezza.',
+      'Tirare la caviglia a scatti invece di tenere una posizione stabile.',
+    ],
+    sensation:
+      'La tensione si sente su tutta la faccia anteriore della coscia, mai nel ginocchio stesso. Un dolore davanti al ginocchio indica di rilasciare subito.',
+    rangeOfMotion:
+      'Porta il tallone fino a una tensione netta ma tollerabile. Avvicinare il ginocchio all’altro e portare leggermente il bacino avanti aumenta l’allungamento senza caricare l’articolazione.',
+    tempo:
+      'Nessun ritmo: la posizione si mantiene immobile. Respira lentamente per tutta la durata.',
+    anatomy:
+      'Il quadricipite, che estende il ginocchio, viene messo in tensione passiva dalla flessione del ginocchio; il retto femorale, l’unico capo che incrocia anche l’anca, lo è ancora di più quando l’anca è estesa — da qui l’utilità di non lasciare che il ginocchio vada in avanti.',
+    mechanics:
+      'Messa in tensione passiva mediante flessione del ginocchio ed estensione dell’anca simultanee, nel piano sagittale, senza carico né movimento ripetuto.',
+    benefits: [
+      'Completa l’allungamento dei femorali coprendo entrambe le facce della coscia.',
+      'Mantiene l’ampiezza di flessione del ginocchio, spesso ridotta dalla posizione seduta prolungata.',
+      'Richiede solo un appoggio per l’equilibrio.',
+    ],
+    precautions:
+      'Se non riesci ad afferrare la caviglia, passa una fascia o un asciugamano attorno al piede invece di inclinare il busto indietro per arrivarci.',
+  },
+
+  gluteStretch: {
+    slug: 'allungamento-gluteo-figura-4',
+    muscles: { primary: 'Glutei', secondary: 'Rotatori dell’anca' },
+    steps: [
+      'Sdraiati sulla schiena, ginocchia piegate e piedi a terra.',
+      'Appoggia la caviglia di un lato sul ginocchio opposto, formando un 4.',
+      'Passa le mani dietro la coscia d’appoggio e tirala delicatamente verso di te.',
+      'Tieni testa e spalle a terra, poi cambia lato.',
+    ],
+    mistakes: [
+      'Testa e spalle sollevate da terra, il che contrae il collo senza aggiungere nulla all’allungamento.',
+      'Tirare a scatti invece di installare una trazione costante.',
+      'Spingere il ginocchio incrociato verso l’interno, il che chiude l’anca invece di aprirla.',
+    ],
+    sensation:
+      'La tensione si sente in profondità nel gluteo del lato incrociato, a volte fino all’esterno dell’anca. Nulla deve tirare nel ginocchio incrociato.',
+    rangeOfMotion:
+      'Tira la coscia d’appoggio fino a una tensione netta ma tollerabile. Più la coscia si avvicina al petto, più l’allungamento è marcato.',
+    tempo:
+      'Nessun ritmo: la posizione si mantiene immobile, con respirazione lenta. L’espirazione aiuta spesso a rilasciare un po’ di più.',
+    anatomy:
+      'Il grande gluteo e i rotatori esterni profondi dell’anca, tra cui il piriforme, vengono messi in tensione passiva dalla combinazione di flessione e rotazione esterna d’anca che la posizione a 4 produce.',
+    mechanics:
+      'Messa in tensione passiva mediante flessione d’anca associata a rotazione esterna, in scarico completo: la schiena resta a terra, il che evita ogni compressione della colonna durante l’allungamento.',
+    benefits: [
+      'Raggiunge una zona che gli allungamenti della coscia non toccano e che si irrigidisce con la posizione seduta prolungata.',
+      'Si pratica a terra, senza equilibrio da mantenere, quindi resta accessibile anche con l’anca rigida.',
+      'Completa il lavoro dei glutei (ponte, abduzione) con la mobilità corrispondente.',
+    ],
+    precautions:
+      'Se l’anca incrociata si blocca o pizzica, riduci la trazione: una posizione meno profonda e indolore vale più di una forzata.',
+  },
+
+  calfStretch: {
+    slug: 'allungamento-polpacci-al-muro',
+    muscles: { primary: 'Polpacci' },
+    steps: [
+      'Appoggia le mani piatte al muro, all’altezza del petto.',
+      'Porta una gamba indietro, tesa, con il tallone a terra e il piede dritto.',
+      'Fletti la gamba davanti e porta il bacino in avanti fino a sentire l’allungamento nel polpaccio dietro.',
+      'Mantieni la posizione senza strattoni, poi cambia gamba.',
+    ],
+    mistakes: [
+      'Il tallone dietro che si solleva: l’allungamento sparisce all’istante.',
+      'Piede dietro ruotato verso l’esterno, il che sposta il carico sulla caviglia.',
+      'Bacino che arretra invece di avanzare, il che annulla la messa in tensione.',
+    ],
+    sensation:
+      'La tensione si sente nella parte posteriore della gamba dietro, dal cavo popliteo al tallone. Piegare leggermente il ginocchio dietro sposta la tensione più in basso nel polpaccio.',
+    rangeOfMotion:
+      'Porta il bacino avanti fino a una tensione netta ma tollerabile, con il tallone sempre a terra: è il tallone a fissare il limite, non la distanza tra i piedi.',
+    tempo:
+      'Nessun ritmo: posizione immobile, respirazione lenta e regolare.',
+    anatomy:
+      'Il tricipite surale — gastrocnemi e soleo — viene messo in tensione dalla flessione dorsale della caviglia. Con il ginocchio dietro teso la tensione ricade soprattutto sui gastrocnemi, che incrociano anche il ginocchio; con il ginocchio leggermente piegato si sposta sul soleo.',
+    mechanics:
+      'Messa in tensione passiva mediante flessione dorsale della caviglia contro un appoggio fisso, senza carico né movimento ripetuto.',
+    benefits: [
+      'Mantiene la flessione dorsale della caviglia, la cui mancanza è la prima causa dei talloni che si sollevano nello squat.',
+      'Toglie i polpacci dal loro isolamento: erano l’unico gruppo con un solo esercizio nella libreria.',
+      'Non richiede altro che un muro.',
+    ],
+    precautions:
+      'Una tensione acuta e localizzata al tendine d’Achille non è l’allungamento cercato: arretra il bacino e riduci l’ampiezza.',
+  },
+
+  childPose: {
+    slug: 'posizione-del-bambino',
+    muscles: { primary: 'Schiena, mobilità', secondary: 'Anche, spalle' },
+    steps: [
+      'Mettiti a quattro zampe, ginocchia alla larghezza dei fianchi.',
+      'Siediti progressivamente sui talloni lasciando le mani dove sono.',
+      'Allunga le braccia lontano in avanti e lascia scendere la fronte verso il pavimento.',
+      'Respira lentamente lasciando che la schiena si arrotondi un po’ di più a ogni espirazione.',
+    ],
+    mistakes: [
+      'Spalle contratte verso le orecchie invece di lasciare che il busto si rilasci.',
+      'Forzare i glutei verso i talloni quando la mobilità di caviglia o ginocchio non lo consente.',
+      'Respirazione bloccata, quando è proprio essa ad aprire progressivamente la posizione.',
+    ],
+    sensation:
+      'Un allungamento diffuso lungo la schiena e nella parte posteriore delle spalle, con una sensazione di rilascio più che di trazione. Nulla deve tirare nelle ginocchia.',
+    rangeOfMotion:
+      'Scendi fin dove il comfort lo consente; la distanza tra le ginocchia regola lo spazio lasciato al busto. La posizione si apre da sola nel corso dei respiri.',
+    tempo:
+      'Nessun ritmo di esecuzione: la posizione si mantiene. Sono le espirazioni a far crescere l’ampiezza, non la forza.',
+    anatomy:
+      'Non è un rinforzo: gli erettori spinali e il gran dorsale vengono allungati passivamente mentre le anche vanno in flessione completa. È il corrispettivo statico del gatto-mucca, che mobilizza la stessa zona in dinamica.',
+    mechanics:
+      'Flessione globale del rachide e delle anche in scarico, con il peso del corpo che poggia sulle cosce e sulle braccia anziché sulla colonna.',
+    benefits: [
+      'L’unico allungamento della schiena di questa libreria, complemento statico del gatto-mucca.',
+      'Fa da transizione a fine seduta, o da recupero tra due serie impegnative per la schiena.',
+      'Non richiede attrezzatura, solo un pavimento comodo.',
+    ],
+    precautions:
+      'Un ginocchio dolorante in questa posizione si allevia infilando un cuscino tra i glutei e i talloni, invece di rinunciare alla postura.',
+  },
+
+  tricepsStretch: {
+    slug: 'allungamento-tricipiti-sopra-la-testa',
+    muscles: { primary: 'Tricipiti', secondary: 'Spalle' },
+    steps: [
+      'In piedi o seduto, alza un braccio e piega il gomito per posare la mano tra le scapole.',
+      'Il gomito punta al soffitto, il più vicino possibile alla testa.',
+      'Afferra quel gomito con l’altra mano e spingilo delicatamente indietro.',
+      'Mantieni senza strattoni, poi cambia braccio.',
+    ],
+    mistakes: [
+      'Inarcare la zona lombare per dare l’illusione di un gomito più arretrato.',
+      'Spingere il gomito a scatti invece di applicare una pressione costante.',
+      'Lasciare che il braccio spinga la testa in avanti, il che contrae il collo.',
+    ],
+    sensation:
+      'La tensione si sente nella parte posteriore del braccio, dal gomito verso la spalla. Un fastidio nell’articolazione della spalla stessa indica di ridurre la spinta.',
+    rangeOfMotion:
+      'Spingi il gomito fino a una tensione netta ma tollerabile. A limitare è l’ampiezza della spalla sopra la testa, non la forza della mano che spinge.',
+    tempo:
+      'Nessun ritmo: posizione immobile, respirazione lenta.',
+    anatomy:
+      'Il tricipite brachiale, unico estensore del gomito, viene messo in tensione dalla flessione completa del gomito; il suo capo lungo, che incrocia anche la spalla, lo è di più con il braccio sopra la testa — il che spiega il gomito rivolto al soffitto.',
+    mechanics:
+      'Messa in tensione passiva mediante flessione del gomito e flessione di spalla sopra la testa, senza carico né movimento ripetuto.',
+    benefits: [
+      'Completa il lavoro di spinta (piegamenti, dip, distensioni) allungando il muscolo che vi lavora di più.',
+      'Si pratica in piedi come da seduti, senza attrezzi e senza spazio.',
+      'Mantiene l’ampiezza della spalla sopra la testa, utile ai piegamenti a V e alle distensioni.',
+    ],
+    precautions:
+      'Se alzare il braccio sopra la testa fa male, tieni il gomito più basso e spingi meno: questa posizione non vale la pena di essere forzata.',
+  },
+
+  bandChestPress: {
+    slug: 'spinte-per-il-petto-con-elastico',
+    muscles: { primary: 'Pettorali, tricipiti', secondary: 'Spalle' },
+    steps: [
+      'Fai passare l’elastico dietro la schiena, all’altezza delle scapole, e tieni un’estremità per mano.',
+      'Mani all’altezza del petto, gomiti piegati e vicini al busto, un piede leggermente avanti per la stabilità.',
+      'Spingi le mani in avanti fino alla completa estensione delle braccia.',
+      'Torna lentamente controllando la tensione finché le mani non tornano al petto.',
+    ],
+    mistakes: [
+      'Busto che va in avanti per aiutare la spinta: si muove il corpo invece delle braccia.',
+      'Gomiti che salgono all’altezza delle spalle, il che mette la spalla in posizione sfavorevole.',
+      'Ritorno lasciato andare di colpo invece che frenato.',
+    ],
+    sensation:
+      'Il lavoro si sente nel petto e nella parte posteriore delle braccia, con una resistenza che cresce man mano che le braccia si estendono. Una tensione lombare segnala che il busto sta compensando.',
+    rangeOfMotion:
+      'Spingi fino a braccia tese senza bloccare i gomiti, e lascia tornare le mani al petto. L’escursione è quella di qualsiasi distensione; cambia solo il profilo di resistenza.',
+    tempo:
+      'Uno o due secondi per spingere, due o tre per tornare frenando. Espira spingendo.',
+    anatomy:
+      'Il grande pettorale e il tricipite sono i motori, il deltoide anteriore assiste e il dentato anteriore mantiene la scapola aderente. Il core e la gamba avanzata resistono al richiamo dell’elastico, che tira il busto all’indietro.',
+    mechanics:
+      'Adduzione orizzontale della spalla con estensione del gomito contro una resistenza crescente: l’elastico è più teso a braccia distese, proprio dove il corpo libero o un manubrio sarebbero più facili. È l’esatto contrario del profilo di un piegamento.',
+    benefits: [
+      'Porta una spinta orizzontale senza spazio a terra né attrezzi pesanti, utile quando i piegamenti non sono praticabili.',
+      'La resistenza crescente carica la fine del movimento, dove un piegamento diventa facile.',
+      'Un elastico si porta ovunque, a differenza di un paio di manubri.',
+    ],
+    progression: {
+      easier: 'Usa un elastico meno teso, o allarga la presa sulla banda.',
+      harder: 'Usa un elastico più teso, porta più avanti il piede d’appoggio, o rallenta il ritorno a quattro secondi.',
+      readyWhen: 'Quando tre serie da quindici passano senza che il busto avanzi, aumenta la resistenza.',
+    },
+    precautions:
+      'Controlla lo stato dell’elastico prima di ogni serie: una banda usurata può cedere di colpo, ed è tesa all’altezza del viso.',
+  },
+
+  bandLateralRaise: {
+    slug: 'alzate-laterali-con-elastico',
+    muscles: { primary: 'Spalle' },
+    steps: [
+      'In piedi al centro dell’elastico, con uno o entrambi i piedi sopra, un’estremità per mano.',
+      'Braccia lungo i fianchi, gomiti appena piegati, palmi verso l’interno.',
+      'Alza le braccia lateralmente fino all’altezza delle spalle, non oltre.',
+      'Scendi lentamente controllando il richiamo dell’elastico.',
+    ],
+    mistakes: [
+      'Salire sopra la spalla, il che passa il testimone al trapezio superiore.',
+      'Slancio del busto per lanciare le braccia.',
+      'Spalle che salgono verso le orecchie durante la salita.',
+    ],
+    sensation:
+      'Il lavoro si sente sul lato della spalla. Una tensione nel trapezio superiore o nel collo segnala che le spalle salgono invece di restare basse.',
+    rangeOfMotion:
+      'Sali finché le braccia sono orizzontali, non oltre: è lì che il deltoide medio finisce il suo lavoro e altri muscoli subentrerebbero.',
+    tempo:
+      'Uno o due secondi per salire, due o tre per scendere. Espira salendo.',
+    anatomy:
+      'Il deltoide medio è il motore principale dell’abduzione del braccio; il sovraspinato avvia i primi gradi. Il trapezio inferiore e medio devono tenere bassa la scapola, ed è per questo che lasciar salire le spalle sposta il lavoro.',
+    mechanics:
+      'Abduzione della spalla nel piano frontale contro una resistenza che cresce con l’elevazione: l’elastico si tende proprio quando il braccio di leva è più lungo, il che rende la fine del movimento nettamente più dura che con un manubrio.',
+    benefits: [
+      'L’unico lavoro di isolamento della spalla accessibile senza manubri nella libreria.',
+      'Completa i movimenti di spinta, che caricano soprattutto la parte anteriore della spalla.',
+      'Si dosa con precisione cambiando la lunghezza di elastico impugnata, senza cambiare attrezzo.',
+    ],
+    progression: {
+      easier: 'Impugna l’elastico più in alto lungo la sua lunghezza, o appoggia un solo piede.',
+      harder: 'Accorcia la lunghezza impugnata, appoggia entrambi i piedi, o mantieni una pausa di un secondo in alto.',
+      readyWhen: 'Quando tre serie da quindici passano senza che le spalle salgano, accorcia l’elastico.',
+    },
+    precautions:
+      'Questo movimento è per definizione senza carichi pesanti: se la spalla pizzica in alto, riduci l’escursione invece di insistere — un pizzicamento non si allena.',
+  },
+
+  bandLateralWalk: {
+    slug: 'camminata-laterale-con-elastico',
+    muscles: { primary: 'Medio gluteo', secondary: 'Quadricipiti, grande gluteo' },
+    steps: [
+      'Posiziona l’elastico appena sopra le ginocchia, piedi alla larghezza dei fianchi.',
+      'Fletti leggermente ginocchia e anche in mezzo squat, busto dritto.',
+      'Fai un passo laterale spingendo attivamente il ginocchio verso l’esterno contro l’elastico.',
+      'Avvicina l’altro piede senza lasciare che l’elastico si allenti, e prosegui nella stessa direzione prima di tornare.',
+    ],
+    mistakes: [
+      'Ginocchia che cedono quando il piede si appoggia: l’elastico prende il sopravvento e il medio gluteo molla.',
+      'Busto che si raddrizza del tutto, il che alleggerisce il lavoro dei glutei.',
+      'Passi troppo lunghi, che fanno perdere il controllo dell’allineamento.',
+    ],
+    sensation:
+      'Il lavoro si sente sul lato dell’anca e del gluteo, con un bruciore che sale progressivamente. Nulla deve tirare nel ginocchio.',
+    rangeOfMotion:
+      'Fai passi larghi all’incirca quanto le spalle, mantenendo costante la tensione dell’elastico per tutta la serie: è la tensione continua a fare il lavoro, non la lunghezza del passo.',
+    tempo:
+      'Regolare e controllato, ogni passo appoggiato senza rimbalzo. Respira normalmente: è un esercizio a tensione continua, non uno sprint.',
+    anatomy:
+      'Il medio e il piccolo gluteo abducono l’anca e stabilizzano il bacino a ogni appoggio; il tensore della fascia lata assiste. Il mezzo squat tiene quadricipiti e grande gluteo in isometria per tutta la camminata.',
+    mechanics:
+      'Abduzione dell’anca nel piano frontale contro resistenza elastica, con appoggio alternato. È uno dei pochi esercizi della libreria a lavorare su questo piano, mentre squat e affondi lavorano quasi tutti nel piano sagittale.',
+    benefits: [
+      'Rinforza lo stabilizzatore laterale dell’anca, direttamente coinvolto nell’allineamento del ginocchio nel camminare e nel correre.',
+      'Dà un riscontro tattile immediato: se l’elastico si allenta, il ginocchio è ceduto.',
+      'Completa lo squat con elastico isolando la componente laterale a cui quello si limita a resistere.',
+    ],
+    progression: {
+      easier: 'Abbassa l’elastico sopra le caviglie invece che sopra le ginocchia, o usa una banda più morbida.',
+      harder: 'Risali con l’elastico sopra le ginocchia, scendi più in basso nel mezzo squat, o allunga la serie.',
+      readyWhen: 'Quando tre serie da quindici passi per lato passano senza che l’elastico si allenti, aumenta la resistenza.',
+    },
+    precautions:
+      'Se la parte esterna del ginocchio scalda più dell’anca, il movimento parte dal ginocchio: abbassa l’elastico e riparti con passi più corti.',
+  },
+
+  bandCurl: {
+    slug: 'curl-bicipiti-con-elastico',
+    muscles: { primary: 'Bicipiti', secondary: 'Avambracci' },
+    steps: [
+      'In piedi al centro dell’elastico, con uno o entrambi i piedi sopra, un’estremità per mano.',
+      'Braccia lungo i fianchi, gomiti aderenti alle costole, palmi in avanti.',
+      'Porta le mani verso le spalle mantenendo i gomiti fermi.',
+      'Scendi lentamente fino alla completa estensione delle braccia.',
+    ],
+    mistakes: [
+      'Gomiti che avanzano durante la salita: il movimento lascia il bicipite e passa alla spalla.',
+      'Busto che oscilla per lanciare il carico.',
+      'Discesa lasciata andare, quando è la parte frenata a produrre più lavoro.',
+    ],
+    sensation:
+      'Il lavoro si sente nella parte anteriore del braccio, dal gomito alla spalla. Anche gli avambracci scaldano, ed è normale: sono loro a tenere l’elastico.',
+    rangeOfMotion:
+      'Sali finché le mani si avvicinano alle spalle, e scendi fino a braccia completamente tese. Accorciare la discesa è il modo più comune di ridurre il lavoro senza accorgersene.',
+    tempo:
+      'Un secondo per salire, due o tre per scendere frenando. Espira salendo.',
+    anatomy:
+      'Il bicipite brachiale flette il gomito e partecipa alla supinazione dell’avambraccio; il brachiale, situato sotto, è il flessore più costante qualunque sia la posizione della mano. Il brachioradiale dell’avambraccio assiste.',
+    mechanics:
+      'Flessione del gomito in catena aperta contro una resistenza crescente: l’elastico è più teso in alto, dove il braccio di leva è corto, il che dà un profilo di carico quasi inverso a quello di un manubrio.',
+    benefits: [
+      'Il primo esercizio per i bicipiti della libreria, in un gruppo «Braccia» che prima di questo lotto non esisteva.',
+      'Completa i movimenti di trazione (rematore, lat machine), dove il bicipite lavora solo in assistenza.',
+      'Non richiede altro che un elastico e sta in una borsa.',
+    ],
+    progression: {
+      easier: 'Impugna l’elastico più in alto lungo la sua lunghezza, o appoggia un solo piede.',
+      harder: 'Accorcia la lunghezza impugnata, o mantieni una pausa di un secondo in alto a ogni ripetizione.',
+      readyWhen: 'Quando tre serie da quindici passano senza che i gomiti avanzino, accorcia l’elastico.',
+    },
+    precautions:
+      'Un dolore alla piega del gomito non è il bruciore cercato: riduci la resistenza e verifica che la discesa sia frenata anziché subita.',
+  },
+
+  dumbbellShoulderPress: {
+    slug: 'lento-avanti-con-manubri',
+    muscles: { primary: 'Spalle', secondary: 'Tricipiti, core' },
+    steps: [
+      'In piedi o seduto, un manubrio per mano all’altezza delle spalle, palmi in avanti.',
+      'Contrai glutei e addome per bloccare il bacino.',
+      'Spingi i manubri sopra la testa fino a estendere le braccia, senza inarcare.',
+      'Scendi con controllo finché i gomiti tornano sotto l’altezza delle spalle.',
+    ],
+    mistakes: [
+      'Zona lombare inarcata per compensare una scarsa ampiezza di spalla.',
+      'Gomiti che si aprono molto lateralmente invece di restare leggermente davanti al busto.',
+      'Discesa accorciata, che elimina la parte più utile del movimento.',
+    ],
+    sensation:
+      'Il lavoro si sente nelle spalle e nella parte posteriore delle braccia, con il core attivo dall’inizio alla fine. Una tensione lombare segnala che il bacino non è più bloccato.',
+    rangeOfMotion:
+      'Scendi finché i gomiti passano sotto l’altezza delle spalle, e spingi fino a braccia tese senza bloccarle di scatto. Da seduti con schienale alto, la zona lombare è protetta meccanicamente.',
+    tempo:
+      'Uno o due secondi per spingere, due o tre per scendere con controllo. Espira spingendo.',
+    anatomy:
+      'Il deltoide anteriore e il tricipite sono i motori, con il deltoide medio che assiste. Trapezio e dentato anteriore ruotano la scapola verso l’alto, condizione perché il braccio salga liberamente sopra la testa; gli addominali impediscono l’inarcamento compensatorio.',
+    mechanics:
+      'Flessione di spalla sopra la testa unita a estensione del gomito, in catena aperta e con carico costante su tutta l’escursione — a differenza dell’elastico, la cui resistenza cresce a fine movimento.',
+    benefits: [
+      'Il movimento di spinta verticale di riferimento non appena si dispone di una coppia di manubri.',
+      'Carica progressivamente le spalle, cosa che i piegamenti a V ottengono solo cambiando la posizione del corpo.',
+      'Lavora ogni braccio in modo indipendente, così il lato forte non compensa quello debole.',
+    ],
+    progression: {
+      easier: 'Riduci il carico, o siediti con schienale per togliere il lavoro di core.',
+      harder: 'Aumenta il carico, o mantieni una pausa di un secondo in alto a ogni ripetizione.',
+      readyWhen: 'Quando tre serie da dodici passano senza inarcamenti, aumenta il carico.',
+    },
+    precautions:
+      'Se alzare le braccia sopra la testa fa male, riduci l’escursione o ruota i palmi verso l’interno: questa posizione non si forza.',
+  },
+
+  dumbbellFloorPress: {
+    slug: 'distensioni-con-manubri-a-terra',
+    muscles: { primary: 'Pettorali, tricipiti', secondary: 'Spalle' },
+    steps: [
+      'Sdraiati sulla schiena, ginocchia piegate, piedi appoggiati, un manubrio per mano.',
+      'Gomiti a terra a circa 45° dal busto, manubri all’altezza del petto.',
+      'Spingi i manubri verso il soffitto fino a estendere le braccia.',
+      'Scendi con controllo finché i gomiti toccano il pavimento, fai una pausa, poi spingi di nuovo.',
+    ],
+    mistakes: [
+      'Lasciare che i gomiti rimbalzino a terra invece di fare una pausa.',
+      'Gomiti aperti a 90°, che mettono la spalla in posizione sfavorevole.',
+      'Zona lombare staccata da terra invece di restare in contatto.',
+    ],
+    sensation:
+      'Il lavoro si sente nel petto e nella parte posteriore delle braccia. Il pavimento dà un riferimento di profondità costante che una panca non ha.',
+    rangeOfMotion:
+      'Il pavimento limita la discesa: è proprio questo il punto, fissa la stessa profondità a ogni ripetizione e impedisce alla spalla di andare troppo in estensione.',
+    tempo:
+      'Uno o due secondi per spingere, due o tre per scendere. Una pausa di un secondo al contatto col pavimento elimina ogni rimbalzo.',
+    anatomy:
+      'Il grande pettorale e il tricipite sono i motori, con il deltoide anteriore che assiste. Poiché l’escursione è delimitata dal pavimento, la spalla non va mai in estensione eccessiva: è questo a rendere la variante più tollerante della panca.',
+    mechanics:
+      'Adduzione orizzontale della spalla con estensione del gomito, in catena aperta e a carico costante. Il pavimento tronca la parte bassa del movimento, trasformando un’escursione libera in una delimitata e riproducibile da una seduta all’altra.',
+    benefits: [
+      'Porta la distensione orizzontale caricata senza panca, con una semplice coppia di manubri e un tappetino.',
+      'Il riferimento del pavimento rende la profondità identica in ogni serie, quindi il progresso misurabile.',
+      'Ogni braccio lavora in modo indipendente, a differenza del bilanciere.',
+    ],
+    progression: {
+      easier: 'Riduci il carico, o spingi un braccio alla volta per concentrarti sulla traiettoria.',
+      harder: 'Aumenta il carico, allunga la pausa a terra, o rallenta la discesa a quattro secondi.',
+      readyWhen: 'Quando tre serie da dodici passano con una pausa netta a terra a ogni ripetizione, aumenta il carico.',
+    },
+    precautions:
+      'Non lasciare mai cadere i gomiti in caduta libera: il contatto col pavimento va appoggiato, non subito.',
+  },
+
+  dumbbellRomanianDeadlift: {
+    slug: 'stacco-rumeno',
+    muscles: { primary: 'Glutei, femorali', secondary: 'Zona lombare, core' },
+    steps: [
+      'In piedi, un manubrio per mano davanti alle cosce, piedi alla larghezza dei fianchi.',
+      'Fletti appena le ginocchia e mantieni quell’angolo costante per tutto il movimento.',
+      'Spingi i fianchi indietro e scendi con i manubri lungo le gambe, schiena piatta.',
+      'Scendi fino a sentire la tensione dietro le cosce, poi torna spingendo i fianchi in avanti.',
+    ],
+    mistakes: [
+      'Flettere progressivamente le ginocchia durante la discesa: il movimento diventa uno squat e lascia i femorali.',
+      'Schiena che si incurva appena finisce la mobilità dell’anca.',
+      'Manubri che si allontanano dalle gambe, il che aumenta il carico sulla zona lombare.',
+    ],
+    sensation:
+      'Una tensione netta dietro le cosce durante la discesa, poi i glutei che subentrano nella risalita. La zona lombare lavora in isometria, mai come motore.',
+    rangeOfMotion:
+      'Scendi fino al termine dell’allungamento dei femorali, non oltre: è la flessibilità posteriore a fissare l’escursione, non l’altezza dei manubri. Nel momento in cui la schiena si incurva, il limite è superato.',
+    tempo:
+      'Tre secondi per scendere, uno o due per risalire. Inspira scendendo, espira spingendo i fianchi in avanti.',
+    anatomy:
+      'I femorali e il grande gluteo estendono l’anca: sono i motori. Gli erettori spinali lavorano in isometria per tenere la schiena piatta — non devono mai produrre il movimento, solo impedirlo. È l’unico esercizio della libreria che allena la cerniera d’anca sotto carico.',
+    mechanics:
+      'Una cerniera d’anca pura: flessione poi estensione dell’anca con il ginocchio quasi fisso, nel piano sagittale. È questo a distinguerla dallo squat: lo squat piega anca E ginocchio, la cerniera solo l’anca.',
+    benefits: [
+      'Insegna la cerniera d’anca, lo schema motorio che protegge la schiena ogni volta che si raccoglie qualcosa da terra.',
+      'Carica i femorali in estensione d’anca, complemento diretto del leg curl che li lavora in flessione di ginocchio.',
+      'Rinforza tutta la catena posteriore con un solo movimento.',
+    ],
+    progression: {
+      easier: 'Riduci il carico, o scendi meno per restare nell’escursione in cui la schiena resta piatta.',
+      harder: 'Aumenta il carico, o rallenta la discesa a cinque secondi.',
+      readyWhen: 'Quando tre serie da dodici passano con la schiena piatta su tutta l’escursione, aumenta il carico.',
+    },
+    precautions:
+      'La schiena piatta non è negoziabile: se mantenere la posizione richiede di incurvarla, il carico è troppo pesante o l’escursione troppo ampia.',
+  },
+
+  dumbbellCalfRaise: {
+    slug: 'calf-raise-con-manubri',
+    muscles: { primary: 'Polpacci' },
+    steps: [
+      'In piedi, un manubrio per mano lungo i fianchi, piedi alla larghezza dei fianchi.',
+      'Sali lentamente sulle punte, il più in alto possibile.',
+      'Fai una pausa in alto, con i polpacci contratti.',
+      'Scendi lentamente finché i talloni toccano il pavimento.',
+    ],
+    mistakes: [
+      'Rimbalzare in basso invece di controllare la discesa.',
+      'Caviglie che cedono verso l’esterno: il peso deve restare sull’alluce.',
+      'Escursione accorciata in alto, proprio dove il polpaccio si contrae di più.',
+    ],
+    sensation:
+      'Un bruciore netto nel polpaccio, che sale in fretta. Il carico si sente anche negli avambracci, che tengono i manubri per tutta la serie.',
+    rangeOfMotion:
+      'Sali quanto la caviglia consente e scendi fino al contatto col pavimento. In piedi su uno scalino, con i talloni nel vuoto, l’escursione si allunga ancora verso il basso.',
+    tempo:
+      'Uno o due secondi per salire, una pausa in alto, due o tre per scendere. È la lentezza a fare il lavoro, non il carico.',
+    anatomy:
+      'Il tricipite surale — gastrocnemi e soleo — produce la flessione plantare. Con il ginocchio teso dominano i gastrocnemi, ed è per questo che la versione in piedi completa bene ogni lavoro da seduti, dove subentra il soleo.',
+    mechanics:
+      'Flessione plantare della caviglia in catena chiusa, con un carico esterno che si aggiunge al peso del corpo. L’escursione è breve per natura, il che rende il tempo sotto tensione più determinante del numero di ripetizioni.',
+    benefits: [
+      'Carica i polpacci oltre il peso corporeo, cosa che la versione senza manubri non consente più quando quindici ripetizioni risultano facili.',
+      'Toglie i polpacci dal loro isolamento nella libreria, insieme all’allungamento corrispondente.',
+      'Rinforza la spinta finale della camminata e della corsa.',
+    ],
+    progression: {
+      easier: 'Fallo senza manubri, o tieniti con una mano per gestire un solo peso.',
+      harder: 'Aumenta il carico, sali su uno scalino per allungare l’escursione, o passa su una gamba sola.',
+      readyWhen: 'Quando tre serie da venti passano con una pausa in alto, aumenta il carico o passa su una gamba.',
+    },
+    precautions:
+      'Un crampo a fine serie è frequente in questo muscolo: riduci l’escursione e allunga il recupero invece di forzare la ripetizione successiva.',
+  },
+
+  dumbbellCurl: {
+    slug: 'curl-bicipiti-con-manubri',
+    muscles: { primary: 'Bicipiti', secondary: 'Avambracci' },
+    steps: [
+      'In piedi, un manubrio per mano, braccia lungo i fianchi, palmi in avanti.',
+      'Gomiti aderenti alle costole, spalle basse e busto fermo.',
+      'Porta il manubrio verso la spalla senza che il gomito avanzi.',
+      'Scendi lentamente fino alla completa estensione del braccio.',
+    ],
+    mistakes: [
+      'Oscillazione del busto per lanciare il carico: lavora la schiena, non il bicipite.',
+      'Gomiti che avanzano a fine salita, il che coinvolge la spalla.',
+      'Discesa lasciata andare, quando la fase frenata è la più produttiva.',
+    ],
+    sensation:
+      'Il lavoro si sente nella parte anteriore del braccio, dalla piega del gomito alla spalla. Il busto deve restare perfettamente fermo: è il miglior indicatore di un carico adeguato.',
+    rangeOfMotion:
+      'Sali finché il manubrio si avvicina alla spalla, e scendi fino al braccio completamente teso. Accorciare in basso è il modo più comune di barare senza accorgersene.',
+    tempo:
+      'Un secondo per salire, due o tre per scendere. Espira salendo.',
+    anatomy:
+      'Il bicipite brachiale flette il gomito e supina l’avambraccio — da qui il palmo in avanti, che lo mette in posizione favorevole. Il brachiale, sotto il bicipite, flette il gomito qualunque sia la posizione della mano; il brachioradiale assiste.',
+    mechanics:
+      'Flessione del gomito in catena aperta a carico costante: a differenza dell’elastico la resistenza non varia, ma il braccio di leva è massimo con l’avambraccio orizzontale, ed è lì che il movimento è più duro.',
+    benefits: [
+      'Il movimento per i bicipiti più diretto, con un carico regolabile con precisione.',
+      'Completa le trazioni (rematore, lat machine), dove il bicipite è solo secondario.',
+      'Ogni braccio lavora separatamente, il che rivela e corregge uno squilibrio.',
+    ],
+    progression: {
+      easier: 'Riduci il carico, o appoggia la schiena al muro per eliminare ogni oscillazione.',
+      harder: 'Aumenta il carico, rallenta la discesa a quattro secondi, o fai una pausa a metà salita.',
+      readyWhen: 'Quando tre serie da dodici passano senza che il busto si muova, aumenta il carico.',
+    },
+    precautions:
+      'Un dolore alla piega del gomito, distinto dal bruciore muscolare, impone di ridurre il carico: i tendini del gomito tollerano male il sovraccarico brusco in questo movimento.',
+  },
+
+  dumbbellTricepsExtension: {
+    slug: 'estensione-tricipiti',
+    muscles: { primary: 'Tricipiti' },
+    steps: [
+      'In piedi o seduto, tieni un manubrio con entrambe le mani, braccia tese sopra la testa.',
+      'Gomiti stretti in avanti, il più vicino possibile alle orecchie.',
+      'Fletti i gomiti per scendere con il manubrio dietro la nuca, senza aprirli.',
+      'Risali fino alla completa estensione delle braccia, gomiti ancora stretti.',
+    ],
+    mistakes: [
+      'Gomiti che si aprono verso l’esterno, il che sposta il carico dal tricipite alla spalla.',
+      'Zona lombare inarcata per compensare la scarsa ampiezza di spalla.',
+      'Discesa troppo rapida, con il carico dietro la testa.',
+    ],
+    sensation:
+      'Il lavoro si sente nella parte posteriore del braccio, dal gomito alla spalla. Un fastidio nell’articolazione della spalla segnala che i gomiti si sono aperti o che il carico è eccessivo.',
+    rangeOfMotion:
+      'Scendi fino a sentire l’allungamento dietro il braccio, senza forzare, poi risali fino a braccia tese. Con le braccia sopra la testa il capo lungo del tricipite è già preallungato, quindi l’escursione utile è più breve di quanto sembri.',
+    tempo:
+      'Uno o due secondi per salire, due o tre per scendere con controllo. Espira spingendo.',
+    anatomy:
+      'Il tricipite brachiale è l’unico estensore del gomito. Il suo capo lungo incrocia anche la spalla: la posizione con le braccia sopra la testa lo mette in tensione ancora prima dell’inizio del movimento, ed è per questo che questa variante lo sollecita più di un’estensione con il braccio lungo il fianco.',
+    mechanics:
+      'Estensione del gomito in catena aperta, con la spalla flessa sopra la testa e mantenuta fissa. È il compito del core e dei gomiti stretti: impedire alla spalla di partecipare, così che si muova solo il gomito.',
+    benefits: [
+      'Colpisce il tricipite in una posizione che dip e piegamenti non riproducono.',
+      'Si fa con un solo manubrio, in piedi o seduti, senza panca.',
+      'Completa il curl per coprire entrambe le facce del braccio nel gruppo «Braccia».',
+    ],
+    progression: {
+      easier: 'Riduci il carico, o esegui il movimento un braccio alla volta per controllare meglio la traiettoria.',
+      harder: 'Aumenta il carico, o mantieni una pausa di un secondo nella posizione bassa.',
+      readyWhen: 'Quando tre serie da dodici passano senza che i gomiti si aprano, aumenta il carico.',
+    },
+    precautions:
+      'Comincia leggero: il carico è dietro la testa, e perderne il controllo lì è più delicato che in un movimento davanti al corpo. Da seduti con schienale, la zona lombare è meglio protetta.',
+  },
+
+  chestPressMachine: {
+    slug: 'chest-press',
+    muscles: { primary: 'Pettorali, tricipiti', secondary: 'Spalle' },
+    steps: [
+      'Regola l’altezza del sedile perché le impugnature arrivino all’altezza del petto.',
+      'Siediti con schiena e spalle ben appoggiate allo schienale, piedi piatti a terra.',
+      'Spingi le impugnature in avanti fino a estendere le braccia, senza bloccare i gomiti.',
+      'Torna con controllo finché le mani non tornano all’altezza del petto.',
+    ],
+    mistakes: [
+      'Spalle che si staccano dallo schienale per guadagnare qualche centimetro di spinta.',
+      'Bloccare i gomiti a fine spinta, il che sposta il carico sull’articolazione.',
+      'Ritorno troppo rapido, quando la fase frenata è la più produttiva.',
+    ],
+    sensation:
+      'Il lavoro si sente nel petto e nella parte posteriore delle braccia, senza sforzo di stabilizzazione: se ne occupa lo schienale. È questo a distinguere la macchina da un piegamento.',
+    rangeOfMotion:
+      'Torna finché le mani sono all’altezza del petto, non oltre: oltre quel punto la spalla va in estensione eccessiva contro un carico guidato, e questo non aggiunge nulla.',
+    tempo:
+      'Uno o due secondi per spingere, due o tre per tornare. Espira spingendo.',
+    anatomy:
+      'Il grande pettorale e il tricipite sono i motori, con il deltoide anteriore che assiste. Lo schienale sostituisce tutto il lavoro di core che un piegamento richiede, il che concentra lo sforzo sui muscoli della spinta e su nient’altro.',
+    mechanics:
+      'Adduzione orizzontale della spalla con estensione del gomito, su una traiettoria imposta dalla macchina. Con il busto fissato, la variabile è il carico e non la stabilità: l’esatto contrario di un piegamento.',
+    benefits: [
+      'Permette di caricare molto la spinta orizzontale senza compagno né panca, con una regolazione fine del carico.',
+      'La traiettoria guidata riduce il rischio di errore tecnico rispetto a un movimento libero caricato.',
+      'Utile come complemento ai piegamenti, o come sostituto quando il polso o il core sono il limite.',
+    ],
+    progression: {
+      easier: 'Riduci il carico, o accorcia l’escursione tornando un po’ meno indietro.',
+      harder: 'Aumenta il carico, rallenta il ritorno a quattro secondi, o fai una pausa nella posizione bassa.',
+      readyWhen: 'Quando tre serie da dodici passano senza che le spalle si stacchino dallo schienale, aumenta il carico.',
+    },
+    precautions:
+      'Tieni le spalle a contatto con lo schienale dall’inizio alla fine: è quel contatto a proteggere l’articolazione su una traiettoria imposta.',
+  },
+
+  legCurlMachine: {
+    slug: 'leg-curl',
+    muscles: { primary: 'Femorali', secondary: 'Polpacci' },
+    steps: [
+      'Regola la macchina perché il rullo poggi sulla parte bassa dei polpacci, appena sopra i talloni.',
+      'Sistemati con il bacino ben aderente all’appoggio, gambe tese senza bloccare le ginocchia.',
+      'Fletti le ginocchia per portare i talloni verso i glutei, con controllo.',
+      'Scendi lentamente fino all’estensione, senza lasciar cadere il carico.',
+    ],
+    mistakes: [
+      'Bacino che si stacca per aiutare la flessione: il movimento lascia i femorali.',
+      'Discesa non frenata, con il carico che ricade da solo.',
+      'Rullo mal posizionato, troppo in alto sul polpaccio, che ostacola invece di caricare.',
+    ],
+    sensation:
+      'Una contrazione netta dietro la coscia, dal ginocchio verso il gluteo. La zona lombare non deve sentire nulla: se lo fa, il bacino si è staccato.',
+    rangeOfMotion:
+      'Fletti quanto la macchina consente senza che il bacino si muova, e scendi fino alla completa estensione ma senza bloccare. In questo movimento l’escursione completa conta più del carico.',
+    tempo:
+      'Uno o due secondi per flettere, due o tre per scendere frenando. Espira flettendo.',
+    anatomy:
+      'I femorali flettono il ginocchio: è la loro azione principale, ed è esattamente quella che nessun esercizio a corpo libero della libreria carica direttamente. I gastrocnemi, che incrociano anch’essi il ginocchio, assistono.',
+    mechanics:
+      'Flessione del ginocchio in catena aperta con anca fissa, su traiettoria guidata. È il complemento esatto dello stacco rumeno, che carica gli stessi muscoli ma in estensione d’anca con il ginocchio quasi fisso.',
+    benefits: [
+      'Colma l’unica lacuna evidente della libreria: nessun esercizio caricava i femorali in flessione di ginocchio.',
+      'Bilancia il lavoro della coscia, largamente dominato dai quadricipiti (squat, affondi, leg press).',
+      'Traiettoria guidata e carico regolabile, quindi progresso misurabile.',
+    ],
+    progression: {
+      easier: 'Riduci il carico, o accorcia l’escursione flettendo un po’ meno.',
+      harder: 'Aumenta il carico, rallenta la discesa a quattro secondi, o mantieni una pausa di un secondo in flessione.',
+      readyWhen: 'Quando tre serie da dodici passano senza che il bacino si stacchi, aumenta il carico.',
+    },
+    precautions:
+      'Un crampo dietro la coscia è frequente in questo movimento: riduci il carico e allunga il riscaldamento invece di insistere.',
+  },
+
+  treadmill: {
+    slug: 'tapis-roulant',
+    muscles: { primary: 'Cardio, gambe' },
+    steps: [
+      'Sali sul tappeto fermo o molto lento, e accelera poi progressivamente.',
+      'Scegli un’andatura in cui parlare resta possibile ma con un po’ di fiatone.',
+      'Mantieni il busto dritto e lo sguardo lontano davanti, senza aggrapparti alle maniglie.',
+      'Mantieni l’andatura per tutta la durata, poi rallenta gradualmente prima di scendere.',
+    ],
+    mistakes: [
+      'Aggrapparsi alle maniglie laterali: parte del peso viene sostenuta, quindi lo sforzo reale cala mentre la velocità indicata non cambia.',
+      'Sguardo fisso sullo schermo, che rovina la postura del collo.',
+      'Partire troppo forte invece di installare l’andatura gradualmente.',
+    ],
+    sensation:
+      'Un fiatone moderato e stabile per tutta la durata: la conversazione deve restare possibile ma non comoda.',
+    rangeOfMotion:
+      'Nessuna escursione da regolare, ma una falcata: appoggia il tallone, srotola il piede, lascia oscillare liberamente le braccia dalla spalla.',
+    tempo:
+      'Un’andatura regolare e mantenuta, meglio di accelerazioni seguite da recuperi — a meno che gli intervalli non siano l’obiettivo del giorno.',
+    anatomy:
+      'La stessa catena muscolare della camminata: glutei e femorali spingono, i quadricipiti ammortizzano, i polpacci danno la spinta finale e il core stabilizza il bacino a ogni appoggio.',
+    mechanics:
+      'Locomozione ciclica su un tappeto motorizzato. Ciò che la distingue dal camminare all’aperto è la pendenza regolabile: è lei, più della velocità, ad aumentare lo sforzo senza aumentare l’impatto — una regolazione che il terreno esterno non offre a piacere.',
+    benefits: [
+      'Permette di fissare con precisione andatura e pendenza, quindi di riprodurre esattamente lo stesso sforzo da una seduta all’altra.',
+      'La pendenza carica di più glutei e polpacci senza dover correre più veloce.',
+      'Indipendente dal meteo e dall’ora, a differenza della camminata all’aperto.',
+    ],
+    progression: {
+      easier: 'Riduci la velocità prima della durata: meglio quindici minuti tenuti che trenta subiti.',
+      harder: 'Alza la pendenza ad andatura costante, allunga la durata, o alterna tratti più veloci.',
+      readyWhen: 'Quando venti minuti ad andatura costante passano mantenendo possibile una conversazione, alza la pendenza.',
+    },
+    precautions:
+      'Aggancia l’arresto di emergenza prima di partire, e non scendere mai da un tappeto in movimento.',
+  },
+
+  stationaryBike: {
+    slug: 'cyclette',
+    muscles: { primary: 'Cardio, cosce', secondary: 'Glutei' },
+    steps: [
+      'Regola la sella perché il ginocchio mantenga una leggera flessione quando il pedale è al punto più basso.',
+      'Siediti con le mani appoggiate senza contrarsi, la schiena né afflosciata né inarcata.',
+      'Trova una cadenza regolare, poi regola la resistenza per individuare il tuo sforzo di lavoro.',
+      'Mantieni cadenza e resistenza per tutta la durata, poi chiudi con qualche minuto leggero.',
+    ],
+    mistakes: [
+      'Sella troppo bassa: il ginocchio resta troppo flesso in basso, il che carica inutilmente l’articolazione.',
+      'Bacino che oscilla da un lato all’altro, segno di una sella troppo alta.',
+      'Resistenza quasi nulla con una cadenza altissima, che dà l’illusione dello sforzo senza produrlo.',
+    ],
+    sensation:
+      'Un fiatone moderato e un riscaldamento progressivo nelle cosce. A differenza della camminata o del tapis roulant, il peso del corpo non grava mai sulle gambe.',
+    rangeOfMotion:
+      'Nessuna escursione da regolare, ma un’altezza di sella: il ginocchio conserva una leggera flessione in basso, senza che il bacino debba oscillare per raggiungere il pedale.',
+    tempo:
+      'Una cadenza regolare mantenuta per tutta la durata. La resistenza è la vera regolazione dell’intensità, non la velocità di pedalata.',
+    anatomy:
+      'Quadricipiti e grande gluteo producono l’estensione di ginocchio e anca a ogni spinta; femorali e polpacci partecipano nella risalita quando i piedi sono fissati. La posizione seduta scarica completamente la colonna e le articolazioni portanti.',
+    mechanics:
+      'Pedalata ciclica in catena chiusa, senza carico del peso: è l’asse che distingue la cyclette da tutto il resto del cardio della libreria — il corpo è sostenuto dalla sella, quindi ginocchia, anche e schiena non subiscono impatto né compressione dovuta al peso.',
+    benefits: [
+      'L’unico cardio della libreria che non fa portare peso alle gambe, quindi praticabile quando camminare o correre infastidisce un’articolazione.',
+      'La resistenza si regola con precisione, il che rende l’intensità riproducibile da una seduta all’altra.',
+      'Permette di sostenere durate lunghe senza carico articolare accumulato.',
+    ],
+    progression: {
+      easier: 'Abbassa la resistenza prima di ridurre la durata, e mantieni una cadenza comoda.',
+      harder: 'Aumenta la resistenza a cadenza costante, allunga la durata, o alterna blocchi più duri.',
+      readyWhen: 'Quando venti minuti passano senza che la cadenza cali alla fine, aumenta la resistenza.',
+    },
+    precautions:
+      'Un ginocchio dolorante viene quasi sempre dalla regolazione della sella, non dallo sforzo: verifica l’altezza prima di ridurre l’intensità.',
+  },
+
+  rowingMachine: {
+    slug: 'vogatore',
+    muscles: { primary: 'Cardio, schiena, gambe', secondary: 'Braccia, core' },
+    steps: [
+      'Allaccia i piedi, afferra l’impugnatura a braccia tese, tibie verticali, busto leggermente in avanti: è la posizione di attacco.',
+      'Spingi prima con forza con le gambe, braccia ancora tese e busto fermo.',
+      'Quando le gambe sono quasi tese, apri il busto all’indietro e solo allora tira l’impugnatura verso la parte bassa delle costole.',
+      'Torna nell’ordine inverso: distendi le braccia, riporta il busto in avanti, poi piega le gambe.',
+    ],
+    mistakes: [
+      'Tirare con le braccia prima che le gambe abbiano spinto: è l’errore più diffuso, e priva il movimento della sua principale fonte di potenza.',
+      'Aprire il busto troppo presto, il che sposta il carico sulla zona lombare.',
+      'Schiena curva in posizione di attacco, con la scusa di andare più lontano.',
+    ],
+    sensation:
+      'Bruciano prima le gambe, poi la schiena e le braccia. Se le braccia si stancano prima delle gambe, l’ordine del colpo è invertito.',
+    rangeOfMotion:
+      'L’impugnatura arriva alla parte bassa delle costole, non al petto né alla pancia. In posizione di attacco le tibie sono verticali: andare oltre non guadagna nulla e sollecita la schiena.',
+    tempo:
+      'Un ritmo regolare, con un ritorno circa due volte più lento della spinta. È questo rapporto, non la cadenza, a distinguere un colpo pulito da uno affrettato.',
+    anatomy:
+      'Quadricipiti e glutei producono la maggior parte della potenza nella spinta; poi il gran dorsale, i romboidi e il trapezio medio portano la scapola verso la colonna; il bicipite conclude. Il core trasmette la forza delle gambe alla parte alta, il che fa del vogatore un movimento di catena completa.',
+    mechanics:
+      'Sequenza in quattro tempi — attacco, spinta, finale, ritorno — che combina estensione delle gambe, estensione dell’anca e trazione orizzontale. È l’unico movimento della libreria in cui l’ordine dei segmenti conta quanto la forza prodotta: gambe, poi busto, poi braccia.',
+    benefits: [
+      'L’unico cardio della libreria che è anche un vero gesto tecnico: la qualità del colpo migliora insieme alla condizione fisica.',
+      'Allena la catena di trazione, assente negli altri esercizi cardio.',
+      'Senza impatto, pur reclutando nettamente più massa muscolare della camminata o della cyclette.',
+    ],
+    progression: {
+      easier: 'Riduci la durata prima di alzare la cadenza, e concentrati sull’ordine gambe-busto-braccia.',
+      harder: 'Allunga la durata, alza il ritmo mantenendo il rapporto ritorno/spinta, o lavora a blocchi.',
+      readyWhen: 'Quando quindici minuti passano con l’ordine del colpo rispettato dall’inizio alla fine, allunga la durata.',
+    },
+    precautions:
+      'La zona lombare non deve mai essere il motore: se la fatica si installa lì, significa che il busto si apre prima che le gambe abbiano finito di spingere. Riprendi più lentamente e più leggero.',
   },
 };

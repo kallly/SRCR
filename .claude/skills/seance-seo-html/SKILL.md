@@ -59,9 +59,9 @@ qu'`applyStaticTranslations()` tournait, decalant tout ce qui suit. Ne pas
 revenir en arriere pour « alleger » le HTML.
 
 **`npm run check` verifie tout cela sur `dist/`** (`scripts/check-build.ts`,
-lance aussi par la CI apres le build) : chaque `data-i18n` rempli, les 28 cles
+lance aussi par la CI apres le build) : chaque `data-i18n` rempli, les 62 cles
 d'exercice presentes en attribut et en `<code>` visible, chaque bloc JSON-LD
-qui parse, `__BUILD_DATE__` remplace, les 140 fiches non vides et inscrites au
+qui parse, `__BUILD_DATE__` remplace, les 310 fiches non vides et inscrites au
 sitemap. Ne pas refaire ces controles a la main — et si une regle nouvelle
 merite d'etre tenue, l'ajouter la plutot que de l'ecrire en prose ici.
 

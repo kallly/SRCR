@@ -6,12 +6,12 @@
     <!-- ~155 caracteres : au-dela, Google tronque dans ses resultats. -->
     <meta
       name="description"
-      content="Planificateur et minuteur de séance au poids du corps, sans matériel. Mode classique ou circuit, en 5 langues. Sans compte : tout reste sur votre appareil."
+      content="Planificateur et minuteur de séance : poids du corps, élastique, haltères ou machine. Mode classique ou circuit, en 5 langues, sans compte."
     />
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#0e1210" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f5f4ee" media="(prefers-color-scheme: light)" />
-    <title>Séance — reprise au poids du corps sans matériel</title>
+    <title>Séance — planificateur et minuteur d'entraînement</title>
     <link rel="canonical" href="https://kallly.github.io/SRCR/" />
 
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
@@ -26,25 +26,25 @@
       contenu retraduit dynamiquement par l'app pour un visiteur reel.
       Voir CLAUDE.md, section « SEO & partage social ».
     -->
-    <meta property="og:title" content="Séance — reprise au poids du corps sans matériel" />
+    <meta property="og:title" content="Séance — planificateur et minuteur d'entraînement" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://kallly.github.io/SRCR/" />
     <meta
       property="og:description"
-      content="Planificateur et minuteur de séance au poids du corps, sans matériel. Mode classique ou circuit, en 5 langues, 100% local."
+      content="Planificateur et minuteur de séance : poids du corps, élastique, haltères ou machine. Mode classique ou circuit, en 5 langues, 100% local."
     />
     <meta property="og:site_name" content="Séance" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:image" content="https://kallly.github.io/SRCR/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Séance — reprise au poids du corps sans matériel" />
+    <meta property="og:image:alt" content="Séance — planificateur et minuteur d'entraînement" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Séance — reprise au poids du corps sans matériel" />
+    <meta name="twitter:title" content="Séance — planificateur et minuteur d'entraînement" />
     <meta
       name="twitter:description"
-      content="Planificateur et minuteur de séance au poids du corps, sans matériel. Mode classique ou circuit, en 5 langues, 100% local."
+      content="Planificateur et minuteur de séance : poids du corps, élastique, haltères ou machine. Mode classique ou circuit, en 5 langues, 100% local."
     />
     <meta name="twitter:image" content="https://kallly.github.io/SRCR/og-image.png" />
 
@@ -53,7 +53,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Séance",
-        "description": "Planificateur et minuteur de séance au poids du corps, sans matériel. Mode classique ou circuit, en 5 langues, 100% local.",
+        "description": "Planificateur et minuteur de séance : poids du corps, élastique, haltères ou machine. Mode classique ou circuit, en 5 langues, 100% local.",
         "url": "https://kallly.github.io/SRCR/",
         "applicationCategory": "HealthApplication",
         "operatingSystem": "Web",
@@ -188,6 +188,13 @@
           <option value="" data-i18n="library.filterAll"></option>
         </select>
       </div>
+      <div
+        class="lib-categories"
+        id="libCategoryFilter"
+        role="group"
+        aria-label=""
+        data-i18n-aria-label="library.filterCategoryLabel"
+      ></div>
       <p class="lib-empty" id="libEmpty" data-i18n="library.noResults" hidden></p>
       <div class="lib" id="library"></div>
 
@@ -277,6 +284,7 @@ https://kallly.github.io/SRCR/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4Iiw
       </div>
       <h3 id="infoName"></h3>
       <div class="info-fig" id="infoFig"></div>
+      <p class="info-equipment"><b data-i18n="exerciseInfo.equipment"></b> <span id="infoEquipment"></span></p>
       <p class="info-muscles"><b data-i18n="exerciseInfo.muscles"></b> <span id="infoMuscles"></span></p>
       <p class="info-unavailable" id="infoUnavailable" data-i18n="exerciseInfo.unavailable" hidden></p>
       <h4 data-i18n="exerciseInfo.keyPoints"></h4>

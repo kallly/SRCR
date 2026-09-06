@@ -105,7 +105,7 @@ function parseItem(raw: unknown): PlanItem | null {
   // jamais une valeur a faire confiance depuis le payload : c'est deja
   // l'invariant que l'UI applique (ui/planner.ts masque le selecteur de
   // groupe pour tout exercice de la bibliotheque — seul un perso l'expose).
-  // Piege verifie : une IA a devine un groupe absent de nos 8 identifiants
+  // Piege verifie : une IA a devine un groupe absent de nos identifiants
   // (« pull », usuel en musculation mais inexistant ici) pour des exercices
   // par ailleurs correctement reconnus (wallSlides, superman, rotation) ;
   // sans ce garde-fou, `isGroupId('pull')` est faux et le groupe retombait

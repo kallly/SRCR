@@ -9,8 +9,8 @@ import type { Dictionary } from '../index';
  */
 export const fr = {
   app: {
-    title: 'Séance — reprise au poids du corps',
-    eyebrow: 'Phase 1 · sans matériel',
+    title: 'Séance — planificateur et minuteur d’entraînement',
+    eyebrow: 'Avec ou sans matériel',
     heading: 'Ma séance',
     tagline: 'Construis ton entraînement, ordonne les exercices, règle les pauses.',
     sourceCode: 'Code source',
@@ -60,7 +60,7 @@ export const fr = {
   about: {
     title: 'À propos de Séance',
     intro:
-      'Séance est un planificateur et un minuteur d’entraînement au poids du corps, pensé pour une reprise sans matériel. On compose son déroulé à partir d’une bibliothèque d’exercices — pompes inclinées, squat sur chaise, wall sit, planche, dead bug, mollets debout, rotation externe d’épaule, marche — puis on règle les séries, les répétitions ou les durées, et les temps de repos.',
+      'Séance est un planificateur et un minuteur d’entraînement. On compose son déroulé à partir d’une bibliothèque d’exercices filtrable selon le matériel dont on dispose — poids du corps, élastique, haltères, machine — ou selon le moment de la séance, échauffement et étirements compris. Chaque ligne se règle ensuite en séries, en répétitions ou en durée, avec son temps de repos.',
     modes:
       'Deux façons d’enchaîner les séries. En mode classique, on fait toutes les séries d’un exercice avant de passer au suivant, avec le repos réglé sur chaque ligne. En mode circuit, les séries alternent les groupes musculaires et une pause n’apparaît que lorsque deux efforts du même groupe doivent forcément se suivre — l’aperçu affiche l’enchaînement calculé avant de commencer.',
     privacy:
@@ -88,7 +88,7 @@ export const fr = {
     createTitle: 'Créer une séance',
     createText: 'Copiez ce message :',
     createPrompt:
-      'Voici un site de séances au poids du corps : https://kallly.github.io/SRCR/. Crée-moi une séance haut du corps de 20 minutes, puis donne-moi le lien à ouvrir pour l’importer.',
+      'Voici un site pour composer des séances : https://kallly.github.io/SRCR/. Crée-moi une séance haut du corps de 20 minutes, puis donne-moi le lien à ouvrir pour l’importer.',
     modifyTitle: 'Modifier une séance',
     modifyText: 'Utilisez le lien de partage de votre séance pour demander à l’IA de la modifier :',
     modifyPrompt:
@@ -100,6 +100,7 @@ export const fr = {
   exerciseInfo: {
     trigger: 'Informations sur l’exercice',
     close: 'Fermer',
+    equipment: 'Équipement',
     muscles: 'Muscles sollicités',
     keyPoints: 'Points clés',
     moreInfo: 'Plus d’informations',
@@ -135,6 +136,8 @@ export const fr = {
     search: 'Rechercher un exercice…',
     filterLabel: 'Filtrer par groupe musculaire',
     filterAll: 'Tous les groupes',
+    /** Aria-label du groupe de puces ; pas d'option « tout » : aucune puce cochée = aucune restriction. */
+    filterCategoryLabel: 'Filtrer par équipement',
     noResults: 'Aucun exercice ne correspond à cette recherche.',
   },
 
@@ -202,14 +205,24 @@ export const fr = {
   },
 
   group: {
-    push: 'Poitrine / bras',
+    push: 'Poitrine',
     shoulders: 'Épaules',
     back: 'Dos',
+    arms: 'Bras',
     legs: 'Cuisses',
     calves: 'Mollets',
     core: 'Gainage',
     cardio: 'Cardio',
     glutes: 'Fessiers',
+  },
+
+  category: {
+    warmup: 'Échauffement',
+    stretching: 'Étirements',
+    bodyweight: 'Poids du corps',
+    band: 'Élastique',
+    dumbbell: 'Haltères',
+    machine: 'Machine',
   },
 
   duration: {
@@ -301,7 +314,7 @@ export const fr = {
     readyWhen: 'Passer à la suite',
     precautions: 'Précautions',
     similar: 'Exercices similaires',
-    tagline: 'planificateur et minuteur de séance au poids du corps.',
+    tagline: 'planificateur et minuteur de séance, avec ou sans matériel.',
     disclaimer:
       'Ces informations sont d’ordre général et ne remplacent pas l’avis d’un professionnel de santé. En cas de douleur, de blessure ou de pathologie connue, demandez un avis médical avant de vous lancer.',
   },
@@ -418,6 +431,142 @@ export const fr = {
     buttKickMarch: {
       name: 'Talons-fesses sur place',
       cue: 'Sur place, ramène les talons vers les fessiers à un rythme modéré.',
+    },
+    bandPullApart: {
+      name: 'Écarté élastique',
+      cue: 'Bras tendus devant toi, élastique tendu entre les mains, écarte les bras en serrant les omoplates.',
+    },
+    bandSquat: {
+      name: 'Squat élastique',
+      cue: 'Élastique sous les pieds et posé sur les épaules, descends comme un squat classique, dos droit.',
+    },
+    dumbbellGobletSquat: {
+      name: 'Squat gobelet',
+      cue: 'Haltère tenu à deux mains contre la poitrine, descends en gardant les coudes entre les genoux.',
+    },
+    dumbbellRow: {
+      name: 'Rowing haltère un bras',
+      cue: 'Un genou et une main en appui sur un banc, tire l’haltère vers la hanche en gardant le dos plat.',
+    },
+    legPressMachine: {
+      name: 'Presse à cuisses',
+      cue: 'Pieds à plat sur la plaque, largeur d’épaules, pousse sans verrouiller complètement les genoux.',
+    },
+    latPulldownMachine: {
+      name: 'Tirage vertical',
+      cue: 'Barre saisie plus large que les épaules, tire-la vers le haut de la poitrine en gardant le buste droit.',
+    },
+    hamstringStretch: {
+      name: 'Étirement des ischio-jambiers',
+      cue: 'Talon posé sur un support, jambe tendue, penche le buste vers l’avant sans arrondir le dos.',
+    },
+    chestDoorwayStretch: {
+      name: 'Étirement pectoraux (cadre de porte)',
+      cue: 'Avant-bras contre le cadre de porte, coude à hauteur d’épaule, avance doucement le buste.',
+    },
+    squat: {
+      name: 'Squat',
+      cue: 'Pieds largeur de hanches, pousse les hanches en arrière et descends cuisses proches de l’horizontale, buste droit.',
+    },
+    pushup: {
+      name: 'Pompes',
+      cue: 'Mains sous les épaules, corps aligné des talons à la tête, descends jusqu’à frôler le sol.',
+    },
+    pikePushup: {
+      name: 'Pompes piquées',
+      cue: 'Bassin haut en V renversé, descends le sommet du crâne vers le sol entre les mains.',
+    },
+    mountainClimber: {
+      name: 'Grimpeur',
+      cue: 'En position de pompe, ramène alternativement un genou vers la poitrine sans lever les hanches.',
+    },
+    legSwing: {
+      name: 'Balancements de jambe',
+      cue: 'Appuie-toi d’une main, balance une jambe d’avant en arrière, amplitude progressive et bassin stable.',
+    },
+    torsoTwist: {
+      name: 'Rotations du buste',
+      cue: 'Debout, pieds ancrés, fais pivoter le buste d’un côté puis de l’autre, bras relâchés.',
+    },
+    quadStretch: {
+      name: 'Étirement quadriceps debout',
+      cue: 'Debout, attrape ta cheville et ramène le talon vers la fesse, genoux côte à côte.',
+    },
+    gluteStretch: {
+      name: 'Étirement fessier (figure 4)',
+      cue: 'Allongé, cheville posée sur le genou opposé, tire la cuisse d’appui vers toi.',
+    },
+    calfStretch: {
+      name: 'Étirement mollets au mur',
+      cue: 'Mains au mur, jambe arrière tendue, talon au sol, avance le bassin.',
+    },
+    childPose: {
+      name: 'Posture de l’enfant',
+      cue: 'À genoux, assieds-toi sur les talons et allonge les bras loin devant, front vers le sol.',
+    },
+    tricepsStretch: {
+      name: 'Étirement triceps',
+      cue: 'Coude plié pointé vers le plafond, main entre les omoplates, pousse doucement le coude avec l’autre main.',
+    },
+    bandChestPress: {
+      name: 'Développé poitrine élastique',
+      cue: 'Élastique dans le dos, mains à hauteur de poitrine, pousse vers l’avant jusqu’aux bras tendus.',
+    },
+    bandLateralRaise: {
+      name: 'Élévations latérales élastique',
+      cue: 'Élastique sous les pieds, monte les bras tendus sur les côtés jusqu’à hauteur d’épaule.',
+    },
+    bandLateralWalk: {
+      name: 'Marche latérale élastique',
+      cue: 'Élastique au-dessus des genoux, demi-squat, fais des pas de côté sans laisser les genoux rentrer.',
+    },
+    bandCurl: {
+      name: 'Curl biceps élastique',
+      cue: 'Élastique sous les pieds, coudes collés au corps, remonte les mains vers les épaules.',
+    },
+    dumbbellShoulderPress: {
+      name: 'Développé militaire haltères',
+      cue: 'Haltères à hauteur d’épaules, pousse au-dessus de la tête sans cambrer le bas du dos.',
+    },
+    dumbbellFloorPress: {
+      name: 'Développé haltères au sol',
+      cue: 'Allongé au sol, genoux pliés, pousse les haltères vers le plafond ; les coudes touchent le sol en bas.',
+    },
+    dumbbellRomanianDeadlift: {
+      name: 'Soulevé de terre jambes tendues',
+      cue: 'Genoux à peine fléchis, pousse les hanches en arrière et descends les haltères le long des jambes, dos plat.',
+    },
+    dumbbellCalfRaise: {
+      name: 'Mollets debout avec haltères',
+      cue: 'Haltères le long du corps, monte sur la pointe des pieds puis redescends lentement.',
+    },
+    dumbbellCurl: {
+      name: 'Curl biceps haltères',
+      cue: 'Coudes collés au corps, remonte l’haltère sans balancer le buste.',
+    },
+    dumbbellTricepsExtension: {
+      name: 'Extension triceps',
+      cue: 'Haltère à deux mains au-dessus de la tête, descends derrière la nuque en gardant les coudes serrés.',
+    },
+    chestPressMachine: {
+      name: 'Développé poitrine machine',
+      cue: 'Dos calé, poignées à hauteur de poitrine, pousse sans verrouiller complètement les coudes.',
+    },
+    legCurlMachine: {
+      name: 'Leg curl (ischio-jambiers)',
+      cue: 'Rouleau sur le bas des mollets, fléchis les genoux avec contrôle, bassin plaqué.',
+    },
+    treadmill: {
+      name: 'Tapis de course',
+      cue: 'Allure où parler reste possible mais devient un peu essoufflé ; ne t’accroche pas aux barres.',
+    },
+    stationaryBike: {
+      name: 'Vélo d’appartement',
+      cue: 'Selle réglée pour garder un léger pli du genou en bas ; cadence régulière.',
+    },
+    rowingMachine: {
+      name: 'Rameur',
+      cue: 'Pousse d’abord avec les jambes, puis ouvre le buste, puis tire avec les bras — et l’inverse au retour.',
     },
     custom: {
       name: 'Exercice perso',

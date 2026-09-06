@@ -3,11 +3,27 @@ export type GroupId =
   | 'push'
   | 'shoulders'
   | 'back'
+  | 'arms'
   | 'legs'
   | 'glutes'
   | 'calves'
   | 'core'
   | 'cardio';
+
+/**
+ * Moment de la seance ou equipement requis, une seule valeur par exercice
+ * (le moment prime sur l'equipement : un echauffement ou un etirement garde
+ * cette etiquette meme s'il ne demande aucun materiel). Metadonnee de
+ * catalogue uniquement (`LibraryEntry`) : jamais copiee dans un `PlanItem`
+ * persiste, contrairement a `GroupId`.
+ */
+export type CategoryId =
+  | 'warmup'
+  | 'stretching'
+  | 'bodyweight'
+  | 'band'
+  | 'dumbbell'
+  | 'machine';
 
 /** Cles de la bibliotheque. `custom` est reserve aux exercices saisis par l'utilisateur. */
 export type ExerciseKey =
@@ -39,6 +55,40 @@ export type ExerciseKey =
   | 'crunch'
   | 'highKneeMarch'
   | 'buttKickMarch'
+  | 'bandPullApart'
+  | 'bandSquat'
+  | 'dumbbellGobletSquat'
+  | 'dumbbellRow'
+  | 'legPressMachine'
+  | 'latPulldownMachine'
+  | 'hamstringStretch'
+  | 'chestDoorwayStretch'
+  | 'squat'
+  | 'pushup'
+  | 'pikePushup'
+  | 'mountainClimber'
+  | 'legSwing'
+  | 'torsoTwist'
+  | 'quadStretch'
+  | 'gluteStretch'
+  | 'calfStretch'
+  | 'childPose'
+  | 'tricepsStretch'
+  | 'bandChestPress'
+  | 'bandLateralRaise'
+  | 'bandLateralWalk'
+  | 'bandCurl'
+  | 'dumbbellShoulderPress'
+  | 'dumbbellFloorPress'
+  | 'dumbbellRomanianDeadlift'
+  | 'dumbbellCalfRaise'
+  | 'dumbbellCurl'
+  | 'dumbbellTricepsExtension'
+  | 'chestPressMachine'
+  | 'legCurlMachine'
+  | 'treadmill'
+  | 'stationaryBike'
+  | 'rowingMachine'
   | 'custom';
 
 /** Un effort se mesure soit en repetitions, soit en duree. */
