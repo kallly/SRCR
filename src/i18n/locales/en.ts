@@ -25,6 +25,29 @@ export const en: Translations = {
     copyName: '{name} - copy',
   },
 
+  account: {
+    label: 'Account',
+    title: 'Online backup',
+    intro:
+      'Without signing in, your sessions live in this browser only: clearing it or switching devices loses them. Sign in with Google and they are saved automatically, so you find them everywhere.',
+    signIn: 'Sign in with Google',
+    signOut: 'Sign out',
+    signOutNotice:
+      'Signing out erases nothing: your sessions stay in this browser, they simply stop being backed up online.',
+    syncNow: 'Sync now',
+    lastSync: 'Last synced: {time}',
+    neverSynced: 'Not synced yet.',
+    statusSynced: 'synced',
+    statusSyncing: 'syncing…',
+    statusOffline: 'offline, will resume when back online',
+    statusError: 'sync unavailable, sessions kept here',
+    signInError: 'Sign-in failed. Try again in a moment.',
+    merged: {
+      one: '{count} session restored from your account',
+      other: '{count} sessions restored from your account',
+    },
+  },
+
   share: {
     trigger: 'Share',
     title: 'Share this session',
@@ -57,13 +80,13 @@ export const en: Translations = {
     modes:
       'Two ways to chain the sets. In classic mode, you complete every set of one exercise before moving to the next, with the rest set on each row. In circuit mode, sets alternate muscle groups and a break only appears when two efforts from the same group unavoidably follow each other — the preview shows the computed sequence before you start.',
     privacy:
-      'During the session, a full-screen player shows the timer, the progress ring and the execution cue, keeps the screen awake and signals the end of each interval. No account, no server, no data sent: your session and history are stored in the browser. The interface is available in French, English, Spanish, German and Italian.',
+      'During the session, a full-screen player shows the timer, the progress ring and the execution cue, keeps the screen awake and signals the end of each interval. No account required: your session and history are stored in the browser. An optional Google sign-in backs them up online so you find them on every device. The interface is available in French, English, Spanish, German and Italian.',
   },
 
   aiPlan: {
     title: 'Create a session from a link (for an AI)',
     intro:
-      'This page can receive a session described in its own address: opening such a link offers to import it, and nothing is saved without confirmation. An AI can therefore put a session together and hand it to you as a link, with no account and no server. Just give it the address of this page.',
+      'This page can receive a session described in its own address: opening such a link offers to import it, and nothing is saved without confirmation. An AI can therefore put a session together and hand it to you as a link, without needing an account. Just give it the address of this page.',
     format:
       'The expected link has the shape below: a JSON object carrying the session name, the sequencing mode and the list of rows, encoded as base64url in the s parameter.',
     keys:

@@ -12,8 +12,9 @@ Planificateur et minuteur de séance, avec ou sans matériel : poids du corps,
 - **Cinq langues** : français, anglais, espagnol, allemand, italien. La langue du
   navigateur est détectée au premier lancement, et changer de langue retraduit
   une séance déjà enregistrée — même en pleine séance.
-- **Aucun backend.** Tout est enregistré dans le navigateur, rien ne quitte
-  l'appareil.
+- **Aucun compte obligatoire.** Tout est enregistré dans le navigateur. Une
+  connexion Google, facultative, sauvegarde les séances en ligne (Firebase) pour
+  les retrouver sur tous ses appareils ; sans elle, rien ne quitte l'appareil.
 
 ## Démarrer
 

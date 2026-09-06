@@ -1,6 +1,6 @@
 import { isExercise } from './plan';
 import { parsePlan, parseSessionConfig } from './storage';
-import type { PlanItem, SavedPlan, SessionConfig } from './types';
+import type { PlanItem, SessionConfig } from './types';
 
 /**
  * Partage d'une seance par lien/QR code : pas de backend, donc la seance
@@ -86,7 +86,7 @@ function decodeItem(raw: unknown): Record<string, unknown> | null {
  * en regenere de frais a l'import, exactement comme il le ferait pour une
  * ligne stockee sans id.
  */
-export function encodeSharedPlan(plan: SavedPlan): string {
+export function encodeSharedPlan(plan: SharedPlan): string {
   const payload = {
     v: SHARE_VERSION,
     n: plan.name,

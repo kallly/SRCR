@@ -49,6 +49,12 @@ export interface Runner {
   render(): void;
   start(): void;
   stop(): void;
+  /**
+   * Vrai tant que le lecteur plein ecran occupe l'ecran. Consulte avant
+   * d'adopter un etat fusionne venu du nuage : le remplacer en pleine seance
+   * reconstruirait le lecteur et le chrono avec.
+   */
+  isActive(): boolean;
 }
 
 export function createRunner(ctx: Context): Runner {
@@ -359,6 +365,10 @@ export function createRunner(ctx: Context): Runner {
     progress.style.width = '0';
     void releaseWakeLock();
     ctx.renderAll();
+    // Une fusion avec le nuage arrivee pendant la seance a ete reportee pour ne
+    // pas reconstruire le lecteur en plein chrono : l'ecran est libre, elle peut
+    // s'appliquer.
+    ctx.cloud.resumeDeferred();
   }
 
   function start(): void {
@@ -409,5 +419,8 @@ export function createRunner(ctx: Context): Runner {
     }
   });
 
-  return { render, start, stop };
+  // `isActive` : le lecteur plein ecran est la seule zone de l'app qu'un
+  // renderAll() venu d'ailleurs (une fusion avec le nuage) ne doit pas
+  // reconstruire — il tournerait alors en plein chrono.
+  return { render, start, stop, isActive: () => active };
 }

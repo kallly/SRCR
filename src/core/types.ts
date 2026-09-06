@@ -157,6 +157,13 @@ export interface SavedPlan {
   name: string | null;
   items: PlanItem[];
   config: SessionConfig;
+  /**
+   * Derniere modification reelle du CONTENU (`name`/`items`/`config`), en ms
+   * epoch. C'est l'arbitre de la fusion avec le nuage : entre deux versions
+   * d'une meme seance, la plus recente gagne. Estampille automatiquement par
+   * `saveState()` (core/storage.ts), jamais a la main depuis un module d'UI.
+   */
+  updatedAt: number;
 }
 
 /** Une serie a executer. */

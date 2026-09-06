@@ -1,6 +1,14 @@
+import { createCloudSync, type CloudSync } from '../cloud/sync';
 import { onLocaleChange, setLocale as applyLocale, t } from '../i18n';
 import { createCustom, createRest, uid } from '../core/plan';
-import { DEFAULT_SESSION_CONFIG, saveLocale, saveState, type State } from '../core/storage';
+import {
+  DEFAULT_SESSION_CONFIG,
+  forgetPlanFingerprint,
+  reseedFingerprints,
+  saveLocale,
+  saveState,
+  type State,
+} from '../core/storage';
 import type { ExerciseKey, Locale, PlanItem, SavedPlan, SessionConfig, SessionMode } from '../core/types';
 import { applyStaticTranslations, byId } from './dom';
 import { createExerciseInfo } from './exercise-info';
@@ -13,6 +21,7 @@ import { createPlanner } from './planner';
 import { createPlanSwitcher } from './plan-switcher';
 import { createPreview } from './preview';
 import { createRunner } from './runner';
+import { createAccount } from './account';
 import { createAiHelp } from './ai-help';
 import { createShare } from './share';
 import { createStatusBar } from './statusbar';
@@ -59,8 +68,22 @@ export interface Context {
   deletePlan(id: string): void;
   switchPlan(id: string): void;
   setLocale(locale: Locale): void;
-  /** Persiste l'etat et signale le resultat a l'utilisateur. */
+  /**
+   * Persiste l'etat, signale le resultat a l'utilisateur, et — si un compte
+   * est connecte — declenche la sauvegarde en ligne. Tous les chemins de
+   * modification de l'app passent par ici : c'est ce qui rend la sauvegarde
+   * automatique exhaustive sans cablage par site d'appel.
+   */
   save(): void;
+  /**
+   * Remplace l'integralite de l'etat apres une fusion avec le nuage. Ne rend
+   * pas : l'appelant enchaine `renderAll()`.
+   */
+  adoptState(next: State): void;
+  /** Vrai pendant une seance : le lecteur occupe l'ecran, on ne le reconstruit pas. */
+  isSessionActive(): boolean;
+  /** Sauvegarde en ligne, facultative (src/cloud/). */
+  cloud: CloudSync;
   /** Rendu complet, apres un changement de structure ou de langue. */
   renderAll(): void;
   /** Apercu et barre de statut seulement, apres une simple saisie chiffree. */
@@ -94,6 +117,16 @@ export function createApp(state: State): { render: () => void } {
   }
 
   const toast = createToast();
+
+  // Cree avant le Context, mais ses rappels (`state`, `adopt`...) ne sont
+  // invoques qu'apres coup, sur un evenement reseau : ils peuvent donc
+  // referencer `ctx` en toute securite.
+  const cloud = createCloudSync({
+    state: () => ctx.state,
+    isBusy: () => ctx.isSessionActive(),
+    adopt: (next) => ctx.adoptState(next),
+    onPulled: (added) => toast.show(t('account.merged', { count: added })),
+  });
 
   const ctx: Context = {
     state,
@@ -154,6 +187,12 @@ export function createApp(state: State): { render: () => void } {
       const index = ctx.state.plans.findIndex((plan) => plan.id === id);
       if (index === -1) return;
       ctx.state.plans.splice(index, 1);
+      // Seul chemin de suppression de l'app : c'est donc ici, et seulement
+      // ici, qu'on pose la pierre tombale. Sans elle, la seance reviendrait du
+      // nuage a la prochaine synchronisation, indistinguable d'une seance que
+      // cet appareil n'aurait jamais recue.
+      ctx.state.deleted[id] = Date.now();
+      forgetPlanFingerprint(id);
       if (ctx.state.activePlanId === id) {
         ctx.state.activePlanId = (ctx.state.plans[0] as SavedPlan).id;
       }
@@ -173,9 +212,32 @@ export function createApp(state: State): { render: () => void } {
       saveLocale(locale);
     },
     save: () => save(),
+    adoptState: (next) => {
+      // Muter les champs plutot que reaffecter `ctx.state` : les modules ont
+      // capture `ctx`, pas `state`, mais muter reste le geste le plus sur si
+      // l'un d'eux venait a garder une reference.
+      ctx.state.plans = next.plans;
+      ctx.state.activePlanId = next.activePlanId;
+      ctx.state.history = next.history;
+      ctx.state.deleted = next.deleted;
+      // L'etat adopte EST celui qu'on s'apprete a ecrire : sans ce reamorcage,
+      // la sauvegarde suivante redaterait chaque seance venue du nuage comme
+      // si cet appareil l'avait modifiee, et elle gagnerait a tort la fusion
+      // d'apres.
+      reseedFingerprints(ctx.state.plans);
+      saveState(ctx.state);
+      renderAll();
+    },
+    isSessionActive: () => runner.isActive(),
+    cloud,
     renderAll: () => renderAll(),
     renderDerived: () => renderDerived(),
-    startSession: () => runner.start(),
+    startSession: () => {
+      // Le lecteur va occuper l'ecran plusieurs dizaines de minutes : ce qui
+      // attend dans le differe part maintenant, pas a la fin de la seance.
+      void cloud.flush();
+      runner.start();
+    },
     showExerciseInfo: (key) => exerciseInfo.open(key),
     openShareDialog: () => share.openShareDialog(),
     toast,
@@ -192,11 +254,19 @@ export function createApp(state: State): { render: () => void } {
   const guidesIndex = createGuidesIndex();
   const exerciseInfo = createExerciseInfo();
   const share = createShare(ctx);
+  const account = createAccount(ctx);
   createAiHelp(ctx);
 
-  /** Sequence commune a createPlan/importPlan/duplicatePlan : enregistrer, activer, sauvegarder, tout rafraichir. */
-  function registerPlan(plan: SavedPlan): void {
-    ctx.state.plans.push(plan);
+  /**
+   * Sequence commune a createPlan/importPlan/duplicatePlan : enregistrer,
+   * activer, sauvegarder, tout rafraichir.
+   *
+   * `updatedAt` est pose ici et nulle part ailleurs : les appelants decrivent
+   * une seance, pas sa date. Ensuite c'est `saveState()` qui la tient a jour
+   * tout seul (core/storage.ts).
+   */
+  function registerPlan(plan: Omit<SavedPlan, 'updatedAt'>): void {
+    ctx.state.plans.push({ ...plan, updatedAt: Date.now() });
     ctx.state.activePlanId = plan.id;
     save();
     renderAll();
@@ -204,12 +274,48 @@ export function createApp(state: State): { render: () => void } {
 
   function save(): void {
     const ok = saveState(ctx.state);
+    // Sauvegarde en ligne : toute modification passant par save(), il suffit de
+    // brancher ici pour que TOUT parte dans le nuage — y compris ce qu'un
+    // module futur ajoutera. Sans effet si personne n'est connecte.
+    cloud.notifyLocalChange();
+    showSaveStatus(ok);
+  }
+
+  /**
+   * Etat de la sauvegarde, locale puis en ligne. Un echec local reste affiche
+   * (pas de minuteur) : c'est un probleme que la personne doit voir. Un echec
+   * de synchronisation aussi, mais il est moins grave — le localStorage a
+   * ecrit, la modification est en retard, pas perdue.
+   */
+  function showSaveStatus(localOk: boolean): void {
     if (savedTimer !== null) window.clearTimeout(savedTimer);
-    savedNote.textContent = ok ? t('storage.saved') : t('storage.unavailable');
-    if (!ok) return;
+    if (!localOk) {
+      savedNote.textContent = t('storage.unavailable');
+      return;
+    }
+    const cloudNote = cloudStatusNote();
+    savedNote.textContent = cloudNote ? `${t('storage.saved')} · ${cloudNote}` : t('storage.saved');
+    if (cloudNote === t('account.statusOffline') || cloudNote === t('account.statusError')) return;
     savedTimer = window.setTimeout(() => {
       savedNote.textContent = '';
     }, SAVED_TOAST_MS);
+  }
+
+  /** Suffixe de `#saved`. `null` quand personne n'est connecte : rien a dire de plus. */
+  function cloudStatusNote(): string | null {
+    switch (cloud.status()) {
+      case 'syncing':
+      case 'signing-in':
+        return t('account.statusSyncing');
+      case 'synced':
+        return t('account.statusSynced');
+      case 'offline':
+        return t('account.statusOffline');
+      case 'error':
+        return t('account.statusError');
+      case 'off':
+        return null;
+    }
   }
 
   function renderDerived(): void {
@@ -230,6 +336,7 @@ export function createApp(state: State): { render: () => void } {
       config.mode === 'circuit' ? t('mode.hintCircuit') : t('mode.hintClassic');
 
     langSwitch.render();
+    account.render();
     planSwitcher.render();
     guidesIndex.render();
     planner.render();
@@ -276,6 +383,14 @@ export function createApp(state: State): { render: () => void } {
       save();
       renderAll();
     },
+  });
+
+  // La poussee aboutit une seconde ou deux apres que save() a peint
+  // « Enregistré » : sans cet abonnement, le suffixe de synchronisation
+  // n'apparaitrait qu'a la modification SUIVANTE, toujours en retard d'un cran.
+  cloud.onChange(() => {
+    account.render();
+    if (savedNote.textContent !== '') showSaveStatus(true);
   });
 
   // Un changement de langue retraduit tout, y compris une seance en cours.

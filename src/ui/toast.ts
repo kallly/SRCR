@@ -4,7 +4,13 @@ import { el } from './dom';
 const TOAST_MS = 5000;
 
 export interface Toast {
-  show(message: string, actionLabel: string, onAction: () => void): void;
+  /**
+   * `actionLabel`/`onAction` vont ensemble et sont facultatifs : un toast
+   * purement informatif (« des seances sont arrivees du nuage ») n'a pas
+   * d'action a proposer, et un bouton qui ne ferait que fermer serait un
+   * bouton qui ne sert a rien — le toast disparait seul.
+   */
+  show(message: string, actionLabel?: string, onAction?: () => void): void;
 }
 
 /**
@@ -24,21 +30,24 @@ export function createToast(): Toast {
     node.replaceChildren();
   }
 
-  function show(message: string, actionLabel: string, onAction: () => void): void {
+  function show(message: string, actionLabel?: string, onAction?: () => void): void {
     if (hideTimer !== null) window.clearTimeout(hideTimer);
 
-    const actionBtn = el('button', {
-      className: 'toast-action',
-      text: actionLabel,
-      attrs: { type: 'button' },
-    });
-    actionBtn.addEventListener('click', () => {
+    const actionBtn =
+      actionLabel !== undefined && onAction !== undefined
+        ? el('button', {
+            className: 'toast-action',
+            text: actionLabel,
+            attrs: { type: 'button' },
+          })
+        : null;
+    actionBtn?.addEventListener('click', () => {
       if (hideTimer !== null) window.clearTimeout(hideTimer);
       hide();
-      onAction();
+      onAction?.();
     });
 
-    node.replaceChildren(el('span', { text: message }), actionBtn);
+    node.replaceChildren(el('span', { text: message }), ...(actionBtn ? [actionBtn] : []));
     node.classList.add('on');
     hideTimer = window.setTimeout(hide, TOAST_MS);
   }

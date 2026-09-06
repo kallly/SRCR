@@ -25,6 +25,29 @@ export const it: Translations = {
     copyName: '{name} - copia',
   },
 
+  account: {
+    label: 'Account',
+    title: 'Backup online',
+    intro:
+      'Senza accesso le tue sedute restano solo in questo browser: svuotarlo o cambiare dispositivo le fa sparire. Accedendo con Google vengono salvate automaticamente e le ritrovi ovunque.',
+    signIn: 'Accedi con Google',
+    signOut: 'Esci',
+    signOutNotice:
+      'Uscire non cancella nulla: le tue sedute restano in questo browser, semplicemente smettono di essere salvate online.',
+    syncNow: 'Sincronizza ora',
+    lastSync: 'Ultima sincronizzazione: {time}',
+    neverSynced: 'Non ancora sincronizzato.',
+    statusSynced: 'sincronizzato',
+    statusSyncing: 'sincronizzazione…',
+    statusOffline: 'offline, riprenderà al ritorno della rete',
+    statusError: 'sincronizzazione non riuscita, sedute conservate qui',
+    signInError: 'Accesso non riuscito. Riprova tra un istante.',
+    merged: {
+      one: '{count} seduta recuperata dal tuo account',
+      other: '{count} sedute recuperate dal tuo account',
+    },
+  },
+
   share: {
     trigger: 'Condividi',
     title: 'Condividi questa seduta',
@@ -57,13 +80,13 @@ export const it: Translations = {
     modes:
       'Due modi di concatenare le serie. In modalità classica esegui tutte le serie di un esercizio prima di passare al successivo, con il recupero impostato su ogni riga. In modalità circuito le serie alternano i gruppi muscolari e una pausa compare solo quando due sforzi dello stesso gruppo devono per forza susseguirsi — l’anteprima mostra la sequenza calcolata prima di iniziare.',
     privacy:
-      'Durante la seduta, un lettore a schermo intero mostra il cronometro, l’anello di avanzamento e l’indicazione di esecuzione, mantiene lo schermo acceso e segnala la fine di ogni intervallo. Nessun account, nessun server, nessun dato inviato: seduta e cronologia sono salvate nel browser. L’interfaccia è disponibile in francese, inglese, spagnolo, tedesco e italiano.',
+      'Durante la seduta, un lettore a schermo intero mostra il cronometro, l’anello di avanzamento e l’indicazione di esecuzione, mantiene lo schermo acceso e segnala la fine di ogni intervallo. Nessun account obbligatorio: seduta e cronologia sono salvate nel browser. Un accesso con Google, facoltativo, le salva online per ritrovarle su ogni dispositivo. L’interfaccia è disponibile in francese, inglese, spagnolo, tedesco e italiano.',
   },
 
   aiPlan: {
     title: 'Creare una seduta tramite link (per un’IA)',
     intro:
-      'Questa pagina sa ricevere una seduta descritta nel proprio indirizzo: aprire un link del genere propone di importarla, e nulla viene salvato senza conferma. Un’intelligenza artificiale può quindi comporre una seduta e consegnartela sotto forma di link, senza account né server. Basta darle l’indirizzo di questa pagina.',
+      'Questa pagina sa ricevere una seduta descritta nel proprio indirizzo: aprire un link del genere propone di importarla, e nulla viene salvato senza conferma. Un’intelligenza artificiale può quindi comporre una seduta e consegnartela sotto forma di link, senza bisogno di un account. Basta darle l’indirizzo di questa pagina.',
     format:
       'Il link atteso ha la forma qui sotto: un oggetto JSON che porta il nome della seduta, la modalità di concatenamento e l’elenco delle righe, codificato in base64url nel parametro s.',
     keys:

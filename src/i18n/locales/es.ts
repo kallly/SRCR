@@ -25,6 +25,29 @@ export const es: Translations = {
     copyName: '{name} - copia',
   },
 
+  account: {
+    label: 'Cuenta',
+    title: 'Copia de seguridad en línea',
+    intro:
+      'Sin iniciar sesión, tus sesiones solo viven en este navegador: al vaciarlo o cambiar de dispositivo se pierden. Si inicias sesión con Google, se guardan automáticamente y las recuperas en cualquier parte.',
+    signIn: 'Iniciar sesión con Google',
+    signOut: 'Cerrar sesión',
+    signOutNotice:
+      'Cerrar sesión no borra nada: tus sesiones siguen en este navegador, simplemente dejan de guardarse en línea.',
+    syncNow: 'Sincronizar ahora',
+    lastSync: 'Última sincronización: {time}',
+    neverSynced: 'Todavía sin sincronizar.',
+    statusSynced: 'sincronizado',
+    statusSyncing: 'sincronizando…',
+    statusOffline: 'sin conexión, se reanudará al volver la red',
+    statusError: 'sincronización no disponible, sesiones guardadas aquí',
+    signInError: 'No se pudo iniciar sesión. Inténtalo de nuevo en un momento.',
+    merged: {
+      one: '{count} sesión recuperada de tu cuenta',
+      other: '{count} sesiones recuperadas de tu cuenta',
+    },
+  },
+
   share: {
     trigger: 'Compartir',
     title: 'Compartir esta sesión',
@@ -57,13 +80,13 @@ export const es: Translations = {
     modes:
       'Dos formas de encadenar las series. En modo clásico, haces todas las series de un ejercicio antes de pasar al siguiente, con el descanso ajustado en cada línea. En modo circuito, las series alternan los grupos musculares y solo aparece una pausa cuando dos esfuerzos del mismo grupo tienen que seguirse forzosamente — la vista previa muestra la secuencia calculada antes de empezar.',
     privacy:
-      'Durante la sesión, un reproductor a pantalla completa muestra el cronómetro, el anillo de progreso y la indicación de ejecución, mantiene la pantalla encendida y avisa del final de cada intervalo. Sin cuenta, sin servidor, sin datos enviados: la sesión y el historial se guardan en el navegador. La interfaz está disponible en francés, inglés, español, alemán e italiano.',
+      'Durante la sesión, un reproductor a pantalla completa muestra el cronómetro, el anillo de progreso y la indicación de ejecución, mantiene la pantalla encendida y avisa del final de cada intervalo. Sin cuenta obligatoria: la sesión y el historial se guardan en el navegador. Un acceso con Google, opcional, los respalda en línea para recuperarlos en cualquier dispositivo. La interfaz está disponible en francés, inglés, español, alemán e italiano.',
   },
 
   aiPlan: {
     title: 'Crear una sesión mediante un enlace (para una IA)',
     intro:
-      'Esta página sabe recibir una sesión descrita en su propia dirección: abrir un enlace así propone importarla, y no se guarda nada sin confirmación. Una inteligencia artificial puede así componer una sesión y entregártela como enlace, sin cuenta ni servidor. Basta con darle la dirección de esta página.',
+      'Esta página sabe recibir una sesión descrita en su propia dirección: abrir un enlace así propone importarla, y no se guarda nada sin confirmación. Una inteligencia artificial puede así componer una sesión y entregártela como enlace, sin necesidad de una cuenta. Basta con darle la dirección de esta página.',
     format:
       'El enlace esperado tiene la forma de abajo: un objeto JSON con el nombre de la sesión, el modo de encadenamiento y la lista de líneas, codificado en base64url dentro del parámetro s.',
     keys:

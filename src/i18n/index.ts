@@ -152,6 +152,18 @@ export function t(key: TranslationKey, params?: Params): string {
   return interpolate(template, params);
 }
 
+/**
+ * Heure courte (« 14:32 ») dans la langue active. Distincte de `formatDate` :
+ * une synchronisation date presque toujours de la minute qui vient de passer,
+ * ou l'heure est la seule information utile.
+ */
+export function formatTime(timestamp: number): string {
+  return new Intl.DateTimeFormat(current, {
+    hour: 'numeric',
+    minute: '2-digit',
+  }).format(new Date(timestamp));
+}
+
 /** Date courte (« lun. 3 sept. ») dans la langue active. */
 export function formatDate(timestamp: number): string {
   return new Intl.DateTimeFormat(current, {

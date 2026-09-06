@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Planificateur et lecteur de seance au poids du corps, multilingue, 100% local",
+  "description": "Planificateur et lecteur de seance au poids du corps, multilingue, sans compte obligatoire",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build && tsx scripts/build-exercise-pages.ts",
@@ -19,6 +19,7 @@
     "vite": "^6.0.7"
   },
   "dependencies": {
+    "firebase": "^12.18.0",
     "qrcode-generator": "^2.0.4"
   }
 }

@@ -1,0 +1,29 @@
+rules_version = '2';
+
+// Regles de la base Firestore du projet `cirkali`.
+//
+// Ce fichier est la TRACE de ce qui doit etre publie : la CI ne le deploie pas
+// (le depot n'a pas de firebase-tools, et le deploiement passe par GitHub
+// Pages). A copier dans Firestore > Regles apres toute modification ici.
+//
+// C'est ce qui protege reellement les donnees : la config web de
+// src/cloud/firebase.ts est publique par nature, et n'autorise rien par
+// elle-meme.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Un document par compte, portant l'etat complet (cf. cloud/sync.ts).
+    // Chacun ne lit et n'ecrit que le sien : `request.auth.uid == uid` est la
+    // seule regle qui compte ici.
+    match /users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Tout le reste est refuse. Regle explicite plutot qu'implicite : elle
+    // survit a l'ajout d'une future collection dont on aurait oublie de
+    // definir les droits.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

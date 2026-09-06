@@ -499,8 +499,8 @@ function renderAiPlanPage(dict: Translations): string {
       <p>
         CIRKALI sait recevoir une séance entière décrite dans son adresse. Ouvrir un tel lien
         affiche un résumé et propose de l’importer : rien n’est enregistré sans que la personne
-        ait choisi une destination. Il n’y a ni compte, ni serveur, ni envoi de données — la
-        séance voyage dans l’URL et ne quitte jamais l’appareil.
+        ait choisi une destination. Aucun compte n’est nécessaire pour cela — la séance voyage
+        dans l’URL et ne passe par aucun serveur.
       </p>
       <p>
         Cette page est écrite pour une intelligence artificielle à qui on donne l’adresse du site
@@ -669,7 +669,8 @@ function renderLlmsTxt(dict: Translations): string {
   return `# CIRKALI
 
 > Planificateur et minuteur de séance, avec ou sans matériel. Site statique, sans
-> backend, sans compte : tout vit dans le navigateur. Cinq langues.
+> compte obligatoire : tout vit dans le navigateur, une connexion Google
+> facultative sauvegarde les séances en ligne. Cinq langues.
 
 ## Créer une séance par lien
 

@@ -1,8 +1,11 @@
 # CIRKALI
 
 Planificateur et minuteur de séance, avec ou sans matériel. Site statique, multilingue
-(fr, en, es, de, it), sans backend : tout l'état vit dans le `localStorage` du
-navigateur et rien ne quitte l'appareil.
+(fr, en, es, de, it), **sans compte obligatoire** : tout l'état vit dans le
+`localStorage` du navigateur, qui reste la source de vérité de l'app. Une
+connexion Google facultative (Firebase Auth + Firestore, `src/cloud/`) en fait
+un miroir en ligne, sauvegardé à chaque modification ; sans elle, rien ne quitte
+l'appareil et le SDK Firebase n'est même pas téléchargé.
 
 L'application a deux écrans : le **planificateur** (choisir la séance active
 parmi plusieurs séances sauvegardées, construire son déroulé, réordonner,
@@ -39,6 +42,11 @@ src/
     storage.ts     localStorage v5 (plusieurs SavedPlan) + migration depuis la v4/v3
     share.ts       format dense du lien/QR de partage (?s=), base64url
     ai-plan.ts     format JSON lisible (?plan=), le filet du pilotage par une IA
+  cloud/           sauvegarde en ligne, facultative — jamais chargee sans compte
+    firebase.ts    config publique + chargement paresseux du SDK
+    sync.ts        LE pilote : poussee automatique debouncee, fusion a la connexion
+    merge.ts       fusion pure seance par seance (updatedAt + pierres tombales)
+    session-hint.ts  un bit local : « etait connecte », pour ne pas charger le SDK pour rien
   data/            donnees sans texte
     groups.ts      ids + couleurs des 9 groupes musculaires
     library.ts     62 exercices : reglages seulement
@@ -138,6 +146,19 @@ les deux formes (v3 `type: 'ex'` avec nom inline, v4/v5 `type: 'exercise'`) et
 ne supprime jamais les anciennes clés : chaque version est écrite à côté de la
 précédente, jamais à sa place.
 
+**v6 : `SavedPlan.updatedAt` + `State.deleted`.** Ces deux ajouts n'existent
+que pour la sauvegarde en ligne (`src/cloud/`) : sans eux une fusion entre deux
+appareils ne saurait ni quelle version d'une séance est la plus récente, ni
+distinguer « supprimée ici » de « pas encore connue ici » — une séance
+supprimée sur le téléphone reviendrait du nuage à chaque synchronisation.
+`updatedAt` est estampillé **automatiquement par `saveState()`**, qui compare le
+contenu (`name`/`items`/`config`, jamais `updatedAt` lui-même) à la dernière
+écriture : surtout ne pas le remplacer par un `touch()` à appeler depuis l'UI,
+il serait oublié au premier module ajouté et la modification serait
+silencieusement perdue au profit d'une version distante plus ancienne. Les clés
+`seance.locale.v5` et `seance.history.v4` ne bougent pas — leur forme n'a pas
+changé, on ne bumpe que ce qui change de forme.
+
 **v5 : plusieurs séances sauvegardées, pas un seul plan.** `State` est
 `{ plans: SavedPlan[], activePlanId, history }` ; chaque `SavedPlan` porte son
 propre déroulé (`items`) et ses propres réglages (`SessionConfig` :
@@ -193,6 +214,7 @@ sans rien charger.
 | `index.html`, `vite.config.ts`, les balises meta/JSON-LD/`og:*`, la police, le sitemap, `llms.txt` | Un élément `data-i18n` doit être **vide** dans la source : son texte français est injecté au build depuis `fr.ts`. `#plan`/`#library` réservent leur hauteur (`:empty`) — c'est ce qui tient le CLS à 0,013 au lieu de 0,43. `--disp` demande `'Archivo'`, jamais `'Archivo Expanded'` (HTTP 400 silencieux). | `seance-seo-html` |
 | `scripts/build-exercise-pages.ts`, `src/content/exercise-details/*`, `exercise-page.css`, `image-prompts.ts` | `dist/exercises/**` est **regénéré à chaque build** : l'éditer à la main est une perte de temps garantie. Le contenu long n'admet que du vérifiable et du stable — jamais d'étude citée, de % d'activation EMG ni de chiffre à fausse précision. Le `slug` est **traduit par langue**. | `seance-fiches-generees` |
 | un module `src/ui/*.ts`, le `Context`, la taille/place d'un bouton, le schéma persisté | Une saisie chiffrée passe par `renderDerived()` — reconstruire la liste ferait perdre le focus du champ. Changer la forme de ce qui est persisté impose de bumper la version **et** d'écrire la migration. | `seance-ui-module` |
+| `src/cloud/*`, `src/ui/account.ts`, le bouton de compte, la sauvegarde en ligne | La sauvegarde automatique tient à **un seul point d'accroche** : `cloud.notifyLocalChange()` dans `save()` (`ui/app.ts`). Ne jamais la recâbler site par site. Le SDK Firebase n'est chargé **que** sur un clic de connexion ou si `session-hint` dit que la personne était connectée — sinon un visiteur anonyme paierait ~200 Ko pour rien. Le document distant repasse **toujours** par les parseurs de `core/storage.ts` : c'est une entrée non fiable, au même titre qu'un lien `?s=`. | *(pas de skill : tout est ici et dans `firestore.rules`)* |
 | une clé de traduction, un texte d'interface | `fr.ts` d'abord : les quatre autres langues deviennent alors des erreurs de compilation. Jamais de pluriel recomposé à la main. | `add-i18n-key` |
 | ajouter un exercice à la bibliothèque | Les 5 fichiers de contenu long sont **hors du contrat typechecké** : une langue oubliée ne casse pas le build, elle retombe en silence sur le français. `npm run exo <clé>` est le seul contrôle. | `add-exercise` |
 

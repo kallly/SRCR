@@ -32,6 +32,29 @@ export const fr = {
     copyName: '{name} - copie',
   },
 
+  account: {
+    label: 'Compte',
+    title: 'Sauvegarde en ligne',
+    intro:
+      'Sans connexion, vos séances restent dans ce navigateur : les vider ou changer d’appareil les fait disparaître. En vous connectant avec Google, elles sont sauvegardées automatiquement et vous les retrouvez partout.',
+    signIn: 'Se connecter avec Google',
+    signOut: 'Se déconnecter',
+    signOutNotice:
+      'Se déconnecter n’efface rien : vos séances restent dans ce navigateur, elles cessent simplement d’être sauvegardées en ligne.',
+    syncNow: 'Synchroniser maintenant',
+    lastSync: 'Dernière synchronisation : {time}',
+    neverSynced: 'Pas encore synchronisé.',
+    statusSynced: 'synchronisé',
+    statusSyncing: 'synchronisation…',
+    statusOffline: 'hors ligne, reprise au retour du réseau',
+    statusError: 'synchronisation impossible, séances gardées ici',
+    signInError: 'Connexion impossible. Réessayez dans un instant.',
+    merged: {
+      one: '{count} séance récupérée depuis votre compte',
+      other: '{count} séances récupérées depuis votre compte',
+    },
+  },
+
   share: {
     trigger: 'Partager',
     title: 'Partager cette séance',
@@ -64,13 +87,13 @@ export const fr = {
     modes:
       'Deux façons d’enchaîner les séries. En mode classique, on fait toutes les séries d’un exercice avant de passer au suivant, avec le repos réglé sur chaque ligne. En mode circuit, les séries alternent les groupes musculaires et une pause n’apparaît que lorsque deux efforts du même groupe doivent forcément se suivre — l’aperçu affiche l’enchaînement calculé avant de commencer.',
     privacy:
-      'Pendant la séance, un lecteur plein écran affiche le chrono, l’anneau de progression et la consigne d’exécution, garde l’écran allumé et signale la fin de chaque temps. Aucun compte, aucun serveur, aucune donnée envoyée : la séance et l’historique sont enregistrés dans le navigateur. L’interface existe en français, anglais, espagnol, allemand et italien.',
+      'Pendant la séance, un lecteur plein écran affiche le chrono, l’anneau de progression et la consigne d’exécution, garde l’écran allumé et signale la fin de chaque temps. Aucun compte obligatoire : la séance et l’historique sont enregistrés dans le navigateur. Une connexion Google, facultative, les sauvegarde en ligne pour les retrouver sur tous ses appareils. L’interface existe en français, anglais, espagnol, allemand et italien.',
   },
 
   aiPlan: {
     title: 'Créer une séance par lien (pour une IA)',
     intro:
-      'Cette page sait recevoir une séance décrite dans son adresse : ouvrir un tel lien propose de l’importer, rien n’est enregistré sans confirmation. Une intelligence artificielle peut donc composer une séance et vous la livrer sous forme de lien, sans compte ni serveur. Donnez-lui simplement l’adresse de cette page.',
+      'Cette page sait recevoir une séance décrite dans son adresse : ouvrir un tel lien propose de l’importer, rien n’est enregistré sans confirmation. Une intelligence artificielle peut donc composer une séance et vous la livrer sous forme de lien, sans avoir besoin d’un compte. Donnez-lui simplement l’adresse de cette page.',
     format:
       'Le lien attendu est de la forme ci-dessous : un objet JSON qui porte le nom de la séance, le mode d’enchaînement et la liste des lignes, compressé en base64url dans le paramètre s.',
     keys:

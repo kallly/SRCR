@@ -5,16 +5,34 @@ import { defaultPlan, uid } from './plan';
 import type { ExerciseItem, Locale, PlanItem, RestItem, SavedPlan, SessionConfig } from './types';
 
 /**
- * Schema v5 : plusieurs seances sauvegardees (`SavedPlan`), au lieu d'un seul
- * plan. La v4 (un plan + une config qui melangeait reglages et langue)
- * n'est jamais effacee : elle sert de migration, et la v5 est ecrite a cote.
+ * Schema v6 : chaque `SavedPlan` porte un `updatedAt`, et l'etat garde une
+ * liste d'ids supprimes (`deleted`). Ces deux ajouts n'existent que pour la
+ * sauvegarde en ligne (src/cloud/) : sans eux, une fusion entre deux appareils
+ * ne saurait ni quelle version d'une seance est la plus recente, ni distinguer
+ * « supprimee ici » de « pas encore connue ici » — une seance supprimee sur le
+ * telephone reviendrait du nuage a chaque synchronisation.
+ *
+ * La v5 n'est jamais effacee : elle sert de migration, et la v6 est ecrite a
+ * cote (comme la v5 l'avait ete a cote de la v4, et la v4 de la v3).
+ *
+ * `locale` et `history` restent sur leur ancienne cle : leur forme n'a pas
+ * change. Meme precedent que `history`, deja reste en v4 lors du passage a la
+ * v5 — on ne bump que ce qui change de forme.
+ *
  * Voir CLAUDE.md, section « Modifier le schema persiste impose une migration ».
  */
 const KEYS = {
-  plans: 'seance.plans.v5',
-  activePlanId: 'seance.active.v5',
+  plans: 'seance.plans.v6',
+  activePlanId: 'seance.active.v6',
+  deleted: 'seance.deleted.v6',
   locale: 'seance.locale.v5',
   history: 'seance.history.v4',
+} as const;
+
+/** v5 : plusieurs seances, mais sans horodatage ni suivi des suppressions. */
+const V5_KEYS = {
+  plans: 'seance.plans.v5',
+  activePlanId: 'seance.active.v5',
 } as const;
 
 /** v4 : un seul plan + une config portant aussi la langue. */
@@ -32,10 +50,32 @@ const LEGACY_KEYS = {
 /** Au-dela, les plus anciennes seances sont oubliees. */
 const MAX_HISTORY = 200;
 
+/**
+ * Duree de vie d'une pierre tombale. Passe ce delai, on suppose que tous les
+ * appareils de la personne ont vu la suppression ; garder la liste indefiniment
+ * la ferait grossir sans fin dans un stockage qui n'a que quelques Mo.
+ *
+ * Volontairement large (1 an, pas 90 jours) : purger cote LOCAL (loadState())
+ * est sans risque — l'appareil qui purge sa propre pierre tombale a deja
+ * applique la suppression, l'oublier ne la fait pas revenir chez lui. Mais un
+ * appareil resté injoignable plus longtemps que ce delai reverrait alors une
+ * seance que d'autres ont supprimee comme si elle n'avait jamais ete vue, et
+ * la resusciterait pour tout le monde a sa prochaine synchronisation. Un an
+ * de marge rend ce scenario negligeable sans faire grossir le stockage de
+ * facon significative (quelques dizaines d'octets par pierre tombale).
+ */
+const TOMBSTONE_TTL_MS = 365 * 24 * 60 * 60 * 1000;
+
 export interface State {
   plans: SavedPlan[];
   activePlanId: string;
   history: number[];
+  /**
+   * Seances supprimees : id -> ms epoch de la suppression. Sans cette trace,
+   * la fusion avec le nuage ne pourrait pas faire la difference entre une
+   * seance que cet appareil a supprimee et une qu'il n'a jamais recue.
+   */
+  deleted: Record<string, number>;
 }
 
 export const DEFAULT_SESSION_CONFIG: SessionConfig = {
@@ -147,7 +187,7 @@ export function parsePlan(raw: unknown): PlanItem[] | null {
   return items;
 }
 
-function parseHistory(raw: unknown): number[] {
+export function parseHistory(raw: unknown): number[] {
   if (!Array.isArray(raw)) return [];
   return raw.filter((entry): entry is number => typeof entry === 'number').slice(-MAX_HISTORY);
 }
@@ -166,7 +206,12 @@ function parsePlanName(raw: unknown): string | null {
   return typeof raw === 'string' && raw.trim() ? raw : null;
 }
 
-function parsePlanEntry(raw: unknown): SavedPlan | null {
+/**
+ * Exporte : le document distant (src/cloud/) est une entree non fiable au meme
+ * titre qu'un lien de partage, et repasse donc par ce parseur plutot que par
+ * une seconde validation vouee a diverger de celle-ci.
+ */
+export function parsePlanEntry(raw: unknown): SavedPlan | null {
   if (typeof raw !== 'object' || raw === null) return null;
   const source = raw as Record<string, unknown>;
   return {
@@ -174,10 +219,41 @@ function parsePlanEntry(raw: unknown): SavedPlan | null {
     name: parsePlanName(source['name']),
     items: parsePlan(source['items']) ?? [],
     config: parseSessionConfig(source['config']),
+    // Une seance v5 n'a pas d'horodatage : on la date de MAINTENANT plutot que
+    // de zero. « L'appareil sur lequel je migre est presume a jour » — dater de
+    // zero ferait perdre le contenu local face a n'importe quelle copie
+    // distante des la premiere connexion.
+    updatedAt: positiveInt(source['updatedAt'], Date.now()),
   };
 }
 
-function parsePlansList(raw: unknown): SavedPlan[] | null {
+/**
+ * Pierres tombales, en oubliant les plus anciennes (voir TOMBSTONE_TTL_MS).
+ * `now` est un parametre pour rester testable sans horloge simulee.
+ *
+ * `prune` vaut `false` pour le document distant (cloud/sync.ts) : le purger
+ * la reviendrait a supposer que CET appareil a deja vu toutes les
+ * suppressions qu'il contient, ce qui est exactement ce qu'on ne sait pas —
+ * c'est le distant qui fait foi pour les autres appareils. Seule la lecture
+ * LOCALE (loadState() ci-dessous) purge : un appareil qui oublie sa PROPRE
+ * pierre tombale ne fait rien revenir, il a deja applique cette suppression.
+ */
+export function parseDeleted(
+  raw: unknown,
+  now: number = Date.now(),
+  prune: boolean = true,
+): Record<string, number> {
+  if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) return {};
+  const deleted: Record<string, number> = {};
+  for (const [id, at] of Object.entries(raw as Record<string, unknown>)) {
+    if (typeof at !== 'number' || !Number.isFinite(at)) continue;
+    if (prune && now - at > TOMBSTONE_TTL_MS) continue;
+    deleted[id] = Math.round(at);
+  }
+  return deleted;
+}
+
+export function parsePlansList(raw: unknown): SavedPlan[] | null {
   if (!Array.isArray(raw) || raw.length === 0) return null;
   const plans = raw.map(parsePlanEntry).filter((entry): entry is SavedPlan => entry !== null);
   return plans.length > 0 ? plans : null;
@@ -193,6 +269,7 @@ function migrateFromV4(): SavedPlan | null {
     name: null,
     items: parsePlan(rawPlan) ?? defaultPlan(),
     config: parseSessionConfig(rawConfig),
+    updatedAt: Date.now(),
   };
 }
 
@@ -224,52 +301,125 @@ export function saveLocale(locale: Locale): void {
   }
 }
 
+/** Une seance neuve, quand rien de lisible n'a ete trouve nulle part. */
+export function createDefaultPlan(): SavedPlan {
+  return {
+    id: uid(),
+    name: null,
+    items: defaultPlan(),
+    // Copie, jamais la reference : sinon muter le mode d'une session
+    // (ctx.activePlan().config.mode = ...) mute ce singleton partage,
+    // et toute session creee ensuite via createPlan() en herite.
+    config: { ...DEFAULT_SESSION_CONFIG },
+    updatedAt: Date.now(),
+  };
+}
+
 /**
- * Charge l'etat, en se rabattant sur la migration v4 puis sur la seance
- * type. Les anciennes cles ne sont jamais effacees : la v5 est ecrite a cote.
+ * Empreinte du CONTENU d'une seance, `updatedAt` exclu — c'est ce que
+ * `stampUpdated()` compare. L'inclure ferait qu'une ecriture change l'empreinte
+ * qui declenche l'ecriture suivante : `updatedAt` se re-daterait a chaque
+ * sauvegarde, et cet appareil gagnerait toutes les fusions a venir sans avoir
+ * rien modifie.
+ */
+function planFingerprint(plan: SavedPlan): string {
+  return JSON.stringify([plan.name, plan.items, plan.config]);
+}
+
+/**
+ * Derniere empreinte ecrite, par id. Semee par `loadState()`, tenue a jour par
+ * `saveState()`.
+ */
+const fingerprints = new Map<string, string>();
+
+/**
+ * Horodate les seances dont le contenu a reellement change depuis la derniere
+ * ecriture.
+ *
+ * Automatique, et non un `touch()` a appeler depuis l'UI : ce dernier serait
+ * oublie au premier module ajoute, et `updatedAt` est precisement ce qui
+ * arbitre la fusion avec le nuage — un oubli s'y traduirait par une
+ * modification silencieusement perdue au profit d'une version distante plus
+ * ancienne. Le contrat « muter -> save() » deja en place suffit donc.
+ */
+function stampUpdated(plans: SavedPlan[], now: number): void {
+  for (const plan of plans) {
+    const fingerprint = planFingerprint(plan);
+    const previous = fingerprints.get(plan.id);
+    // Inconnue de la Map : soit une seance neuve, soit le premier passage
+    // apres chargement. Dans les deux cas `updatedAt` est deja juste (fixe par
+    // le parseur ou par la creation) — on enregistre l'empreinte sans redater.
+    if (previous !== undefined && previous !== fingerprint) plan.updatedAt = now;
+    fingerprints.set(plan.id, fingerprint);
+  }
+}
+
+/**
+ * Charge l'etat, en se rabattant sur la v5, puis sur la migration v4, puis sur
+ * la seance type. Les anciennes cles ne sont jamais effacees : la v6 est
+ * ecrite a cote.
  */
 export function loadState(): State {
   const plans =
     parsePlansList(readJson(KEYS.plans)) ??
-    (() => {
-      const migrated = migrateFromV4();
-      return [
-        migrated ?? {
-          id: uid(),
-          name: null,
-          items: defaultPlan(),
-          // Copie, jamais la reference : sinon muter le mode d'une session
-          // (ctx.activePlan().config.mode = ...) mute ce singleton partage,
-          // et toute session creee ensuite via createPlan() en herite.
-          config: { ...DEFAULT_SESSION_CONFIG },
-        },
-      ];
-    })();
+    parsePlansList(readJson(V5_KEYS.plans)) ??
+    [migrateFromV4() ?? createDefaultPlan()];
 
   // Invariant preserve partout dans l'app : il y a toujours au moins une
   // seance, meme fraichement creee ci-dessus si tout le reste a echoue.
   const firstPlan = plans[0] as SavedPlan;
-  const rawActiveId = readJson(KEYS.activePlanId);
+  const rawActiveId = readJson(KEYS.activePlanId) ?? readJson(V5_KEYS.activePlanId);
   const activePlanId =
     typeof rawActiveId === 'string' && plans.some((plan) => plan.id === rawActiveId)
       ? rawActiveId
       : firstPlan.id;
 
+  // Sème les empreintes : sans ca, la premiere sauvegarde qui suit le
+  // chargement redaterait toutes les seances comme si elles venaient d'etre
+  // modifiees.
+  fingerprints.clear();
+  for (const plan of plans) fingerprints.set(plan.id, planFingerprint(plan));
+
   return {
     plans,
     activePlanId,
     history: parseHistory(readJson(KEYS.history) ?? readJson(LEGACY_KEYS.history)),
+    deleted: parseDeleted(readJson(KEYS.deleted)),
   };
 }
 
-/** Ecrit l'etat. Renvoie `false` si le stockage local est indisponible. */
-export function saveState(state: State): boolean {
+/**
+ * Ecrit l'etat, en horodatant au passage les seances modifiees. Renvoie
+ * `false` si le stockage local est indisponible.
+ */
+export function saveState(state: State, now: number = Date.now()): boolean {
+  stampUpdated(state.plans, now);
   try {
     localStorage.setItem(KEYS.plans, JSON.stringify(state.plans));
     localStorage.setItem(KEYS.activePlanId, JSON.stringify(state.activePlanId));
     localStorage.setItem(KEYS.history, JSON.stringify(state.history.slice(-MAX_HISTORY)));
+    localStorage.setItem(KEYS.deleted, JSON.stringify(state.deleted));
     return true;
   } catch {
     return false;
   }
+}
+
+/**
+ * Oublie l'empreinte d'une seance disparue, pour que la Map ne retienne pas
+ * indefiniment des ids supprimes.
+ */
+export function forgetPlanFingerprint(id: string): void {
+  fingerprints.delete(id);
+}
+
+/**
+ * Reprend les empreintes apres une fusion avec le nuage : l'etat adopte est,
+ * par construction, celui qui vient d'etre ecrit. Sans cet appel, la
+ * sauvegarde suivante redaterait chaque seance venue du distant comme si cet
+ * appareil l'avait modifiee, et elle gagnerait a tort la fusion d'apres.
+ */
+export function reseedFingerprints(plans: SavedPlan[]): void {
+  fingerprints.clear();
+  for (const plan of plans) fingerprints.set(plan.id, planFingerprint(plan));
 }

@@ -6,7 +6,7 @@
     <!-- ~155 caracteres : au-dela, Google tronque dans ses resultats. -->
     <meta
       name="description"
-      content="Planificateur et minuteur de séance : poids du corps, élastique, haltères ou machine. Mode classique ou circuit, en 5 langues, sans compte."
+      content="Planificateur et minuteur de séance : poids du corps, élastique, haltères ou machine. Mode classique ou circuit, en 5 langues, sans compte obligatoire."
     />
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#0e1210" media="(prefers-color-scheme: dark)" />
@@ -31,7 +31,7 @@
     <meta property="og:url" content="https://kallly.github.io/SRCR/" />
     <meta
       property="og:description"
-      content="Planificateur et minuteur de séance : poids du corps, élastique, haltères ou machine. Mode classique ou circuit, en 5 langues, 100% local."
+      content="Planificateur et minuteur de séance : poids du corps, élastique, haltères ou machine. Mode classique ou circuit, en 5 langues, sans compte obligatoire."
     />
     <meta property="og:site_name" content="CIRKALI" />
     <meta property="og:locale" content="fr_FR" />
@@ -44,7 +44,7 @@
     <meta name="twitter:title" content="CIRKALI — planificateur et minuteur d'entraînement" />
     <meta
       name="twitter:description"
-      content="Planificateur et minuteur de séance : poids du corps, élastique, haltères ou machine. Mode classique ou circuit, en 5 langues, 100% local."
+      content="Planificateur et minuteur de séance : poids du corps, élastique, haltères ou machine. Mode classique ou circuit, en 5 langues, sans compte obligatoire."
     />
     <meta name="twitter:image" content="https://kallly.github.io/SRCR/og-image.png" />
 
@@ -53,7 +53,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "CIRKALI",
-        "description": "Planificateur et minuteur de séance : poids du corps, élastique, haltères ou machine. Mode classique ou circuit, en 5 langues, 100% local.",
+        "description": "Planificateur et minuteur de séance : poids du corps, élastique, haltères ou machine. Mode classique ou circuit, en 5 langues, sans compte obligatoire.",
         "url": "https://kallly.github.io/SRCR/",
         "applicationCategory": "HealthApplication",
         "operatingSystem": "Web",
@@ -88,39 +88,66 @@
     />
   </head>
   <body>
-    <!--
-      Etiquette fixe, toujours visible meme en scrollant : ouvre la modal
-      d'aide au pilotage par IA (#aiHelp, ui/ai-help.ts). Placee hors de
-      .wrap et decalee sous l'en-tete (voir le commentaire CSS de
-      .ai-help-tab) pour ne jamais chevaucher le selecteur de langue, qui
-      occupe deja le coin haut-droit du header.
-    -->
-    <button
-      type="button"
-      class="ai-help-tab"
-      id="aiHelpTab"
-      aria-haspopup="dialog"
-      data-i18n="aiHelp.trigger"
-      data-i18n-aria-label="aiHelp.triggerLabel"
-      aria-label=""
-      ></button
-    >
-
     <main class="wrap">
       <header class="head">
+        <!--
+          Titre a gauche, compte + aide IA a droite, SUR LA MEME RANGEE : la
+          langue n'occupant plus cette place (elle est descendue au niveau des
+          liens d'ancrage, voir `.quicknav-row` juste apres), il reste assez
+          de place pour "CIRKALI" a cote des deux boutons — ce qui ne passait
+          pas quand les trois commandes partageaient ce coin a elles seules.
+        -->
         <div class="titles">
           <p class="eyebrow" data-i18n="app.eyebrow"></p>
           <h1 data-i18n="app.heading"></h1>
+          <p class="tagline" data-i18n="app.tagline"></p>
         </div>
+        <!--
+          Dans le flux du document, et non en `position: fixed` : une pastille
+          fixe reste collee au viewport, donc elle glisse au-dessus du contenu
+          quand on fait defiler la page — c'est ce qui se lisait comme « le
+          bouton bouge ». Ici les deux defilent avec l'en-tete et disparaissent
+          avec lui, comme tout le reste de la page.
+
+          Consequence a ne pas defaire : ces boutons portent leur texte dans le
+          HTML (rempli au build depuis fr.ts), donc leur hauteur est reservee
+          des le premier rendu. Les repasser en fixe, ou vider leur libelle,
+          ramenerait un decalage de mise en page a l'arrivee du JS.
+        -->
+        <div class="head-actions">
+          <button
+            type="button"
+            class="account-btn"
+            id="accountBtn"
+            aria-haspopup="dialog"
+            aria-label=""
+            data-i18n-aria-label="account.label"
+          ></button>
+          <button
+            type="button"
+            class="ai-help-tab"
+            id="aiHelpTab"
+            aria-haspopup="dialog"
+            data-i18n="aiHelp.trigger"
+            data-i18n-aria-label="aiHelp.triggerLabel"
+            aria-label=""
+            ></button
+          >
+        </div>
+      </header>
+      <!--
+        La langue partage sa rangee avec les liens d'ancrage : a droite d'eux,
+        dans l'espace qui restait sinon vide entre la tagline et « Séances ».
+      -->
+      <div class="quicknav-row">
+        <nav class="quicknav" aria-label="" data-i18n-aria-label="section.quicknav">
+          <a href="#section-plan" data-i18n="section.plan"></a>
+          <a href="#section-library" data-i18n="section.library"></a>
+        </nav>
         <div class="lang">
           <select id="locale" aria-label="" data-i18n-aria-label="lang.label"></select>
         </div>
-      </header>
-      <p class="tagline" data-i18n="app.tagline"></p>
-      <nav class="quicknav" aria-label="" data-i18n-aria-label="section.quicknav">
-        <a href="#section-plan" data-i18n="section.plan"></a>
-        <a href="#section-library" data-i18n="section.library"></a>
-      </nav>
+      </div>
 
       <h2 id="section-sessions" data-i18n="section.sessions"></h2>
       <div id="planSwitcher"></div>
@@ -371,6 +398,33 @@ https://kallly.github.io/SRCR/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4Iiw
           <button type="button" class="ai-help-copy" id="aiHelpModifyCopy" data-i18n="share.copy"></button>
           <span class="ai-help-copied" id="aiHelpModifyCopied" role="status" hidden></span>
         </div>
+      </div>
+    </dialog>
+
+    <!--
+      Compte et sauvegarde en ligne (ui/account.ts). Deux blocs exclusifs
+      bascules par `hidden` selon l'etat de connexion. Restent vides ici, comme
+      #infoName ou #runName, les seuls contenus qui dependent du compte
+      connecte : #accountIdentity et #accountStatus.
+    -->
+    <dialog class="info" id="account">
+      <div class="info-head">
+        <h3 data-i18n="account.title"></h3>
+        <button class="info-close" type="button" id="accountClose" data-i18n="exerciseInfo.close"></button>
+      </div>
+
+      <div id="accountSignedOut">
+        <p class="account-intro" data-i18n="account.intro"></p>
+        <button class="go account-action" type="button" id="accountSignIn" data-i18n="account.signIn"></button>
+        <p class="account-error" id="accountError" role="alert" hidden></p>
+      </div>
+
+      <div id="accountSignedIn" hidden>
+        <div class="account-identity" id="accountIdentity"></div>
+        <p class="account-status" id="accountStatus" role="status"></p>
+        <button class="go account-action" type="button" id="accountSyncNow" data-i18n="account.syncNow"></button>
+        <p class="account-notice" data-i18n="account.signOutNotice"></p>
+        <button class="ghost account-action" type="button" id="accountSignOut" data-i18n="account.signOut"></button>
       </div>
     </dialog>
 

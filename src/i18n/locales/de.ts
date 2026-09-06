@@ -25,6 +25,29 @@ export const de: Translations = {
     copyName: '{name} - Kopie',
   },
 
+  account: {
+    label: 'Konto',
+    title: 'Online-Sicherung',
+    intro:
+      'Ohne Anmeldung liegen deine Einheiten nur in diesem Browser: Wer ihn leert oder das Gerät wechselt, verliert sie. Mit einer Google-Anmeldung werden sie automatisch gesichert und du findest sie überall wieder.',
+    signIn: 'Mit Google anmelden',
+    signOut: 'Abmelden',
+    signOutNotice:
+      'Abmelden löscht nichts: Deine Einheiten bleiben in diesem Browser, sie werden nur nicht mehr online gesichert.',
+    syncNow: 'Jetzt synchronisieren',
+    lastSync: 'Zuletzt synchronisiert: {time}',
+    neverSynced: 'Noch nicht synchronisiert.',
+    statusSynced: 'synchronisiert',
+    statusSyncing: 'wird synchronisiert…',
+    statusOffline: 'offline, wird bei Netz fortgesetzt',
+    statusError: 'Synchronisierung nicht möglich, Einheiten bleiben hier',
+    signInError: 'Anmeldung fehlgeschlagen. Versuche es gleich noch einmal.',
+    merged: {
+      one: '{count} Einheit aus deinem Konto geholt',
+      other: '{count} Einheiten aus deinem Konto geholt',
+    },
+  },
+
   share: {
     trigger: 'Teilen',
     title: 'Diese Einheit teilen',
@@ -57,13 +80,13 @@ export const de: Translations = {
     modes:
       'Zwei Arten, die Sätze aneinanderzureihen. Im klassischen Modus absolvierst du alle Sätze einer Übung, bevor die nächste folgt, mit der Pause aus der jeweiligen Zeile. Im Zirkelmodus wechseln die Sätze die Muskelgruppen, und eine Pause erscheint nur, wenn zwei Belastungen derselben Gruppe zwangsläufig aufeinanderfolgen — die Vorschau zeigt die berechnete Abfolge vor dem Start.',
     privacy:
-      'Während der Einheit zeigt ein Vollbild-Player die Uhr, den Fortschrittsring und den Ausführungshinweis, hält den Bildschirm wach und meldet das Ende jedes Intervalls. Kein Konto, kein Server, keine gesendeten Daten: Einheit und Verlauf werden im Browser gespeichert. Die Oberfläche gibt es auf Französisch, Englisch, Spanisch, Deutsch und Italienisch.',
+      'Während der Einheit zeigt ein Vollbild-Player die Uhr, den Fortschrittsring und den Ausführungshinweis, hält den Bildschirm wach und meldet das Ende jedes Intervalls. Kein Konto nötig: Einheit und Verlauf werden im Browser gespeichert. Eine optionale Google-Anmeldung sichert sie online, damit du sie auf jedem Gerät wiederfindest. Die Oberfläche gibt es auf Französisch, Englisch, Spanisch, Deutsch und Italienisch.',
   },
 
   aiPlan: {
     title: 'Eine Einheit per Link erstellen (für eine KI)',
     intro:
-      'Diese Seite kann eine Einheit entgegennehmen, die in ihrer eigenen Adresse beschrieben ist: Beim Öffnen eines solchen Links wird der Import angeboten, und ohne Bestätigung wird nichts gespeichert. Eine KI kann also eine Einheit zusammenstellen und sie dir als Link liefern, ohne Konto und ohne Server. Gib ihr einfach die Adresse dieser Seite.',
+      'Diese Seite kann eine Einheit entgegennehmen, die in ihrer eigenen Adresse beschrieben ist: Beim Öffnen eines solchen Links wird der Import angeboten, und ohne Bestätigung wird nichts gespeichert. Eine KI kann also eine Einheit zusammenstellen und sie dir als Link liefern, ohne dass du ein Konto brauchst. Gib ihr einfach die Adresse dieser Seite.',
     format:
       'Der erwartete Link hat die unten gezeigte Form: ein JSON-Objekt mit dem Namen der Einheit, dem Ablaufmodus und der Liste der Zeilen, als base64url im Parameter s abgelegt.',
     keys:

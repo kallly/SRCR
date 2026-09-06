@@ -4,7 +4,10 @@ import type { Context } from './app';
 import { byId, el, wireDialogClose } from './dom';
 
 /**
- * Modal declenchee par l'etiquette fixe #aiHelpTab (index.html). Distincte de
+ * Modal declenchee par #aiHelpTab, deuxieme et derniere commande de
+ * `.head-actions` (index.html) — dans le flux du document, plus en
+ * `position: fixed` (voir le commentaire de `.ai-help-tab` dans base.css : ne
+ * pas y revenir). Distincte de
  * la section statique `#aiPlan` de l'accueil : celle-la s'adresse a l'IA
  * elle-meme quand elle lit la page brute (format technique du lien, cles de
  * la bibliotheque) ; celle-ci s'adresse a la PERSONNE, en langage courant,
