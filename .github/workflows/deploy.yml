@@ -1,21 +1,23 @@
-name: Deploy to GitHub Pages and Cloudflare Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
+# Un seul deploiement a la fois ; les pushes suivants annulent celui en cours.
 concurrency:
-  group: deploy
+  group: pages
   cancel-in-progress: true
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -25,34 +27,19 @@ jobs:
           cache: npm
 
       - run: npm ci
+
+      # Le typecheck est le filet du projet : il verifie aussi que les cinq
+      # langues exposent exactement les memes cles.
       - run: npm run typecheck
+
       - run: npm run build
+
+      # Verifie ce que le build *produit* : texte francais present pour les
+      # robots sans JS, cles d'exercice lisibles par une IA, JSON-LD
+      # valide, exemple `?s=` de la page de spec reellement decodable, et
+      # fiches non vides toutes inscrites au sitemap. Le typecheck
+      # ci-dessus ne voit rien de tout cela.
       - run: npx tsx scripts/check-build.ts
-
-      # Artefact indépendant de la plateforme de déploiement
-      - uses: actions/upload-artifact@v4
-        with:
-          name: build
-          path: dist
-
-  deploy-github-pages:
-    needs: build
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: build
-          path: dist
 
       - uses: actions/configure-pages@v5
 
@@ -60,24 +47,12 @@ jobs:
         with:
           path: dist
 
-      - id: deployment
-        uses: actions/deploy-pages@v4
-
-  deploy-cloudflare:
+  deploy:
     needs: build
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: build
-          path: dist
-
-      - uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=cirkali
+      - id: deployment
+        uses: actions/deploy-pages@v4
