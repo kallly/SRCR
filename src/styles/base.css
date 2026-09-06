@@ -245,23 +245,18 @@ h2::after {
   line-height: 1.55;
 }
 
-/* index statique des fiches d'exercice (injecte au build) */
-.guides {
-  margin-top: 30px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
-}
-
-.guides h2 {
-  margin: 0 0 10px;
-}
-
+/*
+  Index statique des fiches d'exercice (injecte au build), en callout au meme
+  motif que `.about` (dont cet element porte aussi la classe) : marge, bordure
+  et triangle de divulgation viennent de la, .guides n'ajoute que la grille de
+  liens propre a son contenu.
+*/
 .guides ul {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 2px 16px;
   list-style: none;
-  margin: 0;
+  margin: 12px 0 0;
   padding: 0;
 }
 

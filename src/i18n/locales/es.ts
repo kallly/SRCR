@@ -154,8 +154,6 @@ export const es: Translations = {
   actions: {
     addRest: '+ Añadir una pausa',
     addCustom: '+ Ejercicio propio',
-    loadDefault: 'Cargar la sesión tipo',
-    clearAll: 'Borrar todo',
     confirm: 'Confirmar',
     cancel: 'Cancelar',
   },
@@ -235,8 +233,6 @@ export const es: Translations = {
 
   prompt: {
     customName: '¿Nombre del ejercicio?',
-    loadDefault: '¿Sustituir la sesión actual por la sesión tipo?',
-    clearAll: '¿Borrar toda la sesión?',
   },
 
   history: {

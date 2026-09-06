@@ -45,7 +45,7 @@ export function createRest(seconds: number): RestItem {
   return { id: uid(), type: 'rest', seconds };
 }
 
-/** Seance type proposee au premier lancement et par le bouton dedie. */
+/** Seance type proposee au tout premier lancement (core/storage.ts). */
 export function defaultPlan(): PlanItem[] {
   return DEFAULT_ORDER.map(createFromLibrary).filter(
     (item): item is ExerciseItem => item !== null,

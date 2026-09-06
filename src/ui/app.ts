@@ -1,5 +1,5 @@
 import { onLocaleChange, setLocale as applyLocale, t } from '../i18n';
-import { createCustom, createRest, defaultPlan, uid } from '../core/plan';
+import { createCustom, createRest, uid } from '../core/plan';
 import { DEFAULT_SESSION_CONFIG, saveLocale, saveState, type State } from '../core/storage';
 import type { ExerciseKey, Locale, PlanItem, SavedPlan, SessionConfig, SessionMode } from '../core/types';
 import { applyStaticTranslations, byId } from './dom';
@@ -90,6 +90,7 @@ export function createApp(state: State): { render: () => void } {
   if (window.matchMedia?.(ABOUT_COLLAPSE_BELOW).matches) {
     byId<HTMLDetailsElement>('about').open = false;
     byId<HTMLDetailsElement>('aiPlan').open = false;
+    byId<HTMLDetailsElement>('allGuides').open = false;
   }
 
   const toast = createToast();
@@ -275,20 +276,6 @@ export function createApp(state: State): { render: () => void } {
       save();
       renderAll();
     },
-  });
-
-  byId('loadDefault').addEventListener('click', () => {
-    if (ctx.activePlan().items.length > 0 && !window.confirm(t('prompt.loadDefault'))) return;
-    ctx.setPlanItems(defaultPlan());
-    save();
-    renderAll();
-  });
-
-  byId('clearAll').addEventListener('click', () => {
-    if (ctx.activePlan().items.length === 0 || !window.confirm(t('prompt.clearAll'))) return;
-    ctx.setPlanItems([]);
-    save();
-    renderAll();
   });
 
   // Un changement de langue retraduit tout, y compris une seance en cours.

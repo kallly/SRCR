@@ -154,8 +154,6 @@ export const de: Translations = {
   actions: {
     addRest: '+ Pause hinzufügen',
     addCustom: '+ Eigene Übung',
-    loadDefault: 'MusterEinheit laden',
-    clearAll: 'Alles löschen',
     confirm: 'Bestätigen',
     cancel: 'Abbrechen',
   },
@@ -235,8 +233,6 @@ export const de: Translations = {
 
   prompt: {
     customName: 'Name der Übung?',
-    loadDefault: 'Die aktuelle Einheit durch die Muster-Einheit ersetzen?',
-    clearAll: 'Die gesamte Einheit löschen?',
   },
 
   history: {

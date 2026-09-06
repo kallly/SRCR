@@ -154,8 +154,6 @@ export const en: Translations = {
   actions: {
     addRest: '+ Add a break',
     addCustom: '+ Custom exercise',
-    loadDefault: 'Load the sample session',
-    clearAll: 'Clear everything',
     confirm: 'Confirm',
     cancel: 'Cancel',
   },
@@ -235,8 +233,6 @@ export const en: Translations = {
 
   prompt: {
     customName: 'Exercise name?',
-    loadDefault: 'Replace the current session with the sample one?',
-    clearAll: 'Clear the whole session?',
   },
 
   history: {

@@ -169,10 +169,6 @@
         <button class="ghost" type="button" id="addRest" data-i18n="actions.addRest"></button>
         <button class="ghost" type="button" id="addCustom" data-i18n="actions.addCustom"></button>
       </div>
-      <div class="rowbtns">
-        <button class="ghost" type="button" id="loadDefault" data-i18n="actions.loadDefault"></button>
-        <button class="ghost" type="button" id="clearAll" data-i18n="actions.clearAll"></button>
-      </div>
 
       <h2 id="section-library" data-i18n="section.library"></h2>
       <div class="lib-filters">
@@ -209,14 +205,15 @@
         remplir cette liste a la main.
       -->
       <!--
-        aria-labelledby plutot qu'un aria-label traduit : ce nav porte deja son
-        titre visible, qui suit la langue active. Un libelle separe serait une
-        seconde chose a traduire, et a garder d'accord avec le titre.
+        Callout au meme motif que « A propos » (voir plus bas) : livree
+        ouverte pour rester lisible sans JavaScript et par les robots, repliee
+        sur petit ecran par ui/app.ts. <summary> porte deja le titre visible
+        qui suit la langue active, donc pas d'aria-label separe a maintenir.
       -->
-      <nav class="guides" aria-labelledby="section-allGuides">
-        <h2 id="section-allGuides" data-i18n="section.allGuides"></h2>
+      <details class="guides about" id="allGuides" open>
+        <summary data-i18n="section.allGuides"></summary>
         <!--EXERCISE_INDEX-->
-      </nav>
+      </details>
 
       <!--
         Livree ouverte : sans JavaScript elle reste depliee partout, donc

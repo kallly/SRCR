@@ -154,8 +154,6 @@ export const it: Translations = {
   actions: {
     addRest: '+ Aggiungi una pausa',
     addCustom: '+ Esercizio personale',
-    loadDefault: 'Carica la seduta tipo',
-    clearAll: 'Cancella tutto',
     confirm: 'Conferma',
     cancel: 'Annulla',
   },
@@ -235,8 +233,6 @@ export const it: Translations = {
 
   prompt: {
     customName: 'Nome dell’esercizio?',
-    loadDefault: 'Sostituire la seduta attuale con quella tipo?',
-    clearAll: 'Cancellare tutta la seduta?',
   },
 
   history: {

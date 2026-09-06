@@ -164,8 +164,6 @@ export const fr = {
   actions: {
     addRest: '+ Ajouter une pause',
     addCustom: '+ Exercice perso',
-    loadDefault: 'Charger la séance type',
-    clearAll: 'Tout effacer',
     confirm: 'Valider',
     cancel: 'Annuler',
   },
@@ -247,8 +245,6 @@ export const fr = {
 
   prompt: {
     customName: 'Nom de l’exercice ?',
-    loadDefault: 'Remplacer la séance actuelle par la séance type ?',
-    clearAll: 'Effacer toute la séance ?',
   },
 
   history: {
