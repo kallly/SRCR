@@ -666,6 +666,18 @@
 }
 
 /*
+  Sans ce garde, `grid.hidden = true` (ui/library.ts, aucun resultat de
+  recherche) ne cachait rien : le `display: grid` ci-dessus est d'origine
+  auteur et l'emporte sur le `[hidden] { display: none }` du navigateur, et
+  `#library:empty` continuait d'imposer sa reservation de hauteur — donc un
+  trou blanc de plus de 2000px sous le message « aucun exercice ne
+  correspond ». Meme piege que `.info-btn[hidden]` plus bas.
+*/
+.lib[hidden] {
+  display: none;
+}
+
+/*
   Ajustement desktop modeste (pas de mise en page a deux volets, priorite
   mobile) : la grille bibliotheque profite d'un peu plus de largeur au meme
   point de rupture que `.wrap` (base.css).
@@ -742,11 +754,14 @@
   — l'origine (auteur vs navigateur) tranche le conflit avant la specificite,
   meme a specificite egale. Sans ce garde, un `.info-btn` a qui on bascule
   `.hidden = true` (ui/runner.ts, masque pendant un repos) resterait affiche
-  a taille fixe. Ailleurs dans l'app, `.hidden` bascule des conteneurs qui
-  sont aussi vides de contenu quand ils sont masques (`.lib`/`.plan`) : le
-  meme conflit existe mais passe inapercu, une boite display:grid/flex sans
-  enfant s'effondrant deja a 0px. `.info-btn` garde toujours son icone et sa
-  taille fixe, donc le conflit devient visible sans ce garde.
+  a taille fixe.
+
+  Correction d'une version anterieure de ce commentaire, qui affirmait que
+  `.lib`/`.plan` etaient epargnes parce qu'ils sont vides quand on les
+  masque : c'etait faux pour `.lib`, dont la reservation `#library:empty`
+  empeche justement de s'effondrer a 0px — d'ou son propre `.lib[hidden]`
+  plus haut. `.plan` est bien epargne, lui : sa classe ne declare aucun
+  `display`, donc le `[hidden]` du navigateur s'applique normalement.
 */
 .info-btn[hidden] {
   display: none;
