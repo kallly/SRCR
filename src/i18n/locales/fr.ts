@@ -9,9 +9,9 @@ import type { Dictionary } from '../index';
  */
 export const fr = {
   app: {
-    title: 'Séance — planificateur et minuteur d’entraînement',
+    title: 'CIRKALI — planificateur et minuteur d’entraînement',
     eyebrow: 'Avec ou sans matériel',
-    heading: 'Ma séance',
+    heading: 'CIRKALI',
     tagline: 'Construis ton entraînement, ordonne les exercices, règle les pauses.',
     sourceCode: 'Code source',
   },
@@ -58,9 +58,9 @@ export const fr = {
   },
 
   about: {
-    title: 'À propos de Séance',
+    title: 'À propos de CIRKALI',
     intro:
-      'Séance est un planificateur et un minuteur d’entraînement. On compose son déroulé à partir d’une bibliothèque d’exercices filtrable selon le matériel dont on dispose — poids du corps, élastique, haltères, machine — ou selon le moment de la séance, échauffement et étirements compris. Chaque ligne se règle ensuite en séries, en répétitions ou en durée, avec son temps de repos.',
+      'CIRKALI est un planificateur et un minuteur d’entraînement. On compose son déroulé à partir d’une bibliothèque d’exercices filtrable selon le matériel dont on dispose — poids du corps, élastique, haltères, machine — ou selon le moment de la séance, échauffement et étirements compris. Chaque ligne se règle ensuite en séries, en répétitions ou en durée, avec son temps de repos.',
     modes:
       'Deux façons d’enchaîner les séries. En mode classique, on fait toutes les séries d’un exercice avant de passer au suivant, avec le repos réglé sur chaque ligne. En mode circuit, les séries alternent les groupes musculaires et une pause n’apparaît que lorsque deux efforts du même groupe doivent forcément se suivre — l’aperçu affiche l’enchaînement calculé avant de commencer.',
     privacy:

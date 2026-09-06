@@ -2,9 +2,9 @@ import type { Translations } from '../index';
 
 export const es: Translations = {
   app: {
-    title: 'Sesión — planificador y cronómetro de entrenamiento',
+    title: 'CIRKALI — planificador y cronómetro de entrenamiento',
     eyebrow: 'Con o sin material',
-    heading: 'Mi sesión',
+    heading: 'CIRKALI',
     tagline: 'Construye tu entrenamiento, ordena los ejercicios, ajusta las pausas.',
     sourceCode: 'Código fuente',
   },
@@ -51,9 +51,9 @@ export const es: Translations = {
   },
 
   about: {
-    title: 'Acerca de Séance',
+    title: 'Acerca de CIRKALI',
     intro:
-      'Séance es un planificador y cronómetro de entrenamiento. Compones tu sesión a partir de una biblioteca de ejercicios que puedes filtrar según el material del que dispones — peso corporal, banda elástica, mancuernas, máquina — o según el momento de la sesión, calentamiento y estiramientos incluidos. Cada línea se ajusta después en series, repeticiones o duración, con su propio descanso.',
+      'CIRKALI es un planificador y cronómetro de entrenamiento. Compones tu sesión a partir de una biblioteca de ejercicios que puedes filtrar según el material del que dispones — peso corporal, banda elástica, mancuernas, máquina — o según el momento de la sesión, calentamiento y estiramientos incluidos. Cada línea se ajusta después en series, repeticiones o duración, con su propio descanso.',
     modes:
       'Dos formas de encadenar las series. En modo clásico, haces todas las series de un ejercicio antes de pasar al siguiente, con el descanso ajustado en cada línea. En modo circuito, las series alternan los grupos musculares y solo aparece una pausa cuando dos esfuerzos del mismo grupo tienen que seguirse forzosamente — la vista previa muestra la secuencia calculada antes de empezar.',
     privacy:

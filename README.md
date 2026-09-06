@@ -1,4 +1,4 @@
-# Séance
+# CIRKALI
 
 Planificateur et minuteur de séance, avec ou sans matériel : poids du corps,
 élastique, haltères ou machine.

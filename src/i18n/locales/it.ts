@@ -2,9 +2,9 @@ import type { Translations } from '../index';
 
 export const it: Translations = {
   app: {
-    title: 'Seduta — pianificatore e cronometro di allenamento',
+    title: 'CIRKALI — pianificatore e cronometro di allenamento',
     eyebrow: 'Con o senza attrezzi',
-    heading: 'La mia seduta',
+    heading: 'CIRKALI',
     tagline: 'Costruisci il tuo allenamento, ordina gli esercizi, regola le pause.',
     sourceCode: 'Codice sorgente',
   },
@@ -51,9 +51,9 @@ export const it: Translations = {
   },
 
   about: {
-    title: 'Informazioni su Séance',
+    title: 'Informazioni su CIRKALI',
     intro:
-      'Séance è un pianificatore e un cronometro di allenamento. Componi il tuo svolgimento a partire da una libreria di esercizi filtrabile in base all’attrezzatura di cui disponi — corpo libero, elastico, manubri, macchina — o in base al momento della seduta, riscaldamento e allungamento compresi. Ogni riga si regola poi in serie, ripetizioni o durata, con il proprio recupero.',
+      'CIRKALI è un pianificatore e un cronometro di allenamento. Componi il tuo svolgimento a partire da una libreria di esercizi filtrabile in base all’attrezzatura di cui disponi — corpo libero, elastico, manubri, macchina — o in base al momento della seduta, riscaldamento e allungamento compresi. Ogni riga si regola poi in serie, ripetizioni o durata, con il proprio recupero.',
     modes:
       'Due modi di concatenare le serie. In modalità classica esegui tutte le serie di un esercizio prima di passare al successivo, con il recupero impostato su ogni riga. In modalità circuito le serie alternano i gruppi muscolari e una pausa compare solo quando due sforzi dello stesso gruppo devono per forza susseguirsi — l’anteprima mostra la sequenza calcolata prima di iniziare.',
     privacy:

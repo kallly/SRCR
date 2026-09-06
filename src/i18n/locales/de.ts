@@ -2,9 +2,9 @@ import type { Translations } from '../index';
 
 export const de: Translations = {
   app: {
-    title: 'Einheit — Trainingsplaner und Timer',
+    title: 'CIRKALI — Trainingsplaner und Timer',
     eyebrow: 'Mit oder ohne Geräte',
-    heading: 'Meine Einheit',
+    heading: 'CIRKALI',
     tagline: 'Stell dein Training zusammen, ordne die Übungen, leg die Pausen fest.',
     sourceCode: 'Quellcode',
   },
@@ -51,9 +51,9 @@ export const de: Translations = {
   },
 
   about: {
-    title: 'Über Séance',
+    title: 'Über CIRKALI',
     intro:
-      'Séance ist ein Trainingsplaner und Timer. Du stellst deinen Ablauf aus einer Übungsbibliothek zusammen, die sich nach der verfügbaren Ausrüstung filtern lässt — Körpergewicht, Widerstandsband, Kurzhanteln, Gerät — oder nach dem Moment der Einheit, Aufwärmen und Dehnen eingeschlossen. Jede Zeile wird danach in Sätzen, Wiederholungen oder Dauer eingestellt, mit ihrer eigenen Pause.',
+      'CIRKALI ist ein Trainingsplaner und Timer. Du stellst deinen Ablauf aus einer Übungsbibliothek zusammen, die sich nach der verfügbaren Ausrüstung filtern lässt — Körpergewicht, Widerstandsband, Kurzhanteln, Gerät — oder nach dem Moment der Einheit, Aufwärmen und Dehnen eingeschlossen. Jede Zeile wird danach in Sätzen, Wiederholungen oder Dauer eingestellt, mit ihrer eigenen Pause.',
     modes:
       'Zwei Arten, die Sätze aneinanderzureihen. Im klassischen Modus absolvierst du alle Sätze einer Übung, bevor die nächste folgt, mit der Pause aus der jeweiligen Zeile. Im Zirkelmodus wechseln die Sätze die Muskelgruppen, und eine Pause erscheint nur, wenn zwei Belastungen derselben Gruppe zwangsläufig aufeinanderfolgen — die Vorschau zeigt die berechnete Abfolge vor dem Start.',
     privacy:

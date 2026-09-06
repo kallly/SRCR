@@ -1,4 +1,4 @@
-# Séance
+# CIRKALI
 
 Planificateur et minuteur de séance, avec ou sans matériel. Site statique, multilingue
 (fr, en, es, de, it), sans backend : tout l'état vit dans le `localStorage` du

@@ -200,7 +200,7 @@ ${similar.map((e) => carouselCard(e.key, dict, all[e.key]!)).join('\n')}
     <meta name="description" content="${esc(description)}" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#0e1210" />
-    <title>${esc(name)} — ${esc(dict.page.titleSuffix)} | Séance</title>
+    <title>${esc(name)} — ${esc(dict.page.titleSuffix)} | CIRKALI</title>
     <link rel="canonical" href="${url}" />
 ${hreflangTags(key)}
     <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -210,7 +210,7 @@ ${hreflangTags(key)}
     <meta property="og:type" content="article" />
     <meta property="og:url" content="${url}" />
     <meta property="og:description" content="${esc(description)}" />
-    <meta property="og:site_name" content="Séance" />
+    <meta property="og:site_name" content="CIRKALI" />
     <meta property="og:locale" content="${OG_LOCALES[locale]}" />
     <!--
       Image de partage : celle de l'app, faute d'illustration par exercice.
@@ -220,7 +220,7 @@ ${hreflangTags(key)}
     <meta property="og:image" content="${SITE_URL}/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Séance — planificateur et minuteur d’entraînement" />
+    <meta property="og:image:alt" content="CIRKALI — planificateur et minuteur d’entraînement" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${esc(name)} — ${esc(dict.page.titleSuffix)}" />
@@ -236,13 +236,13 @@ ${hreflangTags(key)}
           description,
           url,
           inLanguage: locale,
-          isPartOf: { '@type': 'WebApplication', name: 'Séance', url: `${SITE_URL}/` },
+          isPartOf: { '@type': 'WebApplication', name: 'CIRKALI', url: `${SITE_URL}/` },
         },
         {
           '@context': 'https://schema.org',
           '@type': 'BreadcrumbList',
           itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Séance', item: `${SITE_URL}/` },
+            { '@type': 'ListItem', position: 1, name: 'CIRKALI', item: `${SITE_URL}/` },
             { '@type': 'ListItem', position: 2, name, item: url },
           ],
         },
@@ -309,7 +309,7 @@ ${renderProgression(detail, dict)}${renderPrecautions(detail, dict)}
 
       <footer>
         <p class="disclaimer">${esc(dict.page.disclaimer)}</p>
-        <a href="${SITE_URL}/">Séance</a> — ${esc(dict.page.tagline)}
+        <a href="${SITE_URL}/">CIRKALI</a> — ${esc(dict.page.tagline)}
       </footer>
     </main>
   </body>
@@ -424,7 +424,7 @@ function aiGroupsTable(dict: Translations): string {
 function renderAiPlanPage(dict: Translations): string {
   const url = `${SITE_URL}/${AI_PAGE_SLUG}.html`;
   const description =
-    `Format du lien qui crée une séance dans Séance : structure JSON, encodage base64url, liste des ${LIBRARY.length} clés d’exercice et des groupes musculaires. Destiné aux intelligences artificielles à qui on donne l’adresse du site.`;
+    `Format du lien qui crée une séance dans CIRKALI : structure JSON, encodage base64url, liste des ${LIBRARY.length} clés d’exercice et des groupes musculaires. Destiné aux intelligences artificielles à qui on donne l’adresse du site.`;
   const example = aiExample();
 
   return `<!doctype html>
@@ -435,7 +435,7 @@ function renderAiPlanPage(dict: Translations): string {
     <meta name="description" content="${esc(description)}" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#0e1210" />
-    <title>${esc(AI_PAGE_TITLE)} — format pour une IA | Séance</title>
+    <title>${esc(AI_PAGE_TITLE)} — format pour une IA | CIRKALI</title>
     <link rel="canonical" href="${url}" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="favicon.ico" sizes="32x32" />
@@ -444,12 +444,12 @@ function renderAiPlanPage(dict: Translations): string {
     <meta property="og:type" content="article" />
     <meta property="og:url" content="${url}" />
     <meta property="og:description" content="${esc(description)}" />
-    <meta property="og:site_name" content="Séance" />
+    <meta property="og:site_name" content="CIRKALI" />
     <meta property="og:locale" content="${OG_LOCALES[SOURCE_LOCALE]}" />
     <meta property="og:image" content="${SITE_URL}/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Séance — planificateur et minuteur d’entraînement" />
+    <meta property="og:image:alt" content="CIRKALI — planificateur et minuteur d’entraînement" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${esc(AI_PAGE_TITLE)} — format pour une IA" />
@@ -465,13 +465,13 @@ function renderAiPlanPage(dict: Translations): string {
           description,
           url,
           inLanguage: SOURCE_LOCALE,
-          isPartOf: { '@type': 'WebApplication', name: 'Séance', url: `${SITE_URL}/` },
+          isPartOf: { '@type': 'WebApplication', name: 'CIRKALI', url: `${SITE_URL}/` },
         },
         {
           '@context': 'https://schema.org',
           '@type': 'BreadcrumbList',
           itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Séance', item: `${SITE_URL}/` },
+            { '@type': 'ListItem', position: 1, name: 'CIRKALI', item: `${SITE_URL}/` },
             { '@type': 'ListItem', position: 2, name: AI_PAGE_TITLE, item: url },
           ],
         },
@@ -497,7 +497,7 @@ function renderAiPlanPage(dict: Translations): string {
       <h1>${esc(AI_PAGE_TITLE)}</h1>
 
       <p>
-        Séance sait recevoir une séance entière décrite dans son adresse. Ouvrir un tel lien
+        CIRKALI sait recevoir une séance entière décrite dans son adresse. Ouvrir un tel lien
         affiche un résumé et propose de l’importer : rien n’est enregistré sans que la personne
         ait choisi une destination. Il n’y a ni compte, ni serveur, ni envoi de données — la
         séance voyage dans l’URL et ne quitte jamais l’appareil.
@@ -643,7 +643,7 @@ ${aiGroupsTable(dict)}
 
       <footer>
         <p class="disclaimer">${esc(dict.page.disclaimer)}</p>
-        <a href="${SITE_URL}/">Séance</a> — ${esc(dict.page.tagline)}
+        <a href="${SITE_URL}/">CIRKALI</a> — ${esc(dict.page.tagline)}
       </footer>
     </main>
   </body>
@@ -666,7 +666,7 @@ function renderLlmsTxt(dict: Translations): string {
       `- ${e.key} (${e.group}, ${e.mode}) — ${dict.exercise[e.key]?.name ?? e.key}`,
   ).join('\n');
 
-  return `# Séance
+  return `# CIRKALI
 
 > Planificateur et minuteur de séance, avec ou sans matériel. Site statique, sans
 > backend, sans compte : tout vit dans le navigateur. Cinq langues.

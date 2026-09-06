@@ -2,9 +2,9 @@ import type { Translations } from '../index';
 
 export const en: Translations = {
   app: {
-    title: 'Session — workout planner and timer',
+    title: 'CIRKALI — workout planner and timer',
     eyebrow: 'With or without equipment',
-    heading: 'My session',
+    heading: 'CIRKALI',
     tagline: 'Build your workout, order the exercises, set the breaks.',
     sourceCode: 'Source code',
   },
@@ -51,9 +51,9 @@ export const en: Translations = {
   },
 
   about: {
-    title: 'About Séance',
+    title: 'About CIRKALI',
     intro:
-      'Séance is a workout planner and timer. You build your running order from a library of exercises you can filter by the equipment you have — bodyweight, resistance band, dumbbells, machine — or by the moment in the session, warm-up and stretching included. Each row is then set in sets, reps or duration, with its own rest period.',
+      'CIRKALI is a workout planner and timer. You build your running order from a library of exercises you can filter by the equipment you have — bodyweight, resistance band, dumbbells, machine — or by the moment in the session, warm-up and stretching included. Each row is then set in sets, reps or duration, with its own rest period.',
     modes:
       'Two ways to chain the sets. In classic mode, you complete every set of one exercise before moving to the next, with the rest set on each row. In circuit mode, sets alternate muscle groups and a break only appears when two efforts from the same group unavoidably follow each other — the preview shows the computed sequence before you start.',
     privacy:
