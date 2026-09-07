@@ -1,4 +1,4 @@
-import { createDefaultPlan } from '../core/storage';
+import { createDefaultPlan, isPristineDefaultPlan } from '../core/storage';
 import type { State } from '../core/storage';
 import type { SavedPlan } from '../core/types';
 
@@ -52,19 +52,43 @@ export function mergeStates(local: State, remote: State): State {
   //    le casse.
   if (plans.length === 0) plans.push(createDefaultPlan());
 
-  const first = plans[0] as SavedPlan;
+  // 5. Chaque appareil se cree sa propre seance type au tout premier
+  //    lancement, avant meme d'avoir vu le compte. Sans ce filtre, se
+  //    connecter depuis un deuxieme puis un troisieme appareil empilerait
+  //    autant de copies de cette meme seance. Une seance type INTACTE ne porte
+  //    aucun travail : la jeter ne perd rien, et des que la personne y touche
+  //    elle cesse d'etre reconnue ici et redevient une seance comme une autre.
+  const kept = dropPristineDefaults(plans, remote);
+
+  const first = kept[0] as SavedPlan;
   const activePlanId = [local.activePlanId, remote.activePlanId].find((id) =>
-    plans.some((plan) => plan.id === id),
+    kept.some((plan) => plan.id === id),
   );
 
   return {
-    plans,
+    plans: kept,
     activePlanId: activePlanId ?? first.id,
-    // 5. L'historique n'est qu'une liste d'horodatages de seances terminees :
+    // 6. L'historique n'est qu'une liste d'horodatages de seances terminees :
     //    aucun conflit possible, l'union dedoublonnee est la bonne reponse.
     history: mergeHistory(local.history, remote.history),
     deleted,
   };
+}
+
+/**
+ * Retire les seances restees a l'etat de seance type, sauf s'il n'y a QUE ca.
+ *
+ * Quand tout est encore a l'etat de seance type, on en garde une seule, et de
+ * preference celle qui vient deja du nuage : sinon chaque appareil imposerait
+ * la sienne a tour de role, et l'id changerait a chaque connexion sans que
+ * rien de visible ne bouge.
+ */
+function dropPristineDefaults(plans: SavedPlan[], remote: State): SavedPlan[] {
+  const meaningful = plans.filter((plan) => !isPristineDefaultPlan(plan));
+  if (meaningful.length > 0) return meaningful;
+
+  const fromRemote = new Set(remote.plans.map((plan) => plan.id));
+  return [plans.find((plan) => fromRemote.has(plan.id)) ?? (plans[0] as SavedPlan)];
 }
 
 /** Plafond repris de core/storage.ts (MAX_HISTORY), volontairement identique. */

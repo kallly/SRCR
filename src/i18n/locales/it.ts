@@ -34,7 +34,6 @@ export const it: Translations = {
     signOut: 'Esci',
     signOutNotice:
       'Uscire non cancella nulla: le tue sedute restano in questo browser, semplicemente smettono di essere salvate online.',
-    syncNow: 'Sincronizza ora',
     lastSync: 'Ultima sincronizzazione: {time}',
     neverSynced: 'Non ancora sincronizzato.',
     statusSynced: 'sincronizzato',

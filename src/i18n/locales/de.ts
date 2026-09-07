@@ -34,7 +34,6 @@ export const de: Translations = {
     signOut: 'Abmelden',
     signOutNotice:
       'Abmelden löscht nichts: Deine Einheiten bleiben in diesem Browser, sie werden nur nicht mehr online gesichert.',
-    syncNow: 'Jetzt synchronisieren',
     lastSync: 'Zuletzt synchronisiert: {time}',
     neverSynced: 'Noch nicht synchronisiert.',
     statusSynced: 'synchronisiert',

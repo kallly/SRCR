@@ -41,7 +41,6 @@ export const fr = {
     signOut: 'Se déconnecter',
     signOutNotice:
       'Se déconnecter n’efface rien : vos séances restent dans ce navigateur, elles cessent simplement d’être sauvegardées en ligne.',
-    syncNow: 'Synchroniser maintenant',
     lastSync: 'Dernière synchronisation : {time}',
     neverSynced: 'Pas encore synchronisé.',
     statusSynced: 'synchronisé',

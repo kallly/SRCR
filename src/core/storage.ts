@@ -315,6 +315,54 @@ export function createDefaultPlan(): SavedPlan {
   };
 }
 
+/** Deux lignes identiques au champ pres, `id` exclu (il est tire au hasard). */
+function sameItemIgnoringId(item: PlanItem, reference: PlanItem | undefined): boolean {
+  if (reference === undefined || item.type !== reference.type) return false;
+  if (item.type === 'rest' || reference.type === 'rest') {
+    return item.type === 'rest' && reference.type === 'rest' && item.seconds === reference.seconds;
+  }
+  return (
+    item.key === reference.key &&
+    item.customName === reference.customName &&
+    item.group === reference.group &&
+    item.mode === reference.mode &&
+    item.sets === reference.sets &&
+    item.reps === reference.reps &&
+    item.seconds === reference.seconds &&
+    item.rest === reference.rest
+  );
+}
+
+/**
+ * Vrai si cette seance est encore la seance type, telle que le tout premier
+ * lancement l'a posee — sans nom, reglages par defaut, deroule identique a
+ * `defaultPlan()`.
+ *
+ * Sert a la fusion avec le nuage (cloud/merge.ts) : chaque appareil se cree sa
+ * propre seance type avant meme toute connexion, et sans ce test, se connecter
+ * depuis un deuxieme puis un troisieme appareil empilerait autant de copies de
+ * cette meme seance dans le compte.
+ *
+ * Comparaison champ a champ plutot qu'un `JSON.stringify` des deux cotes : les
+ * `id` de lignes sont tires au hasard a chaque creation, et l'ordre des cles
+ * d'un objet n'est pas un contrat sur lequel s'appuyer (`parseItem()` et
+ * `createFromLibrary()` les posent dans le meme ordre aujourd'hui, rien ne le
+ * garantit demain).
+ */
+export function isPristineDefaultPlan(plan: SavedPlan): boolean {
+  if (plan.name !== null) return false;
+  if (
+    plan.config.mode !== DEFAULT_SESSION_CONFIG.mode ||
+    plan.config.pause !== DEFAULT_SESSION_CONFIG.pause ||
+    plan.config.trans !== DEFAULT_SESSION_CONFIG.trans
+  ) {
+    return false;
+  }
+  const reference = defaultPlan();
+  if (plan.items.length !== reference.length) return false;
+  return plan.items.every((item, index) => sameItemIgnoringId(item, reference[index]));
+}
+
 /**
  * Empreinte du CONTENU d'une seance, `updatedAt` exclu — c'est ce que
  * `stampUpdated()` compare. L'inclure ferait qu'une ecriture change l'empreinte

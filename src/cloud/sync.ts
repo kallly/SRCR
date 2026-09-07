@@ -29,7 +29,6 @@ export interface CloudSync {
   notifyLocalChange(): void;
   /** Pousse tout de suite ce qui attend (onglet masque, page fermee, seance qui demarre). */
   flush(): Promise<void>;
-  syncNow(): Promise<void>;
   /** A appeler quand le lecteur se ferme : rejoue une fusion reportee (voir `isBusy`). */
   resumeDeferred(): void;
   onChange(listener: () => void): () => void;
@@ -173,7 +172,15 @@ export function createCloudSync(host: SyncHost): CloudSync {
 
   /**
    * Aller-retour complet : lire le distant, fusionner, adopter, repousser.
-   * C'est la sequence de la connexion, et celle du bouton « synchroniser ».
+   *
+   * Declenche a la CONNEXION uniquement — c'est-a-dire au chargement de la
+   * page quand la session Firebase est restauree, ou juste apres un clic sur
+   * « se connecter ». Il n'y a volontairement ni ecoute temps reel
+   * (`onSnapshot`, qui ferait surgir un renderAll() en pleine saisie) ni
+   * bouton « synchroniser maintenant » : recharger la page suffit a recuperer
+   * ce qu'un autre appareil a ecrit. Dans l'autre sens, la poussee est
+   * continue (voir `notifyLocalChange`), donc rien n'attend jamais ici pour
+   * PARTIR.
    */
   async function pullMergePush(): Promise<void> {
     if (uid === null) return;
@@ -345,11 +352,6 @@ export function createCloudSync(host: SyncHost): CloudSync {
     },
 
     flush,
-
-    async syncNow(): Promise<void> {
-      deferredPull = false;
-      await pullMergePush();
-    },
 
     /**
      * Une fusion reportee parce qu'une seance tournait : c'est le moment de la

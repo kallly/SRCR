@@ -34,7 +34,6 @@ export const en: Translations = {
     signOut: 'Sign out',
     signOutNotice:
       'Signing out erases nothing: your sessions stay in this browser, they simply stop being backed up online.',
-    syncNow: 'Sync now',
     lastSync: 'Last synced: {time}',
     neverSynced: 'Not synced yet.',
     statusSynced: 'synced',

@@ -20,7 +20,6 @@ export function createAccount(ctx: Context): { render: () => void } {
   const statusNote = byId('accountStatus');
   const signInBtn = byId<HTMLButtonElement>('accountSignIn');
   const signOutBtn = byId<HTMLButtonElement>('accountSignOut');
-  const syncBtn = byId<HTMLButtonElement>('accountSyncNow');
   const errorNote = byId('accountError');
 
   wireDialogClose(dialog, byId('accountClose'));
@@ -51,14 +50,6 @@ export function createAccount(ctx: Context): { render: () => void } {
     void ctx.cloud.signOut().finally(() => {
       render();
       dialog.close();
-    });
-  });
-
-  syncBtn.addEventListener('click', () => {
-    syncBtn.disabled = true;
-    void ctx.cloud.syncNow().finally(() => {
-      syncBtn.disabled = false;
-      render();
     });
   });
 

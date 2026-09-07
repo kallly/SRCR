@@ -34,7 +34,6 @@ export const es: Translations = {
     signOut: 'Cerrar sesión',
     signOutNotice:
       'Cerrar sesión no borra nada: tus sesiones siguen en este navegador, simplemente dejan de guardarse en línea.',
-    syncNow: 'Sincronizar ahora',
     lastSync: 'Última sincronización: {time}',
     neverSynced: 'Todavía sin sincronizar.',
     statusSynced: 'sincronizado',
