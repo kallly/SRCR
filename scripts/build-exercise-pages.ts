@@ -38,7 +38,19 @@ const OG_LOCALES: Record<Locale, string> = {
   it: 'it_IT',
 };
 
-const SITE_URL = 'https://kallly.github.io/SRCR';
+/**
+ * Origine canonique publiee. Elle commande les canonical, hreflang, og:*,
+ * JSON-LD, fil d'Ariane, sitemap et llms.txt de toutes les pages generees.
+ *
+ * Le site a longtemps vecu sur kallly.github.io/SRCR et cette constante n'a pas
+ * suivi le passage a cirkali.fr : pendant ce temps chaque page disait a Google
+ * que sa version de reference etait l'ancienne adresse, et le sitemap servi
+ * depuis cirkali.fr n'y listait que des URL d'un autre domaine — donc rejete.
+ * Les memes valeurs vivent en litteral dans `index.html` (les balises SEO ne
+ * passent pas par `fillStaticTranslations()`), d'ou l'assertion de
+ * `scripts/check-build.ts` qui interdit l'ancienne origine dans `dist/`.
+ */
+const SITE_URL = 'https://cirkali.fr';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DIST = join(ROOT, 'dist');
 
@@ -249,12 +261,7 @@ ${hreflangTags(key)}
       ])}
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,600;125,700;125,800&family=Manrope:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Polices servies par le site : @font-face dans exercise-page.css. -->
     <link rel="stylesheet" href="../style.css" />
   </head>
   <body>
@@ -321,12 +328,15 @@ ${renderProgression(detail, dict)}${renderPrecautions(detail, dict)}
  * Page de specification du format de lien, pour les intelligences
  * artificielles a qui on donne l'URL du site.
  *
- * Pourquoi une page HTML et pas un fichier de convention. Aucune norme ne
- * s'est imposee (llms.txt, ai.txt, agents.txt, /.well-known/*), et toutes
- * s'ancrent a la RACINE du domaine — hors de portee ici, `kallly.github.io/`
- * appartenant a un autre projet. Une page crawlable, inscrite au sitemap et
- * atteignable par un <a> depuis l'accueil, est la meme doctrine que les
- * fiches d'exercice : du contenu qu'on trouve en suivant un lien.
+ * Pourquoi une page HTML et pas seulement un fichier de convention. Aucune
+ * norme ne s'est imposee (llms.txt, ai.txt, agents.txt, /.well-known/*). Ces
+ * fichiers s'ancrent a la RACINE du domaine, ce qui etait longtemps hors de
+ * portee : le site vivait sous kallly.github.io/SRCR/, dont la racine
+ * appartient a un autre projet. Depuis cirkali.fr c'est acquis — llms.txt est
+ * bien servi a la racine — mais la page reste, et pour sa raison d'origine :
+ * crawlable, inscrite au sitemap et atteignable par un <a> depuis l'accueil,
+ * meme doctrine que les fiches d'exercice, du contenu qu'on trouve en suivant
+ * un lien plutot qu'en devinant un nom de fichier.
  *
  * Francais uniquement, et c'est une divergence assumee de la regle « le
  * chrome des pages generees vient de l'i18n » : c'est une specification
@@ -478,12 +488,7 @@ function renderAiPlanPage(dict: Translations): string {
       ])}
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,600;125,700;125,800&family=Manrope:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Polices servies par le site : @font-face dans exercise-page.css. -->
     <link rel="stylesheet" href="exercises/style.css" />
   </head>
   <body>

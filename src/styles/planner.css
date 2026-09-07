@@ -25,7 +25,7 @@
 
 .modes button.on {
   background: var(--lime);
-  color: #0e1210;
+  color: var(--on-accent);
 }
 
 .modehint {
@@ -953,7 +953,7 @@
 
 .go {
   background: var(--lime);
-  color: #0e1210;
+  color: var(--on-accent);
   border: 0;
   padding: 14px 24px;
   font-weight: 800;

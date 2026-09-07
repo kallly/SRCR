@@ -102,7 +102,7 @@ export const en: Translations = {
     createTitle: 'Create a session',
     createText: 'Copy this message:',
     createPrompt:
-      'Here is a site for building workout sessions: https://kallly.github.io/SRCR/. Build me a 20-minute upper body session, then give me the link to open to import it.',
+      'Here is a site for building workout sessions: https://cirkali.fr/. Build me a 20-minute upper body session, then give me the link to open to import it.',
     modifyTitle: 'Edit a session',
     modifyText: 'Use your session’s share link to ask the AI to edit it:',
     modifyPrompt:

@@ -145,6 +145,22 @@ for (const locale of Object.keys(DETAILS_BY_LOCALE) as Locale[]) {
   pages += found.length;
 }
 
+console.log('\nOrigine canonique');
+
+// L'origine est ecrite a deux endroits que rien ne relie : `SITE_URL`
+// (scripts/build-exercise-pages.ts) pour tout ce qui est genere, et des
+// litteraux dans `index.html` — les balises SEO ne portent pas de `data-i18n`,
+// donc `fillStaticTranslations()` ne les voit pas. Au passage a cirkali.fr,
+// aucun des deux n'a suivi : chaque page a continue de se declarer canonique
+// sur github.io, et le sitemap servi depuis cirkali.fr n'a liste que des URL
+// d'un autre domaine. Rien ne cassait, donc personne ne l'a vu.
+const STALE_ORIGIN = 'kallly.github.io';
+const stale = (readdirSync(DIST, { recursive: true, encoding: 'utf8' }) as string[])
+  .filter((rel) => /\.(html|xml|txt|json|js|css)$/.test(rel))
+  .filter((rel) => statSync(join(DIST, rel)).isFile())
+  .filter((rel) => readFileSync(join(DIST, rel), 'utf8').includes(STALE_ORIGIN));
+check(`aucun fichier ne cite ${STALE_ORIGIN}`, stale.length === 0, stale.slice(0, 10).join(', '));
+
 console.log(
   failures === 0
     ? `\n${pages} pages d'exercice, tout est conforme.\n`

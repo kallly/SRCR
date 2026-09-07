@@ -1,3 +1,76 @@
+/*
+  Polices servies par le site, plus par Google Fonts.
+
+  Ce que ca supprime : la feuille `fonts.googleapis.com/css2`, qui bloquait le
+  rendu pendant 750 ms, et deux poignees de main DNS+TLS vers des origines
+  tierces avant le moindre pixel de texte — la plus longue chaine critique de la
+  page. Accessoirement, plus aucune adresse IP de visiteur ne part chez Google
+  du seul fait d'afficher la page.
+
+  Un seul fichier par famille et par sous-ensemble : ce sont des polices
+  variables, et Google servait deja le meme .woff2 pour les graisses 600, 700 et
+  800 d'Archivo. Les sous-ensembles cyrillique, grec et vietnamien ne sont pas
+  repris — l'app est en fr/en/es/de/it. `latin-ext` reste indispensable : c'est
+  lui qui porte une partie des caracteres accentues de l'espagnol, de l'allemand
+  et de l'italien.
+
+  Les fichiers vivent dans public/fonts/, sous un nom stable et une adresse
+  ABSOLUE — seule exception au `base: './'` de vite.config.ts. La raison : les
+  310 fiches d'exercice n'utilisent pas ce bundle mais `exercise-page.css`,
+  recopie tel quel dans dist/exercises/. Un chemin hache par Vite ne serait
+  connu que du bundle ; un chemin relatif ne pourrait pas etre juste depuis deux
+  profondeurs a la fois. Consequence assumee : une copie servie ailleurs qu'a la
+  racine d'un domaine (l'ancien kallly.github.io/SRCR/, voue au retrait) perd
+  ses polices et retombe sur le sans-serif du systeme.
+
+  Archivo est declaree en `font-stretch: 125%` parce que le fichier obtenu est
+  fige sur cet axe de largeur : c'est ce qui fait correspondre les regles qui
+  posent `font-stretch: 125%` a cote de `--disp`, contrainte inchangee.
+*/
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 600 800;
+  font-stretch: 125%;
+  font-display: swap;
+  src: url('/fonts/archivo-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 600 800;
+  font-stretch: 125%;
+  font-display: swap;
+  src: url('/fonts/archivo-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+    U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/manrope-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/manrope-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+    U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+
 :root {
   --bg: #0e1210;
   --surface: #161d19;
@@ -9,13 +82,23 @@
   --lime: #d7ff3f;
   --mint: #7fe0b0;
   --coral: #ff5a3c;
+  /*
+    Encre posee SUR un aplat d'accent (--lime), par opposition a --paper qui se
+    pose sur --bg/--surface. Les deux ne peuvent pas etre la meme valeur : quand
+    --lime s'inverse d'un theme a l'autre, son encre doit s'inverser avec lui.
+    C'etait le bug — `color: #0e1210` etait ecrit en dur sur les six aplats
+    limes, donc juste en sombre (16,4:1) et faux en clair, ou --lime devient
+    sombre a son tour : 3,79:1, sous le seuil AA. Demarrer, Partager, Classique
+    et l'onglet AI etaient illisibles en theme clair.
+  */
+  --on-accent: #0e1210;
   --radius: 6px;
   /*
-    Archivo en chasse large (wdth 125), demandee via l'axe de largeur dans
-    l'URL Google Fonts. « Archivo Expanded » n'existe pas comme famille : la
-    demander renvoie HTTP 400 et fait retomber tout l'affichage sur le
-    sans-serif du navigateur. Voir CLAUDE.md, section « SEO & partage social ».
-    Les regles qui utilisent --disp doivent aussi poser font-stretch: 125%.
+    Archivo en chasse large (wdth 125). « Archivo Expanded » n'existe pas comme
+    famille : la nommer ici ferait retomber tout l'affichage sur le sans-serif
+    du navigateur. La chasse s'obtient par `font-stretch: 125%`, que toute regle
+    utilisant --disp doit poser — c'est ce qui la fait correspondre au
+    @font-face declare plus haut. Voir CLAUDE.md, « SEO & partage social ».
   */
   --disp: 'Archivo', sans-serif;
   --sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -25,10 +108,18 @@
   Theme clair, en overlay du socle sombre ci-dessus (jamais l'inverse) :
   l'app a toujours ete livree sombre, donc garder ces valeurs comme defaut
   ne regresse rien pour qui n'exprime aucune preference. `--lime`/`--mint`/
-  `--coral` sont assombris ici (verifie manuellement a >= 4.5:1 sur fond
-  blanc), sinon illisibles en petit texte sur fond clair ; les couleurs par
-  groupe musculaire (data/groups.ts) restent, elles, en style inline non
-  couvert par ces tokens — a auditer separement pour le contraste clair.
+  `--coral` sont assombris ici, sinon illisibles en petit texte sur fond clair.
+
+  Le contraste de ces trois-la se mesure sur --bg (#f5f4ee), PAS sur du blanc.
+  Un audit precedent les avait valides « >= 4.5:1 sur fond blanc » : sur le vrai
+  fond, plus sombre d'un demi-point, --lime tombait a 4,4966:1 et --mint a
+  4,47:1 — deux echecs AA que la mesure sur blanc ne pouvait pas voir. D'ou les
+  valeurs ci-dessous, reprises sur #f5f4ee : --lime 5,44:1, --mint 5,52:1,
+  --coral 4,70:1 (juste, laisse tel quel). --lime porte en plus du texte blanc
+  (--on-accent) quand il sert de fond : 5,99:1.
+
+  Les couleurs par groupe musculaire (data/groups.ts) restent, elles, en style
+  inline non couvert par ces tokens — a auditer separement.
 */
 @media (prefers-color-scheme: light) {
   :root {
@@ -39,8 +130,9 @@
     --line-soft: #e6e3d6;
     --paper: #1b1f1c;
     --paper-dim: #5b6058;
-    --lime: #5c7a00;
-    --mint: #16805a;
+    --lime: #526c00;
+    --mint: #12704e;
     --coral: #c73a22;
+    --on-accent: #ffffff;
   }
 }

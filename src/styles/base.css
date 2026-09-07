@@ -629,7 +629,7 @@ h2::after {
   min-height: 44px;
   margin-top: 18px;
   background: var(--lime);
-  color: #0e1210;
+  color: var(--on-accent);
   font-weight: 700;
   font-size: 13.5px;
   border-radius: 8px;
@@ -690,7 +690,7 @@ h2::after {
   min-height: 44px;
   padding: 0 14px;
   background: var(--lime);
-  color: #0e1210;
+  color: var(--on-accent);
   font-weight: 700;
   border-radius: 5px;
 }
@@ -736,7 +736,7 @@ h2::after {
   background: var(--lime);
   border: 0;
   border-radius: var(--radius);
-  color: #0e1210;
+  color: var(--on-accent);
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.02em;

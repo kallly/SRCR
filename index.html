@@ -1,16 +1,44 @@
 <!doctype html>
 <html lang="fr">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QVCTZFCKBL"></script>
+    <!--
+      Google tag (gtag.js), charge APRES l'affichage et non pendant.
+
+      Le script pese 166 Ko pour 71 Ko reellement utilises, occupe 126 ms de
+      thread principal et fournissait a lui seul les deux seules taches longues
+      de la page. Il est `async`, donc il ne bloquait pas le rendu, mais sur un
+      mobile en 4G il disputait bande passante et processeur a l'affichage.
+
+      La file `dataLayer` et l'appel `config` restent ici, en tete : gtag.js
+      rejoue tout ce qui s'y trouve a son arrivee, donc rien n'est perdu du
+      seul fait de differer le telechargement. Ne pas reintroduire de balise
+      `script src` vers googletagmanager dans ce head — c'est ce qui a ete
+      retire, et le chargeur plus bas s'en charge au bon moment.
+
+      Rappel : differer n'exonere de rien. GA reste un traceur soumis au
+      consentement ; le bandeau et le Consent Mode v2 restent a faire.
+    -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
       gtag('js', new Date());
-
       gtag('config', 'G-QVCTZFCKBL');
+
+      // `load` et non `DOMContentLoaded` : on veut la page peinte, pas
+      // seulement parsee. `requestIdleCallback` laisse en plus passer les
+      // taches de demarrage de l'app ; Safari ne le connait pas, d'ou le repli.
+      addEventListener('load', function () {
+        var start = function () {
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=G-QVCTZFCKBL';
+          document.head.appendChild(s);
+        };
+        if (window.requestIdleCallback) requestIdleCallback(start, { timeout: 4000 });
+        else setTimeout(start, 1500);
+      });
     </script>
 
     <meta charset="utf-8" />
@@ -26,7 +54,7 @@
     <meta name="theme-color" content="#0e1210" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f5f4ee" media="(prefers-color-scheme: light)" />
     <title>CIRKALI — planificateur et minuteur d'entraînement</title>
-    <link rel="canonical" href="https://kallly.github.io/SRCR/" />
+    <link rel="canonical" href="https://cirkali.fr/" />
 
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="./favicon.ico" sizes="32x32" />
@@ -42,14 +70,14 @@
     -->
     <meta property="og:title" content="CIRKALI — planificateur et minuteur d'entraînement" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://kallly.github.io/SRCR/" />
+    <meta property="og:url" content="https://cirkali.fr/" />
     <meta
       property="og:description"
       content="Planificateur et minuteur de séance : poids du corps, élastique, haltères ou machine. Mode classique ou circuit, en 5 langues, sans compte obligatoire."
     />
     <meta property="og:site_name" content="CIRKALI" />
     <meta property="og:locale" content="fr_FR" />
-    <meta property="og:image" content="https://kallly.github.io/SRCR/og-image.png" />
+    <meta property="og:image" content="https://cirkali.fr/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="CIRKALI — planificateur et minuteur d'entraînement" />
@@ -60,7 +88,7 @@
       name="twitter:description"
       content="Planificateur et minuteur de séance : poids du corps, élastique, haltères ou machine. Mode classique ou circuit, en 5 langues, sans compte obligatoire."
     />
-    <meta name="twitter:image" content="https://kallly.github.io/SRCR/og-image.png" />
+    <meta name="twitter:image" content="https://cirkali.fr/og-image.png" />
 
     <script type="application/ld+json">
       {
@@ -68,7 +96,7 @@
         "@type": "WebApplication",
         "name": "CIRKALI",
         "description": "Planificateur et minuteur de séance : poids du corps, élastique, haltères ou machine. Mode classique ou circuit, en 5 langues, sans compte obligatoire.",
-        "url": "https://kallly.github.io/SRCR/",
+        "url": "https://cirkali.fr/",
         "applicationCategory": "HealthApplication",
         "operatingSystem": "Web",
         "inLanguage": ["fr", "en", "es", "de", "it"],
@@ -83,10 +111,10 @@
         "potentialAction": {
           "@type": "CreateAction",
           "name": "Créer une séance depuis un lien",
-          "description": "Ouvrir cette adresse avec une séance encodée dans le paramètre s propose de l’importer. Format complet : https://kallly.github.io/SRCR/creer-une-seance-par-lien.html",
+          "description": "Ouvrir cette adresse avec une séance encodée dans le paramètre s propose de l’importer. Format complet : https://cirkali.fr/creer-une-seance-par-lien.html",
           "target": {
             "@type": "EntryPoint",
-            "urlTemplate": "https://kallly.github.io/SRCR/?s={plan}",
+            "urlTemplate": "https://cirkali.fr/?s={plan}",
             "encodingType": "application/json",
             "actionPlatform": "http://schema.org/DesktopWebPlatform"
           }
@@ -94,12 +122,12 @@
       }
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,600;125,700;125,800&family=Manrope:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <!--
+      Aucun lien vers Google Fonts : Archivo et Manrope sont servies par ce
+      site, declarees en @font-face dans src/styles/tokens.css. Ne pas les y
+      remettre — cette feuille tierce bloquait le rendu 750 ms et imposait deux
+      poignees de main DNS+TLS avant le premier caractere affiche.
+    -->
   </head>
   <body>
     <main class="wrap">
@@ -298,7 +326,7 @@ t = transition entre exercices (s) i = lignes du déroulé
 Exercice : ["e", clé, groupe, "r" reps | "t" durée, séries, reps, secondes, repos, nomPerso?]
 Pause    : ["r", secondes]
 
-https://kallly.github.io/SRCR/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsInQiOjAsImkiOltbImUiLCJrbmVlUHVzaHVwIiwicHVzaCIsInIiLDQsMTIsMzAsNjBdLFsiZSIsInBsYW5rIiwiY29yZSIsInQiLDMsMTAsNDUsNjBdXX0</code></pre>
+https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsInQiOjAsImkiOltbImUiLCJrbmVlUHVzaHVwIiwicHVzaCIsInIiLDQsMTIsMzAsNjBdLFsiZSIsInBsYW5rIiwiY29yZSIsInQiLDMsMTAsNDUsNjBdXX0</code></pre>
         <p data-i18n="aiPlan.keys"></p>
         <p data-i18n="aiPlan.rawLink"></p>
         <p>

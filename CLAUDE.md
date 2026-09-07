@@ -223,7 +223,28 @@ la donnée qui les a réfutées — à relire avant d'en reproposer une.
 
 ## Déploiement
 
-Push sur `main` → `.github/workflows/deploy.yml` construit et publie `dist/` sur
-GitHub Pages. `base: './'` dans `vite.config.ts` : les chemins sont relatifs, le
-build fonctionne donc sous `user.github.io/<dépôt>/` sans coder le nom du dépôt.
-Ne pas passer `base` à un chemin absolu.
+Le site public est **https://cirkali.fr**, servi par Cloudflare Pages, qui
+construit le dépôt de son côté. `.github/workflows/deploy.yml` continue de
+publier la même chose sur GitHub Pages : c'est un reliquat voué au retrait, mais
+son job `build` reste le filet de CI (`typecheck` + `check-build`) — ne pas le
+supprimer sans déplacer ces deux commandes ailleurs.
+
+L'origine canonique vit dans **`SITE_URL`** (`scripts/build-exercise-pages.ts`)
+pour tout ce qui est généré, et en **littéral** dans `index.html` (les balises
+SEO ne portent pas de `data-i18n`, donc `fillStaticTranslations()` ne les voit
+pas). Les deux doivent bouger ensemble : au passage à cirkali.fr, aucune n'avait
+suivi, et le site a longtemps déclaré à Google que sa version de référence était
+github.io — avec un sitemap ne listant que des URL d'un autre domaine. D'où
+l'assertion de `check-build.ts` qui interdit l'ancienne origine dans `dist/`.
+
+`base: './'` dans `vite.config.ts` : les chemins restent relatifs. Ne pas le
+passer à un chemin absolu. **Une seule exception assumée**, les `@font-face` :
+les `.woff2` de `public/fonts/` sont cités en `/fonts/…` parce qu'ils doivent
+l'être depuis deux profondeurs à la fois (le bundle et `exercise-page.css`, hors
+bundle). Conséquence : une copie servie ailleurs qu'à la racine d'un domaine
+perd ses polices.
+
+`public/_headers` est lu par Cloudflare Pages : cache `immutable` sur
+`/assets/*` et `/fonts/*`, plus HSTS, XFO, COOP et `nosniff`. Le COOP y est en
+`same-origin-allow-popups` et non `same-origin` : la connexion Google passe par
+`signInWithPopup`, que le mode strict casserait.

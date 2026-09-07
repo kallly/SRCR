@@ -339,7 +339,7 @@
 
 .rfoot .primary {
   background: var(--lime);
-  color: #0e1210;
+  color: var(--on-accent);
   border-color: var(--lime);
   flex: 2;
   font-family: var(--disp);

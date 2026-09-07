@@ -102,7 +102,7 @@ export const es: Translations = {
     createTitle: 'Crear una sesión',
     createText: 'Copia este mensaje:',
     createPrompt:
-      'Este es un sitio para componer sesiones de entrenamiento: https://kallly.github.io/SRCR/. Crea una sesión de tren superior de 20 minutos y dame el enlace para importarla.',
+      'Este es un sitio para componer sesiones de entrenamiento: https://cirkali.fr/. Crea una sesión de tren superior de 20 minutos y dame el enlace para importarla.',
     modifyTitle: 'Modificar una sesión',
     modifyText: 'Usa el enlace de tu sesión para pedirle a la IA que la modifique:',
     modifyPrompt:

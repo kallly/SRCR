@@ -102,7 +102,7 @@ export const it: Translations = {
     createTitle: 'Creare una seduta',
     createText: 'Copia questo messaggio:',
     createPrompt:
-      'Ecco un sito per comporre sedute di allenamento: https://kallly.github.io/SRCR/. Creami una seduta per la parte superiore del corpo di 20 minuti e dammi il link per importarla.',
+      'Ecco un sito per comporre sedute di allenamento: https://cirkali.fr/. Creami una seduta per la parte superiore del corpo di 20 minuti e dammi il link per importarla.',
     modifyTitle: 'Modificare una seduta',
     modifyText: 'Usa il link di condivisione della tua seduta per chiedere all’IA di modificarla:',
     modifyPrompt:

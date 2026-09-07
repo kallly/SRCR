@@ -102,7 +102,7 @@ export const de: Translations = {
     createTitle: 'Eine Einheit erstellen',
     createText: 'Kopiere diese Nachricht:',
     createPrompt:
-      'Hier ist eine Seite zum Zusammenstellen von Trainingseinheiten: https://kallly.github.io/SRCR/. Erstelle mir eine 20-minütige Oberkörper-Einheit und gib mir den Link zum Importieren.',
+      'Hier ist eine Seite zum Zusammenstellen von Trainingseinheiten: https://cirkali.fr/. Erstelle mir eine 20-minütige Oberkörper-Einheit und gib mir den Link zum Importieren.',
     modifyTitle: 'Eine Einheit ändern',
     modifyText: 'Nutze den Freigabelink deiner Einheit, um die KI um eine Änderung zu bitten:',
     modifyPrompt:

@@ -32,7 +32,7 @@ REGULAR = FONT_DIR / "DejaVuSans.ttf"
 EYEBROW = "PHASE 1 · SANS MATÉRIEL"
 TITLE = "Ma séance"
 TAGLINE = "Construis ton entraînement, ordonne les exercices, règle les pauses."
-FOOTER = "kallly.github.io/SRCR"
+FOOTER = "cirkali.fr"
 
 PAD = 90
 

@@ -109,7 +109,7 @@ export const fr = {
     createTitle: 'Créer une séance',
     createText: 'Copiez ce message :',
     createPrompt:
-      'Voici un site pour composer des séances : https://kallly.github.io/SRCR/. Crée-moi une séance haut du corps de 20 minutes, puis donne-moi le lien à ouvrir pour l’importer.',
+      'Voici un site pour composer des séances : https://cirkali.fr/. Crée-moi une séance haut du corps de 20 minutes, puis donne-moi le lien à ouvrir pour l’importer.',
     modifyTitle: 'Modifier une séance',
     modifyText: 'Utilisez le lien de partage de votre séance pour demander à l’IA de la modifier :',
     modifyPrompt:

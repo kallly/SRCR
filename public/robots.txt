@@ -1,0 +1,14 @@
+# Sans ce fichier, /robots.txt n'existait pas et le repli SPA de Cloudflare
+# Pages renvoyait index.html avec un code 200 : PageSpeed y lisait 510 erreurs
+# de syntaxe, qui n'etaient que les lignes du HTML. Le sitemap, lui, n'a jamais
+# ete declare nulle part.
+#
+# Cloudflare prepose son propre bloc « Managed content » a cette reponse, dont
+# des `Disallow: /` pour ClaudeBot, GPTBot, Google-Extended et consorts. Ce
+# reglage-la vit dans le tableau de bord (AI Crawl Control), pas ici : le
+# modifier depuis ce fichier est sans effet.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://cirkali.fr/sitemap.xml

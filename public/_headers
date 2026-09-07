@@ -1,0 +1,25 @@
+# En-tetes servis par Cloudflare Pages, lus a la racine de dist/ (Vite recopie
+# public/ tel quel). Sans ce fichier, tout le site sortait en
+# `max-age=0, must-revalidate` — y compris les fichiers au nom hache.
+
+# Nom hache par Vite : le contenu ne peut pas changer sans changer d'URL, donc
+# une revalidation par visite etait du gachis pur.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Les .woff2, eux, portent un nom stable (ils doivent etre citables depuis
+# exercise-page.css, hors bundle) : leur duree de vie tient donc a cet en-tete
+# seul. Changer de fichier de police impose de changer son nom.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  # `same-origin-allow-popups` et non `same-origin` : la connexion Google passe
+  # par `signInWithPopup` (src/cloud/firebase.ts), qui a besoin de garder le
+  # lien `opener` avec la fenetre surgissante. Le mode strict la casserait
+  # silencieusement, en ne laissant que le repli par redirection.
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
