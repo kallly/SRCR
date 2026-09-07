@@ -250,7 +250,7 @@ ${similar.map((e) => carouselCard(e.key, dict, all[e.key]!)).join('\n')}
     <link rel="canonical" href="${url}" />
 ${hreflangTags(key)}
     <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="../../favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48" />
 
     <meta property="og:title" content="${esc(name)} — ${esc(dict.page.titleSuffix)}" />
     <meta property="og:type" content="article" />
@@ -492,7 +492,7 @@ function renderAiPlanPage(dict: Translations): string {
     <title>${esc(AI_PAGE_TITLE)} — format pour une IA | CIRKALI</title>
     <link rel="canonical" href="${url}" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
 
     <meta property="og:title" content="${esc(AI_PAGE_TITLE)} — format pour une IA" />
     <meta property="og:type" content="article" />
@@ -758,7 +758,7 @@ function renderPrivacyPage(locale: Locale, dict: Translations): string {
     <link rel="canonical" href="${url}" />
 ${hreflang}
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="../favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../favicon.ico" sizes="16x16 32x32 48x48" />
 
     <meta property="og:title" content="${esc(dict.privacy.title)}" />
     <meta property="og:type" content="article" />
