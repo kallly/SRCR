@@ -816,33 +816,16 @@
 }
 
 /*
-  Sans ces regles, les figures de la bibliotheque restent quasi invisibles :
-  les <path> sans stroke explicite ne sont pas dessines par defaut, et les
-  <rect class="obj"> se remplissent de noir plein (fill par defaut) faute de
-  fill:none. Meme traitement que .rfig dans runner.css, pour la meme raison.
+  La vignette de bibliotheque descend d'un cran : a 62 px de haut, un corps en
+  --paper ecrase la carte et rivalise avec son titre. Le sol et les objets
+  descendent d'autant, sinon la hierarchie du bloc partage (base.css)
+  s'aplatirait ici — c'est exactement la divergence que la factorisation a
+  supprimee, gardee cette fois comme un choix ecrit.
 */
-.libcard .s,
-.libcard .obj,
-.libcard .gr {
-  stroke: var(--paper-dim);
-}
-
-.libcard .hd {
-  fill: var(--paper-dim);
-}
-
-.libcard .obj {
-  fill: none;
-}
-
-.libcard .ar {
-  stroke: var(--lime);
-  fill: none;
-}
-
-.libcard .arh {
-  fill: var(--lime);
-  stroke: none;
+.libcard .fig-svg {
+  --fig-body: var(--paper-dim);
+  --fig-back: var(--paper-faint);
+  --fig-mass: var(--line-soft);
 }
 
 .libcard .lb {

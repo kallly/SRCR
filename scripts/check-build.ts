@@ -24,6 +24,7 @@ import { join } from 'node:path';
 
 import { decodeSharedPlan } from '../src/core/share';
 import { LIBRARY } from '../src/data/library';
+import { figureSvg } from '../src/data/figures';
 import { DETAILS_BY_LOCALE } from '../src/content/exercise-details';
 import { AD_CLIENT, AD_MIN_WIDTH } from '../src/content/ad-rails';
 import { DICTIONARIES } from '../src/i18n';
@@ -317,6 +318,74 @@ const keyFile = join(DIST, `${INDEXNOW_KEY}.txt`);
 check(
   'la cle IndexNow est servie a la racine',
   existsSync(keyFile) && readFileSync(keyFile, 'utf8').trim() === INDEXNOW_KEY,
+);
+
+console.log('\nFigures d\'exercice');
+
+// Trois conventions de dessin qu'aucun type ne peut tenir : elles portent sur le
+// contenu d'un litteral de chaine. La premiere s'etait deja degradee en silence
+// — 26 exercices sur 62 la contredisaient — parce que rien ne la verifiait.
+const figures = new Map(LIBRARY.map((e) => [e.key, figureSvg(e.key)]));
+
+// 1. La fleche dit ce qui bouge, son absence dit que la position se tient.
+const wrongArrow = LIBRARY.filter(
+  (e) => figures.get(e.key)!.includes('class="ar"') !== (e.motion === 'move'),
+).map((e) => `${e.key} (${e.motion})`);
+check(
+  'chaque mouvement porte une fleche, chaque tenue n\'en porte pas',
+  wrongArrow.length === 0,
+  wrongArrow.join(', '),
+);
+
+// 2. `.pull` marque le sens ou tirer pour s'installer, pas un geste a repeter :
+// il n'a de sens que sur une tenue.
+const wrongPull = LIBRARY.filter(
+  (e) => figures.get(e.key)!.includes('class="pull"') && e.motion !== 'hold',
+).map((e) => e.key);
+check('la marque de tension ne vit que sur une tenue', wrongPull.length === 0, wrongPull.join(', '));
+
+// 3. Toutes les figures de profil regardent du meme cote. Sept regardaient a
+// droite ; dans la bibliotheque, filtree par groupe, elles s'affichaient a cote
+// de leurs voisines et obligeaient l'oeil a se reorienter a chaque vignette.
+const wrongFacing = LIBRARY.filter((e) => {
+  const head = figures.get(e.key)!.match(/class="hd" cx="([\d.]+)"/);
+  return head !== null && Number(head[1]) > 105;
+}).map((e) => e.key);
+check('aucune figure ne regarde a droite', wrongFacing.length === 0, wrongFacing.join(', '));
+
+// 4. Le bloc `.fig-svg` existe en deux exemplaires — le bundle et la feuille des
+// pages generees, hors bundle — pour la meme raison que les @font-face. Deux
+// copies derivent : c'est exactement ce qui etait arrive aux cinq blocs que
+// cette factorisation a remplaces, dont deux avaient change de teinte sans que
+// ce soit une decision.
+// Le selecteur doit commencer la ligne : `.carousel-card .fig-svg` et
+// `.libcard .fig-svg` sont les ajustements propres a une surface, pas le socle
+// partage, et n'ont aucune raison d'exister des deux cotes.
+const figRules = (css: string): string =>
+  (css.replace(/\/\*[\s\S]*?\*\//g, '').match(/^\.fig-svg[^{]*\{[^}]*\}/gm) ?? [])
+    .join('')
+    .replace(/\s+/g, '');
+const bundleRules = figRules(readFileSync(join(process.cwd(), 'src/styles/base.css'), 'utf8'));
+const pageRules = figRules(readFileSync(join(process.cwd(), 'src/content/exercise-page.css'), 'utf8'));
+check(
+  'les deux copies du bloc .fig-svg sont identiques',
+  bundleRules.length > 0 && bundleRules === pageRules,
+  'base.css et exercise-page.css ont diverge',
+);
+
+// 5. Sans la classe posee par figureSvg(), les quatre regles ci-dessus n'ont
+// aucune prise sur ce qui est livre : les <path> du corps reprennent le `fill`
+// noir par defaut du SVG, invisible sur le fond sombre et bien visible sur le
+// theme clair.
+const figPages = (readdirSync(join(DIST, 'exercises'), { recursive: true, encoding: 'utf8' }) as string[])
+  .filter((rel) => rel.endsWith('.html'));
+const sansClasse = figPages.filter(
+  (rel) => !readFileSync(join(DIST, 'exercises', rel), 'utf8').includes('class="fig-svg"'),
+);
+check(
+  `les ${figPages.length} fiches livrent des figures classees fig-svg`,
+  figPages.length > 0 && sansClasse.length === 0,
+  sansClasse.slice(0, 5).join(', '),
 );
 
 console.log('\nOrigine canonique');

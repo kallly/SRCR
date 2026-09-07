@@ -44,3 +44,42 @@ compensé par un bénéfice prouvé : ça fragiliserait les liens déjà partag�
 si `LIBRARY` change un jour d'ordre, alors que le format actuel (des clés
 textuelles) y est insensible.
 
+
+## Remplacer les figures batons par autre chose
+
+Quatre pistes explorees sur `dumbbellCalfRaise` (POC hors code, septembre 2026),
+toutes mesurees. La reference : **492 o bruts, +111 o brotli** dans une fiche
+livree — c'est le cout reel d'une figure inlinee, une fois la compression faite.
+
+**Animation (image + courte video).** Ecartee sur la source, pas sur la
+technique : aucune banque d'exercices n'est a la fois libre de redistribution et
+complete (wger est en CC-BY-SA avec attribution par fiche, ExerciseDB et
+MuscleWiki n'accordent aucun droit), et la video generee par IA produit des
+repetitions biomecaniquement fausses de facon **plausible** — donc que personne
+ne verifie. La piste restante etait d'animer les figures existantes par
+interpolation de poses (SMIL), techniquement bonne, mais elle exigeait
+d'ecrire une seconde pose pour les 62 figures. Non retenue faute de besoin
+demontre.
+
+**Silhouette pleine (aplat).** 1 204 o bruts, **+346 o brotli — 3,1x la
+reference**. Le cout n'est pas la : c'est un **redessin**, pas une conversion.
+Cinq iterations ont ete necessaires pour une seule figure, et surtout le passage
+a l'aplat rend le point de vue determinant — de face, bras et tronc fusionnent
+en une masse et un talon leve est invisible. Il a fallu passer de profil. Les 62
+figures ne se convertiraient donc pas, elles se re-concevraient une par une.
+
+**Illustration raster.** 1 361 o en AVIF, 2 448 o en WebP, 5 552 o en PNG. Le
+poids n'est **pas** l'argument (une estimation initiale a 200x etait fausse : ca
+vaut pour une illustration texturee, pas pour un aplat rasterise, qui est a
+12x). Ce qui la disqualifie : le fond est cuit dans les pixels, donc il faut
+**deux fichiers par exercice** (un par theme), plus une requete HTTP, et la
+figure cesse de suivre `--paper`.
+
+**Epaissir le trait (`stroke-width: 4.5`, bouts ronds).** Gratuit — 0 octet,
+0 redessin — et non retenu par choix esthetique : les batons restent des batons.
+A noter tout de meme, si la question revient : aucun `stroke-width` n'etait
+declare pour les figures, elles etaient rendues a **1 unite** par simple valeur
+par defaut du SVG, jamais par decision.
+
+Retenu a la place : trois reglages de lisibilite a geometrie constante — voir la
+skill `seance-figures`.

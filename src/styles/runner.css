@@ -155,30 +155,6 @@
   height: clamp(50px, 10dvh, 82px);
 }
 
-.rfig .s,
-.rfig .obj,
-.rfig .gr {
-  stroke: var(--paper);
-}
-
-.rfig .hd {
-  fill: var(--paper);
-}
-
-.rfig .obj {
-  fill: none;
-}
-
-.rfig .ar {
-  stroke: var(--lime);
-  fill: none;
-}
-
-.rfig .arh {
-  fill: var(--lime);
-  stroke: none;
-}
-
 /*
  * L'anneau ne se dimensionne plus via un pourcentage de la hauteur du
  * viewport (`vh`/`dvh`) : sur Firefox mobile, la taille peinte pouvait se

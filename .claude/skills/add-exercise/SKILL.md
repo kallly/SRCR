@@ -49,6 +49,13 @@ colorable by CSS and consistent with the other 61 figures. Copy the
 structure of a similar existing exercise (same equipment/pose) as a
 starting point rather than drawing from scratch.
 
+**Load the `seance-figures` skill before drawing.** Three conventions are
+enforced by `npm run check` and none of them is guessable from the data: the
+figure must face left, it must carry a movement arrow if and only if its
+`motion` is `'move'`, and `pull` (the stretch tension mark) is reserved for
+`'hold'`. That skill also ships `figure-space.mjs`, which tells you where an
+arrow fits without colliding with the drawing.
+
 ## 5. Long-form content — `src/content/exercise-details/*.ts` (5 files, **NOT typechecked** — the risky step)
 
 Add a `<key>: { ... }` entry to **all 5** of `fr.ts`, `en.ts`, `es.ts`,

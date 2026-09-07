@@ -67,6 +67,7 @@
   --line-soft: #232c26;
   --paper: #f2f0e8;
   --paper-dim: #a9b0a7;
+  --paper-faint: #6b7269;
   --lime: #d7ff3f;
   --disp: 'Archivo', sans-serif;
   --sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -191,28 +192,55 @@ h2 {
   height: 150px;
 }
 
-.fig svg .s,
-.fig svg .obj,
-.fig svg .gr {
-  stroke: var(--paper);
+/*
+  Miroir du bloc `.fig-svg` de src/styles/base.css, pour la meme raison que les
+  @font-face plus haut : cette feuille est hors du bundle et ne peut rien lui
+  emprunter. Les deux listes doivent rester identiques — la justification
+  complete des trois niveaux (corps / objet / sol) et du `fill: none` sur `.s`
+  vit dans base.css, on ne la recopie pas ici pour ne pas avoir deux versions
+  d'un meme raisonnement a maintenir.
+*/
+.fig-svg {
+  --fig-body: var(--paper);
+  --fig-back: var(--paper-dim);
+  --fig-mass: var(--line);
+  --fig-accent: var(--lime);
 }
 
-.fig svg .hd {
-  fill: var(--paper);
-}
-
-.fig svg .obj {
+.fig-svg .s {
+  stroke: var(--fig-body);
   fill: none;
 }
 
-.fig svg .ar {
-  stroke: var(--lime);
-  fill: none;
-}
-
-.fig svg .arh {
-  fill: var(--lime);
+.fig-svg .hd {
+  fill: var(--fig-body);
   stroke: none;
+}
+
+.fig-svg .gr,
+.fig-svg .obj {
+  stroke: var(--fig-back);
+  fill: none;
+}
+
+.fig-svg rect.obj,
+.fig-svg circle.obj {
+  fill: var(--fig-mass);
+}
+
+.fig-svg .ar {
+  stroke: var(--fig-accent);
+  fill: none;
+}
+
+.fig-svg .arh {
+  fill: var(--fig-accent);
+  stroke: none;
+}
+
+.fig-svg .pull {
+  stroke: var(--fig-back);
+  fill: none;
 }
 
 .muscles {
@@ -313,28 +341,15 @@ ul.progression li b {
   height: 70px;
 }
 
-.carousel-card .cfig svg .s,
-.carousel-card .cfig svg .obj,
-.carousel-card .cfig svg .gr {
-  stroke: var(--paper-dim);
-}
-
-.carousel-card .cfig svg .hd {
-  fill: var(--paper-dim);
-}
-
-.carousel-card .cfig svg .obj {
-  fill: none;
-}
-
-.carousel-card .cfig svg .ar {
-  stroke: var(--lime);
-  fill: none;
-}
-
-.carousel-card .cfig svg .arh {
-  fill: var(--lime);
-  stroke: none;
+/*
+  Le carrousel descend d'un cran, comme la vignette de bibliotheque de l'app
+  (.libcard, planner.css) : a 70 px de haut la figure accompagne un titre, elle
+  ne doit pas le concurrencer.
+*/
+.carousel-card .fig-svg {
+  --fig-body: var(--paper-dim);
+  --fig-back: var(--paper-faint);
+  --fig-mass: var(--line-soft);
 }
 
 .carousel-card .cb {

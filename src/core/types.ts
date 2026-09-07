@@ -94,6 +94,15 @@ export type ExerciseKey =
 /** Un effort se mesure soit en repetitions, soit en duree. */
 export type EffortMode = 'reps' | 'time';
 
+/**
+ * Ce que la figure doit montrer : un geste qui se repete, ou une position que
+ * l'on garde. `EffortMode` ne peut pas repondre a cette question — il range la
+ * planche et le velo d'appartement dans la meme case `time`, alors que l'une se
+ * tient immobile et l'autre pedale. C'est la seule chose qui distingue une
+ * figure devant porter une fleche d'une figure qui n'en porte pas.
+ */
+export type MotionKind = 'move' | 'hold';
+
 /** Deux facons d'enchainer les series. */
 export type SessionMode = 'classic' | 'circuit';
 

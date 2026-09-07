@@ -587,28 +587,78 @@ h2::after {
   height: 110px;
 }
 
-.info-fig svg .s,
-.info-fig svg .obj,
-.info-fig svg .gr {
-  stroke: var(--paper);
+/*
+  Les figures ont trois niveaux de lecture, pas un : le corps au premier plan,
+  l'objet (mur, chaise, banc, machine, haltere) comme masse derriere lui, le sol
+  en simple repere. Une seule declaration peignait les trois de la meme couleur
+  et laissait l'objet en contour vide — autrement dit, ce qui distingue
+  l'exercice (le rebord d'`inclined`, le mur de `wallPushup`, la chaise de
+  `chairsquat`) etait l'element le moins visible du dessin, et le sol pesait
+  autant que le tronc sur les figures allongees.
+
+  Le remplissage est scope en `rect.obj` / `circle.obj` : ce sont les seules
+  formes fermees. Les murs sont des <line> et les elastiques des <path> ouverts
+  — un `fill` sur ceux-la fermerait la courbe sur sa corde.
+
+  `fill: none` sur `.s` n'est pas cosmetique : 76 traces du corps ont trois
+  points ou plus, et un <path> sans fill declare est rempli en NOIR par defaut.
+  Invisible sur le fond sombre, d'ou vingt versions sans que personne le voie ;
+  bien reel sur le theme clair de l'app.
+
+  Les cinq surfaces qui affichent une figure (.fig et .cfig des pages generees,
+  .info-fig, .rfig, .libcard de l'app) partagent ce bloc par la classe posee
+  dans `figureSvg()` et ne declarent chacune que ses teintes. Les memes six
+  regles etaient auparavant recopiees cinq fois sur 95 lignes — et avaient deja
+  diverge : le corps etait en --paper sur trois surfaces, en --paper-dim sur les
+  deux autres, sans que ce soit une decision.
+*/
+.fig-svg {
+  --fig-body: var(--paper);
+  --fig-back: var(--paper-dim);
+  --fig-mass: var(--line);
+  --fig-accent: var(--lime);
 }
 
-.info-fig svg .hd {
-  fill: var(--paper);
-}
-
-.info-fig svg .obj {
+.fig-svg .s {
+  stroke: var(--fig-body);
   fill: none;
 }
 
-.info-fig svg .ar {
-  stroke: var(--lime);
-  fill: none;
-}
-
-.info-fig svg .arh {
-  fill: var(--lime);
+.fig-svg .hd {
+  fill: var(--fig-body);
   stroke: none;
+}
+
+.fig-svg .gr,
+.fig-svg .obj {
+  stroke: var(--fig-back);
+  fill: none;
+}
+
+.fig-svg rect.obj,
+.fig-svg circle.obj {
+  fill: var(--fig-mass);
+}
+
+.fig-svg .ar {
+  stroke: var(--fig-accent);
+  fill: none;
+}
+
+.fig-svg .arh {
+  fill: var(--fig-accent);
+  stroke: none;
+}
+
+/*
+  `.pull` n'est pas une fleche. Sur un etirement, le trait indique le sens ou
+  tirer pour installer la position — une consigne de mise en place, pas un
+  mouvement a repeter. D'ou le pointille serre, sans pointe et dans la teinte
+  du sol : lisible, mais ne promettant aucune repetition.
+*/
+.fig-svg .pull {
+  stroke: var(--fig-back);
+  fill: none;
 }
 
 .info-muscles {

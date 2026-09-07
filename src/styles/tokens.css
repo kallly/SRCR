@@ -79,6 +79,13 @@
   --line-soft: #232c26;
   --paper: #f2f0e8;
   --paper-dim: #a9b0a7;
+  /*
+    Troisieme niveau de gris, pour les figures d'exercice uniquement : le sol et
+    le contour des objets doivent reculer derriere un corps deja dessine en
+    --paper-dim sur les surfaces reduites (carte de bibliotheque, carrousel).
+    --line y serait trop proche du fond, --paper-dim trop proche du corps.
+  */
+  --paper-faint: #6b7269;
   --lime: #d7ff3f;
   --mint: #7fe0b0;
   --coral: #ff5a3c;
@@ -130,6 +137,7 @@
     --line-soft: #e6e3d6;
     --paper: #1b1f1c;
     --paper-dim: #5b6058;
+    --paper-faint: #9a9e94;
     --lime: #526c00;
     --mint: #12704e;
     --coral: #c73a22;
