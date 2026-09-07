@@ -286,8 +286,9 @@ sans lui Google cesse simplement de servir des annonces, sans erreur visible.
 
 `dist/confidentialite/<locale>.html` (5 pages, générées) est la politique de
 confidentialité : obligatoire pour AdSense, et de toute façon due depuis
-l'ajout de Google Analytics. `CONTACT_EMAIL` y est publié — l'adresse doit
-exister.
+l'ajout de Google Analytics. `CONTACT_EMAIL` (`cirkali@proton.me`) y est publié :
+c'est par là qu'arrive une demande d'accès ou de suppression, la boîte doit
+rester relevée tant que la page est en ligne.
 
 `public/_headers` est lu par Cloudflare Pages : cache `immutable` sur
 `/assets/*` et `/fonts/*`, plus HSTS, XFO, COOP et `nosniff`. Le COOP y est en

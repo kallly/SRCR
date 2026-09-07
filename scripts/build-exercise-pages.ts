@@ -79,10 +79,11 @@ const SOURCE_LOCALE: Locale = 'fr';
 
 /**
  * Adresse de contact publiee dans la page de confidentialite. Un texte RGPD
- * sans destinataire ne vaut rien : c'est par la qu'une demande de suppression
- * arrive. A faire suivre vers une boite reellement relevee.
+ * sans destinataire ne vaut rien : c'est par la qu'arrive une demande d'acces
+ * ou de suppression, et le delai de reponse court des sa reception. La boite
+ * doit donc rester relevee tant que la page est en ligne.
  */
-const CONTACT_EMAIL = 'contact@cirkali.fr';
+const CONTACT_EMAIL = 'cirkali@proton.me';
 
 /** Identifiant de mesure GA, cite tel quel dans la page de confidentialite. */
 const GA_MEASUREMENT_ID = 'G-QVCTZFCKBL';
