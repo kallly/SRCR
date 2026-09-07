@@ -490,27 +490,6 @@ h2::after {
   opacity: 0.75;
 }
 
-/* lien de pied de page vers le depot */
-.credit {
-  font-size: 11.5px;
-  margin: 10px 0 0;
-}
-
-.credit a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  color: var(--paper-dim);
-  text-decoration: underline;
-  text-decoration-color: var(--line);
-  text-underline-offset: 3px;
-}
-
-.credit a:hover {
-  color: var(--lime);
-  text-decoration-color: var(--lime);
-}
-
 /* modal d'info sur un exercice : <dialog> natif (fermeture Echap et focus-trap gratuits) */
 .info {
   width: min(420px, calc(100vw - 40px));

@@ -6,7 +6,6 @@ export const de: Translations = {
     eyebrow: 'Mit oder ohne Geräte',
     heading: 'CIRKALI',
     tagline: 'Stell dein Training zusammen, ordne die Übungen, leg die Pausen fest.',
-    sourceCode: 'Quellcode',
   },
 
   lang: {

@@ -13,7 +13,6 @@ export const fr = {
     eyebrow: 'Avec ou sans matériel',
     heading: 'CIRKALI',
     tagline: 'Construis ton entraînement, ordonne les exercices, règle les pauses.',
-    sourceCode: 'Code source',
   },
 
   lang: {

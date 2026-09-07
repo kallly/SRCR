@@ -6,7 +6,6 @@ export const en: Translations = {
     eyebrow: 'With or without equipment',
     heading: 'CIRKALI',
     tagline: 'Build your workout, order the exercises, set the breaks.',
-    sourceCode: 'Source code',
   },
 
   lang: {

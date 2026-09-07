@@ -6,7 +6,6 @@ export const it: Translations = {
     eyebrow: 'Con o senza attrezzi',
     heading: 'CIRKALI',
     tagline: 'Costruisci il tuo allenamento, ordina gli esercizi, regola le pause.',
-    sourceCode: 'Codice sorgente',
   },
 
   lang: {
