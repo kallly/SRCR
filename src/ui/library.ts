@@ -100,7 +100,16 @@ export function createLibrary(ctx: Context): { render: () => void } {
     ctx.activePlan().items.push(item);
     ctx.save();
     ctx.renderAll();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // La carte ajoutee est le dernier <li> : on vient de `push()` en fin de
+    // tableau, et planner.render() reconstruit la liste dans l'ordre de `items`.
+    // `center` plutot que `nearest` : la barre d'action fixe du bas masquerait
+    // une carte calee contre le bord inferieur.
+    byId('plan').lastElementChild?.scrollIntoView({
+      // Le bloc CSS `prefers-reduced-motion` ne peut rien contre un defilement
+      // anime demande en JS : c'est ici qu'il faut le respecter.
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      block: 'center',
+    });
   });
 
   /**
