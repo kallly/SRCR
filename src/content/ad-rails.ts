@@ -40,10 +40,10 @@ export const AD_CLIENT = 'ca-pub-2139584209201341';
  * decider plus tard sur des chiffres plutot qu'a l'estime.
  */
 export const AD_SLOTS = {
-  homeLeft: '',
-  homeRight: '',
-  pageLeft: '',
-  pageRight: '',
+  homeLeft: '6618301629', // cirkali-accueil-gauche
+  homeRight: '2623216294', // cirkali-accueil-droite
+  pageLeft: '4135126015', // cirkali-fiche-gauche
+  pageRight: '1310134623', // cirkali-fiche-droite
 } as const;
 
 /** Largeur a partir de laquelle les marges peuvent accueillir un encart. */
@@ -83,7 +83,14 @@ export function adRailsScript(left: string, right: string, label: string): strin
           ins.style.display = 'block';
           ins.setAttribute('data-ad-client', ${json(AD_CLIENT)});
           ins.setAttribute('data-ad-slot', slots[i][1]);
-          ins.setAttribute('data-ad-format', 'auto');
+          // 'vertical' d'abord : l'encart occupe une marge haute et etroite,
+          // c'est un gratte-ciel (160x600, 300x600) qui la remplit, pas un
+          // pave. Avec 'auto', AdSense ne voit qu'une largeur de 300px sans
+          // hauteur imposee et sert un 300x250 tasse en haut d'une marge vide.
+          // 'rectangle' reste en repli : la demande sur les formats verticaux
+          // est plus mince, et un rail vide ne rapporte rien du tout. A
+          // reexaminer sur les chiffres de remplissage, pas a l'estime.
+          ins.setAttribute('data-ad-format', 'vertical, rectangle');
           // Sans ce 'false', un format responsive s'elargit a toute la largeur
           // du viewport et deborderait de la marge sur le contenu.
           ins.setAttribute('data-full-width-responsive', 'false');
