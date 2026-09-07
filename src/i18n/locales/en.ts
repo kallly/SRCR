@@ -86,6 +86,11 @@ export const en: Translations = {
     none: 'CIRKALI shows no advertising on mobile: on a phone no slot is created and no advertising script is downloaded. On a large screen, two units sit in the margins the layout leaves empty — they never break up the content and stay hidden during a session.',
   },
 
+  notFound: {
+    title: 'Page not found',
+    lead: 'This address matches no page on the site. The link may contain a typo, or the page may have moved.',
+  },
+
   privacy: {
     title: 'Privacy',
     lead: 'CIRKALI works without an account and without a server: the session you build lives in your browser. This page states what is stored, what leaves the device, and on what conditions.',

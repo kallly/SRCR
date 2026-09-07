@@ -830,6 +830,76 @@ ${section(dict.privacy.rightsTitle, dict.privacy.rightsText)}      <h2>${esc(
 }
 
 /**
+ * Page 404, a la racine de la sortie.
+ *
+ * Sans ce fichier, Cloudflare Pages retombe sur `index.html` avec un code
+ * **200** pour toute adresse inconnue. Deux degats : un lien casse devient
+ * indetectable — `curl` repond 200 sur un chemin qui n'existe pas, donc aucune
+ * verification automatique ne peut le voir — et Google indexe des URL fantomes
+ * comme autant de copies de l'accueil. Le simple fait que ce fichier existe
+ * suffit : Pages le sert avec un vrai 404.
+ *
+ * Rien ne s'y perd cote application : `location.pathname` n'est lu que pour
+ * *construire* les liens de partage (`ui/share.ts`, `ui/ai-help.ts`), jamais
+ * pour router. Le repli attrape-tout ne servait donc personne.
+ *
+ * Le texte francais est dans le HTML, pour les robots et sans JavaScript ; un
+ * script minuscule le remplace par la langue du visiteur quand elle fait
+ * partie des cinq. Les pages generees n'ont pas de moteur i18n a l'execution,
+ * d'ou ce dictionnaire embarque plutot qu'un import.
+ */
+function renderNotFoundPage(): string {
+  const dict = DICTIONARIES[SOURCE_LOCALE];
+  const texts = Object.fromEntries(
+    (Object.keys(DICTIONARIES) as Locale[]).map((l) => [
+      l,
+      {
+        title: DICTIONARIES[l].notFound.title,
+        lead: DICTIONARIES[l].notFound.lead,
+        home: DICTIONARIES[l].page.back,
+        guides: DICTIONARIES[l].section.allGuides,
+      },
+    ]),
+  );
+
+  return `<!doctype html>
+<html lang="${SOURCE_LOCALE}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0e1210" />
+    <title>${esc(dict.notFound.title)} | CIRKALI</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="stylesheet" href="exercises/style.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <h1 id="t">${esc(dict.notFound.title)}</h1>
+      <p id="l">${esc(dict.notFound.lead)}</p>
+      <p><a id="h" href="${SITE_URL}/">${esc(dict.page.back)}</a></p>
+      <p><a id="g" href="${SITE_URL}/#section-library">${esc(dict.section.allGuides)}</a></p>
+    </main>
+    <script>
+      (function () {
+        var d = ${JSON.stringify(texts)};
+        var l = (navigator.language || '').slice(0, 2);
+        if (!d[l] || l === '${SOURCE_LOCALE}') return;
+        document.documentElement.lang = l;
+        document.getElementById('t').textContent = d[l].title;
+        document.getElementById('l').textContent = d[l].lead;
+        document.getElementById('h').textContent = d[l].home;
+        document.getElementById('g').textContent = d[l].guides;
+      })();
+    </script>
+  </body>
+</html>
+`;
+}
+
+/**
  * Miroir court du format, a `/SRCR/llms.txt`. CLAUDE.md documente que Google
  * l'ignore pour la recherche, et ca reste vrai : ce n'est pas un levier SEO.
  * Il est ici pour une autre raison — les outils agentiques (Claude Code,
@@ -957,6 +1027,10 @@ function main(): void {
     sitemapUrls.push(`${SITE_URL}/${PRIVACY_DIR}/${locale}`);
   }
   console.log(`${PRIVACY_DIR}/ : ${Object.keys(DICTIONARIES).length} page(s) generee(s).`);
+
+  // 404 : jamais au sitemap, elle porte d'ailleurs `noindex`.
+  writeFileSync(join(DIST, '404.html'), renderNotFoundPage(), 'utf8');
+  console.log('404.html genere.');
 
   // sitemap.xml : source unique desormais (public/sitemap.xml est supprime).
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

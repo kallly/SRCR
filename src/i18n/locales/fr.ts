@@ -106,6 +106,11 @@ export const fr = {
     portent des marqueurs ({date}, {email}) remplaces a la generation : ce ne
     sont pas des pluriels, `t()` n'intervient pas ici.
   */
+  notFound: {
+    title: 'Page introuvable',
+    lead: 'Cette adresse ne correspond à aucune page du site. Le lien comporte peut-être une faute, ou la page a changé d’adresse.',
+  },
+
   privacy: {
     title: 'Confidentialité',
     lead: 'CIRKALI fonctionne sans compte et sans serveur : la séance que vous composez vit dans votre navigateur. Cette page dit ce qui est enregistré, ce qui sort de l’appareil, et à quelles conditions.',

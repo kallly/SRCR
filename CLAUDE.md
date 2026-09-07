@@ -301,6 +301,17 @@ l'ajout de Google Analytics. `CONTACT_EMAIL` (`cirkali@proton.me`) y est publié
 c'est par là qu'arrive une demande d'accès ou de suppression, la boîte doit
 rester relevée tant que la page est en ligne.
 
+**`dist/404.html` doit exister.** Sans lui, Cloudflare Pages retombe sur
+`index.html` avec un code **200** pour toute adresse inconnue : un lien cassé
+devient indétectable (un `curl` répond 200 sur un chemin qui n'existe pas) et
+Google indexe des URL fantômes comme autant de copies de l'accueil. Sa seule
+présence suffit à rétablir un vrai 404. Rien ne s'y perd côté application :
+`location.pathname` n'est lu que pour *construire* les liens de partage, jamais
+pour router. La page porte `noindex`, n'est pas au sitemap, et — seule page du
+site dans ce cas — ne porte **pas** d'encart publicitaire : la politique
+AdSense interdit les annonces sur une page d'erreur. `check-build.ts` tient les
+deux bouts de cette exception.
+
 `public/_headers` est lu par Cloudflare Pages : cache `immutable` sur
 `/assets/*` et `/fonts/*`, plus HSTS, XFO, COOP et `nosniff`. Le COOP y est en
 `same-origin-allow-popups` et non `same-origin` : la connexion Google passe par

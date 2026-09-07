@@ -86,6 +86,11 @@ export const it: Translations = {
     none: 'CIRKALI non mostra alcuna pubblicità su mobile: su un telefono non viene creato nessuno spazio e non viene scaricato nessuno script pubblicitario. Su schermo grande, due annunci occupano i margini che l’impaginazione lascia vuoti: non spezzano mai il contenuto e restano nascosti durante la sessione.',
   },
 
+  notFound: {
+    title: 'Pagina non trovata',
+    lead: 'Questo indirizzo non corrisponde a nessuna pagina del sito. Forse il link contiene un errore, oppure la pagina ha cambiato indirizzo.',
+  },
+
   privacy: {
     title: 'Riservatezza',
     lead: 'CIRKALI funziona senza account e senza server: la sessione che componi vive nel tuo browser. Questa pagina dice che cosa viene salvato, che cosa esce dal dispositivo e a quali condizioni.',

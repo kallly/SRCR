@@ -209,14 +209,23 @@ const surfaces = (readdirSync(DIST, { recursive: true, encoding: 'utf8' }) as st
   .filter((rel) => rel.endsWith('.html'))
   .filter((rel) => statSync(join(DIST, rel)).isFile());
 
-const withoutGate = surfaces.filter(
+// 404.html en est exclue, et c'est une regle et non un oubli : la politique
+// AdSense interdit les annonces sur une page d'erreur, qui n'a pas de contenu.
+const NO_ADS = ['404.html'];
+const adSurfaces = surfaces.filter((rel) => !NO_ADS.includes(rel));
+const withoutGate = adSurfaces.filter(
   (rel) => !readFileSync(join(DIST, rel), 'utf8').includes(`min-width: ${AD_MIN_WIDTH}px`),
 );
 check(
-  `les ${surfaces.length} pages livrees portent le portillon publicitaire`,
+  `les ${adSurfaces.length} pages livrees portent le portillon publicitaire`,
   withoutGate.length === 0,
   withoutGate.slice(0, 5).join(', '),
 );
+const errorWithAds = NO_ADS.filter(
+  (rel) =>
+    existsSync(join(DIST, rel)) && readFileSync(join(DIST, rel), 'utf8').includes('adsbygoogle'),
+);
+check('aucune publicite sur la page d\'erreur', errorWithAds.length === 0, errorWithAds.join(', '));
 
 // Un <script src> vers adsbygoogle, ou un <ins> ecrit en dur, partirait sur
 // TOUS les ecrans — c'est exactement la « simplification » qu'on redoute, et
@@ -274,6 +283,18 @@ check(
   'aucun canonical ne porte l\'extension .html',
   canonicals.length === 0,
   canonicals.slice(0, 5).map((e) => e.rel).join(', '),
+);
+
+// Sans 404.html a la racine, Cloudflare Pages sert l'accueil en 200 pour toute
+// adresse inconnue : un lien casse devient indetectable et Google indexe des
+// URL fantomes. Sa seule presence suffit a retablir un vrai 404.
+const notFound = join(DIST, '404.html');
+check('dist/404.html existe', existsSync(notFound));
+check(
+  '404.html porte noindex et n\'est pas au sitemap',
+  existsSync(notFound) &&
+    readFileSync(notFound, 'utf8').includes('name="robots" content="noindex"') &&
+    !sitemap.includes('404'),
 );
 
 console.log('\nOrigine canonique');

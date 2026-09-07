@@ -86,6 +86,11 @@ export const de: Translations = {
     none: 'CIRKALI zeigt auf dem Handy keine Werbung: dort wird kein Werbeplatz angelegt und kein Werbeskript geladen. Auf großen Bildschirmen sitzen zwei Anzeigen in den Rändern, die das Layout ohnehin frei lässt — sie unterbrechen den Inhalt nie und bleiben während des Trainings verborgen.',
   },
 
+  notFound: {
+    title: 'Seite nicht gefunden',
+    lead: 'Diese Adresse gehört zu keiner Seite der Website. Vielleicht enthält der Link einen Tippfehler, oder die Seite ist umgezogen.',
+  },
+
   privacy: {
     title: 'Datenschutz',
     lead: 'CIRKALI kommt ohne Konto und ohne Server aus: das Training, das du zusammenstellst, lebt in deinem Browser. Diese Seite sagt, was gespeichert wird, was das Gerät verlässt und unter welchen Bedingungen.',
