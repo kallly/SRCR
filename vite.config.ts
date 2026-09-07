@@ -121,6 +121,75 @@ function stampBuildDate(): Plugin {
  * plugins. La CSS garde des valeurs de repli, sans lesquelles une injection
  * ratee produirait une declaration invalide donc AUCUNE reservation.
  */
+/**
+ * Integre la feuille de style de l'accueil dans le HTML, au lieu de la lier.
+ *
+ * Un `<link rel="stylesheet">` bloque le rendu par definition : le navigateur
+ * ne peint rien tant qu'il ne l'a pas recu. Mesure sur cirkali.fr, c'etait un
+ * aller-retour reseau complet pour 5,6 Ko compresses — la derniere requete
+ * bloquante de la page une fois Google Fonts elimine.
+ *
+ * Pourquoi c'est gratuit ici, alors que « inliner le CSS » coute normalement le
+ * cache : le HTML est servi en `max-age=0, must-revalidate`, donc il est de
+ * toute facon revalide a chaque visite. Le CSS integre voyage avec lui ou pas
+ * du tout — les visites repetees font le meme nombre d'aller-retours qu'avant.
+ * Seule la premiere visite y gagne, et elle y gagne entierement.
+ *
+ * La balise est remplacee SUR PLACE plutot qu'ajoutee ailleurs : c'est ce qui
+ * garantit que le <style> de `injectLibraryRows()` (insere juste avant
+ * </head>, donc apres) continue de gagner sur les valeurs de repli du fichier
+ * CSS. Inverser les deux ferait retomber `--lib-rows-2` sur son repli et
+ * remonter le CLS, sans que rien ne casse visiblement.
+ *
+ * Ne concerne QUE l'accueil. Les 310 fiches gardent `exercises/style.css` en
+ * fichier separe : une seule feuille mise en cache puis reutilisee par 310
+ * documents, l'integrer la ferait payer 310 fois.
+ */
+function inlineStyles(): Plugin {
+  return {
+    name: 'inline-styles',
+    transformIndexHtml: {
+      // `post` : il faut que Vite ait deja injecte sa balise pour qu'il y ait
+      // quelque chose a remplacer.
+      order: 'post',
+      handler(html, ctx) {
+        // En `npm run dev` il n'y a pas de bundle : Vite sert le CSS par
+        // injection JS, il n'y a ni fichier ni balise a reprendre.
+        if (!ctx.bundle) return html;
+
+        return html.replace(/<link\b[^>]*rel="stylesheet"[^>]*>/g, (tag) => {
+          const href = /href="([^"]+)"/.exec(tag)?.[1];
+          if (!href) return tag;
+
+          const asset = ctx.bundle?.[href.replace(/^\.?\//, '')];
+          if (!asset || asset.type !== 'asset') {
+            throw new Error(
+              `inline-styles : "${href}" est liee dans index.html mais absente ` +
+                `du bundle. La forme des noms d'assets a change — sans ce ` +
+                `remplacement la page repasse en rendu bloquant, en silence.`,
+            );
+          }
+
+          const css =
+            typeof asset.source === 'string'
+              ? asset.source
+              : Buffer.from(asset.source).toString('utf8');
+
+          // Rebaser les url() relatives : Vite les a calculees pour un fichier
+          // servi depuis /assets/, or ce CSS part maintenant depuis la racine.
+          // Les @font-face sortaient en `url(../fonts/…)`, ce qui ne visait le
+          // bon fichier que parce qu'un navigateur refuse de remonter au-dessus
+          // de la racine — juste par accident, et faux des que la page n'est
+          // plus a la racine. Seules les polices sont concernees ; le chevron
+          // des selects est une data: URI, insensible au chemin.
+          const rebased = css.replace(/url\((['"]?)\.\.\//g, 'url($1/');
+          return `<style>${rebased}</style>`;
+        });
+      },
+    },
+  };
+}
+
 function injectLibraryRows(): Plugin {
   return {
     name: 'inject-library-rows',
@@ -268,7 +337,13 @@ export default defineConfig({
   // Chemins relatifs : le build fonctionne sur user.github.io/<depot>/
   // sans avoir a coder le nom du depot en dur.
   base: './',
-  plugins: [stampBuildDate(), injectExerciseIndex(), fillStaticTranslations(), injectLibraryRows()],
+  plugins: [
+    stampBuildDate(),
+    injectExerciseIndex(),
+    fillStaticTranslations(),
+    injectLibraryRows(),
+    inlineStyles(),
+  ],
   // `host: true` expose le serveur sur le reseau local : la seance se teste
   // depuis le telephone, qui est l'appareil vise.
   server: { port: 8000, host: true, strictPort: true },

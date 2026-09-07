@@ -261,7 +261,14 @@ ${hreflangTags(key)}
       ])}
     </script>
 
-    <!-- Polices servies par le site : @font-face dans exercise-page.css. -->
+    <!--
+      Polices servies par le site : @font-face dans exercise-page.css. Le
+      preload les sort du bout de la chaine (HTML -> feuille -> police) ;
+      L'attribut crossorigin est obligatoire meme en meme origine, une requete
+      de police partant toujours en mode CORS. Voir index.html pour le detail.
+    -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/archivo-latin.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/manrope-latin.woff2" />
     <link rel="stylesheet" href="../style.css" />
   </head>
   <body>
@@ -488,7 +495,14 @@ function renderAiPlanPage(dict: Translations): string {
       ])}
     </script>
 
-    <!-- Polices servies par le site : @font-face dans exercise-page.css. -->
+    <!--
+      Polices servies par le site : @font-face dans exercise-page.css. Le
+      preload les sort du bout de la chaine (HTML -> feuille -> police) ;
+      L'attribut crossorigin est obligatoire meme en meme origine, une requete
+      de police partant toujours en mode CORS. Voir index.html pour le detail.
+    -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/archivo-latin.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/manrope-latin.woff2" />
     <link rel="stylesheet" href="exercises/style.css" />
   </head>
   <body>

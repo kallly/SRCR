@@ -84,6 +84,40 @@ check('__BUILD_DATE__ remplace', !index.includes('__BUILD_DATE__'));
 // reservation de hauteur redevient fausse des que la bibliotheque grandit,
 // sans que rien ne casse (voir injectLibraryRows(), vite.config.ts).
 check('--lib-rows-2 injecte pour la reservation CLS', index.includes('--lib-rows-2:'));
+
+// Un navigateur qui n'a pas lu l'encodage dans les 1024 premiers octets
+// recommence son analyse du document. Regression deja vue : un commentaire et
+// le chargeur GA ajoutes en tete du <head> avaient repousse la balise a
+// l'octet 1824, sans que rien ne casse — seul Lighthouse l'a signale.
+const charsetAt = Buffer.from(index, 'utf8').indexOf('<meta charset');
+check(
+  '<meta charset> dans les 1024 premiers octets',
+  charsetAt >= 0 && charsetAt < 1024,
+  charsetAt < 0 ? 'balise absente' : `a l'octet ${charsetAt}`,
+);
+
+// Le CSS de l'accueil est integre (plugin inline-styles, vite.config.ts) : plus
+// aucune requete bloquante avant le premier pixel. Si la forme des assets de
+// Vite changeait, le remplacement echouerait et la page repasserait en rendu
+// bloquant sans que rien d'autre ne le signale.
+check('le CSS de l\'accueil est integre', /<style>[^]{2000,}<\/style>/.test(index));
+check(
+  'aucune feuille de style liee dans l\'accueil',
+  !/<link\b[^>]*rel="stylesheet"/.test(index),
+  /<link\b[^>]*rel="stylesheet"[^>]*>/.exec(index)?.[0] ?? '',
+);
+
+// Les polices sont declarees dans le CSS : sans preload elles ne partent
+// qu'apres son telechargement. `crossorigin` est obligatoire meme en meme
+// origine — sans lui le prechargement ne correspond pas a la requete reelle et
+// la police est telechargee deux fois.
+for (const font of ['archivo-latin', 'manrope-latin']) {
+  check(
+    `${font}.woff2 preloade avec crossorigin`,
+    new RegExp(`<link\\b[^>]*rel="preload"[^>]*crossorigin[^>]*${font}\\.woff2`).test(index) ||
+      new RegExp(`<link\\b[^>]*rel="preload"[^>]*${font}\\.woff2[^>]*crossorigin`).test(index),
+  );
+}
 check('marqueur EXERCISE_INDEX remplace', !index.includes('<!--EXERCISE_INDEX-->'));
 
 console.log('\nPages generees pour les IA');

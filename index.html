@@ -2,6 +2,16 @@
 <html lang="fr">
   <head>
     <!--
+      L'encodage EN PREMIER, avant tout commentaire et tout script. Un
+      navigateur qui ne l'a pas lu dans les 1024 premiers octets recommence son
+      analyse du document, et peut afficher des caracteres casses en attendant.
+      Le commentaire ci-dessous et le chargeur GA l'avaient repousse a l'octet
+      1824 — piege verifie, signale par Lighthouse. Ne rien inserer au-dessus de
+      cette ligne ; `check-build.ts` verifie la position a chaque build.
+    -->
+    <meta charset="utf-8" />
+
+    <!--
       Google tag (gtag.js), charge APRES l'affichage et non pendant.
 
       Le script pese 166 Ko pour 71 Ko reellement utilises, occupe 126 ms de
@@ -41,7 +51,6 @@
       });
     </script>
 
-    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <!-- ~155 caracteres : au-dela, Google tronque dans ses resultats. -->
     <meta
@@ -127,7 +136,25 @@
       site, declarees en @font-face dans src/styles/tokens.css. Ne pas les y
       remettre — cette feuille tierce bloquait le rendu 750 ms et imposait deux
       poignees de main DNS+TLS avant le premier caractere affiche.
+
+      Le preload existe parce que les @font-face vivent dans le CSS : sans lui,
+      le navigateur doit lire le HTML, PUIS telecharger la feuille, PUIS y
+      decouvrir les polices — trois niveaux de profondeur, mesures a 538 ms de
+      latence de chemin critique. Ces deux lignes les font partir en meme temps
+      que le CSS.
+
+      `crossorigin` est OBLIGATOIRE, y compris en meme origine : une requete de
+      police part toujours en mode CORS, et sans cet attribut le prechargement
+      ne correspond pas a la requete reelle — la police est alors telechargee
+      deux fois, ce qui est pire que de ne rien precharger.
+
+      Seuls les sous-ensembles `latin` : ce sont eux qui portent les accents du
+      francais, de l'espagnol, de l'allemand et de l'italien (verifie glyphe par
+      glyphe). `latin-ext` ne sert qu'a des caracteres rares — le precharger
+      couterait 47 Ko que la plupart des pages n'affichent jamais.
     -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/archivo-latin.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/manrope-latin.woff2" />
   </head>
   <body>
     <main class="wrap">

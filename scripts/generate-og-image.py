@@ -29,8 +29,15 @@ FONT_DIR = Path("/usr/share/fonts/truetype/dejavu")
 BOLD = FONT_DIR / "DejaVuSans-Bold.ttf"
 REGULAR = FONT_DIR / "DejaVuSans.ttf"
 
-EYEBROW = "PHASE 1 · SANS MATÉRIEL"
-TITLE = "Ma séance"
+# Ces quatre valeurs doivent refléter le bloc `app` de src/i18n/locales/fr.ts
+# (heading, eyebrow, tagline) et l'origine canonique. Elles ne peuvent pas en
+# être dérivées — ce script est en Python et fr.ts en TypeScript — donc c'est un
+# couplage à tenir à la main. Il avait déjà lâché deux fois : l'image annonçait
+# encore « Ma séance » alors que l'app s'appelle CIRKALI, et « PHASE 1 · SANS
+# MATÉRIEL » alors que la bibliothèque couvre élastique, haltères et machine.
+# C'est la vignette de tout partage sur les réseaux : personne ne la relit.
+EYEBROW = "AVEC OU SANS MATÉRIEL"
+TITLE = "CIRKALI"
 TAGLINE = "Construis ton entraînement, ordonne les exercices, règle les pauses."
 FOOTER = "cirkali.fr"
 
