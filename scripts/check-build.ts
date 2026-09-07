@@ -290,6 +290,13 @@ check(
 // URL fantomes. Sa seule presence suffit a retablir un vrai 404.
 const notFound = join(DIST, '404.html');
 check('dist/404.html existe', existsSync(notFound));
+// La page seule ne suffisait pas : la reecriture attrape-tout de Cloudflare
+// s'appliquait avant elle. C'est cette regle qui la remplace.
+const redirects = join(DIST, '_redirects');
+check(
+  'dist/_redirects renvoie les adresses inconnues en 404',
+  existsSync(redirects) && /^\/\*\s+\/404\.html\s+404\s*$/m.test(readFileSync(redirects, 'utf8')),
+);
 check(
   '404.html porte noindex et n\'est pas au sitemap',
   existsSync(notFound) &&

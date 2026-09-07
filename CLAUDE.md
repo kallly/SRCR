@@ -304,8 +304,11 @@ rester relevée tant que la page est en ligne.
 **`dist/404.html` doit exister.** Sans lui, Cloudflare Pages retombe sur
 `index.html` avec un code **200** pour toute adresse inconnue : un lien cassé
 devient indétectable (un `curl` répond 200 sur un chemin qui n'existe pas) et
-Google indexe des URL fantômes comme autant de copies de l'accueil. Sa seule
-présence suffit à rétablir un vrai 404. Rien ne s'y perd côté application :
+Google indexe des URL fantômes comme autant de copies de l'accueil. **Le fichier seul ne suffit pas** — vérifié en production : la réécriture
+attrape-tout s'applique avant lui. C'est `public/_redirects` (`/* /404.html
+404`) qui la remplace. Cloudflare cherche d'abord un fichier statique,
+extension `.html` déduite comprise, et ne consulte `_redirects` que si aucun ne
+correspond : les 317 pages ne passent donc jamais par cette règle. Rien ne s'y perd côté application :
 `location.pathname` n'est lu que pour *construire* les liens de partage, jamais
 pour router. La page porte `noindex`, n'est pas au sitemap, et — seule page du
 site dans ce cas — ne porte **pas** d'encart publicitaire : la politique
