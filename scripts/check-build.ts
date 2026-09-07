@@ -290,12 +290,16 @@ check(
 // URL fantomes. Sa seule presence suffit a retablir un vrai 404.
 const notFound = join(DIST, '404.html');
 check('dist/404.html existe', existsSync(notFound));
-// La page seule ne suffisait pas : la reecriture attrape-tout de Cloudflare
-// s'appliquait avant elle. C'est cette regle qui la remplace.
-const redirects = join(DIST, '_redirects');
+// La page seule ne suffit pas — verifie en production : Workers Static Assets
+// sert index.html en 200 pour toute adresse inconnue tant que
+// `not_found_handling` n'est pas pose. Sans cette ligne, `404.html` n'est
+// qu'un fichier decoratif que personne n'atteint jamais. Seule assertion du
+// fichier qui ne porte pas sur `dist/` : la sortie est correcte, c'est ce qui
+// la sert qui ne l'etait pas.
+const wrangler = join(process.cwd(), 'wrangler.jsonc');
 check(
-  'dist/_redirects renvoie les adresses inconnues en 404',
-  existsSync(redirects) && /^\/\*\s+\/404\.html\s+404\s*$/m.test(readFileSync(redirects, 'utf8')),
+  'wrangler.jsonc renvoie les adresses inconnues en 404',
+  existsSync(wrangler) && /"not_found_handling"\s*:\s*"404-page"/.test(readFileSync(wrangler, 'utf8')),
 );
 check(
   '404.html porte noindex et n\'est pas au sitemap',

@@ -223,7 +223,8 @@ la donnée qui les a réfutées — à relire avant d'en reproposer une.
 
 ## Déploiement
 
-Le site public est **https://cirkali.fr**, servi par Cloudflare Pages, qui
+Le site public est **https://cirkali.fr**, servi par Cloudflare **Workers
+Static Assets** (et non Pages — voir `wrangler.jsonc`), qui
 construit le dépôt de son côté. `.github/workflows/deploy.yml` continue de
 publier la même chose sur GitHub Pages : c'est un reliquat voué au retrait, mais
 son job `build` reste le filet de CI (`typecheck` + `check-build`) — ne pas le
@@ -304,18 +305,20 @@ rester relevée tant que la page est en ligne.
 **`dist/404.html` doit exister.** Sans lui, Cloudflare Pages retombe sur
 `index.html` avec un code **200** pour toute adresse inconnue : un lien cassé
 devient indétectable (un `curl` répond 200 sur un chemin qui n'existe pas) et
-Google indexe des URL fantômes comme autant de copies de l'accueil. **Le fichier seul ne suffit pas** — vérifié en production : la réécriture
-attrape-tout s'applique avant lui. C'est `public/_redirects` (`/* /404.html
-404`) qui la remplace. Cloudflare cherche d'abord un fichier statique,
-extension `.html` déduite comprise, et ne consulte `_redirects` que si aucun ne
-correspond : les 317 pages ne passent donc jamais par cette règle. Rien ne s'y perd côté application :
+Google indexe des URL fantômes comme autant de copies de l'accueil. **Le fichier seul ne suffit pas**, et c'est ici que se joue une distinction à
+connaître : cirkali.fr est servi par **Cloudflare Workers Static Assets**, pas
+par Cloudflare Pages. Le repli attrape-tout ne se désarme donc que par
+`not_found_handling: "404-page"` dans `wrangler.jsonc`. Deux correctifs ont été
+essayés et réfutés en production — poser `404.html` seul, puis une règle
+`_redirects` — ne pas les reproposer. C'est le même moteur qui explique les
+307 retirant le `.html` (`html_handling`). Rien ne s'y perd côté application :
 `location.pathname` n'est lu que pour *construire* les liens de partage, jamais
 pour router. La page porte `noindex`, n'est pas au sitemap, et — seule page du
 site dans ce cas — ne porte **pas** d'encart publicitaire : la politique
 AdSense interdit les annonces sur une page d'erreur. `check-build.ts` tient les
 deux bouts de cette exception.
 
-`public/_headers` est lu par Cloudflare Pages : cache `immutable` sur
+`public/_headers` est lu par Workers Static Assets : cache `immutable` sur
 `/assets/*` et `/fonts/*`, plus HSTS, XFO, COOP et `nosniff`. Le COOP y est en
 `same-origin-allow-popups` et non `same-origin` : la connexion Google passe par
 `signInWithPopup`, que le mode strict casserait.
