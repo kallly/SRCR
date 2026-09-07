@@ -95,7 +95,7 @@ export const es: Translations = {
     accountTitle: 'El acceso con Google, opcional',
     accountText: 'Acceder con Google es una elección, nunca una obligación: mientras no lo hagas, el kit de Firebase ni siquiera se descarga. Si accedes, tu dirección de correo y tus sesiones se guardan en Google (Firebase Authentication y Cloud Firestore) para recuperarlas en tus demás dispositivos. Cerrar sesión detiene la sincronización; la copia en línea permanece hasta que pidas su supresión.',
     analyticsTitle: 'Medición de audiencia',
-    analyticsText: 'El sitio usa Google Analytics (identificador de medición {ga}) para contar las visitas y saber qué páginas se leen. El script solo se carga una vez mostrada la página, para no ralentizar tu llegada.',
+    analyticsText: 'El sitio usa Google Analytics (identificador de medición {ga}) para contar las visitas y saber qué páginas se leen. El script solo se carga una vez mostrada la página, para no ralentizar tu llegada. Desde el Espacio Económico Europeo, el Reino Unido y Suiza, la medición empieza en estado «denegado»: no se deposita ninguna cookie de medición mientras no hayas aceptado.',
     adsTitle: 'Publicidad',
     adsText: 'Solo en pantalla grande, el sitio muestra anuncios de Google AdSense. Google y sus socios pueden usar cookies para medirlos y personalizarlos; una ventana de consentimiento recoge tu acuerdo antes de cualquier depósito y puedes modificarlo cuando quieras. En móvil no se descarga ningún código publicitario, así que allí no se deposita ninguna cookie publicitaria.',
     adsOptOut: 'La personalización de los anuncios de Google se ajusta desde la página de configuración de tu cuenta de Google.',

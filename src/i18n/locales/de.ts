@@ -95,7 +95,7 @@ export const de: Translations = {
     accountTitle: 'Die Google-Anmeldung, freiwillig',
     accountText: 'Sich mit Google anzumelden ist eine Wahl, nie eine Pflicht: solange du es nicht tust, wird das Firebase-Paket nicht einmal geladen. Meldest du dich an, werden deine E-Mail-Adresse und deine Trainings bei Google gespeichert (Firebase Authentication und Cloud Firestore), damit du sie auf deinen anderen Geräten wiederfindest. Abmelden beendet die Synchronisierung; die Onlinekopie bleibt, bis du ihre Löschung verlangst.',
     analyticsTitle: 'Reichweitenmessung',
-    analyticsText: 'Die Website nutzt Google Analytics (Mess-ID {ga}), um Besuche zu zählen und zu sehen, welche Seiten gelesen werden. Das Skript lädt erst, wenn die Seite gezeichnet ist, damit es deine Ankunft nicht verlangsamt.',
+    analyticsText: 'Die Website nutzt Google Analytics (Mess-ID {ga}), um Besuche zu zählen und zu sehen, welche Seiten gelesen werden. Das Skript lädt erst, wenn die Seite gezeichnet ist, damit es deine Ankunft nicht verlangsamt. Aus dem Europäischen Wirtschaftsraum, dem Vereinigten Königreich und der Schweiz startet die Messung im Zustand „abgelehnt“: Es wird kein Mess-Cookie gesetzt, solange du nicht zugestimmt hast.',
     adsTitle: 'Werbung',
     adsText: 'Nur auf großen Bildschirmen zeigt die Website Google-AdSense-Anzeigen. Google und seine Partner können Cookies setzen, um sie zu messen und zu personalisieren; ein Einwilligungsfenster holt vorher deine Zustimmung ein, und du kannst sie jederzeit ändern. Auf dem Handy wird kein Werbecode geladen, dort wird also auch kein Werbecookie gesetzt.',
     adsOptOut: 'Die Personalisierung von Google-Anzeigen lässt sich in den Einstellungen deines Google-Kontos regeln.',

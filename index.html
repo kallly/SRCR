@@ -25,14 +25,59 @@
       `script src` vers googletagmanager dans ce head — c'est ce qui a ete
       retire, et le chargeur plus bas s'en charge au bon moment.
 
-      Rappel : differer n'exonere de rien. GA reste un traceur soumis au
-      consentement ; le bandeau et le Consent Mode v2 restent a faire.
+      Le Consent Mode v2 ci-dessous complete le dispositif : le bandeau (CMP
+      de Google) ne voyage qu'avec le script publicitaire, donc au-dela de
+      1200 px ; sans etat par defaut declare ici, GA collecterait librement
+      partout ailleurs, bandeau ou pas.
     -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
+
+      /*
+        Consent Mode v2. AVANT `js` et `config` : un etat par defaut declare
+        apres coup arriverait trop tard, gtag ayant deja pu ecrire.
+
+        Portee regionale et non globale, et c'est le coeur du reglage. Le
+        bandeau de consentement part avec le script publicitaire, donc
+        seulement au-dela de 1200 px : un visiteur europeen sur telephone ne
+        se voit jamais poser la question. Refuser par defaut dans l'EEE, au
+        Royaume-Uni et en Suisse est donc la seule position tenable — il
+        restera refuse faute d'avoir ete interroge, ce qui est exactement le
+        comportement voulu. Consequence assumee : l'audience mobile
+        europeenne n'est plus mesuree que par la modelisation sans cookie de
+        Google. La retrouver demanderait un bandeau sur mobile aussi.
+
+        Hors de ces pays, aucun etat par defaut n'est pose : gtag y reste au
+        comportement historique, et la mesure y est complete.
+
+        `security_storage` reste accorde : il ne sert ni a la publicite ni a
+        l'audience, seulement a la prevention de la fraude.
+
+        `wait_for_update` laisse 500 ms au CMP pour repondre avant que gtag
+        n'envoie quoi que ce soit. Sans ce delai, les premiers evenements
+        partiraient sous l'etat par defaut alors que la personne vient
+        d'accepter.
+      */
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        security_storage: 'granted',
+        wait_for_update: 500,
+        // EEE (UE 27 + IS, LI, NO), Royaume-Uni et Suisse.
+        region: [
+          'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR',
+          'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL',
+          'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE',
+          'IS', 'LI', 'NO',
+          'GB', 'CH',
+        ],
+      });
+
       gtag('js', new Date());
       gtag('config', 'G-QVCTZFCKBL');
 

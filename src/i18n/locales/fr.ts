@@ -115,7 +115,7 @@ export const fr = {
     accountTitle: 'La connexion Google, facultative',
     accountText: 'Se connecter avec Google est un choix, jamais une obligation : tant que vous ne le faites pas, le kit Firebase n’est même pas téléchargé. Si vous vous connectez, votre adresse e-mail et vos séances sont enregistrées chez Google (Firebase Authentication et Cloud Firestore) pour être retrouvées sur vos autres appareils. Se déconnecter arrête la synchronisation ; la copie en ligne subsiste jusqu’à ce que vous en demandiez la suppression.',
     analyticsTitle: 'Mesure d’audience',
-    analyticsText: 'Le site utilise Google Analytics (identifiant de mesure {ga}) pour compter les visites et savoir quelles pages sont lues. Le script n’est chargé qu’une fois la page affichée, afin de ne pas ralentir votre arrivée.',
+    analyticsText: 'Le site utilise Google Analytics (identifiant de mesure {ga}) pour compter les visites et savoir quelles pages sont lues. Le script n’est chargé qu’une fois la page affichée, afin de ne pas ralentir votre arrivée. Depuis l’Espace économique européen, le Royaume-Uni et la Suisse, la mesure démarre à l’état « refusé » : aucun cookie de mesure n’est déposé tant que vous n’avez pas accepté.',
     adsTitle: 'Publicité',
     adsText: 'Sur grand écran uniquement, le site affiche des annonces Google AdSense. Google et ses partenaires peuvent déposer des cookies pour mesurer et personnaliser ces annonces ; une fenêtre de consentement recueille votre accord avant tout dépôt, et vous pouvez le modifier à tout moment. Sur mobile, aucun code publicitaire n’est téléchargé : aucun cookie publicitaire n’y est donc déposé.',
     adsOptOut: 'La personnalisation des annonces Google se règle depuis la page des paramètres de votre compte Google.',

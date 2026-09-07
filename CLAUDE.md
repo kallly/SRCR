@@ -279,6 +279,17 @@ horizontal gratuit. `AD_SLOTS` est vide tant que les emplacements n'existent
 pas côté AdSense — le portillon saute alors l'encart, et la page se comporte
 comme avant. Les remplir est la seule chose à faire le jour de la validation.
 
+**Consent Mode v2** vit dans le script inline de `index.html`, **avant**
+`gtag('config')` — un état par défaut posé après coup arriverait trop tard.
+Sa portée est **régionale** et c'est le cœur du réglage : le bandeau voyage
+avec le script publicitaire, donc au-delà de 1200 px seulement, et un visiteur
+européen sur téléphone ne se voit jamais poser la question. Refuser par défaut
+dans l'EEE, au Royaume-Uni et en Suisse est donc la seule position tenable — il
+restera refusé faute d'avoir été interrogé. Conséquence assumée : l'audience
+mobile européenne n'est plus mesurée que par la modélisation sans cookie de
+Google. Hors de ces pays, aucun défaut n'est posé et la mesure reste complète.
+`check-build.ts` vérifie l'ordre des deux appels et les quatre signaux.
+
 `public/ads.txt` doit rester à la racine du domaine (c'est la seule position qui
 fasse autorité) et `public/robots.txt` ne doit pas le bloquer. La diffusion dans
 l'EEE exige en plus un CMP certifié TCF v2.2, activé dans la console AdSense —

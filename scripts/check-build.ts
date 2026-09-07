@@ -120,6 +120,23 @@ for (const font of ['archivo-latin', 'manrope-latin']) {
       new RegExp(`<link\\b[^>]*rel="preload"[^>]*${font}\\.woff2[^>]*crossorigin`).test(index),
   );
 }
+// Consent Mode v2 : l'etat par defaut doit etre pose AVANT `config`, sinon
+// gtag a deja pu ecrire quand il arrive. Les deux appels vivent dans le meme
+// script inline, a quelques lignes d'ecart : rien d'autre qu'un ordre, donc
+// rien qui casse si on l'inverse — d'ou cette assertion.
+const consentAt = index.indexOf("gtag('consent', 'default'");
+const configAt = index.indexOf("gtag('config'");
+check(
+  'l\'etat de consentement par defaut precede gtag config',
+  consentAt >= 0 && configAt >= 0 && consentAt < configAt,
+  consentAt < 0 ? 'aucun appel consent default' : `consent a ${consentAt}, config a ${configAt}`,
+);
+// Les quatre signaux du Consent Mode v2. En oublier un ne provoque aucune
+// erreur : Google le traite simplement comme accorde.
+for (const signal of ['ad_storage', 'ad_user_data', 'ad_personalization', 'analytics_storage']) {
+  check(`${signal} refuse par defaut`, new RegExp(`${signal}: 'denied'`).test(index));
+}
+
 check('marqueur EXERCISE_INDEX remplace', !index.includes('<!--EXERCISE_INDEX-->'));
 
 console.log('\nPages generees pour les IA');

@@ -95,7 +95,7 @@ export const en: Translations = {
     accountTitle: 'Signing in with Google, optional',
     accountText: 'Signing in with Google is a choice, never a requirement: until you do, the Firebase kit is not even downloaded. If you do sign in, your email address and your sessions are stored with Google (Firebase Authentication and Cloud Firestore) so you can find them on your other devices. Signing out stops the sync; the online copy remains until you ask for its deletion.',
     analyticsTitle: 'Audience measurement',
-    analyticsText: 'The site uses Google Analytics (measurement ID {ga}) to count visits and see which pages are read. The script only loads once the page has been painted, so that it does not slow down your arrival.',
+    analyticsText: 'The site uses Google Analytics (measurement ID {ga}) to count visits and see which pages are read. The script only loads once the page has been painted, so that it does not slow down your arrival. From the European Economic Area, the United Kingdom and Switzerland, measurement starts in the “denied” state: no measurement cookie is set until you have accepted.',
     adsTitle: 'Advertising',
     adsText: 'On large screens only, the site shows Google AdSense adverts. Google and its partners may set cookies to measure and personalise them; a consent dialog collects your agreement before anything is set, and you can change it at any time. On mobile no advertising code is downloaded, so no advertising cookie is set there.',
     adsOptOut: 'Google ad personalisation can be adjusted from your Google account settings page.',
