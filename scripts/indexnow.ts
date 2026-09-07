@@ -72,12 +72,23 @@ const res = await fetch(ENDPOINT, {
   body: JSON.stringify(body),
 });
 
-// 200 = accepte, 202 = accepte mais cle pas encore verifiee (le moteur ira
-// lire le fichier). 403 = cle introuvable ou differente ; 422 = URL hors du
-// domaine ; 429 = trop de soumissions. Afficher le code brut plutot que de le
-// traduire a moitie : la table complete est sur indexnow.org.
-console.log(`${res.status} ${res.statusText} — ${urlList.length} URL(s) soumises.`);
-if (res.status === 202) {
-  console.log(`Cle pas encore verifiee : le moteur va lire ${body.keyLocation}.`);
+// 200 = accepte. 202 = accepte, cle en cours de verification. 422 = une URL
+// hors du domaine declare. 429 = trop de soumissions.
+const detail = (await res.text()).trim();
+console.log(
+  `${res.status} ${res.statusText} — ${urlList.length} URL(s) soumises.` +
+    (detail ? `\n${detail}` : ''),
+);
+
+// 403 signifie « cle refusee », mais la premiere soumission d'une cle toute
+// neuve le renvoie aussi : le moteur ne l'a pas encore lue. Observe ici meme —
+// un 403, puis 200 quelques secondes plus tard sans rien changer. Ne pas
+// conclure a une erreur de configuration avant d'avoir reessaye.
+if (res.status === 403) {
+  console.log(
+    `\nSi c'est la premiere soumission de cette cle, reessaie dans une minute :\n` +
+      `le moteur doit d'abord lire ${body.keyLocation}. Verifie qu'elle repond :\n` +
+      `  curl -s ${body.keyLocation}`,
+  );
 }
 process.exit(res.ok ? 0 : 1);
