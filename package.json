@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "exo": "tsx scripts/show-exercise.ts",
-    "check": "npm run build && tsx scripts/check-build.ts"
+    "check": "npm run build && tsx scripts/check-build.ts",
+    "indexnow": "tsx scripts/indexnow.ts"
   },
   "devDependencies": {
     "@types/node": "^26.4.1",

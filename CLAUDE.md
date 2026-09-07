@@ -21,6 +21,7 @@ progression + bip).
 | `npm run preview` | Sert `dist/` sur le port 8000 |
 | `npm run typecheck` | Le filet du projet — il n'y a pas de suite de tests |
 | `npm run check` | Build, puis vérifie ce qu'il a **produit** dans `dist/` (`scripts/check-build.ts`) — lancé aussi par la CI |
+| `npm run indexnow` | Signale les URL du sitemap à Bing/Yandex/Seznam/Naver (`--dry` pour voir sans envoyer). **Pas Google.** À lancer après un vrai changement de contenu, pas à chaque déploiement |
 | `npm run exo <clé>` | Où lire le contenu long d'un exercice : bornes de lignes dans les 5 langues, champs manquants (`scripts/show-exercise.ts`) |
 
 `npm run typecheck` est ce qui tient le projet : il vérifie le code **et** le fait
@@ -317,6 +318,15 @@ pour router. La page porte `noindex`, n'est pas au sitemap, et — seule page du
 site dans ce cas — ne porte **pas** d'encart publicitaire : la politique
 AdSense interdit les annonces sur une page d'erreur. `check-build.ts` tient les
 deux bouts de cette exception.
+
+**IndexNow.** `public/aa22ab05496f4b5bb923774108f40cc8.txt` est la preuve de
+propriété du domaine : le protocole exige que la clé soit **publiquement
+lisible** à la racine, ce n'est donc pas un secret et la commiter est le
+fonctionnement normal. Sans elle, les moteurs répondent 403 et les soumissions
+sont rejetées en silence — d'où l'assertion de `check-build.ts`. Le script lit
+`dist/sitemap.xml` plutôt que de tenir sa propre liste : une seconde liste
+divergerait, c'est l'erreur que `public/sitemap.xml` avait déjà commise.
+**Google n'y participe pas** — pour lui, seule la Search Console agit.
 
 `public/_headers` est lu par Workers Static Assets : cache `immutable` sur
 `/assets/*` et `/fonts/*`, plus HSTS, XFO, COOP et `nosniff`. Le COOP y est en

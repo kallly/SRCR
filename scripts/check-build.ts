@@ -308,6 +308,17 @@ check(
     !sitemap.includes('404'),
 );
 
+// IndexNow : la cle doit etre lisible a la racine du domaine, c'est la preuve
+// de propriete. Si le fichier disparait ou que son contenu ne correspond plus
+// au nom, les moteurs repondent 403 et les soumissions sont rejetees en
+// silence — `npm run indexnow` a l'air de marcher, mais rien n'est pris.
+const INDEXNOW_KEY = 'aa22ab05496f4b5bb923774108f40cc8';
+const keyFile = join(DIST, `${INDEXNOW_KEY}.txt`);
+check(
+  'la cle IndexNow est servie a la racine',
+  existsSync(keyFile) && readFileSync(keyFile, 'utf8').trim() === INDEXNOW_KEY,
+);
+
 console.log('\nOrigine canonique');
 
 // L'origine est ecrite a deux endroits que rien ne relie : `SITE_URL`
