@@ -25,6 +25,8 @@ import { join } from 'node:path';
 import { decodeSharedPlan } from '../src/core/share';
 import { LIBRARY } from '../src/data/library';
 import { DETAILS_BY_LOCALE } from '../src/content/exercise-details';
+import { AD_CLIENT, AD_MIN_WIDTH } from '../src/content/ad-rails';
+import { DICTIONARIES } from '../src/i18n';
 import type { Locale } from '../src/core/types';
 
 const DIST = join(process.cwd(), 'dist');
@@ -177,6 +179,59 @@ for (const locale of Object.keys(DETAILS_BY_LOCALE) as Locale[]) {
     .filter((slug) => !sitemap.includes(`/exercises/${locale}/${slug}.html`));
   check(`exercises/${locale} : toutes au sitemap`, missing.length === 0, missing.join(', '));
   pages += found.length;
+}
+
+console.log('\nPublicites et confidentialite');
+
+// La promesse « aucune publicite sur mobile » n'est pas une intention, c'est
+// une propriete du HTML livre : le portillon (src/content/ad-rails.ts) est la
+// SEULE chose qui cree un encart, et il ne s'execute qu'au-dela du seuil de
+// largeur. Ces assertions verifient les deux moities de cette promesse — le
+// portillon present partout, et rien de publicitaire pose en statique a cote.
+const surfaces = (readdirSync(DIST, { recursive: true, encoding: 'utf8' }) as string[])
+  .filter((rel) => rel.endsWith('.html'))
+  .filter((rel) => statSync(join(DIST, rel)).isFile());
+
+const withoutGate = surfaces.filter(
+  (rel) => !readFileSync(join(DIST, rel), 'utf8').includes(`min-width: ${AD_MIN_WIDTH}px`),
+);
+check(
+  `les ${surfaces.length} pages livrees portent le portillon publicitaire`,
+  withoutGate.length === 0,
+  withoutGate.slice(0, 5).join(', '),
+);
+
+// Un <script src> vers adsbygoogle, ou un <ins> ecrit en dur, partirait sur
+// TOUS les ecrans — c'est exactement la « simplification » qu'on redoute, et
+// elle ne se verrait pas autrement qu'en ouvrant le site sur un telephone.
+const staticAds = surfaces.filter((rel) => {
+  const html = readFileSync(join(DIST, rel), 'utf8');
+  return /<script\b[^>]*src="[^"]*adsbygoogle/.test(html) || /<ins\b[^>]*adsbygoogle/.test(html);
+});
+check(
+  'aucune balise publicitaire statique (rien ne part sur mobile)',
+  staticAds.length === 0,
+  staticAds.slice(0, 5).join(', '),
+);
+
+// Sans ads.txt a la racine, une partie des acheteurs cesse d'encherir sans
+// qu'aucune erreur ne le signale : la seule trace serait un revenu plus bas.
+const adsTxtPath = join(DIST, 'ads.txt');
+check('dist/ads.txt existe', existsSync(adsTxtPath));
+check(
+  'ads.txt porte l\'identifiant editeur',
+  existsSync(adsTxtPath) && readFileSync(adsTxtPath, 'utf8').includes(AD_CLIENT.replace('ca-', '')),
+);
+check(
+  'l\'accueil declare la propriete AdSense',
+  index.includes(`content="${AD_CLIENT}"`),
+);
+
+// AdSense refuse un site sans politique de confidentialite accessible, et le
+// manque etait de toute facon deja reel (GA, connexion Google).
+for (const locale of Object.keys(DICTIONARIES) as Locale[]) {
+  const rel = `confidentialite/${locale}.html`;
+  check(`${rel} existe et est au sitemap`, existsSync(join(DIST, rel)) && sitemap.includes(rel));
 }
 
 console.log('\nOrigine canonique');

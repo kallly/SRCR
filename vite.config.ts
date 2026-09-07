@@ -3,6 +3,7 @@ import { defineConfig, type Plugin } from 'vite';
 import { DETAILS_BY_LOCALE } from './src/content/exercise-details';
 import { LIBRARY, findLibraryEntry } from './src/data/library';
 import { fr as i18nFr } from './src/i18n/locales/fr';
+import { AD_SLOTS, adRailsScript } from './src/content/ad-rails';
 import type { ExerciseKey, Locale } from './src/core/types';
 
 /**
@@ -85,6 +86,34 @@ function injectExerciseIndex(): Plugin {
         .join('\n');
 
       return html.replace(MARKER, `<ul>\n${links}\n        </ul>`);
+    },
+  };
+}
+
+/**
+ * Injecte le portillon publicitaire a la place de <!--AD_RAILS-->.
+ *
+ * Le script lui-meme vit dans src/content/ad-rails.ts, partage avec les pages
+ * generees : ce plugin ne fait que le poser dans l'accueil. Le passer par un
+ * marqueur plutot que de l'ecrire en dur dans index.html evite d'avoir deux
+ * versions du meme code de conformite, dont une derivant en silence.
+ *
+ * Le libelle est en francais ici, comme tout ce que rend `index.html` en
+ * statique ; `applyStaticTranslations()` le retraduit au demarrage grace au
+ * `data-i18n` que le script pose sur l'element.
+ */
+function injectAdRails(): Plugin {
+  const MARKER = '<!--AD_RAILS-->';
+  return {
+    name: 'inject-ad-rails',
+    transformIndexHtml(html) {
+      if (!html.includes(MARKER)) {
+        throw new Error(`Marqueur ${MARKER} introuvable dans index.html.`);
+      }
+      return html.replace(
+        MARKER,
+        adRailsScript(AD_SLOTS.homeLeft, AD_SLOTS.homeRight, i18nFr.ads.label),
+      );
     },
   };
 }
@@ -341,6 +370,7 @@ export default defineConfig({
     stampBuildDate(),
     injectExerciseIndex(),
     fillStaticTranslations(),
+    injectAdRails(),
     injectLibraryRows(),
     inlineStyles(),
   ],

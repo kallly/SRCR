@@ -1,0 +1,13 @@
+# Qui a le droit de vendre l'inventaire publicitaire de cirkali.fr.
+#
+# Recopie tel quel par Vite depuis public/, donc servi a
+# https://cirkali.fr/ads.txt — l'emplacement fait autorite, ce fichier ne vaut
+# qu'a la racine du domaine. Sans lui, une partie des acheteurs programmatiques
+# refuse d'enchérir, sans que rien ne le signale : la seule trace est un revenu
+# plus bas.
+#
+# `DIRECT` : la regie est en relation directe avec l'editeur, sans
+# intermediaire. `f08c47fec0942fa0` est l'identifiant TAG de Google, constant
+# pour tous les editeurs AdSense.
+
+google.com, pub-2139584209201341, DIRECT, f08c47fec0942fa0

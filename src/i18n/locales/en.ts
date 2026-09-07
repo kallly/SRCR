@@ -81,6 +81,30 @@ export const en: Translations = {
       'During the session, a full-screen player shows the timer, the progress ring and the execution cue, keeps the screen awake and signals the end of each interval. No account required: your session and history are stored in the browser. An optional Google sign-in backs them up online so you find them on every device. The interface is available in French, English, Spanish, German and Italian.',
   },
 
+  ads: {
+    label: 'Advertisement',
+    none: 'CIRKALI shows no advertising on mobile: on a phone no slot is created and no advertising script is downloaded. On a large screen, two units sit in the margins the layout leaves empty — they never break up the content and stay hidden during a session.',
+  },
+
+  privacy: {
+    title: 'Privacy',
+    lead: 'CIRKALI works without an account and without a server: the session you build lives in your browser. This page states what is stored, what leaves the device, and on what conditions.',
+    updated: 'Last updated: {date}',
+    localTitle: 'What stays on your device',
+    localText: 'Your sessions, your settings, the language you picked and the history of finished sessions are stored in the browser’s local storage. They are sent nowhere and nobody but you can read them. Clearing the site data deletes them for good.',
+    accountTitle: 'Signing in with Google, optional',
+    accountText: 'Signing in with Google is a choice, never a requirement: until you do, the Firebase kit is not even downloaded. If you do sign in, your email address and your sessions are stored with Google (Firebase Authentication and Cloud Firestore) so you can find them on your other devices. Signing out stops the sync; the online copy remains until you ask for its deletion.',
+    analyticsTitle: 'Audience measurement',
+    analyticsText: 'The site uses Google Analytics (measurement ID {ga}) to count visits and see which pages are read. The script only loads once the page has been painted, so that it does not slow down your arrival.',
+    adsTitle: 'Advertising',
+    adsText: 'On large screens only, the site shows Google AdSense adverts. Google and its partners may set cookies to measure and personalise them; a consent dialog collects your agreement before anything is set, and you can change it at any time. On mobile no advertising code is downloaded, so no advertising cookie is set there.',
+    adsOptOut: 'Google ad personalisation can be adjusted from your Google account settings page.',
+    rightsTitle: 'Your rights',
+    rightsText: 'You may access, correct or have deleted the data tied to your account, and withdraw your consent whenever you wish. For what stayed in the browser, clearing the site data is enough. For the online copy, write to us.',
+    contactTitle: 'Contact',
+    contactText: 'For any question about this data: {email}',
+  },
+
   aiPlan: {
     title: 'Create a session with an AI',
     intro:

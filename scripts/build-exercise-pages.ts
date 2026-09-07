@@ -22,6 +22,7 @@ import type { ExerciseKey, GroupId, Locale } from '../src/core/types';
 import { DICTIONARIES, type Translations } from '../src/i18n';
 import { DETAILS_BY_LOCALE, type ExerciseDetail } from '../src/content/exercise-details';
 import { imagePrompt } from '../src/content/image-prompts';
+import { AD_SLOTS, adRailsScript } from '../src/content/ad-rails';
 
 /**
  * Locales Open Graph, langue + territoire. Table explicite et non
@@ -56,6 +57,19 @@ const DIST = join(ROOT, 'dist');
 
 /** Langue source : la seule garantie d'avoir du contenu pour chaque exercice. */
 const SOURCE_LOCALE: Locale = 'fr';
+
+/**
+ * Adresse de contact publiee dans la page de confidentialite. Un texte RGPD
+ * sans destinataire ne vaut rien : c'est par la qu'une demande de suppression
+ * arrive. A faire suivre vers une boite reellement relevee.
+ */
+const CONTACT_EMAIL = 'contact@cirkali.fr';
+
+/** Identifiant de mesure GA, cite tel quel dans la page de confidentialite. */
+const GA_MEASUREMENT_ID = 'G-QVCTZFCKBL';
+
+/** Slug du repertoire des pages de confidentialite, une page par langue. */
+const PRIVACY_DIR = 'confidentialite';
 
 function esc(s: string): string {
   return s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
@@ -323,9 +337,12 @@ ${renderProgression(detail, dict)}${renderPrecautions(detail, dict)}
 
       <footer>
         <p class="disclaimer">${esc(dict.page.disclaimer)}</p>
+        <p class="ads-note">${esc(dict.ads.none)}</p>
         <a href="${SITE_URL}/">CIRKALI</a> — ${esc(dict.page.tagline)}
+        · <a href="${SITE_URL}/${PRIVACY_DIR}/${locale}.html">${esc(dict.privacy.title)}</a>
       </footer>
     </main>
+    ${adRailsScript(AD_SLOTS.pageLeft, AD_SLOTS.pageRight, dict.ads.label)}
   </body>
 </html>
 `;
@@ -662,9 +679,131 @@ ${aiGroupsTable(dict)}
 
       <footer>
         <p class="disclaimer">${esc(dict.page.disclaimer)}</p>
+        <p class="ads-note">${esc(dict.ads.none)}</p>
+        <a href="${SITE_URL}/">CIRKALI</a> — ${esc(dict.page.tagline)}
+        · <a href="${SITE_URL}/${PRIVACY_DIR}/${SOURCE_LOCALE}.html">${esc(dict.privacy.title)}</a>
+      </footer>
+    </main>
+    ${adRailsScript(AD_SLOTS.pageLeft, AD_SLOTS.pageRight, dict.ads.label)}
+  </body>
+</html>
+`;
+}
+
+/**
+ * Page de confidentialite, une par langue, a `/confidentialite/<locale>.html`.
+ *
+ * Elle existe d'abord parce qu'AdSense refuse un site qui n'en a pas, mais le
+ * manque etait deja reel : Google Analytics tourne depuis plusieurs semaines
+ * et la connexion Google enregistre des donnees chez un tiers, sans que rien
+ * ne le dise nulle part.
+ *
+ * Le texte vient des dictionnaires, comme le reste — donc traduit une fois et
+ * jamais recopie. Les marqueurs {date}, {ga} et {email} sont remplaces ici :
+ * ce ne sont pas des pluriels, `t()` n'a rien a faire dans un script de build.
+ */
+function renderPrivacyPage(locale: Locale, dict: Translations): string {
+  const url = `${SITE_URL}/${PRIVACY_DIR}/${locale}.html`;
+  const title = `${dict.privacy.title} | CIRKALI`;
+  const today = new Date().toISOString().slice(0, 10);
+
+  const fill = (text: string): string =>
+    text
+      .replace('{date}', today)
+      .replace('{ga}', GA_MEASUREMENT_ID)
+      .replace('{email}', CONTACT_EMAIL);
+
+  const hreflang = (Object.keys(DICTIONARIES) as Locale[])
+    .map(
+      (l) =>
+        `    <link rel="alternate" hreflang="${l}" href="${SITE_URL}/${PRIVACY_DIR}/${l}.html" />`,
+    )
+    .concat(
+      `    <link rel="alternate" hreflang="x-default" href="${SITE_URL}/${PRIVACY_DIR}/${SOURCE_LOCALE}.html" />`,
+    )
+    .join('\n');
+
+  const section = (heading: string, body: string): string =>
+    `      <h2>${esc(heading)}</h2>\n      <p>${esc(fill(body))}</p>\n`;
+
+  return `<!doctype html>
+<html lang="${locale}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="${esc(fill(dict.privacy.lead))}" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0e1210" />
+    <title>${esc(title)}</title>
+    <link rel="canonical" href="${url}" />
+${hreflang}
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="../favicon.ico" sizes="32x32" />
+
+    <meta property="og:title" content="${esc(dict.privacy.title)}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="${url}" />
+    <meta property="og:description" content="${esc(fill(dict.privacy.lead))}" />
+    <meta property="og:site_name" content="CIRKALI" />
+    <meta property="og:locale" content="${OG_LOCALES[locale]}" />
+    <meta property="og:image" content="${SITE_URL}/og-image.png" />
+
+    <script type="application/ld+json">
+      ${jsonLd([
+        {
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: dict.privacy.title,
+          description: fill(dict.privacy.lead),
+          url,
+          inLanguage: locale,
+          isPartOf: { '@type': 'WebApplication', name: 'CIRKALI', url: `${SITE_URL}/` },
+        },
+      ])}
+    </script>
+
+    <!--
+      Polices servies par le site : @font-face dans exercise-page.css. Le
+      preload les sort du bout de la chaine (HTML -> feuille -> police) ;
+      L'attribut crossorigin est obligatoire meme en meme origine, une requete
+      de police partant toujours en mode CORS. Voir index.html pour le detail.
+    -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/archivo-latin.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/manrope-latin.woff2" />
+    <link rel="stylesheet" href="../exercises/style.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <nav class="back" aria-label="${esc(dict.page.breadcrumb)}">
+        <a href="${SITE_URL}/">${esc(dict.page.back)}</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">${esc(dict.privacy.title)}</span>
+      </nav>
+
+      <h1>${esc(dict.privacy.title)}</h1>
+      <p>${esc(fill(dict.privacy.lead))}</p>
+      <p class="page-meta">${esc(fill(dict.privacy.updated))}</p>
+
+${section(dict.privacy.localTitle, dict.privacy.localText)}${section(
+    dict.privacy.accountTitle,
+    dict.privacy.accountText,
+  )}${section(dict.privacy.analyticsTitle, dict.privacy.analyticsText)}      <h2>${esc(
+    dict.privacy.adsTitle,
+  )}</h2>
+      <p>${esc(fill(dict.privacy.adsText))}</p>
+      <p>${esc(fill(dict.privacy.adsOptOut))}</p>
+${section(dict.privacy.rightsTitle, dict.privacy.rightsText)}      <h2>${esc(
+    dict.privacy.contactTitle,
+  )}</h2>
+      <p>${esc(dict.privacy.contactText.split('{email}')[0] ?? '')}<a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>${esc(
+    dict.privacy.contactText.split('{email}')[1] ?? '',
+  )}</p>
+
+      <footer>
         <a href="${SITE_URL}/">CIRKALI</a> — ${esc(dict.page.tagline)}
       </footer>
     </main>
+    ${adRailsScript(AD_SLOTS.pageLeft, AD_SLOTS.pageRight, dict.ads.label)}
   </body>
 </html>
 `;
@@ -784,6 +923,20 @@ function main(): void {
   sitemapUrls.push(`${SITE_URL}/${AI_PAGE_SLUG}.html`);
   writeFileSync(join(DIST, 'llms.txt'), renderLlmsTxt(sourceDict), 'utf8');
   console.log(`${AI_PAGE_SLUG}.html + llms.txt generes.`);
+
+  // Confidentialite : une page par langue. Avant le sitemap, comme la page de
+  // spec — chacune doit pouvoir y pousser son URL.
+  const privacyDir = join(DIST, PRIVACY_DIR);
+  mkdirSync(privacyDir, { recursive: true });
+  for (const locale of Object.keys(DICTIONARIES) as Locale[]) {
+    writeFileSync(
+      join(privacyDir, `${locale}.html`),
+      renderPrivacyPage(locale, DICTIONARIES[locale]),
+      'utf8',
+    );
+    sitemapUrls.push(`${SITE_URL}/${PRIVACY_DIR}/${locale}.html`);
+  }
+  console.log(`${PRIVACY_DIR}/ : ${Object.keys(DICTIONARIES).length} page(s) generee(s).`);
 
   // sitemap.xml : source unique desormais (public/sitemap.xml est supprime).
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

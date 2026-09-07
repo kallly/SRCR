@@ -81,6 +81,30 @@ export const it: Translations = {
       'Durante la seduta, un lettore a schermo intero mostra il cronometro, l’anello di avanzamento e l’indicazione di esecuzione, mantiene lo schermo acceso e segnala la fine di ogni intervallo. Nessun account obbligatorio: seduta e cronologia sono salvate nel browser. Un accesso con Google, facoltativo, le salva online per ritrovarle su ogni dispositivo. L’interfaccia è disponibile in francese, inglese, spagnolo, tedesco e italiano.',
   },
 
+  ads: {
+    label: 'Pubblicità',
+    none: 'CIRKALI non mostra alcuna pubblicità su mobile: su un telefono non viene creato nessuno spazio e non viene scaricato nessuno script pubblicitario. Su schermo grande, due annunci occupano i margini che l’impaginazione lascia vuoti: non spezzano mai il contenuto e restano nascosti durante la sessione.',
+  },
+
+  privacy: {
+    title: 'Riservatezza',
+    lead: 'CIRKALI funziona senza account e senza server: la sessione che componi vive nel tuo browser. Questa pagina dice che cosa viene salvato, che cosa esce dal dispositivo e a quali condizioni.',
+    updated: 'Ultimo aggiornamento: {date}',
+    localTitle: 'Ciò che resta sul tuo dispositivo',
+    localText: 'Le tue sessioni, le tue impostazioni, la lingua scelta e lo storico delle sessioni concluse sono salvati nella memoria locale del browser. Non vengono inviati da nessuna parte e nessuno oltre a te può leggerli. Cancellare i dati del sito li elimina definitivamente.',
+    accountTitle: 'L’accesso con Google, facoltativo',
+    accountText: 'Accedere con Google è una scelta, mai un obbligo: finché non lo fai, il kit Firebase non viene nemmeno scaricato. Se accedi, il tuo indirizzo e-mail e le tue sessioni sono salvati presso Google (Firebase Authentication e Cloud Firestore) per ritrovarli sugli altri dispositivi. Disconnettersi ferma la sincronizzazione; la copia online resta finché non ne chiedi la cancellazione.',
+    analyticsTitle: 'Misurazione del pubblico',
+    analyticsText: 'Il sito usa Google Analytics (identificativo di misurazione {ga}) per contare le visite e sapere quali pagine vengono lette. Lo script viene caricato solo dopo che la pagina è stata disegnata, per non rallentare il tuo arrivo.',
+    adsTitle: 'Pubblicità',
+    adsText: 'Solo su schermo grande, il sito mostra annunci Google AdSense. Google e i suoi partner possono usare cookie per misurarli e personalizzarli; una finestra di consenso raccoglie il tuo accordo prima di qualsiasi deposito e puoi modificarlo in qualunque momento. Su mobile non viene scaricato alcun codice pubblicitario, quindi non vi è depositato alcun cookie pubblicitario.',
+    adsOptOut: 'La personalizzazione degli annunci Google si regola dalla pagina delle impostazioni del tuo account Google.',
+    rightsTitle: 'I tuoi diritti',
+    rightsText: 'Puoi consultare, correggere o far cancellare i dati legati al tuo account e revocare il consenso quando vuoi. Per ciò che è rimasto nel browser basta cancellare i dati del sito. Per la copia online, scrivici.',
+    contactTitle: 'Contatti',
+    contactText: 'Per qualsiasi domanda su questi dati: {email}',
+  },
+
   aiPlan: {
     title: 'Creare una seduta con un’IA',
     intro:

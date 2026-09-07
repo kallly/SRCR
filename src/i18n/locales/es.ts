@@ -81,6 +81,30 @@ export const es: Translations = {
       'Durante la sesión, un reproductor a pantalla completa muestra el cronómetro, el anillo de progreso y la indicación de ejecución, mantiene la pantalla encendida y avisa del final de cada intervalo. Sin cuenta obligatoria: la sesión y el historial se guardan en el navegador. Un acceso con Google, opcional, los respalda en línea para recuperarlos en cualquier dispositivo. La interfaz está disponible en francés, inglés, español, alemán e italiano.',
   },
 
+  ads: {
+    label: 'Publicidad',
+    none: 'CIRKALI no muestra ninguna publicidad en móvil: en un teléfono no se crea ningún espacio ni se descarga ningún script publicitario. En pantalla grande, dos anuncios ocupan los márgenes que la maquetación deja vacíos: nunca cortan el contenido y quedan ocultos durante la sesión.',
+  },
+
+  privacy: {
+    title: 'Privacidad',
+    lead: 'CIRKALI funciona sin cuenta y sin servidor: la sesión que compones vive en tu navegador. Esta página dice qué se guarda, qué sale del dispositivo y en qué condiciones.',
+    updated: 'Última actualización: {date}',
+    localTitle: 'Lo que se queda en tu dispositivo',
+    localText: 'Tus sesiones, tus ajustes, el idioma elegido y el historial de sesiones terminadas se guardan en el almacenamiento local del navegador. No se envían a ninguna parte y nadie más que tú puede leerlos. Borrar los datos del sitio los elimina de forma definitiva.',
+    accountTitle: 'El acceso con Google, opcional',
+    accountText: 'Acceder con Google es una elección, nunca una obligación: mientras no lo hagas, el kit de Firebase ni siquiera se descarga. Si accedes, tu dirección de correo y tus sesiones se guardan en Google (Firebase Authentication y Cloud Firestore) para recuperarlas en tus demás dispositivos. Cerrar sesión detiene la sincronización; la copia en línea permanece hasta que pidas su supresión.',
+    analyticsTitle: 'Medición de audiencia',
+    analyticsText: 'El sitio usa Google Analytics (identificador de medición {ga}) para contar las visitas y saber qué páginas se leen. El script solo se carga una vez mostrada la página, para no ralentizar tu llegada.',
+    adsTitle: 'Publicidad',
+    adsText: 'Solo en pantalla grande, el sitio muestra anuncios de Google AdSense. Google y sus socios pueden usar cookies para medirlos y personalizarlos; una ventana de consentimiento recoge tu acuerdo antes de cualquier depósito y puedes modificarlo cuando quieras. En móvil no se descarga ningún código publicitario, así que allí no se deposita ninguna cookie publicitaria.',
+    adsOptOut: 'La personalización de los anuncios de Google se ajusta desde la página de configuración de tu cuenta de Google.',
+    rightsTitle: 'Tus derechos',
+    rightsText: 'Puedes consultar, corregir o hacer suprimir los datos vinculados a tu cuenta, y retirar tu consentimiento cuando lo desees. Para lo que se quedó en el navegador, basta con borrar los datos del sitio. Para la copia en línea, escríbenos.',
+    contactTitle: 'Contacto',
+    contactText: 'Para cualquier pregunta sobre estos datos: {email}',
+  },
+
   aiPlan: {
     title: 'Crear una sesión con una IA',
     intro:

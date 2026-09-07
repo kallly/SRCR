@@ -244,6 +244,41 @@ l'être depuis deux profondeurs à la fois (le bundle et `exercise-page.css`, ho
 bundle). Conséquence : une copie servie ailleurs qu'à la racine d'un domaine
 perd ses polices.
 
+## Publicité
+
+Des encarts AdSense sont affichés **sur grand écran uniquement**, et
+« uniquement » y est au sens fort : sous 1200 px, aucun élément n'est créé,
+aucune requête ne part, `adsbygoogle.js` n'est pas téléchargé. C'est un
+portillon JavaScript (`src/content/ad-rails.ts`) et non une media-query, pour
+deux raisons — un `display: none` masquerait un encart déjà demandé, ce qui
+compte une impression jamais vue et que la politique AdSense interdit ; et le
+visiteur mobile paierait quand même les ~100 Ko du script, annulant le travail
+des deux lots PageSpeed précédents. `check-build.ts` vérifie les deux moitiés
+de cette promesse sur les 317 pages livrées : le portillon présent partout,
+aucune balise `<ins>` ni `<script src>` publicitaire en statique.
+
+Une seule source pour les trois surfaces (`src/content/ad-rails.ts`), posée
+dans l'accueil par le plugin `injectAdRails()` et dans les pages générées par
+`build-exercise-pages.ts` : trois copies d'une règle de conformité auraient
+dérivé en silence, et c'est la copie oubliée qui aurait servi des publicités là
+où on a promis qu'il n'y en aurait pas.
+
+Les encarts sont en `position: absolute` dans les marges, **pas** une grille
+sur `<body>` : une grille décalerait `.wrap` d'un demi-encart, soit du CLS
+horizontal gratuit. `AD_SLOTS` est vide tant que les emplacements n'existent
+pas côté AdSense — le portillon saute alors l'encart, et la page se comporte
+comme avant. Les remplir est la seule chose à faire le jour de la validation.
+
+`public/ads.txt` doit rester à la racine du domaine (c'est la seule position qui
+fasse autorité) et `public/robots.txt` ne doit pas le bloquer. La diffusion dans
+l'EEE exige en plus un CMP certifié TCF v2.2, activé dans la console AdSense —
+sans lui Google cesse simplement de servir des annonces, sans erreur visible.
+
+`dist/confidentialite/<locale>.html` (5 pages, générées) est la politique de
+confidentialité : obligatoire pour AdSense, et de toute façon due depuis
+l'ajout de Google Analytics. `CONTACT_EMAIL` y est publié — l'adresse doit
+exister.
+
 `public/_headers` est lu par Cloudflare Pages : cache `immutable` sur
 `/assets/*` et `/fonts/*`, plus HSTS, XFO, COOP et `nosniff`. Le COOP y est en
 `same-origin-allow-popups` et non `same-origin` : la connexion Google passe par

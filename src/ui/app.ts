@@ -1,5 +1,5 @@
 import { createCloudSync, type CloudSync } from '../cloud/sync';
-import { onLocaleChange, setLocale as applyLocale, t } from '../i18n';
+import { getLocale, onLocaleChange, setLocale as applyLocale, t } from '../i18n';
 import { createCustom, createRest, uid } from '../core/plan';
 import {
   DEFAULT_SESSION_CONFIG,
@@ -327,6 +327,11 @@ export function createApp(state: State): { render: () => void } {
     const { config } = ctx.activePlan();
 
     applyStaticTranslations();
+    // La page de confidentialite est generee en cinq fichiers, un par langue :
+    // le libelle du lien suit la langue via `data-i18n`, mais pas sa cible.
+    // Meme motif que l'index des fiches (`ui/guides-index.ts`), en plus simple
+    // — ici il n'y a qu'une URL a recomposer, sans slug traduit.
+    byId('privacyLink').setAttribute('href', `confidentialite/${getLocale()}.html`);
     byId('modeClassic').classList.toggle('on', config.mode === 'classic');
     byId('modeCircuit').classList.toggle('on', config.mode === 'circuit');
     settings.classList.toggle('on', config.mode === 'circuit');

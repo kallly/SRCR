@@ -81,6 +81,30 @@ export const de: Translations = {
       'Während der Einheit zeigt ein Vollbild-Player die Uhr, den Fortschrittsring und den Ausführungshinweis, hält den Bildschirm wach und meldet das Ende jedes Intervalls. Kein Konto nötig: Einheit und Verlauf werden im Browser gespeichert. Eine optionale Google-Anmeldung sichert sie online, damit du sie auf jedem Gerät wiederfindest. Die Oberfläche gibt es auf Französisch, Englisch, Spanisch, Deutsch und Italienisch.',
   },
 
+  ads: {
+    label: 'Werbung',
+    none: 'CIRKALI zeigt auf dem Handy keine Werbung: dort wird kein Werbeplatz angelegt und kein Werbeskript geladen. Auf großen Bildschirmen sitzen zwei Anzeigen in den Rändern, die das Layout ohnehin frei lässt — sie unterbrechen den Inhalt nie und bleiben während des Trainings verborgen.',
+  },
+
+  privacy: {
+    title: 'Datenschutz',
+    lead: 'CIRKALI kommt ohne Konto und ohne Server aus: das Training, das du zusammenstellst, lebt in deinem Browser. Diese Seite sagt, was gespeichert wird, was das Gerät verlässt und unter welchen Bedingungen.',
+    updated: 'Zuletzt aktualisiert: {date}',
+    localTitle: 'Was auf deinem Gerät bleibt',
+    localText: 'Deine Trainings, deine Einstellungen, die gewählte Sprache und der Verlauf abgeschlossener Einheiten liegen im lokalen Speicher des Browsers. Sie werden nirgendwohin gesendet und niemand außer dir kann sie lesen. Die Websitedaten zu löschen entfernt sie endgültig.',
+    accountTitle: 'Die Google-Anmeldung, freiwillig',
+    accountText: 'Sich mit Google anzumelden ist eine Wahl, nie eine Pflicht: solange du es nicht tust, wird das Firebase-Paket nicht einmal geladen. Meldest du dich an, werden deine E-Mail-Adresse und deine Trainings bei Google gespeichert (Firebase Authentication und Cloud Firestore), damit du sie auf deinen anderen Geräten wiederfindest. Abmelden beendet die Synchronisierung; die Onlinekopie bleibt, bis du ihre Löschung verlangst.',
+    analyticsTitle: 'Reichweitenmessung',
+    analyticsText: 'Die Website nutzt Google Analytics (Mess-ID {ga}), um Besuche zu zählen und zu sehen, welche Seiten gelesen werden. Das Skript lädt erst, wenn die Seite gezeichnet ist, damit es deine Ankunft nicht verlangsamt.',
+    adsTitle: 'Werbung',
+    adsText: 'Nur auf großen Bildschirmen zeigt die Website Google-AdSense-Anzeigen. Google und seine Partner können Cookies setzen, um sie zu messen und zu personalisieren; ein Einwilligungsfenster holt vorher deine Zustimmung ein, und du kannst sie jederzeit ändern. Auf dem Handy wird kein Werbecode geladen, dort wird also auch kein Werbecookie gesetzt.',
+    adsOptOut: 'Die Personalisierung von Google-Anzeigen lässt sich in den Einstellungen deines Google-Kontos regeln.',
+    rightsTitle: 'Deine Rechte',
+    rightsText: 'Du kannst die mit deinem Konto verknüpften Daten einsehen, berichtigen oder löschen lassen und deine Einwilligung jederzeit widerrufen. Für das, was im Browser geblieben ist, genügt es, die Websitedaten zu löschen. Für die Onlinekopie schreib uns.',
+    contactTitle: 'Kontakt',
+    contactText: 'Bei Fragen zu diesen Daten: {email}',
+  },
+
   aiPlan: {
     title: 'Eine Einheit mit einer KI erstellen',
     intro:

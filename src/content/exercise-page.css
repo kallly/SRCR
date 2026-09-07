@@ -435,3 +435,67 @@ footer a {
     scroll-behavior: auto !important;
   }
 }
+
+/*
+  Encarts publicitaires, dans les marges que la colonne unique laisse vides.
+
+  `position: absolute` et non une grille sur <body> : une grille deplacerait
+  `.wrap` d'un demi-encart, soit un decalage horizontal a chaque chargement —
+  du CLS offert, dans un depot qui l'a ramene de 0,43 a 0,013. Ici la colonne
+  ne bouge pas d'un pixel, que les encarts existent ou non.
+
+  `absolute` et non `sticky` : ils defilent avec la page et ne reviennent pas
+  se coller au viewport.
+
+  344px = la moitie de `.wrap` (320) plus la gouttiere (24). La largeur
+  suit la place reellement disponible — 300px des qu'il y en a, moins sinon —
+  ce qui fait tenir l'emplacement aussi bien sur un portable 1366 que sur un
+  1920, sans deuxieme point de rupture. En pourcentage et non en `vw` : `50vw`
+  compte la barre de defilement, pas `50%`, et melanger les deux ferait
+  deborder l'encart d'une quinzaine de pixels.
+
+  Le portillon qui cree ces elements est en JavaScript (src/content/ad-rails.ts) :
+  sous 1200px ils n'existent pas, cette regle n'a donc rien a masquer — c'est
+  la difference entre « pas de publicite » et « publicite cachee ».
+*/
+@media (min-width: 1200px) {
+  body {
+    position: relative;
+  }
+
+  .ad-rail {
+    position: absolute;
+    top: 28px;
+    width: min(300px, calc(50% - 344px));
+  }
+
+  .ad-rail-l {
+    right: calc(50% + 344px);
+  }
+
+  .ad-rail-r {
+    left: calc(50% + 344px);
+  }
+
+  .ad-rail-tag {
+    margin: 0 0 6px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+  }
+}
+
+/*
+  Date de mise a jour de la page de confidentialite, et mention publicitaire du
+  pied de page. Deux lignes de service : lisibles, jamais mises en avant.
+*/
+.page-meta {
+  margin-top: -8px;
+  font-size: 12.5px;
+  color: var(--paper-dim);
+}
+
+.ads-note {
+  margin: 10px 0 14px;
+}

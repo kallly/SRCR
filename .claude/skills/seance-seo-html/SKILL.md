@@ -126,6 +126,17 @@ vides après rendu (`list.hidden` dans `ui/planner.ts`, `grid.hidden` dans
 mesurées sur le rendu réel : à reprendre si le nombre d'exercices, la
 hauteur des cartes ou le déroulé par défaut changent.
 
+**Encarts publicitaires et CLS.** Les deux `.ad-rail` de l'accueil et des
+pages générées sont en `position: absolute` dans les marges, jamais en grille
+sur `<body>` : une grille décalerait `.wrap` d'un demi-encart à chaque
+chargement, soit un décalage horizontal que la mesure du CLS compte comme le
+reste. Ils sont créés par un portillon JavaScript
+(`src/content/ad-rails.ts`) au-delà de 1200 px seulement — donc absents, et non
+masqués, sur mobile. Ne pas transformer ce portillon en media-query : un encart
+demandé puis caché compte une impression jamais vue, ce qu'AdSense interdit, et
+ferait payer le script au visiteur mobile. Voir CLAUDE.md, section
+« Publicité ».
+
 **Cibles tactiles** : la regle des 44px et la repartition des commandes d'une
 carte vivent dans la skill `seance-ui-module`.
 

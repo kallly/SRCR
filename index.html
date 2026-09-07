@@ -59,6 +59,13 @@
     />
     <meta name="google-site-verification" content="klcNylRr2XzNoMTgQFLg1ykhQwx-9VcFdokLKhOY5pI" />
     <meta name="msvalidate.01" content="CCF56FECC454B6BBD29EE985AE0EEECC" />
+    <!--
+      Preuve de propriete pour AdSense : la regie la lit dans le <head> de la
+      racine du domaine, meme quand aucune publicite n'est encore diffusee.
+      C'est une balise d'identification, pas un chargeur : elle ne declenche
+      aucune requete, y compris sur mobile ou l'on n'affiche rien.
+    -->
+    <meta name="google-adsense-account" content="ca-pub-2139584209201341" />
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#0e1210" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f5f4ee" media="(prefers-color-scheme: light)" />
@@ -322,6 +329,20 @@
         <p data-i18n="about.intro"></p>
         <p data-i18n="about.modes"></p>
         <p data-i18n="about.privacy"></p>
+        <!--
+          Mention affichee sur TOUS les ecrans, mobile compris : c'est
+          precisement au visiteur mobile qu'elle apprend qu'il n'y a rien a
+          bloquer chez lui. Elle est dans le HTML statique, donc lue aussi par
+          les robots et par une IA qui parcourt la page.
+        -->
+        <p data-i18n="ads.none"></p>
+        <!--
+          Le href pointe le francais dans le HTML livre, comme l'index des
+          fiches : l'accueil est une URL unique, il faut bien choisir une
+          langue pour le crawler. `ui/app.ts` le reoriente vers la langue
+          active au demarrage et a chaque changement de langue.
+        -->
+        <p><a id="privacyLink" href="confidentialite/fr.html" data-i18n="privacy.title"></a></p>
       </details>
 
       <!--
@@ -545,6 +566,14 @@ https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsIn
         <button class="primary" type="button" id="runPrimary"></button>
       </div>
     </div>
+
+    <!--
+      Portillon publicitaire, injecte au build par `injectAdRails()`
+      (vite.config.ts) depuis src/content/ad-rails.ts — meme source que les
+      pages generees. En fin de <body> : il ajoute des elements a `document.body`,
+      qui doit donc exister. Ne pas remonter ce marqueur dans le <head>.
+    -->
+    <!--AD_RAILS-->
 
     <script type="module" src="/src/main.ts"></script>
   </body>

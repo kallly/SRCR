@@ -88,6 +88,43 @@ export const fr = {
       'Pendant la séance, un lecteur plein écran affiche le chrono, l’anneau de progression et la consigne d’exécution, garde l’écran allumé et signale la fin de chaque temps. Aucun compte obligatoire : la séance et l’historique sont enregistrés dans le navigateur. Une connexion Google, facultative, les sauvegarde en ligne pour les retrouver sur tous ses appareils. L’interface existe en français, anglais, espagnol, allemand et italien.',
   },
 
+  /*
+    Textes publicitaires. `none` est affiche sur TOUS les ecrans, mobile
+    compris : c'est precisement au visiteur mobile qu'il apprend qu'il n'y a
+    rien a bloquer chez lui. `label` coiffe chaque encart — un libelle
+    explicite est ce que demande la politique AdSense des lors qu'on en pose
+    un, et il ne doit pas etre trompeur (« Publicite », pas « Partenaires »).
+  */
+  ads: {
+    label: 'Publicité',
+    none: 'CIRKALI n’affiche aucune publicité sur mobile : sur un téléphone, aucun emplacement n’est créé et aucun script publicitaire n’est téléchargé. Sur grand écran, deux encarts occupent les marges que la mise en page laisse vides — ils ne coupent jamais le contenu et restent cachés pendant la séance.',
+  },
+
+  /*
+    Page de confidentialite, generee en cinq langues par
+    scripts/build-exercise-pages.ts. `updated`, `contactText` et `analyticsText`
+    portent des marqueurs ({date}, {email}) remplaces a la generation : ce ne
+    sont pas des pluriels, `t()` n'intervient pas ici.
+  */
+  privacy: {
+    title: 'Confidentialité',
+    lead: 'CIRKALI fonctionne sans compte et sans serveur : la séance que vous composez vit dans votre navigateur. Cette page dit ce qui est enregistré, ce qui sort de l’appareil, et à quelles conditions.',
+    updated: 'Dernière mise à jour : {date}',
+    localTitle: 'Ce qui reste sur votre appareil',
+    localText: 'Vos séances, vos réglages, la langue choisie et l’historique des séances terminées sont enregistrés dans le stockage local du navigateur. Ils ne sont envoyés nulle part et personne d’autre que vous n’y a accès. Effacer les données du site les supprime définitivement.',
+    accountTitle: 'La connexion Google, facultative',
+    accountText: 'Se connecter avec Google est un choix, jamais une obligation : tant que vous ne le faites pas, le kit Firebase n’est même pas téléchargé. Si vous vous connectez, votre adresse e-mail et vos séances sont enregistrées chez Google (Firebase Authentication et Cloud Firestore) pour être retrouvées sur vos autres appareils. Se déconnecter arrête la synchronisation ; la copie en ligne subsiste jusqu’à ce que vous en demandiez la suppression.',
+    analyticsTitle: 'Mesure d’audience',
+    analyticsText: 'Le site utilise Google Analytics (identifiant de mesure {ga}) pour compter les visites et savoir quelles pages sont lues. Le script n’est chargé qu’une fois la page affichée, afin de ne pas ralentir votre arrivée.',
+    adsTitle: 'Publicité',
+    adsText: 'Sur grand écran uniquement, le site affiche des annonces Google AdSense. Google et ses partenaires peuvent déposer des cookies pour mesurer et personnaliser ces annonces ; une fenêtre de consentement recueille votre accord avant tout dépôt, et vous pouvez le modifier à tout moment. Sur mobile, aucun code publicitaire n’est téléchargé : aucun cookie publicitaire n’y est donc déposé.',
+    adsOptOut: 'La personnalisation des annonces Google se règle depuis la page des paramètres de votre compte Google.',
+    rightsTitle: 'Vos droits',
+    rightsText: 'Vous pouvez consulter, corriger ou faire supprimer les données liées à votre compte, et retirer votre consentement quand vous le souhaitez. Pour ce qui est resté dans le navigateur, il suffit d’effacer les données du site. Pour la copie en ligne, écrivez-nous.',
+    contactTitle: 'Contact',
+    contactText: 'Pour toute question sur ces données : {email}',
+  },
+
   aiPlan: {
     title: 'Créer une séance avec une IA',
     intro:
