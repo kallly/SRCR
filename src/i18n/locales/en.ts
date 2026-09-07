@@ -82,9 +82,10 @@ export const en: Translations = {
   },
 
   aiPlan: {
-    title: 'Create a session from a link (for an AI)',
+    title: 'Create a session with an AI',
     intro:
-      'This page can receive a session described in its own address: opening such a link offers to import it, and nothing is saved without confirmation. An AI can therefore put a session together and hand it to you as a link, without needing an account. Just give it the address of this page.',
+      'Ask ChatGPT, Claude or Gemini to put a session together for you: give them the address of this page and they reply with a link. You open it, the app shows you the session and asks whether to keep it — nothing is saved without your say-so. The “AI” button at the top of the page prepares the message to copy.',
+    forAi: 'What follows is addressed to the AI. A human reader can skip it.',
     format:
       'The expected link has the shape below: a JSON object carrying the session name, the sequencing mode and the list of rows, encoded as base64url in the s parameter.',
     keys:

@@ -82,9 +82,10 @@ export const es: Translations = {
   },
 
   aiPlan: {
-    title: 'Crear una sesión mediante un enlace (para una IA)',
+    title: 'Crear una sesión con una IA',
     intro:
-      'Esta página sabe recibir una sesión descrita en su propia dirección: abrir un enlace así propone importarla, y no se guarda nada sin confirmación. Una inteligencia artificial puede así componer una sesión y entregártela como enlace, sin necesidad de una cuenta. Basta con darle la dirección de esta página.',
+      'Pide a ChatGPT, Claude o Gemini que te componga una sesión: dales la dirección de esta página y te responderán con un enlace. Al abrirlo, la aplicación muestra la sesión y te pregunta si quieres conservarla: no se guarda nada sin tu consentimiento. El botón «IA», arriba, prepara el mensaje que hay que copiar.',
+    forAi: 'Lo que sigue va dirigido a la IA. Un lector humano puede saltárselo.',
     format:
       'El enlace esperado tiene la forma de abajo: un objeto JSON con el nombre de la sesión, el modo de encadenamiento y la lista de líneas, codificado en base64url dentro del parámetro s.',
     keys:

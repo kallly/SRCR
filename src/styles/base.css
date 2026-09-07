@@ -424,6 +424,43 @@ h2::after {
 }
 
 /*
+  Zone technique de la section « Creer une seance avec une IA ».
+
+  Ce contenu s'adresse a une IA qui lit le HTML, pas au visiteur : le format du
+  lien, la table des cles, la consigne sur le lien brut. Il ne peut pas etre
+  retire de la page — c'est LUI qui porte la fonctionnalite, les outils de
+  navigation lisent le HTML et n'executent pas notre JS — ni etre masque, ce
+  qui serait du cloaking. Restait un vrai probleme de lecture : un humain
+  tombait sur du JSON et une table de cles au milieu d'une prose qui lui etait
+  destinee, sans rien pour lui dire qu'il pouvait sauter.
+
+  D'ou ce liseré : il ne cache rien, il DELIMITE. L'intro reste pleine largeur
+  et humaine, la zone en retrait annonce d'elle-meme qu'elle change de
+  destinataire. Meme motif que `.ai-help-prompt`, l'autre bloc de la page dont
+  le contenu est fait pour etre lu par une machine.
+*/
+.ai-spec {
+  margin: 14px 0 0;
+  padding: 2px 0 2px 14px;
+  border-left: 3px solid var(--lime);
+}
+
+.ai-spec > p {
+  margin: 10px 0 0;
+}
+
+.ai-spec-tag {
+  margin: 0;
+  color: var(--lime);
+  font-family: var(--disp);
+  font-stretch: 125%;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/*
   Gabarit d'URL de la section « Creer une seance par lien ». Deborde
   horizontalement DANS SA PROPRE BOITE (overflow-x) : le body ne doit jamais
   defiler lateralement. Pas de `white-space: pre-wrap` — une chaine base64

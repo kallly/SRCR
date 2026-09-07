@@ -82,9 +82,10 @@ export const it: Translations = {
   },
 
   aiPlan: {
-    title: 'Creare una seduta tramite link (per un’IA)',
+    title: 'Creare una seduta con un’IA',
     intro:
-      'Questa pagina sa ricevere una seduta descritta nel proprio indirizzo: aprire un link del genere propone di importarla, e nulla viene salvato senza conferma. Un’intelligenza artificiale può quindi comporre una seduta e consegnartela sotto forma di link, senza bisogno di un account. Basta darle l’indirizzo di questa pagina.',
+      'Chiedi a ChatGPT, Claude o Gemini di comporti una seduta: dai loro l’indirizzo di questa pagina e ti rispondono con un link. Aprendolo, l’applicazione mostra la seduta e ti chiede se vuoi conservarla: non viene salvato nulla senza il tuo consenso. Il pulsante «IA», in alto, prepara il messaggio da copiare.',
+    forAi: 'Quanto segue è rivolto all’IA. Un lettore umano può saltarlo.',
     format:
       'Il link atteso ha la forma qui sotto: un oggetto JSON che porta il nome della seduta, la modalità di concatenamento e l’elenco delle righe, codificato in base64url nel parametro s.',
     keys:

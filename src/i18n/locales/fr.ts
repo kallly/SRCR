@@ -89,9 +89,10 @@ export const fr = {
   },
 
   aiPlan: {
-    title: 'Créer une séance par lien (pour une IA)',
+    title: 'Créer une séance avec une IA',
     intro:
-      'Cette page sait recevoir une séance décrite dans son adresse : ouvrir un tel lien propose de l’importer, rien n’est enregistré sans confirmation. Une intelligence artificielle peut donc composer une séance et vous la livrer sous forme de lien, sans avoir besoin d’un compte. Donnez-lui simplement l’adresse de cette page.',
+      'Demandez à ChatGPT, Claude ou Gemini de vous composer une séance : donnez-leur l’adresse de cette page, ils vous répondent par un lien. Vous l’ouvrez, l’application affiche la séance et vous demande si vous voulez la garder — rien n’est enregistré sans votre accord. Le bouton « IA », en haut de page, prépare le message à copier.',
+    forAi: 'La suite s’adresse à l’IA. Un lecteur humain peut la sauter.',
     format:
       'Le lien attendu est de la forme ci-dessous : un objet JSON qui porte le nom de la séance, le mode d’enchaînement et la liste des lignes, compressé en base64url dans le paramètre s.',
     keys:

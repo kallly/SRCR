@@ -309,12 +309,21 @@
         Les blocs <code> n'ont volontairement PAS de data-i18n :
         applyStaticTranslations() ecrase textContent et emporterait le markup,
         et un gabarit d'URL n'est pas du texte traduisible.
+
+        Deux destinataires, deux zones. `aiPlan.intro` parle au visiteur et ne
+        mentionne ni JSON ni base64 ; tout ce qui s'adresse a l'IA (format,
+        cles, consigne sur le lien brut) est regroupe dans `.ai-spec`, annonce
+        par `aiPlan.forAi`. Le contenu technique reste entier et visible — le
+        retirer casserait la fonctionnalite, le masquer serait du cloaking —
+        mais il ne se lit plus comme la suite du texte adresse a l'humain.
       -->
       <details class="about" id="aiPlan" open>
         <summary data-i18n="aiPlan.title"></summary>
         <p data-i18n="aiPlan.intro"></p>
-        <p data-i18n="aiPlan.format"></p>
-        <pre class="ai-code"><code>{"v":1,"n":"Haut du corps","m":"x","p":60,"t":0,"i":[
+        <div class="ai-spec">
+          <p class="ai-spec-tag" data-i18n="aiPlan.forAi"></p>
+          <p data-i18n="aiPlan.format"></p>
+          <pre class="ai-code"><code>{"v":1,"n":"Haut du corps","m":"x","p":60,"t":0,"i":[
   ["e","kneePushup","push","r",4,12,30,60],
   ["e","plank","core","t",3,10,45,60]
 ]}
@@ -327,8 +336,9 @@ Exercice : ["e", clé, groupe, "r" reps | "t" durée, séries, reps, secondes, r
 Pause    : ["r", secondes]
 
 https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsInQiOjAsImkiOltbImUiLCJrbmVlUHVzaHVwIiwicHVzaCIsInIiLDQsMTIsMzAsNjBdLFsiZSIsInBsYW5rIiwiY29yZSIsInQiLDMsMTAsNDUsNjBdXX0</code></pre>
-        <p data-i18n="aiPlan.keys"></p>
-        <p data-i18n="aiPlan.rawLink"></p>
+          <p data-i18n="aiPlan.keys"></p>
+          <p data-i18n="aiPlan.rawLink"></p>
+        </div>
         <p>
           <a href="creer-une-seance-par-lien.html" data-i18n="aiPlan.spec"
             ></a

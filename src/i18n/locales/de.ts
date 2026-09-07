@@ -82,9 +82,10 @@ export const de: Translations = {
   },
 
   aiPlan: {
-    title: 'Eine Einheit per Link erstellen (für eine KI)',
+    title: 'Eine Einheit mit einer KI erstellen',
     intro:
-      'Diese Seite kann eine Einheit entgegennehmen, die in ihrer eigenen Adresse beschrieben ist: Beim Öffnen eines solchen Links wird der Import angeboten, und ohne Bestätigung wird nichts gespeichert. Eine KI kann also eine Einheit zusammenstellen und sie dir als Link liefern, ohne dass du ein Konto brauchst. Gib ihr einfach die Adresse dieser Seite.',
+      'Bitte ChatGPT, Claude oder Gemini, dir eine Einheit zusammenzustellen: Gib ihnen die Adresse dieser Seite, und du bekommst einen Link zurück. Beim Öffnen zeigt die App die Einheit und fragt, ob du sie behalten möchtest — ohne deine Zustimmung wird nichts gespeichert. Die Schaltfläche „KI“ oben auf der Seite legt die Nachricht zum Kopieren bereit.',
+    forAi: 'Das Folgende richtet sich an die KI. Menschliche Leser können es überspringen.',
     format:
       'Der erwartete Link hat die unten gezeigte Form: ein JSON-Objekt mit dem Namen der Einheit, dem Ablaufmodus und der Liste der Zeilen, als base64url im Parameter s abgelegt.',
     keys:

@@ -104,9 +104,25 @@ headless, et le contenu d'un `<details>` fermé n'y figure pas. **Jamais de
 bloc masqué réservé aux robots** : c'est du cloaking (déjà interdit § « À
 propos »), et `display: none` est de toute façon absent de l'`innerText`.
 
+**La section a deux destinataires, et le dit — `.ai-spec` (`base.css`).**
+`aiPlan.intro` s'adresse au visiteur et ne prononce ni « JSON » ni
+« base64 » : demandez une séance à une IA, elle répond par un lien, vous
+choisissez de le garder. Tout le reste (`aiPlan.format`, `.keys`, `.rawLink`
+et le bloc `.ai-code`) s'adresse à l'IA et vit dans un `<div class="ai-spec">`
+en retrait derrière un liseré, annoncé par `aiPlan.forAi`. C'était une plainte
+d'usage réelle : un humain tombait sur du JSON et une table de clés au milieu
+d'une prose écrite pour lui. **Ce liseré délimite, il ne masque pas** — le
+contenu technique reste entier, visible et dans l'`innerText`, sans quoi on
+retomberait sur le cloaking interdit juste au-dessus. Ne pas « simplifier » en
+déplaçant ce contenu vers la seule page de spec : c'est la présence *sur
+l'accueil* qui fait marcher le cas « on donne l'URL du site à une IA ».
+
 **Aucune norme ne fait autorité ici, vérifié en 2026** — `llms.txt`,
 `ai.txt`, `agents.txt`, `/.well-known/agent-*.json` sont fragmentés, et tous
-s'ancrent à la **racine du domaine**, qui appartient à l'autre projet. C'est
+s'ancrent à la **racine du domaine**. Cette racine était hors de portée tant
+que le site vivait sous `kallly.github.io/SRCR/` ; depuis `cirkali.fr` elle
+est à nous, et `llms.txt` y est bien servi. Ça ne change pas le choix
+ci-dessous, ça lui retire seulement une de ses contraintes d'origine. C'est
 la même contrainte que pour `robots.txt` et le sitemap. Le choix retenu est
 donc une **page HTML crawlable maillée depuis l'accueil**
 (`dist/creer-une-seance-par-lien.html`, générée par
