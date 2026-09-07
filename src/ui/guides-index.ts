@@ -32,7 +32,9 @@ export function createGuidesIndex(): { render: () => void } {
       // qui n'en a pas laisserait le lien precedent en place.
       const slug = slugFor(locale) ?? slugFor(SOURCE_LOCALE);
       const linkLocale = slugFor(locale) ? locale : SOURCE_LOCALE;
-      if (slug) link.href = `exercises/${linkLocale}/${slug}.html`;
+      // Sans extension : c'est la forme canonique, celle vers laquelle
+      // l'hebergeur redirige `.html` (voir SITE_URL, build-exercise-pages.ts).
+      if (slug) link.href = `exercises/${linkLocale}/${slug}`;
     }
   }
 

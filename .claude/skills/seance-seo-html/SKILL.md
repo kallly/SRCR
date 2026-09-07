@@ -171,7 +171,7 @@ pas ailleurs : ce doit rester un miroir.
 - *`hreflang` sur l'app elle-même* : les 5 langues partagent une seule URL,
   il n'y a donc rien à déclarer. **Les fiches d'exercice, elles, ont bien un
   `hreflang`** depuis qu'elles existent en plusieurs langues à des URL
-  distinctes (`exercises/<locale>/<slug>.html`) — c'est exactement la
+  distinctes (`exercises/<locale>/<slug>`, sans extension) — c'est exactement la
   condition qui manquait.
 - *Redirection www ↔ non-www* : sans objet pour un sous-domaine
   `*.github.io` ; ne s'applique qu'à un domaine personnalisé avec apex + www.

@@ -81,7 +81,11 @@ function injectExerciseIndex(): Plugin {
           // la cle attendue (`catCow`), produisant une seance ou chaque
           // exercice s'affichait comme "Exercice perso" faute de cle connue.
           const visibleKey = entry ? ` <code>${entry.key}</code>` : '';
-          return `          <li><a href="exercises/${INDEX_LOCALE}/${e.slug}.html"${machine}${data}>${e.name}</a>${visibleKey}</li>`;
+          // Sans `.html` : l'hebergeur sert le fichier a cette adresse et
+          // redirige la forme longue vers elle (voir SITE_URL dans
+          // scripts/build-exercise-pages.ts). `ui/guides-index.ts` recompose
+          // le meme href au changement de langue, il suit la meme regle.
+          return `          <li><a href="exercises/${INDEX_LOCALE}/${e.slug}"${machine}${data}>${e.name}</a>${visibleKey}</li>`;
         })
         .join('\n');
 

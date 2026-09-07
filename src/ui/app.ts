@@ -331,7 +331,7 @@ export function createApp(state: State): { render: () => void } {
     // le libelle du lien suit la langue via `data-i18n`, mais pas sa cible.
     // Meme motif que l'index des fiches (`ui/guides-index.ts`), en plus simple
     // — ici il n'y a qu'une URL a recomposer, sans slug traduit.
-    byId('privacyLink').setAttribute('href', `confidentialite/${getLocale()}.html`);
+    byId('privacyLink').setAttribute('href', `confidentialite/${getLocale()}`);
     byId('modeClassic').classList.toggle('on', config.mode === 'classic');
     byId('modeCircuit').classList.toggle('on', config.mode === 'circuit');
     settings.classList.toggle('on', config.mode === 'circuit');

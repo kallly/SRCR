@@ -82,7 +82,10 @@ Chaque exercice a deux niveaux de texte, dans deux systèmes différents :
 
 **Les pages sont des fichiers HTML statiques, pas des routes.** Générées par
 `scripts/build-exercise-pages.ts` (lancé via `tsx` après `vite build`, voir
-`package.json`) dans `dist/exercises/<locale>/<slug>.html`. Nécessaire pour
+`package.json`) dans `dist/exercises/<locale>/<slug>.html`, publié à
+`/exercises/<locale>/<slug>` — l'hébergeur retire l'extension et redirige la
+forme longue vers la courte, donc toute URL écrite dans une balise ou un lien
+s'écrit sans `.html`. Nécessaire pour
 être crawlables sans JS et référençables individuellement dans le sitemap —
 une route client (`#/exercise/...`) ne le permettrait pas, exactement le
 problème hreflang déjà documenté plus haut pour l'app elle-même.

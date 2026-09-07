@@ -101,7 +101,7 @@ export function createExerciseInfo(): ExerciseInfo {
       // La page detaillee vit sous la langue qui a reellement fourni ce
       // contenu : la locale active si elle a son propre contenu, le francais
       // sinon (c'est aussi ce que sert `detail` dans ce cas, via le repli).
-      more.href = `exercises/${native ? locale : 'fr'}/${detail.slug}.html`;
+      more.href = `exercises/${native ? locale : 'fr'}/${detail.slug}`;
       loadingMsg.hidden = true;
     } catch {
       loadingMsg.hidden = true;

@@ -176,7 +176,7 @@ for (const locale of Object.keys(DETAILS_BY_LOCALE) as Locale[]) {
 
   const missing = Object.values(details)
     .map((d) => d.slug)
-    .filter((slug) => !sitemap.includes(`/exercises/${locale}/${slug}.html`));
+    .filter((slug) => !sitemap.includes(`/exercises/${locale}/${slug}</loc>`));
   check(`exercises/${locale} : toutes au sitemap`, missing.length === 0, missing.join(', '));
   pages += found.length;
 }
@@ -230,9 +230,34 @@ check(
 // AdSense refuse un site sans politique de confidentialite accessible, et le
 // manque etait de toute facon deja reel (GA, connexion Google).
 for (const locale of Object.keys(DICTIONARIES) as Locale[]) {
-  const rel = `confidentialite/${locale}.html`;
-  check(`${rel} existe et est au sitemap`, existsSync(join(DIST, rel)) && sitemap.includes(rel));
+  // Le FICHIER garde son extension, l'URL publiee ne l'a pas : c'est
+  // exactement la distinction que le sitemap avait perdue.
+  check(
+    `confidentialite/${locale} existe et est au sitemap`,
+    existsSync(join(DIST, `confidentialite/${locale}.html`)) &&
+      sitemap.includes(`/confidentialite/${locale}</loc>`),
+  );
 }
+
+// Cloudflare Pages redirige `/page.html` vers `/page` : une URL publiee avec
+// extension est donc une URL qui redirige. Declarer celle-la en canonical, en
+// hreflang ou au sitemap revient a designer a Google une adresse qui n'est pas
+// celle qu'il indexe — regression deja vue, et parfaitement muette.
+const sitemapHtml = [...sitemap.matchAll(/<loc>([^<]*\.html)<\/loc>/g)].map((m) => m[1]);
+check(
+  'aucune URL du sitemap ne porte l\'extension .html',
+  sitemapHtml.length === 0,
+  sitemapHtml.slice(0, 5).join(', '),
+);
+
+const canonicals = surfaces
+  .map((rel) => ({ rel, m: /<link rel="canonical" href="([^"]+)"/.exec(readFileSync(join(DIST, rel), 'utf8')) }))
+  .filter((e) => e.m?.[1]?.endsWith('.html'));
+check(
+  'aucun canonical ne porte l\'extension .html',
+  canonicals.length === 0,
+  canonicals.slice(0, 5).map((e) => e.rel).join(', '),
+);
 
 console.log('\nOrigine canonique');
 

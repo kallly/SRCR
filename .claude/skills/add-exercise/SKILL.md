@@ -82,7 +82,8 @@ precise number.
 Precautions are practical, never a diagnosis.
 
 **`slug` is translated per locale, and that is load-bearing.** Each locale's
-page lives at `exercises/<locale>/<slug>.html`, so the slug must be written in
+page lives at `exercises/<locale>/<slug>` (the file keeps its `.html`; the host
+serves it without), so the slug must be written in
 that locale's language: `pompes-inclinees` (fr), `incline-push-ups` (en),
 `flexiones-inclinadas` (es), `erhoehte-liegestuetze` (de),
 `piegamenti-inclinati` (it). A French slug under `exercises/en/` is an

@@ -237,6 +237,16 @@ suivi, et le site a longtemps déclaré à Google que sa version de référence 
 github.io — avec un sitemap ne listant que des URL d'un autre domaine. D'où
 l'assertion de `check-build.ts` qui interdit l'ancienne origine dans `dist/`.
 
+**Les URL publiées n'ont pas d'extension, les fichiers si.** Cloudflare Pages
+sert `dist/exercises/fr/pompes.html` à l'adresse `/exercises/fr/pompes` et
+redirige la forme longue vers elle (307) ; GitHub Pages et `vite preview` font
+de même. Tant que les balises déclaraient le `.html`, chaque canonical, chaque
+hreflang et les 317 entrées du sitemap désignaient une URL qui redirige pendant
+que Google indexait l'autre — de quoi laisser durablement des pages en
+« Détectée, actuellement non indexée ». Toute URL écrite dans une balise, un
+lien ou le sitemap s'écrit donc **sans extension** ; seuls les `writeFileSync()`
+gardent le `.html`. Deux assertions de `check-build.ts` l'imposent.
+
 `base: './'` dans `vite.config.ts` : les chemins restent relatifs. Ne pas le
 passer à un chemin absolu. **Une seule exception assumée**, les `@font-face` :
 les `.woff2` de `public/fonts/` sont cités en `/fonts/…` parce qu'ils doivent

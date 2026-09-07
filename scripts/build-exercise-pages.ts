@@ -52,6 +52,25 @@ const OG_LOCALES: Record<Locale, string> = {
  * `scripts/check-build.ts` qui interdit l'ancienne origine dans `dist/`.
  */
 const SITE_URL = 'https://cirkali.fr';
+
+/**
+ * Les URL publiees n'ont PAS d'extension, alors que les fichiers ecrits sur le
+ * disque, eux, gardent leur `.html`. C'est l'hebergeur qui fait la
+ * correspondance, et il la fait dans ce sens-la : Cloudflare Pages sert
+ * `dist/exercises/fr/pompes.html` a l'adresse `/exercises/fr/pompes` et
+ * REDIRIGE `/exercises/fr/pompes.html` vers elle, en 307.
+ *
+ * Tant que les balises declaraient la forme avec extension, chaque canonical,
+ * chaque hreflang et les 317 entrees du sitemap designaient une URL qui
+ * redirige, pendant que Google indexait l'autre — l'incoherence exacte qui
+ * laisse une page en « Detectee, actuellement non indexee ». Rien ne cassait,
+ * donc rien ne le signalait.
+ *
+ * Verifie sur les trois environnements avant d'etre adopte : Cloudflare Pages,
+ * GitHub Pages et `vite preview` servent tous les deux formes, seule la forme
+ * courte est stable. `check-build.ts` interdit desormais l'extension dans le
+ * sitemap.
+ */
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DIST = join(ROOT, 'dist');
 
@@ -134,7 +153,7 @@ function hreflangTags(key: ExerciseKey): string {
   if (available.length < 2) return '';
 
   const tag = (hreflang: string, l: Locale) =>
-    `    <link rel="alternate" hreflang="${hreflang}" href="${SITE_URL}/exercises/${l}/${DETAILS_BY_LOCALE[l]![key]!.slug}.html" />`;
+    `    <link rel="alternate" hreflang="${hreflang}" href="${SITE_URL}/exercises/${l}/${DETAILS_BY_LOCALE[l]![key]!.slug}" />`;
 
   const lines = available.map((l) => tag(l, l));
   // x-default pointe vers la langue source, celle qui a toujours du contenu.
@@ -150,7 +169,7 @@ function libraryEntry(key: ExerciseKey) {
 
 function carouselCard(key: ExerciseKey, dict: Translations, detail: ExerciseDetail): string {
   const name = dict.exercise[key]?.name ?? key;
-  return `<a class="carousel-card" href="${detail.slug}.html">
+  return `<a class="carousel-card" href="${detail.slug}">
   <span class="cfig">${figureSvg(key)}</span>
   <span class="cb">
     <span class="cn">${esc(name)}</span>
@@ -206,7 +225,7 @@ function renderPage(locale: Locale, key: ExerciseKey, dict: Translations, all: P
   // ferait interpreter $&, $` ou $1 s'ils apparaissaient un jour dans un nom
   // d'exercice, en corrompant silencieusement la description.
   const description = dict.page.description.replace('{name}', () => name);
-  const url = `${SITE_URL}/exercises/${locale}/${detail.slug}.html`;
+  const url = `${SITE_URL}/exercises/${locale}/${detail.slug}`;
 
   const similar = pickSimilar(key, entry.group, all);
 
@@ -339,7 +358,7 @@ ${renderProgression(detail, dict)}${renderPrecautions(detail, dict)}
         <p class="disclaimer">${esc(dict.page.disclaimer)}</p>
         <p class="ads-note">${esc(dict.ads.none)}</p>
         <a href="${SITE_URL}/">CIRKALI</a> — ${esc(dict.page.tagline)}
-        · <a href="${SITE_URL}/${PRIVACY_DIR}/${locale}.html">${esc(dict.privacy.title)}</a>
+        · <a href="${SITE_URL}/${PRIVACY_DIR}/${locale}">${esc(dict.privacy.title)}</a>
       </footer>
     </main>
     ${adRailsScript(AD_SLOTS.pageLeft, AD_SLOTS.pageRight, dict.ads.label)}
@@ -456,7 +475,7 @@ function aiGroupsTable(dict: Translations): string {
 }
 
 function renderAiPlanPage(dict: Translations): string {
-  const url = `${SITE_URL}/${AI_PAGE_SLUG}.html`;
+  const url = `${SITE_URL}/${AI_PAGE_SLUG}`;
   const description =
     `Format du lien qui crée une séance dans CIRKALI : structure JSON, encodage base64url, liste des ${LIBRARY.length} clés d’exercice et des groupes musculaires. Destiné aux intelligences artificielles à qui on donne l’adresse du site.`;
   const example = aiExample();
@@ -681,7 +700,7 @@ ${aiGroupsTable(dict)}
         <p class="disclaimer">${esc(dict.page.disclaimer)}</p>
         <p class="ads-note">${esc(dict.ads.none)}</p>
         <a href="${SITE_URL}/">CIRKALI</a> — ${esc(dict.page.tagline)}
-        · <a href="${SITE_URL}/${PRIVACY_DIR}/${SOURCE_LOCALE}.html">${esc(dict.privacy.title)}</a>
+        · <a href="${SITE_URL}/${PRIVACY_DIR}/${SOURCE_LOCALE}">${esc(dict.privacy.title)}</a>
       </footer>
     </main>
     ${adRailsScript(AD_SLOTS.pageLeft, AD_SLOTS.pageRight, dict.ads.label)}
@@ -691,7 +710,7 @@ ${aiGroupsTable(dict)}
 }
 
 /**
- * Page de confidentialite, une par langue, a `/confidentialite/<locale>.html`.
+ * Page de confidentialite, une par langue, a `/confidentialite/<locale>`.
  *
  * Elle existe d'abord parce qu'AdSense refuse un site qui n'en a pas, mais le
  * manque etait deja reel : Google Analytics tourne depuis plusieurs semaines
@@ -703,7 +722,7 @@ ${aiGroupsTable(dict)}
  * ce ne sont pas des pluriels, `t()` n'a rien a faire dans un script de build.
  */
 function renderPrivacyPage(locale: Locale, dict: Translations): string {
-  const url = `${SITE_URL}/${PRIVACY_DIR}/${locale}.html`;
+  const url = `${SITE_URL}/${PRIVACY_DIR}/${locale}`;
   const title = `${dict.privacy.title} | CIRKALI`;
   const today = new Date().toISOString().slice(0, 10);
 
@@ -716,10 +735,10 @@ function renderPrivacyPage(locale: Locale, dict: Translations): string {
   const hreflang = (Object.keys(DICTIONARIES) as Locale[])
     .map(
       (l) =>
-        `    <link rel="alternate" hreflang="${l}" href="${SITE_URL}/${PRIVACY_DIR}/${l}.html" />`,
+        `    <link rel="alternate" hreflang="${l}" href="${SITE_URL}/${PRIVACY_DIR}/${l}" />`,
     )
     .concat(
-      `    <link rel="alternate" hreflang="x-default" href="${SITE_URL}/${PRIVACY_DIR}/${SOURCE_LOCALE}.html" />`,
+      `    <link rel="alternate" hreflang="x-default" href="${SITE_URL}/${PRIVACY_DIR}/${SOURCE_LOCALE}" />`,
     )
     .join('\n');
 
@@ -874,7 +893,7 @@ ${keys}
 
 ## Pages
 
-- [Spécification complète du format](${SITE_URL}/${AI_PAGE_SLUG}.html)
+- [Spécification complète du format](${SITE_URL}/${AI_PAGE_SLUG})
 - [Application](${SITE_URL}/)
 - [Sitemap, dont une fiche par exercice et par langue](${SITE_URL}/sitemap.xml)
 `;
@@ -901,7 +920,7 @@ function main(): void {
       const detail = all[key]!;
       const html = renderPage(locale, key, dict, all);
       writeFileSync(join(localeDir, `${detail.slug}.html`), html, 'utf8');
-      sitemapUrls.push(`${SITE_URL}/exercises/${locale}/${detail.slug}.html`);
+      sitemapUrls.push(`${SITE_URL}/exercises/${locale}/${detail.slug}`);
 
       const name = dict.exercise[key]?.name ?? key;
       const prompt = imagePrompt(key);
@@ -920,7 +939,7 @@ function main(): void {
   // la page doit pouvoir y pousser son URL.
   const sourceDict = DICTIONARIES[SOURCE_LOCALE];
   writeFileSync(join(DIST, `${AI_PAGE_SLUG}.html`), renderAiPlanPage(sourceDict), 'utf8');
-  sitemapUrls.push(`${SITE_URL}/${AI_PAGE_SLUG}.html`);
+  sitemapUrls.push(`${SITE_URL}/${AI_PAGE_SLUG}`);
   writeFileSync(join(DIST, 'llms.txt'), renderLlmsTxt(sourceDict), 'utf8');
   console.log(`${AI_PAGE_SLUG}.html + llms.txt generes.`);
 
@@ -934,7 +953,7 @@ function main(): void {
       renderPrivacyPage(locale, DICTIONARIES[locale]),
       'utf8',
     );
-    sitemapUrls.push(`${SITE_URL}/${PRIVACY_DIR}/${locale}.html`);
+    sitemapUrls.push(`${SITE_URL}/${PRIVACY_DIR}/${locale}`);
   }
   console.log(`${PRIVACY_DIR}/ : ${Object.keys(DICTIONARIES).length} page(s) generee(s).`);
 
