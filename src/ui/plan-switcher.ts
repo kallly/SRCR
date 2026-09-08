@@ -1,6 +1,6 @@
 import { t } from '../i18n';
 import { presetName } from '../core/plan';
-import { PRESETS, presetPlanId } from '../data/presets';
+import { activePresets, presetPlanId } from '../data/presets';
 import type { Context } from './app';
 import { byId, el } from './dom';
 import { createInlineInput } from './inline-input';
@@ -75,7 +75,7 @@ export function createPlanSwitcher(ctx: Context): { render: () => void } {
           : null,
         optionGroup(
           t('presets.group'),
-          PRESETS.map((entry) => ({ id: presetPlanId(entry), label: presetName(entry) })),
+          activePresets().map((entry) => ({ id: presetPlanId(entry), label: presetName(entry) })),
           activePlan.id,
         ),
       ],

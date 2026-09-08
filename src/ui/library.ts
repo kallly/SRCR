@@ -1,10 +1,11 @@
 import { getLocale, t } from '../i18n';
 import { GROUP_IDS, groupColor } from '../data/groups';
 import { CATEGORY_IDS } from '../data/categories';
-import { LIBRARY, type LibraryEntry } from '../data/library';
+import { LIBRARY } from '../data/library';
+import { activeTenant } from '../data/tenants';
 import { figureSvg } from '../data/figures';
-import { createFromLibrary } from '../core/plan';
-import type { CategoryId, ExerciseKey } from '../core/types';
+import { createFromLibrary, createFromTenant } from '../core/plan';
+import type { CategoryId, EffortMode, ExerciseKey, GroupId } from '../core/types';
 import type { Context } from './app';
 import { byId, dot, el } from './dom';
 import { effortSummary } from './format';
@@ -18,7 +19,44 @@ function normalize(s: string): string {
     .trim();
 }
 
-function card(entry: LibraryEntry): HTMLElement {
+/**
+ * Une carte de la grille, mise a plat.
+ *
+ * Deux origines s'y melangent : les 62 exercices de `LIBRARY`, dont le nom se
+ * resout par `t()`, et ceux d'une salle (`data/tenants.ts`), dont le nom est du
+ * texte deja ecrit. La carte, elle, est la meme — d'ou cette forme commune,
+ * calculee a chaque rendu pour suivre la langue active.
+ */
+interface CatalogueCard {
+  key: string;
+  name: string;
+  group: GroupId;
+  category: CategoryId;
+  mode: EffortMode;
+  sets: number;
+  reps: number;
+  seconds: number;
+  rest: number;
+  /** Vrai pour une entree CIRKALI : elle seule a une fiche a montrer. */
+  guide: boolean;
+}
+
+/**
+ * Le catalogue visible ici et maintenant : CIRKALI, plus la salle s'il y en a
+ * une. Jamais « a la place de » — une salle ajoute ses machines, elle ne retire
+ * pas les exercices au poids du corps.
+ */
+function catalogue(): CatalogueCard[] {
+  const own = LIBRARY.map((entry) => ({
+    ...entry,
+    name: t(`exercise.${entry.key}.name`),
+    guide: true,
+  }));
+  const tenant = (activeTenant()?.exercises ?? []).map((entry) => ({ ...entry, guide: false }));
+  return [...own, ...tenant];
+}
+
+function card(entry: CatalogueCard): HTMLElement {
   const detail = el('span', {
     className: 'ld',
     children: [
@@ -34,17 +72,21 @@ function card(entry: LibraryEntry): HTMLElement {
       el('span', {
         className: 'lb',
         children: [
-          el('span', { className: 'ln', text: t(`exercise.${entry.key}.name`) }),
+          el('span', { className: 'ln', text: entry.name }),
           detail,
         ],
       }),
     ],
   });
-  const infoButton = el('button', {
-    className: 'info-btn',
-    text: 'ⓘ',
-    attrs: { type: 'button', 'data-info': entry.key, 'aria-label': t('exerciseInfo.trigger') },
-  });
+  // Meme regle que dans le deroule (`infoButton()`, ui/planner.ts) : pas de
+  // fiche pour ce qui n'a pas de contenu long, donc pas de bouton.
+  const infoButton = entry.guide
+    ? el('button', {
+        className: 'info-btn',
+        text: 'ⓘ',
+        attrs: { type: 'button', 'data-info': entry.key, 'aria-label': t('exerciseInfo.trigger') },
+      })
+    : null;
   return el('div', { className: 'libcard', children: [addButton, infoButton] });
 }
 
@@ -95,7 +137,12 @@ export function createLibrary(ctx: Context): { render: () => void } {
     const key = addButton?.dataset['add'];
     if (!key) return;
 
-    const item = createFromLibrary(key);
+    const entry = catalogue().find((candidate) => candidate.key === key);
+    if (!entry) return;
+    // Un exercice de salle devient une ligne PERSO portant son nom, pas une
+    // cle de bibliotheque : c'est ce qui lui permet de traverser le stockage,
+    // un lien de partage et le nuage sans rien casser (voir data/tenants.ts).
+    const item = entry.guide ? createFromLibrary(key) : createFromTenant(entry);
     if (!item) return;
     ctx.activePlan().items.push(item);
     ctx.save();
@@ -117,12 +164,12 @@ export function createLibrary(ctx: Context): { render: () => void } {
    * traduit, plutot que l'ordre de declaration brut de `LIBRARY`. Refait a
    * chaque rendu, donc suit naturellement un changement de langue.
    */
-  function sortedLibrary(): LibraryEntry[] {
+  function sortedLibrary(): CatalogueCard[] {
     const locale = getLocale();
-    return [...LIBRARY].sort((a, b) => {
+    return catalogue().sort((a, b) => {
       const groupDiff = GROUP_IDS.indexOf(a.group) - GROUP_IDS.indexOf(b.group);
       if (groupDiff !== 0) return groupDiff;
-      return t(`exercise.${a.key}.name`).localeCompare(t(`exercise.${b.key}.name`), locale);
+      return a.name.localeCompare(b.name, locale);
     });
   }
 
@@ -131,7 +178,7 @@ export function createLibrary(ctx: Context): { render: () => void } {
     const filtered = sortedLibrary().filter((entry) => {
       if (group && entry.group !== group) return false;
       if (categories.size > 0 && !categories.has(entry.category)) return false;
-      if (term && !normalize(t(`exercise.${entry.key}.name`)).includes(term)) return false;
+      if (term && !normalize(entry.name).includes(term)) return false;
       return true;
     });
     grid.replaceChildren(...filtered.map(card));

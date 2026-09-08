@@ -1,6 +1,7 @@
 import { t } from '../i18n';
 import { CUSTOM_DEFAULTS, findLibraryEntry, isLibraryKey } from '../data/library';
-import { presetPlanId, type PresetPlan } from '../data/presets';
+import { presetPlanId, type AnyPreset } from '../data/presets';
+import type { TenantExercise } from '../data/tenants';
 import type { ExerciseItem, PlanItem, RestItem, SavedPlan } from './types';
 
 /** Longueur maximale d'un nom d'exercice saisi par l'utilisateur. */
@@ -42,6 +43,32 @@ export function createCustom(name: string): ExerciseItem {
   };
 }
 
+/**
+ * Cree une ligne a partir d'un exercice propre a une salle (`data/tenants.ts`).
+ *
+ * C'est une ligne PERSO — `key: 'custom'`, le nom stocke tel quel — et non une
+ * cle de bibliotheque : le nom voyage donc avec la ligne, et la seance reste
+ * lisible partout, y compris sur cirkali.fr ou cette salle n'existe pas. Rien a
+ * migrer, rien a etendre dans le format de partage.
+ *
+ * Les reglages, eux, sont ceux de l'entree — un exercice de salle n'est pas un
+ * exercice perso improvise, il a ses series et son repos comme un autre.
+ */
+export function createFromTenant(entry: TenantExercise): ExerciseItem {
+  return {
+    id: uid(),
+    type: 'exercise',
+    key: 'custom',
+    customName: entry.name.trim().slice(0, MAX_CUSTOM_NAME),
+    group: entry.group,
+    mode: entry.mode,
+    sets: entry.sets,
+    reps: entry.reps,
+    seconds: entry.seconds,
+    rest: entry.rest,
+  };
+}
+
 export function createRest(seconds: number): RestItem {
   return { id: uid(), type: 'rest', seconds };
 }
@@ -52,8 +79,11 @@ export function createRest(seconds: number): RestItem {
  * fige en texte qu'a l'instant ou la personne cree sa propre version du
  * modele (voir `presetToPlan()` et `ctx.adoptPreset()`, ui/app.ts).
  */
-export function presetName(preset: PresetPlan): string {
-  return t(`presets.name.${preset.id}`);
+export function presetName(preset: AnyPreset): string {
+  // Une seance de salle porte son nom en clair ; un modele CIRKALI le resout
+  // dans la langue active. `'name' in preset` distingue les deux sans champ
+  // marqueur a tenir a jour.
+  return 'name' in preset ? preset.name : t(`presets.name.${preset.id}`);
 }
 
 /**
@@ -67,7 +97,7 @@ export function presetName(preset: PresetPlan): string {
  * l'exercice a disparu de `LIBRARY` est simplement ignoree plutot que de
  * faire echouer tout le modele.
  */
-export function presetToPlan(preset: PresetPlan): SavedPlan {
+export function presetToPlan(preset: AnyPreset): SavedPlan {
   const items = preset.items
     .map((line) => {
       const item = createFromLibrary(line.key);

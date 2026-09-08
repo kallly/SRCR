@@ -1,7 +1,7 @@
 import { createCloudSync, type CloudSync } from '../cloud/sync';
 import { getLocale, onLocaleChange, setLocale as applyLocale, t } from '../i18n';
 import { createCustom, createRest, presetName, presetToPlan, uid } from '../core/plan';
-import { DEFAULT_PRESET, findPresetByPlanId, type PresetPlan } from '../data/presets';
+import { defaultPreset, findPresetByPlanId, type AnyPreset } from '../data/presets';
 import {
   DEFAULT_SESSION_CONFIG,
   forgetPlanFingerprint,
@@ -74,7 +74,7 @@ export interface Context {
    * appartient a la personne. C'est le seul test a faire dans un module
    * d'interface : ni comparaison d'id ni recherche dans `PRESETS`.
    */
-  activePreset(): PresetPlan | null;
+  activePreset(): AnyPreset | null;
   /**
    * Fait entrer le modele affiche — avec ses eventuelles modifications — dans
    * les seances de la personne. C'est le seul chemin par lequel une seance
@@ -153,7 +153,7 @@ export function createApp(state: State): { render: () => void } {
    * traduction pour une modification de la personne.
    */
   interface PresetDraft {
-    preset: PresetPlan;
+    preset: AnyPreset;
     plan: SavedPlan;
     pristine: string;
   }
@@ -165,7 +165,7 @@ export function createApp(state: State): { render: () => void } {
   }
 
   /** (Re)materialise un modele : c'est aussi le geste d'annulation des retouches. */
-  function openPreset(preset: PresetPlan): void {
+  function openPreset(preset: AnyPreset): void {
     const plan = presetToPlan(preset);
     draft = { preset, plan, pristine: presetFingerprint(plan) };
   }
@@ -194,7 +194,7 @@ export function createApp(state: State): { render: () => void } {
    *
    * Remplace l'ancien invariant « `loadState()` fabrique une seance type pour
    * que `plans` ne soit jamais vide » : plus rien n'est fabrique ni ecrit, on
-   * ouvre le modele d'accueil (`DEFAULT_PRESET`). C'est ce qui rend une
+   * ouvre le modele d'accueil (`defaultPreset()`). C'est ce qui rend une
    * premiere visite gratuite en stockage, et ce qui a permis de retirer de
    * `cloud/merge.ts` la reconnaissance des seances types dupliquees d'un
    * appareil a l'autre : plus aucun appareil n'en cree.
@@ -210,7 +210,7 @@ export function createApp(state: State): { render: () => void } {
       ctx.state.activePlanId = fallback.id;
       return;
     }
-    openPreset(DEFAULT_PRESET);
+    openPreset(defaultPreset());
   }
 
   // Cree avant le Context, mais ses rappels (`state`, `adopt`...) ne sont
@@ -237,7 +237,7 @@ export function createApp(state: State): { render: () => void } {
       // a resoudre, mieux vaut le faire ici que renvoyer une seance qui
       // n'existe pas.
       ensureActive();
-      return currentPlan() ?? presetToPlan(DEFAULT_PRESET);
+      return currentPlan() ?? presetToPlan(defaultPreset());
     },
     getPlan: (id) =>
       draft && draft.plan.id === id

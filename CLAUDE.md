@@ -49,6 +49,7 @@ src/
     merge.ts       fusion pure seance par seance (updatedAt + pierres tombales)
     session-hint.ts  un bit local : « etait connecte », pour ne pas charger le SDK pour rien
   data/            donnees sans texte
+    tenants.ts     variantes par sous-domaine (salles de sport) — vide pour l'instant
     groups.ts      ids + couleurs des 9 groupes musculaires
     library.ts     62 exercices : reglages seulement
     presets.ts     les 6 seances CIRKALI toutes faites (jamais persistees)
@@ -228,6 +229,36 @@ Meme raison qu'ailleurs : toute modification de l'app passe deja par `save()`,
 donc un module ajoute demain est couvert sans cablage — ne pas eparpiller ce
 test dans les modules d'UI. Le nom fige a l'adoption est traduit dans la langue
 du moment, comme le suffixe de `duplicatePlan()`, et pour le meme motif.
+
+## Variantes par sous-domaine (`src/data/tenants.ts`)
+
+Une salle de sport par hôte — `<salle>.cirkali.fr` — servie par **le même
+déploiement, le même `index.html` et le même bundle** que cirkali.fr. Rien
+n'est forké, rien n'est reconstruit : `main.ts` lit le premier libellé de
+l'hôte, le cherche dans `TENANTS`, et seules des **données** changent — des
+exercices en plus dans la bibliothèque, d'autres séances toutes faites.
+`TENANTS` est vide aujourd'hui, donc l'app se comporte exactement comme s'il
+n'y avait pas de mécanisme.
+
+**Un exercice de salle est une ligne perso** (`key: 'custom'` + son nom), pas
+une nouvelle clé de bibliothèque : c'est ce qui lui permet de traverser le
+stockage, un lien `?s=` et le document Firestore sans qu'aucun format ne
+bouge, et de rester lisible sur cirkali.fr où cette salle n'existe pas — le nom
+voyage avec la ligne. Contrepartie assumée : pas de fiche détaillée, figure
+générique. Promouvoir un exercice de salle vers CIRKALI, c'est déplacer son
+entrée vers `LIBRARY` puis lui donner ce que le catalogue public exige (clé,
+5 langues, figure, contenu long — skill `add-exercise`).
+
+**La sauvegarde en ligne est commune** : un compte Google porte un seul
+document Firestore quel que soit le sous-domaine. Les séances faites à la salle
+et celles faites chez soi arrivent dans la même liste — elles suivent la
+personne, pas le lieu.
+
+Ce qui demandera une **page générée au build** le jour où une salle en aura
+besoin : thème, textes propres, retrait des encarts publicitaires, et la
+réservation de hauteur `--lib-rows` (calculée depuis `LIBRARY.length`, elle
+ignore les exercices d'une salle). Tant qu'il ne s'agit que de données, rien de
+tout ça n'est nécessaire.
 
 ## Le moteur (`core/queue.ts`)
 

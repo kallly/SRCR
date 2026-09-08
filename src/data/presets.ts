@@ -1,4 +1,5 @@
 import type { ExerciseKey, SessionConfig } from '../core/types';
+import { activeTenant } from './tenants';
 
 /**
  * Les seances toutes faites proposees par CIRKALI, en dur dans le bundle.
@@ -45,6 +46,26 @@ export interface PresetPlan {
 }
 
 /**
+ * Une seance toute faite proposee par une SALLE (`data/tenants.ts`).
+ *
+ * Elle porte son nom en clair, la ou un modele CIRKALI le resout depuis
+ * `presets.name.<id>` : le nom d'une seance de salle est du texte de la salle,
+ * meme statut que `TenantExercise.name` ou que le `customName` d'un exercice
+ * perso (regle n°2 de CLAUDE.md). Sans ce type, une salle devait emprunter un
+ * de NOS six identifiants et se voyait afficher NOTRE libelle — « Gainage
+ * express » pour sa propre seance.
+ */
+export interface TenantPreset {
+  id: string;
+  name: string;
+  config: SessionConfig;
+  items: readonly PresetLine[];
+}
+
+/** Un modele, d'ou qu'il vienne. Ce que manipule tout le reste de l'app. */
+export type AnyPreset = PresetPlan | TenantPreset;
+
+/**
  * Prefixe des ids de seance des modeles. Deux roles : distinguer un modele
  * d'une seance de l'utilisateur partout ou l'app ne manipule qu'un id
  * (`switchPlan`, `getPlan`), et garantir qu'aucun `uid()` — sept caracteres
@@ -79,8 +100,24 @@ const FULL_BODY: PresetPlan = {
   ],
 };
 
-/** Alias parlant : c'est ce modele que l'app ouvre quand rien n'est enregistre. */
-export const DEFAULT_PRESET = FULL_BODY;
+/**
+ * Les modeles proposes ici et maintenant : ceux de la salle si l'hote en
+ * designe une, ceux de CIRKALI sinon (`data/tenants.ts`). Fonction et non
+ * constante — la salle n'est connue qu'apres `setActiveTenant()`, au demarrage.
+ */
+export function activePresets(): readonly AnyPreset[] {
+  const tenant = activeTenant();
+  return tenant?.presets ?? PRESETS;
+}
+
+/**
+ * Le modele sur lequel s'ouvre une premiere visite. Repli sur `FULL_BODY` si
+ * une salle declarait une liste vide : il y a toujours une seance a afficher
+ * (voir `ensureActive()`, ui/app.ts).
+ */
+export function defaultPreset(): AnyPreset {
+  return activePresets()[0] ?? FULL_BODY;
+}
 
 export const PRESETS: readonly PresetPlan[] = [
   FULL_BODY,
@@ -151,7 +188,7 @@ export const PRESETS: readonly PresetPlan[] = [
 ];
 
 /** Id de seance porte par un modele une fois materialise (core/plan.ts). */
-export function presetPlanId(preset: PresetPlan): string {
+export function presetPlanId(preset: AnyPreset): string {
   return PRESET_PLAN_PREFIX + preset.id;
 }
 
@@ -160,8 +197,10 @@ export function presetPlanId(preset: PresetPlan): string {
  * utiliser partout ou l'app recoit un id sans savoir d'ou il vient (selecteur
  * de seance, `getPlan()`) — jamais une comparaison de nom.
  */
-export function findPresetByPlanId(planId: string): PresetPlan | undefined {
+export function findPresetByPlanId(planId: string): AnyPreset | undefined {
   if (!planId.startsWith(PRESET_PLAN_PREFIX)) return undefined;
   const id = planId.slice(PRESET_PLAN_PREFIX.length);
-  return PRESETS.find((preset) => preset.id === id);
+  // `activePresets()` et non `PRESETS` : sur une salle, ce sont ses modeles a
+  // elle que le selecteur propose, donc les seuls ids qui doivent se resoudre.
+  return activePresets().find((preset) => preset.id === id);
 }
