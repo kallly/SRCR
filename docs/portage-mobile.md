@@ -172,30 +172,27 @@ lire ni écrire quoi que ce soit. À `true`, c'est le même compte, le même uid
 et le même document que sur cirkali.fr : une séance créée sur le site apparaît
 dans l'application, et `cloud/merge.ts` n'a rien eu à apprendre.
 
-### Il reste deux choses, sans lesquelles ça ne marchera pas
+### Il reste une chose, côté iOS
 
-**L'empreinte SHA-1, côté Android.** Le `google-services.json` déposé ne
-contient qu'un client OAuth de type 3 (le client web) et **aucun de type 1** —
-la preuve visible qu'aucune empreinte n'a été enregistrée. Sans elle, Google
-ne peut pas vérifier l'application qui l'appelle et la connexion échoue par un
-`DEVELOPER_ERROR` (code 10), qui ne dit rien de sa cause.
-
-Console Firebase → Paramètres du projet → l'application Android → Ajouter une
-empreinte. Celle de la clé de débogage versionnée :
-
-```
-66:F1:8A:83:C7:A1:9F:BA:CC:17:4D:B8:8C:F3:86:59:C6:BE:AB:CD
-```
-
-Puis **re-télécharger `google-services.json`** dans `android/app/` : il doit
-alors porter un client de type 1. Le jour du Play Store, ajouter à côté
-l'empreinte de la clé de release ; Firebase en accepte plusieurs.
-
-**`GoogleService-Info.plist`, côté iOS.** Toujours manquant. Il va dans
+**`GoogleService-Info.plist`.** Toujours manquant. Il va dans
 `ios/App/App/`, et son *reversed client ID* doit être ajouté aux
 `CFBundleURLTypes` d'`Info.plist` — c'est le schéma d'URL par lequel Google
 rend la main à l'application. Sans les deux, la connexion échoue sur iOS
-seulement.
+seulement ; Android fonctionne.
+
+### L'empreinte de signature, et le piège qu'elle tend
+
+Android est en place : `google-services.json` porte un client OAuth de type 1
+lié à l'empreinte SHA-1 de `android/debug.keystore`.
+
+Le piège est que rien ne casse à la compilation si les deux divergent — c'est
+la connexion qui échoue à l'exécution, par un `DEVELOPER_ERROR` (code 10) qui
+ne dit pas un mot de sa cause. Le job Android **compare donc les deux avant de
+compiler** et refuse de produire un APK qui échouerait à se connecter.
+
+Le jour du Play Store, ajouter l'empreinte de la clé de release à côté de
+celle-ci dans la console — Firebase en accepte plusieurs — puis re-télécharger
+`google-services.json`.
 
 ### Ce que ça a changé côté raisonnement
 

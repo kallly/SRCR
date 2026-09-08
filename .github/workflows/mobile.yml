@@ -70,6 +70,30 @@ jobs:
       # quelqu'un a lance la commande a la main.
       - run: npx cap sync android
 
+      # L'empreinte de signature declaree a Firebase doit etre celle de la cle
+      # qui signe reellement l'APK. Si les deux divergent, RIEN ne casse a la
+      # compilation : c'est la connexion Google qui echoue a l'execution, par
+      # un DEVELOPER_ERROR (code 10) qui ne dit pas un mot de sa cause. C'est
+      # exactement le genre de panne qu'on ne diagnostique qu'en sachant
+      # d'avance ou regarder — d'ou cette verification, qui la transforme en
+      # echec de build explicite.
+      - name: Verifier l'empreinte de signature declaree a Firebase
+        run: |
+          declared=$(jq -r '.client[0].oauth_client[] | select(.client_type == 1) | .android_info.certificate_hash' \
+            android/app/google-services.json | tr 'A-Z' 'a-z')
+          actual=$(openssl pkcs12 -in android/debug.keystore -passin pass:android -nokeys -clcerts \
+            | openssl x509 -noout -fingerprint -sha1 \
+            | cut -d= -f2 | tr -d ':' | tr 'A-Z' 'a-z')
+          if [ -z "$declared" ]; then
+            echo "::error::google-services.json ne porte aucun client OAuth de type 1 : l'empreinte SHA-1 n'a pas ete enregistree dans la console Firebase. La connexion Google echouera par un DEVELOPER_ERROR."
+            exit 1
+          fi
+          if [ "$declared" != "$actual" ]; then
+            echo "::error::Empreinte declaree a Firebase ($declared) differente de celle de android/debug.keystore ($actual). La connexion Google echouera par un DEVELOPER_ERROR."
+            exit 1
+          fi
+          echo "Empreinte concordante : $actual"
+
       - run: ./gradlew assembleDebug --no-daemon
         working-directory: android
 
