@@ -29,6 +29,7 @@ import { figureSvg } from '../src/data/figures';
 import { DETAILS_BY_LOCALE } from '../src/content/exercise-details';
 import { AD_CLIENT, AD_MIN_WIDTH } from '../src/content/ad-rails';
 import { DICTIONARIES } from '../src/i18n';
+import { SITE_URL } from '../src/data/site';
 import type { Locale } from '../src/core/types';
 
 const DIST = join(process.cwd(), 'dist');
@@ -384,7 +385,7 @@ check(
 // Un `.txt` ne peut pas dire son encodage de l'interieur, contrairement au HTML
 // (`<meta charset>`) et au XML (sa declaration) : sans `charset` dans l'en-tete,
 // Cloudflare sort un `text/plain` nu et le navigateur retombe sur l'encodage par
-// defaut de sa locale — windows-1252 en France, donc « sÃ©ance ». C'est arrive a
+// defaut de sa locale — windows-1252 en France, donc « sA©ance ». C'est arrive a
 // llms.txt, le fichier meme qu'on adresse aux IA. La regle vit dans
 // `public/_headers` ; on verifie ici qu'aucun .txt accentue n'y manque, plutot
 // que de figer une liste de noms qui divergerait au prochain fichier ajoute.
@@ -590,6 +591,23 @@ const stale = (readdirSync(DIST, { recursive: true, encoding: 'utf8' }) as strin
   .filter((rel) => statSync(join(DIST, rel)).isFile())
   .filter((rel) => readFileSync(join(DIST, rel), 'utf8').includes(STALE_ORIGIN));
 check(`aucun fichier ne cite ${STALE_ORIGIN}`, stale.length === 0, stale.slice(0, 10).join(', '));
+
+// L'un des deux endroits est desormais partage : `SITE_URL` vit dans
+// `src/data/site.ts` et sert a la fois les pages generees et le bundle
+// navigateur, qui en a besoin depuis le portage mobile (`platform/native.ts` :
+// dans le WebView, `location.origin` vaut `https://localhost`). Restent les
+// litteraux d'`index.html`, qu'aucun code ne peut atteindre — d'ou cette
+// assertion, qui les tient a la meme valeur. Sans elle, un futur changement de
+// domaine se ferait a moitie, exactement comme le precedent.
+const homeOrigins = [...index.matchAll(/https:\/\/[a-z0-9.-]+/gi)]
+  .map((m) => m[0])
+  .filter((origin) => /(^https:\/\/([a-z0-9-]+\.)*cirkali\.fr$)|github\.io/i.test(origin));
+const wrongOrigins = [...new Set(homeOrigins.filter((origin) => origin !== SITE_URL))];
+check(
+  `les litteraux d'origine d'index.html disent tous ${SITE_URL}`,
+  homeOrigins.length > 0 && wrongOrigins.length === 0,
+  homeOrigins.length === 0 ? 'aucun litteral trouve' : wrongOrigins.join(', '),
+);
 
 console.log(
   failures === 0

@@ -1,5 +1,6 @@
 import { getLocale } from '../i18n';
 import type { Locale } from '../core/types';
+import { siteHref } from '../platform/native';
 
 /** Langue source : celle qui a toujours une fiche, donc le repli. */
 const SOURCE_LOCALE: Locale = 'fr';
@@ -34,7 +35,7 @@ export function createGuidesIndex(): { render: () => void } {
       const linkLocale = slugFor(locale) ? locale : SOURCE_LOCALE;
       // Sans extension : c'est la forme canonique, celle vers laquelle
       // l'hebergeur redirige `.html` (voir SITE_URL, build-exercise-pages.ts).
-      if (slug) link.href = `exercises/${linkLocale}/${slug}`;
+      if (slug) link.href = siteHref(`exercises/${linkLocale}/${slug}`);
     }
   }
 

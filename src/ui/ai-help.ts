@@ -2,6 +2,7 @@ import { t } from '../i18n';
 import { encodeSharedPlan } from '../core/share';
 import type { Context } from './app';
 import { byId, el, wireDialogClose } from './dom';
+import { shareBase } from '../platform/native';
 
 /**
  * Modal declenchee par #aiHelpTab, deuxieme et derniere commande de
@@ -31,7 +32,7 @@ export function createAiHelp(ctx: Context): void {
 
   /** Le lien reel de la seance active : le message « modifier » n'est donc pas un gabarit vide, il est deja pret a envoyer. */
   function activeShareUrl(): string {
-    return `${location.origin}${location.pathname}?s=${encodeSharedPlan(ctx.activePlan())}`;
+    return `${shareBase()}?s=${encodeSharedPlan(ctx.activePlan())}`;
   }
 
   /**

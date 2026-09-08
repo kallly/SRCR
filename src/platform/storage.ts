@@ -1,3 +1,5 @@
+import { isNativeApp } from './native';
+
 /**
  * Durabilite du stockage local, cote navigateur.
  *
@@ -11,6 +13,9 @@
  *   par script apres sept jours sans visite, et rien ne permet de s'y
  *   soustraire depuis la page : la seule reponse est de le DIRE, c'est
  *   `evictsIdleStorage()`.
+ *
+ * L'application native est un troisieme cas, et c'est WebKit qui le rend
+ * piegeux : voir `evictsIdleStorage()`.
  */
 
 /**
@@ -48,8 +53,18 @@ export function requestPersistentStorage(): void {
  * l'absence de `navigator.storage.persist` ne suffit pas a conclure (elle
  * manque aussi ailleurs). Le pire cas reste une phrase affichee en trop ou en
  * moins — rien de fonctionnel n'en depend.
+ *
+ * **L'application native est exclue en premier, et ce n'est pas un detail.**
+ * Le WebView d'iOS est un `WKWebView`, donc son UA porte « iPhone » ou
+ * « iPad » : sans ce test, l'app installee affichait « ce navigateur efface
+ * les donnees apres sept jours » — faux, et alarmant. Le stockage d'une
+ * application vit dans son conteneur, qu'iOS ne purge pas par inactivite ; il
+ * disparait a la desinstallation, comme celui de n'importe quelle app. La
+ * politique visee ici est celle du navigateur, pas celle du moteur de rendu,
+ * et c'est le seul endroit ou les deux se separent.
  */
 export function evictsIdleStorage(): boolean {
+  if (isNativeApp()) return false;
   const ua = navigator.userAgent;
   // iOS : le marqueur du navigateur tiers (CriOS, FxiOS, EdgiOS) ou celui de
   // l'appareil suffit — dans les deux cas c'est WebKit dessous.

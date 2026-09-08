@@ -11,6 +11,7 @@ import {
   type State,
 } from '../core/storage';
 import type { ExerciseKey, Locale, PlanItem, SavedPlan, SessionConfig, SessionMode } from '../core/types';
+import { siteHref } from '../platform/native';
 import { requestPersistentStorage } from '../platform/storage';
 import { applyStaticTranslations, byId } from './dom';
 import { createExerciseInfo } from './exercise-info';
@@ -507,7 +508,7 @@ export function createApp(state: State): { render: () => void } {
     // le libelle du lien suit la langue via `data-i18n`, mais pas sa cible.
     // Meme motif que l'index des fiches (`ui/guides-index.ts`), en plus simple
     // — ici il n'y a qu'une URL a recomposer, sans slug traduit.
-    byId('privacyLink').setAttribute('href', `confidentialite/${getLocale()}`);
+    byId('privacyLink').setAttribute('href', siteHref(`confidentialite/${getLocale()}`));
     byId('modeClassic').classList.toggle('on', config.mode === 'classic');
     byId('modeCircuit').classList.toggle('on', config.mode === 'circuit');
     settings.classList.toggle('on', config.mode === 'circuit');

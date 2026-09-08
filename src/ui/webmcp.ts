@@ -3,6 +3,7 @@ import { decodeAiPlan, encodeAiPlan } from '../core/ai-plan';
 import { encodeSharedPlan } from '../core/share';
 import { GROUP_IDS, groupParent } from '../data/groups';
 import { LIBRARY } from '../data/library';
+import { shareBase } from '../platform/native';
 import type { Context } from './app';
 import type { Share } from './share';
 
@@ -106,7 +107,7 @@ export function installWebMcp(ctx: Context, share: Share): void {
         const plan = ctx.activePlan();
         return text({
           session: encodeAiPlan(plan),
-          shareUrl: `${location.origin}${location.pathname}?s=${encodeSharedPlan(plan)}`,
+          shareUrl: `${shareBase()}?s=${encodeSharedPlan(plan)}`,
         });
       },
     },

@@ -6,6 +6,7 @@ import type { SharedPlan } from '../core/share';
 import type { SavedPlan } from '../core/types';
 import type { Context } from './app';
 import { byId, wireDialogClose } from './dom';
+import { shareBase } from '../platform/native';
 
 /** Nom du parametre d'URL portant une seance partagee. Court, pour un lien plus lisible. */
 const SHARE_QUERY_PARAM = 's';
@@ -39,7 +40,7 @@ function loadQrFactory(): ReturnType<typeof importQrFactory> {
 }
 
 function buildShareUrl(encoded: string): string {
-  return `${location.origin}${location.pathname}?${SHARE_QUERY_PARAM}=${encoded}`;
+  return `${shareBase()}?${SHARE_QUERY_PARAM}=${encoded}`;
 }
 
 /**

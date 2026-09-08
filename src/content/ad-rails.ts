@@ -21,6 +21,20 @@
  *   une impression jamais vue — interdit par la politique AdSense ;
  * - et le visiteur mobile paierait quand meme les ~100 Ko d'adsbygoogle.js,
  *   pour rien, en annulant le travail des deux derniers lots PageSpeed.
+ *
+ * --- Et jamais dans l'application native ---
+ *
+ * AdSense interdit ses annonces dans le WebView d'une application. Le seuil de
+ * largeur ne suffisait PAS a nous en preserver : il est a 1200 px et un iPad
+ * Pro en paysage fait 1366 px, donc les encarts se seraient declenches dans
+ * l'app, sur tablette, sans que rien ne le signale. La reponse tient en deux
+ * temps, volontairement redondants parce qu'une infraction ne se rattrape pas :
+ *
+ * 1. le build applicatif (`CIRKALI_TARGET=app`, voir vite.config.ts) n'injecte
+ *    pas ce script du tout — pas une ligne de code publicitaire dans le
+ *    binaire, ce qui est la version forte de la meme promesse ;
+ * 2. et le script lui-meme sort immediatement s'il se decouvre dans un runtime
+ *    natif, au cas ou un binaire serait construit depuis `dist/` par erreur.
  */
 
 /** Identifiant editeur AdSense. Le meme dans public/ads.txt et dans le <head>. */
@@ -67,6 +81,14 @@ export function adRailsScript(left: string, right: string, label: string): strin
         // Evalue UNE SEULE FOIS : redimensionner la fenetre n'insere pas de
         // publicite en cours de route, et n'en retire pas non plus.
         if (!matchMedia('(min-width: ${AD_MIN_WIDTH}px)').matches) return;
+
+        // Application native : interdit par la politique AdSense, et le seuil
+        // ci-dessus ne l'attrape pas (un iPad Pro en paysage le franchit).
+        // Meme sonde que src/platform/native.ts, recopiee ici parce que ce
+        // script est une chaine posee dans du HTML genere : il ne peut rien
+        // importer.
+        var cap = window.Capacitor;
+        if (cap && typeof cap.isNativePlatform === 'function' && cap.isNativePlatform()) return;
 
         var slots = [['ad-rail-l', ${json(left)}], ['ad-rail-r', ${json(right)}]];
         var units = [];

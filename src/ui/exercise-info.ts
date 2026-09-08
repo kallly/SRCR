@@ -3,6 +3,7 @@ import { groupColor } from '../data/groups';
 import { figureSvg } from '../data/figures';
 import { LIBRARY } from '../data/library';
 import type { ExerciseKey, GroupId } from '../core/types';
+import { siteHref } from '../platform/native';
 import { byId, el, wireDialogClose } from './dom';
 
 /** Nombre de points cles resumes dans la modal (les etapes completes sont sur la page dediee). */
@@ -101,7 +102,7 @@ export function createExerciseInfo(): ExerciseInfo {
       // La page detaillee vit sous la langue qui a reellement fourni ce
       // contenu : la locale active si elle a son propre contenu, le francais
       // sinon (c'est aussi ce que sert `detail` dans ce cas, via le repli).
-      more.href = `exercises/${native ? locale : 'fr'}/${detail.slug}`;
+      more.href = siteHref(`exercises/${native ? locale : 'fr'}/${detail.slug}`);
       loadingMsg.hidden = true;
     } catch {
       loadingMsg.hidden = true;

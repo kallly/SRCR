@@ -13,6 +13,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { LIBRARY, type LibraryEntry } from '../src/data/library';
+import { SITE_URL } from '../src/data/site';
 import { GROUP_IDS, GROUP_TREE } from '../src/data/groups';
 import { encodeSharedPlan } from '../src/core/share';
 import type { ExerciseItem, PlanItem } from '../src/core/types';
@@ -39,19 +40,23 @@ const OG_LOCALES: Record<Locale, string> = {
   it: 'it_IT',
 };
 
-/**
- * Origine canonique publiee. Elle commande les canonical, hreflang, og:*,
- * JSON-LD, fil d'Ariane, sitemap et llms.txt de toutes les pages generees.
+/*
+ * `SITE_URL` est importe de `src/data/site.ts` (voir les imports en tete) et
+ * non plus declare ici. Il commande les canonical, hreflang, og:*, JSON-LD,
+ * fil d'Ariane, sitemap et llms.txt de toutes les pages generees.
  *
  * Le site a longtemps vecu sur kallly.github.io/SRCR et cette constante n'a pas
  * suivi le passage a cirkali.fr : pendant ce temps chaque page disait a Google
  * que sa version de reference etait l'ancienne adresse, et le sitemap servi
  * depuis cirkali.fr n'y listait que des URL d'un autre domaine — donc rejete.
- * Les memes valeurs vivent en litteral dans `index.html` (les balises SEO ne
- * passent pas par `fillStaticTranslations()`), d'ou l'assertion de
- * `scripts/check-build.ts` qui interdit l'ancienne origine dans `dist/`.
+ * C'est exactement pour ne pas le revivre que la valeur a ete sortie d'ici le
+ * jour ou le bundle navigateur en a eu besoin lui aussi (portage mobile :
+ * `platform/native.ts`) — au lieu d'une troisieme copie. Les memes valeurs
+ * vivent en litteral dans `index.html` (les balises SEO ne passent pas par
+ * `fillStaticTranslations()`), d'ou les deux assertions de
+ * `scripts/check-build.ts` : l'ancienne origine interdite dans `dist/`, et
+ * `index.html` tenu de dire la meme chose que `SITE_URL`.
  */
-const SITE_URL = 'https://cirkali.fr';
 
 /**
  * Les URL publiees n'ont PAS d'extension, alors que les fichiers ecrits sur le
