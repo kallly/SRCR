@@ -487,29 +487,31 @@ https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsIn
         francais injecte au build depuis fr.ts, donc les elements data-i18n
         sont VIDES ici.
 
-        Deux ecarts assumes par rapport aux trois autres sections repliables :
+        Aucun style propre, volontairement : elles reprennent `.about` tel
+        quel, comme `#allGuides` qui n'ajoute que la grille de liens dont il a
+        besoin. Une version precedente leur donnait un liseré et un fond ;
+        elles ne se lisaient plus comme les sections voisines, alors qu'elles
+        vivent dans la meme colonne et disent la meme sorte de chose.
 
-        - `.callout` leur donne un liseré et un fond, parce qu'elles
-          s'adressent au visiteur au lieu de documenter l'app ;
-        - `ui/app.ts` ne les replie PAS sous 760 px, contrairement a
-          « A propos », « Toutes les fiches » et « Creer une seance avec une
-          IA ». C'est precisement sur telephone que l'une explique comment
-          installer et que l'autre est lue ; les replier reviendrait a les
-          cacher a leur seul public. Elles sont courtes, elles ne repoussent
-          pas le contenu utile comme le ferait la specification `?s=`.
+        Un seul ecart avec les trois autres sections repliables :
+        `ui/app.ts` ne les replie PAS sous 760 px, contrairement a « A
+        propos », « Toutes les fiches » et « Creer une seance avec une IA ».
+        C'est precisement sur telephone que l'une explique comment installer
+        et que l'autre est lue ; les replier reviendrait a les cacher a leur
+        seul public. Elles sont courtes, elles ne repoussent pas le contenu
+        utile comme le ferait la specification `?s=`.
 
         Le lien Ko-fi porte son propre data-i18n : `applyStaticTranslations()`
         ecrit dans textContent, donc un <p> traduit qui contiendrait un <a>
         emporterait le lien au premier rendu.
       -->
-      <details class="about callout" id="installApp" open>
+      <details class="about" id="installApp" open>
         <summary data-i18n="install.title"></summary>
         <p data-i18n="install.chrome"></p>
         <p data-i18n="install.ios"></p>
         <p data-i18n="install.native"></p>
         <p>
           <a
-            class="callout-link"
             href="https://ko-fi.com/cirkali"
             target="_blank"
             rel="noopener"
@@ -518,12 +520,11 @@ https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsIn
         </p>
       </details>
 
-      <details class="about callout" id="supportProject" open>
+      <details class="about" id="supportProject" open>
         <summary data-i18n="support.title"></summary>
         <p data-i18n="support.text"></p>
         <p>
           <a
-            class="callout-link"
             href="https://ko-fi.com/cirkali"
             target="_blank"
             rel="noopener"
