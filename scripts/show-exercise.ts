@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 /**
  * Localise le contenu long d'UN exercice dans les cinq langues.
  *

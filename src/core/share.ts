@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import { isExercise } from './plan';
 import { parsePlan, parsePlanName, parseSessionConfig } from './storage';
 import type { PlanItem, SessionConfig } from './types';

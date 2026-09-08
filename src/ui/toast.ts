@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import { el } from './dom';
 
 /** Duree d'affichage avant disparition automatique. */

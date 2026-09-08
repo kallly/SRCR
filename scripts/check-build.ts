@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 /**
  * Verifications de non-regression sur `dist/`, apres `npm run build`.
  *

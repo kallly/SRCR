@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import { GROUP_IDS } from '../data/groups';
 import { CUSTOM_DEFAULTS } from '../data/library';
 import { createCustom } from '../core/plan';

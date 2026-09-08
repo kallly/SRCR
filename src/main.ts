@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import './styles/tokens.css';
 import './styles/base.css';
 import './styles/planner.css';

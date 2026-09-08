@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import { formatTime, t } from '../i18n';
 import { evictsIdleStorage } from '../platform/storage';
 import type { Context } from './app';

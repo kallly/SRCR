@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 /**
  * Genere une page HTML statique et autonome par exercice, plus le sitemap et
  * un recapitulatif des prompts d'image. Lance apres `vite build` (voir

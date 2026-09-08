@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 /**
  * Signale les URL du site aux moteurs qui implementent IndexNow.
  *

@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import type { CategoryId, EffortMode, GroupId } from '../core/types';
 import type { TenantPreset } from './presets';
 

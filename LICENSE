@@ -1,0 +1,87 @@
+CIRKALI — Tous droits réservés / All rights reserved
+
+Copyright (c) 2026 CIRKALI (cirkali@proton.me)
+
+--------------------------------------------------------------------------
+FRANÇAIS
+--------------------------------------------------------------------------
+
+Ce dépôt et tout ce qu'il contient — code source, textes, traductions,
+figures SVG, contenu des fiches d'exercice, ressources graphiques, données
+et documentation — sont protégés par le droit d'auteur et demeurent la
+propriété exclusive de leur auteur.
+
+Le dépôt est consultable publiquement. Cette visibilité n'emporte AUCUNE
+cession de droits : ce logiciel n'est pas un logiciel libre et n'est pas
+placé dans le domaine public.
+
+Sont interdits, en l'absence d'autorisation écrite préalable de l'auteur :
+
+  - la reproduction, la copie ou la redistribution de tout ou partie du
+    contenu de ce dépôt, sous quelque forme et sur quelque support que ce
+    soit ;
+  - la modification, l'adaptation, la traduction ou la création d'œuvres
+    dérivées ;
+  - le déploiement, l'hébergement ou la mise à disposition du public de
+    tout ou partie de ce logiciel, y compris sous une autre marque ;
+  - la publication sur une boutique d'applications ;
+  - l'exploitation commerciale, directe ou indirecte ;
+  - l'utilisation du contenu de ce dépôt pour entraîner un modèle
+    d'apprentissage automatique.
+
+Sont autorisées la consultation du code à des fins de lecture, d'étude
+personnelle et d'évaluation, ainsi que les copies techniques que le
+fonctionnement normal de GitHub implique.
+
+L'usage du site https://cirkali.fr et des applications mobiles CIRKALI par
+leurs utilisateurs finaux n'est pas concerné par le présent texte : il reste
+libre et gratuit.
+
+Le nom « CIRKALI », le nom de domaine cirkali.fr et l'identité visuelle du
+projet ne font l'objet d'aucune licence d'usage.
+
+Les dépendances tierces (Vite, TypeScript, Capacitor, Firebase,
+qrcode-generator, et les autres paquets listés dans package.json) restent
+régies par leurs licences respectives et ne sont pas couvertes par le
+présent texte.
+
+Ce logiciel est fourni « en l'état », sans garantie d'aucune sorte. L'auteur
+ne saurait être tenu responsable d'un quelconque dommage résultant de son
+utilisation.
+
+Pour toute demande d'autorisation ou de licence : cirkali@proton.me
+
+--------------------------------------------------------------------------
+ENGLISH (courtesy translation — the French text prevails)
+--------------------------------------------------------------------------
+
+This repository and all of its contents — source code, texts, translations,
+SVG figures, exercise page content, assets, data and documentation — are
+protected by copyright and remain the exclusive property of their author.
+
+This repository is publicly visible. Such visibility grants NO rights
+whatsoever: this software is not open source and is not in the public
+domain.
+
+Without the author's prior written permission, you may not: reproduce, copy
+or redistribute any part of this repository, in any form or medium; modify,
+adapt, translate or create derivative works; deploy, host or otherwise make
+this software available to the public, including under a different brand;
+publish it to an application store; exploit it commercially, directly or
+indirectly; or use its contents to train a machine learning model.
+
+Viewing the code for reading, personal study and evaluation is permitted, as
+are the technical copies that the normal operation of GitHub entails.
+
+End users' use of https://cirkali.fr and of the CIRKALI mobile applications
+is unaffected by this notice: it remains free of charge.
+
+The name "CIRKALI", the cirkali.fr domain name and the project's visual
+identity are not licensed for use.
+
+Third-party dependencies remain governed by their own licenses.
+
+This software is provided "as is", without warranty of any kind. The author
+shall not be liable for any damages arising from its use.
+
+Licensing enquiries: cirkali@proton.me

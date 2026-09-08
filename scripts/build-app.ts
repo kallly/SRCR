@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 /**
  * Construit `dist-app/`, le bundle embarque dans l'application native.
  *

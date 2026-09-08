@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 /**
  * Trois sons distincts, pour que l'oreille seule les distingue sans regarder
  * l'ecran : `beepWarning()` (deux bips brefs, plus aigu) annonce qu'il reste

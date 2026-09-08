@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import { defineConfig, type Plugin } from 'vite';
 
 import { DETAILS_BY_LOCALE } from './src/content/exercise-details';

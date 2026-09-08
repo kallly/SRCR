@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import type { ExerciseKey, Locale } from '../../core/types';
 import { fr } from './fr';
 import { en } from './en';

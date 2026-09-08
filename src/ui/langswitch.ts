@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import { getLocale, LOCALE_NAMES, LOCALES, isLocale } from '../i18n';
 import type { Context } from './app';
 import { byId, el } from './dom';

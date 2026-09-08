@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 /**
  * Les encarts publicitaires, en une seule source pour les trois surfaces.
  *

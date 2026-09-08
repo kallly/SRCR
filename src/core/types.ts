@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 /**
  * Groupes musculaires, dans l'ordre d'affichage des selecteurs.
  *

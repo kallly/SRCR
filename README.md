@@ -67,3 +67,11 @@ src/platform/  bip audio, verrou d'écran
 Les détails d'architecture et les règles à respecter sont dans
 [CLAUDE.md](CLAUDE.md), qui renvoie vers `.claude/skills/` pour les règles
 propres à une zone (partage par lien, SEO, pages d'exercice, modules d'interface).
+
+## Licence
+
+**Tous droits réservés** — voir [LICENSE](LICENSE). Le dépôt est consultable,
+mais le code n'est pas libre : aucune reproduction, modification,
+redistribution ni mise en ligne, en tout ou partie, sans autorisation écrite.
+L'usage de https://cirkali.fr et des applications mobiles par leurs
+utilisateurs reste libre et gratuit.

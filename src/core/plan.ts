@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import { t } from '../i18n';
 import { CUSTOM_DEFAULTS, findLibraryEntry, isLibraryKey } from '../data/library';
 import { presetPlanId, type AnyPreset } from '../data/presets';

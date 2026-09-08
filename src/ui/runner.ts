@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import { formatNumber, t } from '../i18n';
 import { groupColor } from '../data/groups';
 import { figureSvg } from '../data/figures';

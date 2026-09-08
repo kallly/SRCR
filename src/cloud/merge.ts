@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import type { State } from '../core/storage';
 import type { SavedPlan } from '../core/types';
 

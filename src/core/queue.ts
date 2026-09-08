@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import type { ExerciseItem, PlanItem, RestStep, SessionConfig, Step, WorkStep } from './types';
 import { groupsOverlap } from '../data/groups';
 import { isExercise } from './plan';

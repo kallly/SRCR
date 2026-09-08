@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import { t, type TranslationKey } from '../i18n';
 import { GROUP_TREE } from '../data/groups';
 import type { GroupId } from '../core/types';

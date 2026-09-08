@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "license": "UNLICENSED",
   "description": "Planificateur et lecteur de seance au poids du corps, multilingue, sans compte obligatoire",
   "scripts": {
     "dev": "vite",

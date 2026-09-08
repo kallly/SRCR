@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import { isLocale } from '../i18n';
 import { isGroupId } from '../data/groups';
 import { findLibraryEntry, isLibraryKey } from '../data/library';

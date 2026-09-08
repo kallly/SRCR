@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import { parseDeleted, parseHistory, parsePlansList, type State } from '../core/storage';
 import { isUserCancellation, loadSdk } from './firebase';
 import { mergeStates } from './merge';

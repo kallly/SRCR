@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import { t } from '../i18n';
 import { isExercise } from '../core/plan';
 import { decodeAiPlan } from '../core/ai-plan';

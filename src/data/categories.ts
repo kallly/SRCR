@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import type { CategoryId } from '../core/types';
 
 /** Ordre d'affichage des puces de filtre dans la bibliotheque. */

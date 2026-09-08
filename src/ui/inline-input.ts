@@ -1,3 +1,5 @@
+// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+
 import { MAX_NAME } from '../core/plan';
 import { el } from './dom';
 
