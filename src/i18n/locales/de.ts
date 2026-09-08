@@ -60,7 +60,7 @@ export const de: Translations = {
     statusOffline: 'offline, wird bei Netz fortgesetzt',
     statusError: 'Synchronisierung nicht möglich, Einheiten bleiben hier',
     statusTooLarge: 'zu viele Einheiten für die Online-Sicherung',
-    safariNotice: 'Safari löscht Einheiten nach 7 Tagen ohne Besuch. Ein Konto bewahrt sie.',
+    storageNotice: 'Dieser Browser löscht Einheiten nach 7 Tagen ohne Besuch. Ein Konto bewahrt sie.',
     signInError: 'Anmeldung fehlgeschlagen. Versuche es gleich noch einmal.',
     merged: {
       one: '{count} Einheit aus deinem Konto geholt',

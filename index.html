@@ -212,11 +212,13 @@
     <main class="wrap">
       <header class="head">
         <!--
-          Titre a gauche, compte + aide IA a droite, SUR LA MEME RANGEE : la
-          langue n'occupant plus cette place (elle est descendue sur la
-          rangee suivante, voir `.quicknav-row` juste apres), il reste assez
-          de place pour "CIRKALI" a cote des deux boutons — ce qui ne passait
-          pas quand les trois commandes partageaient ce coin a elles seules.
+          Titre a gauche, commandes a droite, mais sur DEUX rangees
+          (`.head-side`) et non une : compte + aide IA en haut, au niveau du
+          titre ; la langue en dessous, au niveau de la tagline. Les trois cote
+          a cote approchaient les 240px et ne laissaient pas assez de place
+          pour "CIRKALI" a 34px sur la meme ligne — c'est cette contrainte qui
+          avait fait descendre la langue sous l'en-tete, et cet empilement qui
+          l'y remonte sans la ramener sur la rangee du titre.
         -->
         <div class="titles">
           <p class="eyebrow" data-i18n="app.eyebrow"></p>
@@ -235,44 +237,40 @@
           des le premier rendu. Les repasser en fixe, ou vider leur libelle,
           ramenerait un decalage de mise en page a l'arrivee du JS.
         -->
-        <div class="head-actions">
-          <button
-            type="button"
-            class="account-btn"
-            id="accountBtn"
-            aria-haspopup="dialog"
-            aria-label=""
-            data-i18n-aria-label="account.label"
-          ></button>
-          <button
-            type="button"
-            class="ai-help-tab"
-            id="aiHelpTab"
-            aria-haspopup="dialog"
-            data-i18n="aiHelp.trigger"
-            data-i18n-aria-label="aiHelp.triggerLabel"
-            aria-label=""
-            ></button
-          >
+        <div class="head-side">
+          <div class="head-actions">
+            <button
+              type="button"
+              class="account-btn"
+              id="accountBtn"
+              aria-haspopup="dialog"
+              aria-label=""
+              data-i18n-aria-label="account.label"
+            ></button>
+            <button
+              type="button"
+              class="ai-help-tab"
+              id="aiHelpTab"
+              aria-haspopup="dialog"
+              data-i18n="aiHelp.trigger"
+              data-i18n-aria-label="aiHelp.triggerLabel"
+              aria-label=""
+              ></button
+            >
+          </div>
+          <div class="lang">
+            <select id="locale" aria-label="" data-i18n-aria-label="lang.label"></select>
+          </div>
         </div>
       </header>
       <!--
-        La langue occupe seule cette rangee, a droite, dans l'espace qui
-        restait sinon vide entre la tagline et « Séances ».
-
         #storageNotice ne porte PAS de data-i18n et reste vide dans la source :
-        son texte n'existe que sur Safari et seulement deconnecte (voir
-        ui/account.ts). Ce n'est donc pas du chrome statique, et un robot ne
-        doit pas lire un avertissement qui ne le concerne pas. Il tient dans la
-        hauteur deja imposee par le selecteur de langue (44px), donc son
-        apparition ne decale rien.
+        son texte n'existe que sous WebKit (Safari, et tout navigateur sur iOS)
+        et seulement deconnecte (voir ui/account.ts). Ce n'est donc pas du
+        chrome statique, et un robot ne doit pas lire un avertissement qui ne
+        le concerne pas.
       -->
-      <div class="quicknav-row">
-        <p class="storage-notice" id="storageNotice" hidden></p>
-        <div class="lang">
-          <select id="locale" aria-label="" data-i18n-aria-label="lang.label"></select>
-        </div>
-      </div>
+      <p class="storage-notice" id="storageNotice" hidden></p>
 
       <h2 id="section-sessions" data-i18n="section.sessions"></h2>
       <div id="planSwitcher"></div>

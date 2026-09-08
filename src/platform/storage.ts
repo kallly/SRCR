@@ -7,14 +7,15 @@
  *
  * - Chrome et Firefox n'effacent que sous pression disque, et acceptent qu'on
  *   demande a en etre exempte : c'est `requestPersistentStorage()`.
- * - Safari efface tout stockage ecrit par script apres sept jours sans visite,
- *   et rien ne permet de s'y soustraire depuis la page : la seule reponse est
- *   de le DIRE, c'est `evictsIdleStorage()`.
+ * - WebKit — Safari, et tout navigateur sur iOS — efface tout stockage ecrit
+ *   par script apres sept jours sans visite, et rien ne permet de s'y
+ *   soustraire depuis la page : la seule reponse est de le DIRE, c'est
+ *   `evictsIdleStorage()`.
  */
 
 /**
  * Demande que le stockage de ce site soit marque persistant. Sans effet la ou
- * l'API n'existe pas (Safari), best-effort partout ailleurs.
+ * l'API n'existe pas (WebKit), best-effort partout ailleurs.
  *
  * A n'appeler qu'apres une vraie modification, jamais au chargement : Firefox
  * pose la question a l'utilisateur, et un visiteur qui n'a encore rien
@@ -32,17 +33,29 @@ export function requestPersistentStorage(): void {
 }
 
 /**
- * Vrai sur Safari, le seul navigateur qui efface le stockage d'un site non
- * visite depuis sept jours (ITP). Detection par l'UA faute de mieux : aucune
- * API n'expose cette politique, et `navigator.storage.persist` absent ne
- * suffit pas a conclure (il manque aussi ailleurs).
+ * Vrai la ou le stockage d'un site non visite depuis sept jours est efface
+ * (l'ITP de WebKit). Ce n'est pas « Safari » qu'on cherche mais WEBKIT, et les
+ * deux ne se recouvrent pas :
  *
- * Les navigateurs tiers sur iOS (Chrome, Firefox...) sont volontairement
- * exclus : ils embarquent bien WebKit, mais l'exception se paierait en
- * fausses alertes ailleurs, et le message vise le cas de loin le plus
- * courant.
+ * - sur iPhone et iPad, Apple impose son moteur a TOUS les navigateurs — Chrome
+ *   et Firefox y sont des habillages de `WKWebView` et purgent donc pareil ;
+ * - a l'inverse, Chrome, Edge, Opera et Samsung Internet ecrivent tous
+ *   « Safari » dans leur UA (heritage : ils ont copie sa forme pour ne pas se
+ *   faire servir de pages degradees) sans rien purger du tout. Chercher le
+ *   seul mot « Safari » avertirait les deux tiers du web a tort.
+ *
+ * Detection par l'UA faute de mieux : aucune API n'expose cette politique, et
+ * l'absence de `navigator.storage.persist` ne suffit pas a conclure (elle
+ * manque aussi ailleurs). Le pire cas reste une phrase affichee en trop ou en
+ * moins — rien de fonctionnel n'en depend.
  */
 export function evictsIdleStorage(): boolean {
   const ua = navigator.userAgent;
-  return /safari/i.test(ua) && !/chrome|chromium|android|crios|fxios|edgios|opr\//i.test(ua);
+  // iOS : le marqueur du navigateur tiers (CriOS, FxiOS, EdgiOS) ou celui de
+  // l'appareil suffit — dans les deux cas c'est WebKit dessous.
+  const webkitIos = /crios|fxios|edgios|iphone|ipad|ipod/i.test(ua);
+  // Safari proprement dit : macOS, ou un iPad en mode bureau (son UA se
+  // fait alors passer pour un Macintosh, sans plus aucune trace d'iOS).
+  const safari = /safari/i.test(ua) && !/chrome|chromium|android|opr\//i.test(ua);
+  return webkitIos || safari;
 }

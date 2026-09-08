@@ -75,13 +75,15 @@ export const fr = {
     statusError: 'synchronisation impossible, séances gardées ici',
     statusTooLarge: 'trop de séances pour la sauvegarde en ligne',
     /**
-     * Affichee seulement sur Safari et seulement deconnecte (ui/account.ts) :
-     * c'est le seul navigateur qui efface le stockage d'un site non visite
-     * depuis sept jours, et la seule parade depuis la page est de le dire.
-     * Deux lignes maximum sur un ecran etroit — au-dela, la rangee grandit et
-     * decale la page.
+     * Affichee seulement sous WebKit — Safari, et tout navigateur sur iOS — et
+     * seulement deconnecte (ui/account.ts, platform/storage.ts) : c'est le seul
+     * moteur qui efface le stockage d'un site non visite depuis sept jours, et
+     * la seule parade depuis la page est de le dire. « Ce navigateur » et non
+     * « Safari » : le message s'affiche aussi sur Chrome ou Firefox pour
+     * iPhone, ou WebKit est impose. Deux lignes maximum sur un ecran etroit —
+     * au-dela, la rangee grandit et decale la page.
      */
-    safariNotice: 'Safari efface les séances après 7 jours sans visite. Un compte les garde.',
+    storageNotice: 'Ce navigateur efface les séances après 7 jours sans visite. Un compte les garde.',
     signInError: 'Connexion impossible. Réessayez dans un instant.',
     merged: {
       one: '{count} séance récupérée depuis votre compte',

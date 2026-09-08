@@ -60,7 +60,7 @@ export const it: Translations = {
     statusOffline: 'offline, riprenderà al ritorno della rete',
     statusError: 'sincronizzazione non riuscita, sedute conservate qui',
     statusTooLarge: 'troppe sedute per il salvataggio online',
-    safariNotice: 'Safari cancella le sedute dopo 7 giorni senza visite. Un account le conserva.',
+    storageNotice: 'Questo browser cancella le sedute dopo 7 giorni senza visite. Un account le conserva.',
     signInError: 'Accesso non riuscito. Riprova tra un istante.',
     merged: {
       one: '{count} seduta recuperata dal tuo account',

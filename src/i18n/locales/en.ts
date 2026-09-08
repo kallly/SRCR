@@ -60,7 +60,7 @@ export const en: Translations = {
     statusOffline: 'offline, will resume when back online',
     statusError: 'sync unavailable, sessions kept here',
     statusTooLarge: 'too many sessions for online backup',
-    safariNotice: 'Safari erases sessions after 7 days without a visit. An account keeps them.',
+    storageNotice: 'This browser erases sessions after 7 days without a visit. An account keeps them.',
     signInError: 'Sign-in failed. Try again in a moment.',
     merged: {
       one: '{count} session restored from your account',

@@ -62,13 +62,13 @@ export function createAccount(ctx: Context): { render: () => void } {
   function render(): void {
     const user = ctx.cloud.user();
 
-    // Safari efface le stockage d'un site non visite depuis sept jours, et
+    // WebKit efface le stockage d'un site non visite depuis sept jours, et
     // aucune API ne permet de s'y soustraire (voir platform/storage.ts) : la
     // seule chose a faire est de le dire, la ou c'est vrai et tant qu'aucun
     // compte ne met les seances a l'abri. Texte pose ici et non dans
     // index.html : il est conditionnel, donc transitoire par nature.
     const warn = user === null && fragileStorage;
-    storageNotice.textContent = warn ? t('account.safariNotice') : '';
+    storageNotice.textContent = warn ? t('account.storageNotice') : '';
     storageNotice.hidden = !warn;
 
     // Le contenu du bouton d'en-tete est du texte transitoire, jamais du

@@ -338,12 +338,19 @@ le garder. Deux politiques, donc deux réponses :
   `navigator.storage.persist()`. Il est demandé **à la première sauvegarde
   réussie**, jamais au chargement : Firefox pose la question à l'utilisateur, et
   un visiteur qui n'a encore rien enregistré n'a pas à se la voir poser.
-- Safari efface tout stockage écrit par script après **sept jours sans visite**,
+- WebKit efface tout stockage écrit par script après **sept jours sans visite**,
   et rien depuis la page ne permet de s'y soustraire. La seule réponse est de le
-  dire : `#storageNotice`, une phrase affichée uniquement sur Safari et
-  uniquement déconnecté (`ui/account.ts`). Elle tient dans la hauteur déjà
-  imposée par le sélecteur de langue, donc elle ne décale rien — la garder
-  courte fait partie du contrat.
+  dire : `#storageNotice`, une phrase affichée uniquement là et uniquement
+  déconnecté (`ui/account.ts`). Elle tient dans la hauteur déjà imposée par le
+  sélecteur de langue, donc elle ne décale rien — la garder courte fait partie
+  du contrat.
+
+  Ce qu'on détecte est bien **WebKit**, pas « Safari », et les deux ne se
+  recouvrent pas (`evictsIdleStorage()`) : sur iPhone et iPad, Apple impose son
+  moteur à tous les navigateurs, donc Chrome et Firefox y purgent pareil ; à
+  l'inverse Chrome, Edge, Opera et Samsung écrivent tous « Safari » dans leur
+  UA sans rien purger. Chercher ce seul mot avertirait les deux tiers du web à
+  tort — d'où le message qui dit « ce navigateur » plutôt que « Safari ».
 
 ## Publicité
 

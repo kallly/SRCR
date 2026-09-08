@@ -67,10 +67,11 @@ input[type='number'] {
   colonne de titre est plus haute, on ne veut pas que "flex-start" par defaut
   centre ou etire les boutons sur toute cette hauteur).
 
-  Ca ne tenait pas quand la langue partageait encore ce coin : langue + compte
-  + IA a eux trois approchaient les 240px, ne laissant pas assez de place pour
-  "CIRKALI" a 34px sur la meme ligne. La langue est descendue sur la rangee
-  suivante (`.quicknav-row`) precisement pour liberer ce coin.
+  Ca ne tient pas si la langue partage la RANGEE : langue + compte + IA a eux
+  trois approchent les 240px, ne laissant pas assez de place pour "CIRKALI" a
+  34px sur la meme ligne. D'ou `.head-side`, qui les empile sur deux rangees
+  plutot que de les aligner : le coin reste etroit, la langue reste dans
+  l'en-tete.
 */
 .head {
   display: flex;
@@ -141,9 +142,8 @@ h2::after {
 }
 
 /*
-  Compte + aide IA, a droite du titre dans `.head` (voir son commentaire). La
-  langue n'y est plus : elle occupe la rangee juste sous le titre (voir
-  `.quicknav-row`).
+  Compte + aide IA, premiere rangee de `.head-side` (voir le commentaire de
+  `.head`). La langue est sur la seconde, juste dessous.
 
   `flex: none` : cette rangee ne doit jamais retrecir sous sa largeur de
   contenu — les boutons sont deja au minimum tactile de 44px, les comprimer
@@ -162,34 +162,35 @@ h2::after {
 }
 
 /*
-  La langue a droite, pour ne pas laisser un grand vide entre la tagline et
-  « Séances » — c'est l'espace qu'elle occupait autrefois dans l'en-tete, avant
-  que compte et aide IA ne l'y rejoignent. L'avertissement Safari, quand il y
-  en a un, occupe le reste de la rangee a gauche.
+  Les deux rangees de commandes, calees a droite du titre : compte + aide IA
+  en haut, langue en dessous. Une colonne et non une rangee unique — voir le
+  commentaire de `.head` : les trois cote a cote ne laissaient pas la place
+  d'afficher "CIRKALI" a 34px.
+
+  `flex: none` : c'est `.head .titles` (flex:1, min-width:0) qui cede la place
+  sur un ecran etroit, jamais cette colonne.
 */
-.quicknav-row {
+.head-side {
   display: flex;
-  align-items: center;
-  /* `flex-end` et non `space-between` : la rangee ne contient plus qu'un seul
-     element la plupart du temps (la langue), et `space-between` le collerait
-     alors a gauche. C'est `.storage-notice` qui prend la place restante quand
-     il est visible. */
-  justify-content: flex-end;
-  gap: 12px;
-  margin: 0 0 24px;
+  flex: none;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
 }
 
 /*
-  Avertissement Safari (ui/account.ts) : discret, et surtout contenu dans la
-  hauteur du selecteur de langue (44px) — deux lignes de 12px y tiennent, donc
-  son apparition apres le premier rendu ne pousse rien vers le bas.
+  Avertissement de stockage (ui/account.ts), sur sa propre ligne au-dessus de
+  « Séances ». Masque par defaut : il n'apparait que sous WebKit et deconnecte,
+  donc son apparition pousse la page vers le bas d'une quarantaine de pixels
+  au premier rendu chez ces visiteurs-la. Reserver cette hauteur pour tout le
+  monde couterait une bande vide permanente a tous les autres, et c'est
+  l'inverse du resserrement recherche en remontant la langue dans l'en-tete.
 */
 .storage-notice {
-  flex: 1;
-  min-width: 0;
-  margin: 0;
+  max-width: 62ch;
+  margin: 0 0 20px;
   font-size: 12px;
-  line-height: 1.35;
+  line-height: 1.4;
   color: var(--paper-dim);
 }
 
@@ -226,7 +227,7 @@ h2::after {
   (voir le commentaire de `.head`).
 
   Memes jetons que .lang select (fond, bordure, couleur), meme si ce dernier
-  vit desormais dans `.quicknav-row` : les commandes gardent un air de
+  vit desormais dans `.head-side` : les commandes gardent un air de
   famille. En secondaire, la couleur pleine restant a l'aide IA juste apres.
 
   La TAILLE est fixe et carree, jamais dictee par le contenu : celui-ci passe
