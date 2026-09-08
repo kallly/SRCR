@@ -459,12 +459,22 @@ function aiExample(): { json: string; encoded: string; url: string } {
   return { json, encoded, url: `${SITE_URL}/?s=${encoded}` };
 }
 
-/** Table des cles, derivee de LIBRARY : jamais une seconde liste a tenir a jour. */
+/**
+ * Table des cles, derivee de LIBRARY : jamais une seconde liste a tenir a jour.
+ *
+ * La derniere colonne mene a la fiche. Sans elle, cette page annonce 62 cles
+ * sans dire nulle part ou en lire le contenu — et une IA ne peut pas deviner
+ * l'URL, le slug etant traduit et sans rapport avec la cle.
+ */
 function aiKeysTable(dict: Translations): string {
   return LIBRARY.map((e) => {
     const name = dict.exercise[e.key]?.name ?? e.key;
     const effort = e.mode === 'time' ? `${e.seconds} s` : `${e.reps} reps`;
-    return `          <tr><td><code>${e.key}</code></td><td>${esc(name)}</td><td><code>${e.group}</code></td><td><code>${e.mode}</code></td><td>${e.sets} × ${effort}, repos ${e.rest} s</td></tr>`;
+    const slug = DETAILS_BY_LOCALE[SOURCE_LOCALE]?.[e.key]?.slug;
+    const sheet = slug
+      ? `<a href="${SITE_URL}/exercises/${SOURCE_LOCALE}/${slug}">${slug}</a>`
+      : '—';
+    return `          <tr><td><code>${e.key}</code></td><td>${esc(name)}</td><td><code>${e.group}</code></td><td><code>${e.mode}</code></td><td>${e.sets} × ${effort}, repos ${e.rest} s</td><td>${sheet}</td></tr>`;
   }).join('\n');
 }
 
@@ -646,9 +656,20 @@ function renderAiPlanPage(dict: Translations): string {
       </p>
 
       <h2>Les ${LIBRARY.length} clés d’exercice</h2>
+      <p>
+        La colonne « Fiche » mène au contenu détaillé du mouvement : étapes d’exécution,
+        erreurs fréquentes, muscles sollicités, amplitude, rythme et respiration, mécanique,
+        bienfaits et précautions. Une page par exercice et par langue, à l’adresse
+        <code>/exercises/&lt;langue&gt;/&lt;slug&gt;</code> — mais <strong>le slug est traduit</strong>
+        et ne se déduit pas d’une langue à l’autre : les quatre autres versions sont liées depuis
+        chaque fiche par ses balises <code>hreflang</code>, et les cinq sont au sitemap.
+        Surtout, <strong>le slug n’est pas la clé</strong> : c’est la première colonne qui va dans
+        un lien <code>?s=</code>, jamais le slug de l’URL — une séance construite avec des slugs
+        s’importe en exercices personnalisés, sans figure ni fiche.
+      </p>
       <div class="tablewrap">
         <table>
-          <thead><tr><th>Clé</th><th>Nom</th><th>Groupe</th><th>Effort</th><th>Réglages par défaut</th></tr></thead>
+          <thead><tr><th>Clé</th><th>Nom</th><th>Groupe</th><th>Effort</th><th>Réglages par défaut</th><th>Fiche</th></tr></thead>
           <tbody>
 ${aiKeysTable(dict)}
           </tbody>
@@ -923,10 +944,46 @@ function renderNotFoundPage(): string {
  */
 function renderLlmsTxt(dict: Translations): string {
   const example = aiExample();
-  const keys = LIBRARY.map(
-    (e) =>
-      `- ${e.key} (${e.group}, ${e.mode}) — ${dict.exercise[e.key]?.name ?? e.key}`,
-  ).join('\n');
+  // Le chemin de la fiche francaise en fin de ligne : sans lui, rien dans ce
+  // fichier ne mene au contenu long, et une IA ne peut que deviner une URL a
+  // partir de la cle — or le slug est traduit, donc elle tomberait a cote.
+  const keys = LIBRARY.map((e) => {
+    const detail = DETAILS_BY_LOCALE[SOURCE_LOCALE]?.[e.key];
+    const name = dict.exercise[e.key]?.name ?? e.key;
+    const path = detail ? ` — /exercises/${SOURCE_LOCALE}/${detail.slug}` : '';
+    return `- ${e.key} (${e.group}, ${e.mode}) — ${name}${path}`;
+  }).join('\n');
+
+  // Exemple pris dans les donnees et jamais ecrit en dur : c'est lui qui montre
+  // que le slug change d'une langue a l'autre, et un slug recopie a la main
+  // deviendrait faux au premier renommage sans que rien ne le signale.
+  // Les langues qui ont VRAIMENT des fiches, et non la liste des langues de
+  // l'app : sans contenu long, une langue n'a pas une seule page generee.
+  const detailLocales = (Object.keys(DETAILS_BY_LOCALE) as Locale[]).join(', ');
+
+  const bilingual = LIBRARY.map((e) => e.key).find(
+    (key) => DETAILS_BY_LOCALE[SOURCE_LOCALE]?.[key] && DETAILS_BY_LOCALE.en?.[key],
+  );
+  const frSlug = bilingual ? DETAILS_BY_LOCALE[SOURCE_LOCALE]?.[bilingual]?.slug : undefined;
+  const enSlug = bilingual ? DETAILS_BY_LOCALE.en?.[bilingual]?.slug : undefined;
+  // Les exemples vivent dans un bloc a eux, et non au fil du texte : leur
+  // longueur depend d'une cle et d'un slug, donc le paragraphe se serait
+  // deforme au premier exercice renomme. Le reste du fichier tient en 80
+  // colonnes, c'est ce qui le rend lisible tel quel.
+  const slugExample =
+    frSlug && enSlug
+      ? `
+  /exercises/${SOURCE_LOCALE}/${frSlug}
+  /exercises/en/${enSlug}   (et non /exercises/en/${frSlug})
+`
+      : '';
+  const keyExample =
+    bilingual && frSlug
+      ? `
+  clé  : ${bilingual}   — c'est elle qui va dans ?s=
+  slug : ${frSlug}   — seulement dans l'URL de la fiche
+`
+      : '';
 
   return `# CIRKALI
 
@@ -977,6 +1034,33 @@ ${GROUP_TREE.map((node) =>
         ...node.children.map((child) => `  - ${child} — ${dict.group[child]}`),
       ].join('\n'),
 ).join('\n')}
+
+## Fiches d'exercice
+
+Chaque exercice a une page détaillée, une par langue :
+
+  ${SITE_URL}/exercises/<langue>/<slug>   (langue = ${detailLocales})
+
+Le chemin donné en fin de ligne dans la liste ci-dessous est la fiche
+française. LE SLUG EST TRADUIT, il ne se déduit pas d'une langue à l'autre :
+${slugExample}
+Les cinq langues sont dans le sitemap, et chaque fiche porte les liens
+<link rel="alternate" hreflang> de ses quatre sœurs. Les URL s'écrivent sans
+extension — la forme en .html redirige.
+
+LE SLUG N'EST PAS LA CLÉ. Pour écrire un lien ?s=, prenez la clé de la première
+colonne de la liste, jamais le slug de son URL :
+${keyExample}
+Une séance construite avec des slugs s'importe en exercices personnalisés,
+sans figure ni fiche.
+
+Chaque page contient, dans cet ordre : les étapes d'exécution, les erreurs
+fréquentes, où l'effort doit se faire sentir, l'amplitude, le rythme et la
+respiration, le rôle de chaque muscle, la mécanique du mouvement, les
+bienfaits, comment adapter et progresser, les précautions, et des exercices
+similaires — les deux avant-dernières selon l'exercice. Contenu volontairement
+limité au vérifiable et au stable : aucune étude citée, aucun pourcentage
+d'activation musculaire.
 
 ## Clés d'exercice
 

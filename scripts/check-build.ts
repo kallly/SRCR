@@ -161,6 +161,23 @@ if (existsSync(specPath)) {
       decoded === null ? 'decodeSharedPlan() renvoie null' : 'aucun exercice',
     );
   }
+
+  // La colonne « Fiche » du tableau des cles. Meme raison que pour llms.txt
+  // plus bas : rien sur une fiche ne porte la cle interne, donc cette colonne
+  // est la seule passerelle de cette page vers le contenu long. Les deux
+  // surfaces destinees aux IA se verifient separement — la table HTML peut
+  // perdre sa colonne sans que llms.txt bouge.
+  const specSheets = [...spec.matchAll(/href="[^"]*\/exercises\/([a-z]{2})\/([^"]+)"/g)];
+  const brokenSpecSheets = specSheets
+    .filter(([, locale, slug]) => !existsSync(join(DIST, 'exercises', locale!, `${slug}.html`)))
+    .map(([, , slug]) => slug!);
+  check(
+    `la page de spec mene aux ${LIBRARY.length} fiches`,
+    specSheets.length === LIBRARY.length && brokenSpecSheets.length === 0,
+    brokenSpecSheets.length > 0
+      ? brokenSpecSheets.join(', ')
+      : `${specSheets.length} liens pour ${LIBRARY.length} exercices`,
+  );
 }
 
 console.log('\nFiches d\'exercice');
@@ -321,6 +338,28 @@ check(
   existsSync(keyFile) && readFileSync(keyFile, 'utf8').trim() === INDEXNOW_KEY,
 );
 
+// Un `.txt` ne peut pas dire son encodage de l'interieur, contrairement au HTML
+// (`<meta charset>`) et au XML (sa declaration) : sans `charset` dans l'en-tete,
+// Cloudflare sort un `text/plain` nu et le navigateur retombe sur l'encodage par
+// defaut de sa locale — windows-1252 en France, donc « sÃ©ance ». C'est arrive a
+// llms.txt, le fichier meme qu'on adresse aux IA. La regle vit dans
+// `public/_headers` ; on verifie ici qu'aucun .txt accentue n'y manque, plutot
+// que de figer une liste de noms qui divergerait au prochain fichier ajoute.
+const headers = existsSync(join(DIST, '_headers'))
+  ? readFileSync(join(DIST, '_headers'), 'utf8')
+  : '';
+const accentedTxt = readdirSync(DIST).filter(
+  (name) => name.endsWith('.txt') && /[^\u0000-\u007F]/.test(readFileSync(join(DIST, name), 'utf8')),
+);
+const withoutCharset = accentedTxt.filter(
+  (name) => !new RegExp(`^/${name}\\s*\\n\\s*Content-Type: text/plain; charset=utf-8$`, 'm').test(headers),
+);
+check(
+  `les ${accentedTxt.length} .txt accentues sont servis en charset=utf-8`,
+  accentedTxt.length > 0 && withoutCharset.length === 0,
+  withoutCharset.join(', '),
+);
+
 console.log('\nFigures d\'exercice');
 
 // Trois conventions de dessin qu'aucun type ne peut tenir : elles portent sur le
@@ -454,6 +493,24 @@ check(
   missingGroup.length === 0,
   missingGroup.join(', '),
 );
+// 3. La passerelle entre la cle interne et le contenu long. Une fiche ne porte
+// NULLE PART son `catCow` : une IA qui lit /exercises/fr/chat-vache n'a aucun
+// moyen d'en revenir a la cle, et le piege est documente (voir
+// `humanizeUnknownKey()`, core/storage.ts — un modele avait deja envoye des
+// slugs a la place des cles). llms.txt est le seul endroit qui relie les deux ;
+// un slug renomme y casserait les 62 chemins sans que rien ne le dise.
+const sheetPaths = [...llms.matchAll(/^- \S+ \([^)]*\) — .* — (\/exercises\/\S+)$/gm)].map(
+  (match) => match[1]!,
+);
+const missingSheets = sheetPaths.filter((path) => !existsSync(join(DIST, `${path}.html`)));
+check(
+  `llms.txt mene aux ${LIBRARY.length} fiches, et elles existent`,
+  sheetPaths.length === LIBRARY.length && missingSheets.length === 0,
+  missingSheets.length > 0
+    ? missingSheets.join(', ')
+    : `${sheetPaths.length} chemins pour ${LIBRARY.length} exercices`,
+);
+
 check(
   'llms.txt dit quels groupes en regroupent d\'autres',
   GROUP_TREE.filter((node) => node.children.length > 0).every((node) =>

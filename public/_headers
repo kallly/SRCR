@@ -13,6 +13,25 @@
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
 
+# Un `.txt` est le seul type servi ici qui ne sache pas declarer son encodage
+# de l'interieur : un `.html` porte son `<meta charset>` dans ses 1024 premiers
+# octets, un `.xml` sa declaration en premiere ligne, un `.txt` n'a que cet
+# en-tete. Sans lui, Cloudflare sort un `text/plain` nu et le navigateur retombe
+# sur l'encodage par defaut de sa locale — windows-1252 en France, donc
+# « sÃ©ance » pour « seance ». Verifie en production sur llms.txt, le fichier
+# meme qu'on adresse aux IA ; robots.txt et ads.txt n'ont d'accents que dans
+# leurs commentaires, mais la regle n'a pas de raison de s'arreter a l'un des
+# trois. `check-build.ts` echoue si un .txt accentue de `dist/` n'est pas liste
+# ici.
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+
+/robots.txt
+  Content-Type: text/plain; charset=utf-8
+
+/ads.txt
+  Content-Type: text/plain; charset=utf-8
+
 /*
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Content-Type-Options: nosniff
