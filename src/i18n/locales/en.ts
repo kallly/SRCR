@@ -24,6 +24,26 @@ export const en: Translations = {
     copyName: '{name} - copy',
   },
 
+  presets: {
+    groupMine: 'My sessions',
+    group: 'CIRKALI sessions',
+    badge: 'CIRKALI session',
+    note: 'Ready-made session. Change it to make it yours.',
+    makeMine: 'Make my version',
+    adoptTitle: 'Create your version?',
+    adoptText: 'Your changes will go into your own copy of "{name}".',
+    adoptConfirm: 'Make my version',
+    adopted: '"{name}" added to your sessions',
+    name: {
+      fullBody: 'Full body, no equipment',
+      beginner: 'Gentle start',
+      upperBody: 'Upper body',
+      lowerBody: 'Lower body and glutes',
+      core: 'Quick core',
+      stretching: 'Evening stretches',
+    },
+  },
+
   account: {
     label: 'Account',
     title: 'Online backup',

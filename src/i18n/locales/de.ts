@@ -24,6 +24,26 @@ export const de: Translations = {
     copyName: '{name} - Kopie',
   },
 
+  presets: {
+    groupMine: 'Meine Einheiten',
+    group: 'CIRKALI-Einheiten',
+    badge: 'CIRKALI-Einheit',
+    note: 'Fertige Vorlage. Ändere sie, um deine eigene daraus zu machen.',
+    makeMine: 'Eigene Version erstellen',
+    adoptTitle: 'Eigene Version erstellen?',
+    adoptText: 'Deine Änderungen landen in deiner eigenen Kopie von „{name}“.',
+    adoptConfirm: 'Eigene Version erstellen',
+    adopted: '„{name}“ zu deinen Einheiten hinzugefügt',
+    name: {
+      fullBody: 'Ganzkörper ohne Geräte',
+      beginner: 'Sanfter Einstieg',
+      upperBody: 'Oberkörper',
+      lowerBody: 'Beine und Gesäß',
+      core: 'Rumpf express',
+      stretching: 'Dehnen am Abend',
+    },
+  },
+
   account: {
     label: 'Konto',
     title: 'Online-Sicherung',

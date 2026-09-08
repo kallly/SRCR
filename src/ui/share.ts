@@ -216,7 +216,17 @@ export function createShare(ctx: Context): Share {
       // seance par son id plutot que « celle qui est active maintenant ».
       const target = ctx.activePlan();
       const before = [...target.items];
+      const preset = ctx.activePreset();
+      // Ferme AVANT l'ajout : sur une seance CIRKALI, celui-ci ouvre aussitot
+      // la question « en creer votre version ? », qui n'a pas a s'empiler
+      // par-dessus ce dialogue.
+      importDialog.close();
       ctx.appendToActive(shared.items);
+      // Rien a annuler sur un modele : refuser la copie remet deja le modele
+      // en etat, et l'accepter garde les lignes ajoutees dans la copie de la
+      // personne. Meme raisonnement que la suppression d'une ligne
+      // (ui/planner.ts).
+      if (preset) return;
       ctx.toast.show(t('share.appended', { count }), t('toast.undo'), () => {
         const plan = ctx.getPlan(target.id);
         if (!plan) return;
@@ -224,7 +234,6 @@ export function createShare(ctx: Context): Share {
         ctx.save();
         ctx.renderAll();
       });
-      importDialog.close();
     };
 
     const target = shared.name ? findPlanByName(shared.name) : undefined;

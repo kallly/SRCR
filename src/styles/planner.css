@@ -110,6 +110,34 @@
   cursor: default;
 }
 
+/* Note « Séance CIRKALI » : une ligne disant ce qu'est la seance choisie.
+   Placee entre le selecteur et les actions — cf. ui/plan-switcher.ts, ou
+   l'ordre du DOM porte la meme intention pour un lecteur d'ecran. */
+.plan-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 8px;
+  margin: 0 0 10px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--paper-dim);
+}
+
+/* `flex: 0 0 auto` : la pastille garde sa taille, c'est le texte qui se
+   replie sous elle sur un ecran etroit. */
+.plan-badge {
+  flex: 0 0 auto;
+  padding: 2px 8px;
+  border: 1px solid var(--lime);
+  border-radius: 999px;
+  color: var(--lime);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 /*
   Reservation approximative (formulaire construit en JS, jamais mesuree en
   reseau bride comme #plan:empty/#library:empty plus bas) : la rangee
@@ -118,6 +146,10 @@
   gouttiere), + le padding-bottom et la bordure du separateur ci-dessus
   (19px) — box-sizing: border-box oblige, `min-height` couvre le rendu FINAL
   (padding+bordure+contenu), pas le contenu seul.
+
+  `.plan-note` n'y entre pas : une seance CIRKALI n'est jamais la seance
+  active au chargement (elle n'est nulle part enregistree), donc la note
+  n'existe qu'apres un clic — bien apres la mesure du CLS.
 */
 #planSwitcher:empty {
   min-height: 169px;

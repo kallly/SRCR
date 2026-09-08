@@ -31,6 +31,33 @@ export const fr = {
     copyName: '{name} - copie',
   },
 
+  /**
+   * Seances toutes faites proposees par CIRKALI (data/presets.ts). Leur nom
+   * n'est jamais stocke : il se resout ici a chaque affichage, comme celui
+   * d'une seance sans nom. Il n'est fige en texte qu'a la creation de la
+   * version personnelle d'un modele — meme compromis assume que
+   * `plans.copyName`.
+   */
+  presets: {
+    groupMine: 'Mes séances',
+    group: 'Séances CIRKALI',
+    badge: 'Séance CIRKALI',
+    note: 'Séance type. Modifiez-la pour en faire la vôtre.',
+    makeMine: 'Créer ma version',
+    adoptTitle: 'Créer votre version ?',
+    adoptText: 'Vos modifications iront dans votre copie de « {name} ».',
+    adoptConfirm: 'Créer ma version',
+    adopted: '« {name} » ajoutée à vos séances',
+    name: {
+      fullBody: 'Full body sans matériel',
+      beginner: 'Débuter en douceur',
+      upperBody: 'Haut du corps',
+      lowerBody: 'Bas du corps et fessiers',
+      core: 'Gainage express',
+      stretching: 'Étirements du soir',
+    },
+  },
+
   account: {
     label: 'Compte',
     title: 'Sauvegarde en ligne',

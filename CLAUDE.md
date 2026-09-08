@@ -51,6 +51,7 @@ src/
   data/            donnees sans texte
     groups.ts      ids + couleurs des 9 groupes musculaires
     library.ts     62 exercices : reglages seulement
+    presets.ts     les 6 seances CIRKALI toutes faites (jamais persistees)
     categories.ts  ids des categories d'equipement (filtre bibliotheque)
     figures.ts     figures SVG
   content/
@@ -64,6 +65,7 @@ src/
   ui/              rendu et interactions, un module par zone d'ecran
     app.ts         orchestration : etat partage, sauvegarde, cycles de rendu
     plan-switcher.ts  choix/creation/duplication/renommage/suppression de seance
+    preset-dialog.ts  « creer votre version ? » a la 1re retouche d'une seance CIRKALI
     toast.ts       toast transitoire avec action (annulation de suppression)
     inline-input.ts  formulaire inline, remplace un window.prompt() natif
     dom.ts         el(), byId(), applyStaticTranslations()
@@ -182,6 +184,32 @@ clés v4 et v3 restent lisibles et ne sont jamais effacées. Partout dans l'UI,
 `ctx.activePlan()` (`ui/app.ts`) est l'accesseur à utiliser — jamais
 `ctx.state.plans.find(...)` répété à chaque endroit — avec un invariant
 garanti par `loadState()` : il y a toujours au moins une séance.
+
+## Les seances CIRKALI ne sont pas des donnees de l'utilisateur
+
+`src/data/presets.ts` porte six seances toutes faites, en dur dans le bundle.
+Elles n'existent **ni dans le `localStorage` ni dans Firestore** : elles sont
+reconstruites a chaque chargement (`presetToPlan()`, `core/plan.ts`), listees
+apres celles de la personne dans leur propre `<optgroup>`, et ne se renomment
+ni ne se suppriment — il n'y a rien d'ecrit a renommer ou a supprimer. Aucun
+texte dans `presets.ts` : le nom vit sous `presets.name.<id>` et se resout a
+l'affichage, comme `plans.unnamed` (regle n°2).
+
+Selectionner un modele materialise une `SavedPlan` **en memoire seulement**
+(le `draft` de `ui/app.ts`), que `ctx.activePlan()` renvoie a la place de la
+seance active : toute l'interface la manipule comme n'importe quelle autre
+seance, sans un seul `if` de plus. `state.activePlanId` continue pendant ce
+temps de designer une vraie seance — un id de modele ne doit jamais partir
+dans le document distant.
+
+**Le point d'arbitrage est `save()`, et lui seul.** A la premiere modification
+d'un modele, `save()` n'ecrit rien et ouvre `ui/preset-dialog.ts` : accepter
+cree la copie personnelle (`adoptPreset()`, le seul chemin par lequel une
+seance CIRKALI est un jour ecrite), refuser rend au modele sa forme d'origine.
+Meme raison qu'ailleurs : toute modification de l'app passe deja par `save()`,
+donc un module ajoute demain est couvert sans cablage — ne pas eparpiller ce
+test dans les modules d'UI. Le nom fige a l'adoption est traduit dans la langue
+du moment, comme le suffixe de `duplicatePlan()`, et pour le meme motif.
 
 ## Le moteur (`core/queue.ts`)
 

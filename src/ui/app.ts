@@ -1,6 +1,7 @@
 import { createCloudSync, type CloudSync } from '../cloud/sync';
 import { getLocale, onLocaleChange, setLocale as applyLocale, t } from '../i18n';
-import { createCustom, createRest, uid } from '../core/plan';
+import { createCustom, createRest, presetName, presetToPlan, uid } from '../core/plan';
+import { findPresetByPlanId, type PresetPlan } from '../data/presets';
 import {
   DEFAULT_SESSION_CONFIG,
   forgetPlanFingerprint,
@@ -19,6 +20,7 @@ import { createLangSwitch } from './langswitch';
 import { createLibrary } from './library';
 import { createPlanner } from './planner';
 import { createPlanSwitcher } from './plan-switcher';
+import { createPresetDialog } from './preset-dialog';
 import { createPreview } from './preview';
 import { createRunner } from './runner';
 import { createAccount } from './account';
@@ -64,6 +66,20 @@ export interface Context {
   /** Ajoute des lignes a la fin du deroule actif, sans toucher a ses reglages. */
   appendToActive(items: PlanItem[]): void;
   duplicatePlan(id: string): void;
+  /**
+   * Le modele CIRKALI actuellement affiche, `null` quand la seance active
+   * appartient a la personne. C'est le seul test a faire dans un module
+   * d'interface : ni comparaison d'id ni recherche dans `PRESETS`.
+   */
+  activePreset(): PresetPlan | null;
+  /**
+   * Fait entrer le modele affiche — avec ses eventuelles modifications — dans
+   * les seances de la personne. C'est le seul chemin par lequel une seance
+   * CIRKALI est un jour ecrite quelque part.
+   */
+  adoptPreset(): void;
+  /** Rend au modele affiche son contenu d'origine (refus de la copie). */
+  discardPresetEdits(): void;
   renamePlan(id: string, name: string | null): void;
   deletePlan(id: string): void;
   switchPlan(id: string): void;
@@ -118,6 +134,43 @@ export function createApp(state: State): { render: () => void } {
 
   const toast = createToast();
 
+  /**
+   * Le modele CIRKALI en cours de consultation, s'il y en a un.
+   *
+   * `plan` est une seance ordinaire, materialisee en memoire a la selection
+   * (`presetToPlan()`) et JAMAIS poussee dans `state.plans` : c'est ce qui
+   * fait qu'une seance CIRKALI n'existe ni dans le localStorage ni dans le
+   * nuage, et qu'elle repart intacte au chargement suivant. Toute l'interface
+   * la manipule comme n'importe quelle autre seance — c'est `save()` qui
+   * arbitre, en refusant d'ecrire un modele modifie sans que la personne ait
+   * accepte d'en creer sa copie.
+   *
+   * `pristine` exclut le NOM : celui-ci suit la langue active (il est refait a
+   * chaque changement de langue), et l'inclure ferait passer une simple
+   * traduction pour une modification de la personne.
+   */
+  interface PresetDraft {
+    preset: PresetPlan;
+    plan: SavedPlan;
+    pristine: string;
+  }
+
+  let draft: PresetDraft | null = null;
+
+  function presetFingerprint(plan: SavedPlan): string {
+    return JSON.stringify([plan.items, plan.config]);
+  }
+
+  /** (Re)materialise un modele : c'est aussi le geste d'annulation des retouches. */
+  function openPreset(preset: PresetPlan): void {
+    const plan = presetToPlan(preset);
+    draft = { preset, plan, pristine: presetFingerprint(plan) };
+  }
+
+  function presetEdited(): boolean {
+    return draft !== null && presetFingerprint(draft.plan) !== draft.pristine;
+  }
+
   // Cree avant le Context, mais ses rappels (`state`, `adopt`...) ne sont
   // invoques qu'apres coup, sur un evenement reseau : ils peuvent donc
   // referencer `ctx` en toute securite.
@@ -131,11 +184,19 @@ export function createApp(state: State): { render: () => void } {
   const ctx: Context = {
     state,
     activePlan: () => {
+      // Un modele CIRKALI passe AVANT `activePlanId`, qui continue de designer
+      // la derniere seance de la personne : on y revient telle quelle en
+      // sortant du modele, et le document distant n'a jamais a connaitre un id
+      // de modele.
+      if (draft) return draft.plan;
       const found = ctx.state.plans.find((plan) => plan.id === ctx.state.activePlanId);
       // Invariant garanti par `loadState()` : `plans` n'est jamais vide.
       return found ?? (ctx.state.plans[0] as SavedPlan);
     },
-    getPlan: (id) => ctx.state.plans.find((plan) => plan.id === id),
+    getPlan: (id) =>
+      draft && draft.plan.id === id
+        ? draft.plan
+        : ctx.state.plans.find((plan) => plan.id === id),
     setPlanItems: (items) => {
       ctx.activePlan().items = items;
     },
@@ -146,8 +207,11 @@ export function createApp(state: State): { render: () => void } {
       registerPlan({ id: uid(), name, items, config });
     },
     replacePlan: (id, name, items, config) => {
-      const plan = ctx.getPlan(id);
+      const plan = ctx.state.plans.find((entry) => entry.id === id);
+      // Un modele n'est jamais une cible d'ecrasement : il n'apparait pas dans
+      // `state.plans`, donc pas non plus dans les destinations d'import.
       if (!plan) return;
+      draft = null;
       plan.name = name;
       plan.items = items;
       plan.config = config;
@@ -161,6 +225,12 @@ export function createApp(state: State): { render: () => void } {
       renderAll();
     },
     duplicatePlan: (id) => {
+      // Dupliquer le modele affiche, c'est exactement en creer sa version :
+      // un seul chemin, donc un seul comportement a expliquer.
+      if (draft && draft.plan.id === id) {
+        ctx.adoptPreset();
+        return;
+      }
       const source = ctx.state.plans.find((plan) => plan.id === id);
       if (!source) return;
       registerPlan({
@@ -173,6 +243,30 @@ export function createApp(state: State): { render: () => void } {
         items: source.items.map((item) => ({ ...item, id: uid() })),
         config: { ...source.config },
       });
+    },
+    activePreset: () => draft?.preset ?? null,
+    adoptPreset: () => {
+      const current = draft;
+      if (!current) return;
+      // Avant `registerPlan()`, qui appelle `save()` : sans ca, le modele
+      // serait encore affiche et `save()` redemanderait la confirmation.
+      draft = null;
+      const name = current.plan.name;
+      registerPlan({
+        id: uid(),
+        // Nom traduit fige a cet instant, comme le suffixe de
+        // `duplicatePlan()` : a partir d'ici c'est une seance de la personne,
+        // qu'elle peut renommer. Meme compromis assume (CLAUDE.md, regle n°2).
+        name,
+        items: current.plan.items,
+        config: current.plan.config,
+      });
+      toast.show(t('presets.adopted', { name: name ?? '' }));
+    },
+    discardPresetEdits: () => {
+      if (!draft) return;
+      openPreset(draft.preset);
+      renderAll();
     },
     renamePlan: (id, name) => {
       const plan = ctx.state.plans.find((entry) => entry.id === id);
@@ -200,7 +294,17 @@ export function createApp(state: State): { render: () => void } {
       renderAll();
     },
     switchPlan: (id) => {
+      const preset = findPresetByPlanId(id);
+      if (preset) {
+        // Rien a persister : consulter un modele ne modifie pas l'etat, et
+        // `activePlanId` doit continuer de designer une vraie seance (le
+        // document distant n'accepterait pas un id de modele).
+        openPreset(preset);
+        renderAll();
+        return;
+      }
       if (!ctx.state.plans.some((plan) => plan.id === id)) return;
+      draft = null;
       ctx.state.activePlanId = id;
       save();
       renderAll();
@@ -244,6 +348,7 @@ export function createApp(state: State): { render: () => void } {
   };
 
   const planSwitcher = createPlanSwitcher(ctx);
+  const presetDialog = createPresetDialog(ctx);
   const planner = createPlanner(ctx);
   const preview = createPreview(ctx);
   const statusBar = createStatusBar(ctx);
@@ -266,6 +371,9 @@ export function createApp(state: State): { render: () => void } {
    * tout seul (core/storage.ts).
    */
   function registerPlan(plan: Omit<SavedPlan, 'updatedAt'>): void {
+    // Creer, importer ou dupliquer une seance fait sortir du modele affiche :
+    // la nouvelle seance devient l'active, et `activePlan()` doit la rendre.
+    draft = null;
     ctx.state.plans.push({ ...plan, updatedAt: Date.now() });
     ctx.state.activePlanId = plan.id;
     save();
@@ -273,6 +381,16 @@ export function createApp(state: State): { render: () => void } {
   }
 
   function save(): void {
+    // Seul endroit ou une seance CIRKALI est protegee, et il suffit : toute
+    // modification de l'app passe par save() (c'est deja ce qui rend la
+    // sauvegarde en ligne exhaustive). Le modele modifie reste affiche tel
+    // quel pendant la question — la personne voit ce qu'elle s'apprete a
+    // garder — et le dialogue conclut par `adoptPreset()` ou
+    // `discardPresetEdits()`.
+    if (presetEdited()) {
+      presetDialog.open();
+      return;
+    }
     const ok = saveState(ctx.state);
     // Sauvegarde en ligne : toute modification passant par save(), il suffit de
     // brancher ici pour que TOUT parte dans le nuage — y compris ce qu'un
@@ -399,7 +517,14 @@ export function createApp(state: State): { render: () => void } {
   });
 
   // Un changement de langue retraduit tout, y compris une seance en cours.
-  onLocaleChange(() => renderAll());
+  onLocaleChange(() => {
+    // Le nom d'un modele est resolu a l'affichage, jamais stocke : il doit
+    // donc suivre la langue comme n'importe quel libelle de l'interface.
+    // `pristine` ignore le nom, ce rafraichissement ne passe donc pas pour
+    // une modification de la personne.
+    if (draft) draft.plan.name = presetName(draft.preset);
+    renderAll();
+  });
 
   // Une seule fois au demarrage : un lien partage ouvert directement propose
   // son import, puis nettoie l'URL (voir ui/share.ts).

@@ -1,6 +1,7 @@
 import { t } from '../i18n';
 import { CUSTOM_DEFAULTS, DEFAULT_ORDER, findLibraryEntry, isLibraryKey } from '../data/library';
-import type { ExerciseItem, PlanItem, RestItem } from './types';
+import { presetPlanId, type PresetPlan } from '../data/presets';
+import type { ExerciseItem, PlanItem, RestItem, SavedPlan } from './types';
 
 /** Longueur maximale d'un nom d'exercice saisi par l'utilisateur. */
 const MAX_CUSTOM_NAME = 60;
@@ -50,6 +51,55 @@ export function defaultPlan(): PlanItem[] {
   return DEFAULT_ORDER.map(createFromLibrary).filter(
     (item): item is ExerciseItem => item !== null,
   );
+}
+
+/**
+ * Nom affiche d'une seance CIRKALI, resolu dans la langue active — jamais
+ * stocke, exactement comme `plans.unnamed` pour une seance sans nom. Il n'est
+ * fige en texte qu'a l'instant ou la personne cree sa propre version du
+ * modele (voir `presetToPlan()` et `ctx.adoptPreset()`, ui/app.ts).
+ */
+export function presetName(preset: PresetPlan): string {
+  return t(`presets.name.${preset.id}`);
+}
+
+/**
+ * Materialise un modele en seance manipulable. Meme partage des roles que
+ * `defaultPlan()` juste au-dessus : les donnees sont dans `data/presets.ts`,
+ * la construction ici.
+ *
+ * Le resultat n'est PAS ajoute a `state.plans` : il vit en memoire le temps
+ * qu'on regarde le modele (ui/app.ts). Chaque ligne repart des reglages de la
+ * bibliotheque, que le modele ne fait que retoucher — une ligne dont
+ * l'exercice a disparu de `LIBRARY` est simplement ignoree plutot que de
+ * faire echouer tout le modele.
+ */
+export function presetToPlan(preset: PresetPlan): SavedPlan {
+  const items = preset.items
+    .map((line) => {
+      const item = createFromLibrary(line.key);
+      if (!item) return null;
+      if (line.sets !== undefined) item.sets = line.sets;
+      if (line.reps !== undefined) item.reps = line.reps;
+      if (line.seconds !== undefined) item.seconds = line.seconds;
+      if (line.rest !== undefined) item.rest = line.rest;
+      return item;
+    })
+    .filter((item): item is ExerciseItem => item !== null);
+
+  return {
+    id: presetPlanId(preset),
+    name: presetName(preset),
+    items,
+    // Copie, jamais la reference : le mode d'une seance se change depuis
+    // l'interface, et muter le singleton de `PRESETS` contaminerait le modele
+    // pour le reste de la session (meme piege que DEFAULT_SESSION_CONFIG).
+    config: { ...preset.config },
+    // Sans objet pour un modele, qui n'est jamais persiste ni fusionne : la
+    // vraie estampille est posee par `saveState()` le jour ou cette seance
+    // devient celle de la personne.
+    updatedAt: 0,
+  };
 }
 
 /**

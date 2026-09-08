@@ -226,7 +226,12 @@ export function createPlanner(ctx: Context): { render: () => void } {
       const planId = ctx.activePlan().id;
       ctx.save();
       ctx.renderAll();
-      if (removed) {
+      // Pas d'annulation a proposer sur une seance CIRKALI : `save()` vient
+      // d'ouvrir la question « en creer votre version ? », dont le refus
+      // remet deja le modele en etat — et si la personne accepte, la ligne
+      // supprimee l'est dans SA copie, qu'elle modifie librement. Un
+      // « Annuler » derriere la modale viserait un modele qui n'existe plus.
+      if (removed && !ctx.activePreset()) {
         ctx.toast.show(t('toast.deleted'), t('toast.undo'), () => {
           const target = ctx.getPlan(planId);
           if (!target) return;

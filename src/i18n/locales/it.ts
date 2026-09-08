@@ -24,6 +24,26 @@ export const it: Translations = {
     copyName: '{name} - copia',
   },
 
+  presets: {
+    groupMine: 'Le mie sedute',
+    group: 'Sedute CIRKALI',
+    badge: 'Seduta CIRKALI',
+    note: 'Seduta tipo. Modificala per farla tua.',
+    makeMine: 'Crea la mia versione',
+    adoptTitle: 'Creare la tua versione?',
+    adoptText: 'Le tue modifiche andranno nella tua copia di «{name}».',
+    adoptConfirm: 'Crea la mia versione',
+    adopted: '«{name}» aggiunta alle tue sedute',
+    name: {
+      fullBody: 'Total body senza attrezzi',
+      beginner: 'Iniziare con dolcezza',
+      upperBody: 'Parte superiore',
+      lowerBody: 'Gambe e glutei',
+      core: 'Core espresso',
+      stretching: 'Stretching della sera',
+    },
+  },
+
   account: {
     label: 'Account',
     title: 'Backup online',

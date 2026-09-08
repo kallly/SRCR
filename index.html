@@ -503,6 +503,36 @@ https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsIn
       </div>
     </dialog>
 
+    <!--
+      Creation de sa propre version d'une seance CIRKALI (ui/preset-dialog.ts).
+      Ouvert par `save()` (ui/app.ts) a la premiere modification d'un modele :
+      rien n'est ecrit tant que la reponse n'est pas donnee. Fermer par Echap,
+      par le fond ou par « Annuler » vaut refus, et le modele reprend sa forme
+      d'origine.
+    -->
+    <dialog class="info" id="presetAdopt" aria-labelledby="presetAdoptTitle" aria-describedby="presetAdoptText">
+      <div class="info-head">
+        <h3 id="presetAdoptTitle" data-i18n="presets.adoptTitle"></h3>
+        <button class="info-close" type="button" id="presetAdoptClose" data-i18n="exerciseInfo.close"></button>
+      </div>
+      <!--
+        #presetAdoptText ne porte PAS de data-i18n : son libelle est parametre
+        (« ... « {name} » ... ») et applyStaticTranslations() appelle t() sans
+        parametre, ce qui afficherait le jeton {name} tel quel. Meme statut que
+        #importSummary : texte transitoire, rempli par ui/preset-dialog.ts.
+      -->
+      <p id="presetAdoptText"></p>
+      <div class="rowbtns">
+        <button class="ghost" type="button" id="presetAdoptCancel" data-i18n="actions.cancel"></button>
+        <!--
+          autofocus : showModal() donne sinon le focus au premier element
+          focusable du dialogue (le bouton de fermeture), et l'action proposee
+          doit etre celle qu'on atteint d'abord.
+        -->
+        <button class="go" type="button" id="presetAdoptConfirm" autofocus data-i18n="presets.adoptConfirm"></button>
+      </div>
+    </dialog>
+
     <dialog class="info" id="aiHelp">
       <div class="info-head">
         <h3 data-i18n="aiHelp.title"></h3>
