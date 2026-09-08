@@ -1,4 +1,4 @@
-// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+// CIRKALI — Copyright (c) 2026 Alexis Baudry. Tous droits réservés. Voir LICENSE.
 
 import { createCloudSync, type CloudSync } from '../cloud/sync';
 import { getLocale, onLocaleChange, setLocale as applyLocale, t } from '../i18n';

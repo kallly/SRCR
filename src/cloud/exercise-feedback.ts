@@ -1,4 +1,4 @@
-// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+// CIRKALI — Copyright (c) 2026 Alexis Baudry. Tous droits réservés. Voir LICENSE.
 
 /**
  * Remonte les exercices que les gens creent a la main, pour savoir ce qui

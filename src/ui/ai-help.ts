@@ -1,4 +1,4 @@
-// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+// CIRKALI — Copyright (c) 2026 Alexis Baudry. Tous droits réservés. Voir LICENSE.
 
 import { t } from '../i18n';
 import { encodeSharedPlan } from '../core/share';

@@ -1,4 +1,4 @@
-// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+// CIRKALI — Copyright (c) 2026 Alexis Baudry. Tous droits réservés. Voir LICENSE.
 
 /**
  * Un seul bit, en clair, hors de Firebase : « cette personne etait connectee la

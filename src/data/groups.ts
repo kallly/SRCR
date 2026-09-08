@@ -1,4 +1,4 @@
-// CIRKALI — Copyright (c) 2026. Tous droits réservés. Voir LICENSE.
+// CIRKALI — Copyright (c) 2026 Alexis Baudry. Tous droits réservés. Voir LICENSE.
 
 import type { GroupId } from '../core/types';
 
