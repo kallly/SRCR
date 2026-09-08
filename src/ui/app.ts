@@ -34,8 +34,14 @@ import { createToast, type Toast } from './toast';
 /** Duree d'affichage du message « Enregistré ». */
 const SAVED_TOAST_MS = 1600;
 
-/** En dessous, « A propos » et « Creer une seance par lien » sont repliees pour ne pas allonger la page. */
-const ABOUT_COLLAPSE_BELOW = '(max-width: 759px)';
+/**
+ * Sections de fin d'accueil repliees au demarrage, quelle que soit la largeur.
+ *
+ * `#supportProject` en est volontairement absent : c'est le seul bloc de la
+ * page qui demande quelque chose au visiteur, et un appel au soutien replie ne
+ * se lit pas.
+ */
+const COLLAPSED_ON_START = ['about', 'allGuides', 'aiPlan', 'installApp'] as const;
 
 /**
  * Ce que les modules d'interface partagent : l'etat, la persistance et les
@@ -122,22 +128,26 @@ export function createApp(state: State): { render: () => void } {
 
   let savedTimer: number | null = null;
 
-  // La section « A propos » est livree ouverte : sans JavaScript elle reste
-  // lisible partout. Ici on la replie sur petit ecran, ou elle pousserait le
-  // contenu utile trop bas. Le contenu reste dans le DOM dans les deux cas.
-  // Appel defensif : replier une section est cosmetique et ne doit jamais
-  // pouvoir empecher l'app de demarrer la ou matchMedia manque.
+  // Les sections de fin d'accueil sont LIVREES OUVERTES dans index.html et
+  // repliees ici, au demarrage. L'inverse — un `open` retire du HTML — serait
+  // beaucoup plus simple et serait une regression :
   //
-  // Cette liste est deliberement incomplete : `#installApp` et
-  // `#supportProject` sont des `.about` eux aussi, et restent OUVERTS sur
-  // petit ecran. C'est precisement sur telephone que l'un explique comment
-  // installer l'application et que l'autre est lu ; les replier reviendrait a
-  // les cacher a leur seul public. Ils sont courts, ils ne repoussent pas le
-  // contenu utile comme le fait la specification `?s=`.
-  if (window.matchMedia?.(ABOUT_COLLAPSE_BELOW).matches) {
-    byId<HTMLDetailsElement>('about').open = false;
-    byId<HTMLDetailsElement>('aiPlan').open = false;
-    byId<HTMLDetailsElement>('allGuides').open = false;
+  // - sans JavaScript, la page doit rester entierement lisible ;
+  // - et surtout, les outils de navigation de ChatGPT, Claude et Gemini
+  //   recuperent ce fichier sans executer un octet de src/. Plusieurs
+  //   extraient l'innerText d'un rendu sans JS, or le contenu d'un <details>
+  //   FERME n'y figure pas. Replier la specification `?s=` dans la source,
+  //   c'est la retirer a son unique public.
+  //
+  // Le meme HTML sert donc tout le monde, et seul l'affichage change — jamais
+  // un bloc masque reserve aux robots, qui serait du cloaking.
+  //
+  // Repli desormais inconditionnel : la page etait longue sur grand ecran
+  // aussi. Appel defensif malgre tout, replier une section est cosmetique et
+  // ne doit jamais pouvoir empecher l'app de demarrer.
+  for (const id of COLLAPSED_ON_START) {
+    const section = document.getElementById(id);
+    if (section instanceof HTMLDetailsElement) section.open = false;
   }
 
   const toast = createToast();

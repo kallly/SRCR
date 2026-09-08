@@ -662,6 +662,23 @@ check(
   /\/sw\.js\s*\n\s*Cache-Control:[^\n]*max-age=0/.test(headers),
 );
 
+// Les cinq sections de fin d'accueil doivent etre livrees OUVERTES. C'est
+// `ui/app.ts` qui les replie au demarrage, et l'inverse serait une regression
+// silencieuse : les outils de navigation de ChatGPT, Claude et Gemini
+// recuperent ce fichier sans executer un octet de src/, et plusieurs extraient
+// l'innerText d'un rendu sans JS — or le contenu d'un <details> FERME n'y
+// figure pas. Replier la specification `?s=` dans la source, c'est la retirer
+// a son unique public, sans que rien ne casse par ailleurs.
+const SECTIONS = ['about', 'allGuides', 'aiPlan', 'installApp', 'supportProject'];
+const notOpen = SECTIONS.filter(
+  (id) => !new RegExp(`<details[^>]*id="${id}"[^>]*\\sopen>`).test(index),
+);
+check(
+  'les sections de fin d\'accueil sont livrees ouvertes',
+  notOpen.length === 0,
+  `${notOpen.join(', ')} — c'est ui/app.ts qui replie, pas le HTML`,
+);
+
 console.log("\nEncarts d'installation et de soutien");
 
 // Deux encarts de fin d'accueil, dont le texte francais est injecte au build

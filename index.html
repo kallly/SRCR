@@ -400,7 +400,7 @@
 
       <!--
         Livree ouverte : sans JavaScript elle reste depliee partout, donc
-        accessible. src/ui/app.ts la replie sous 760 px. Le contenu d'un
+        accessible. src/ui/app.ts la replie au demarrage. Le contenu d'un
         <details> est dans le DOM quel que soit son etat : meme HTML pour les
         visiteurs et pour les robots.
       -->
@@ -430,7 +430,7 @@
         navigation de ChatGPT/Claude/Gemini recuperent ce fichier sans jamais
         executer src/main.ts. Livree ouverte comme « A propos » — certains de
         ces outils extraient l'innerText d'un rendu headless, or le contenu
-        d'un <details> ferme n'y figure pas. ui/app.ts la replie sous 760 px.
+        d'un <details> ferme n'y figure pas. ui/app.ts la replie au demarrage.
         Jamais de bloc masque reserve aux robots : ce serait du cloaking, et ca
         ne marcherait pas non plus (display:none est absent de l'innerText).
 
@@ -495,13 +495,12 @@ https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsIn
         qu'elles vivent dans la meme colonne et disent la meme sorte de chose.
         Ne pas y revenir ; c'est le lien, et lui seul, qui doit attirer l'oeil.
 
-        Un seul ecart avec les trois autres sections repliables :
-        `ui/app.ts` ne les replie PAS sous 760 px, contrairement a « A
-        propos », « Toutes les fiches » et « Creer une seance avec une IA ».
-        C'est precisement sur telephone que l'une explique comment installer
-        et que l'autre est lue ; les replier reviendrait a les cacher a leur
-        seul public. Elles sont courtes, elles ne repoussent pas le contenu
-        utile comme le ferait la specification `?s=`.
+        Un seul ecart entre les deux : `ui/app.ts` replie tout au demarrage
+        SAUF « Soutenir CIRKALI ». C'est le seul bloc de la page qui demande
+        quelque chose au visiteur, et un appel au soutien replie ne se lit pas.
+        Comme toutes les autres, les deux restent livrees OUVERTES dans ce
+        fichier — voir COLLAPSED_ON_START (ui/app.ts) pour la raison, qui n'est
+        pas cosmetique.
 
         Le lien Ko-fi porte son propre data-i18n : `applyStaticTranslations()`
         ecrit dans textContent, donc un <p> traduit qui contiendrait un <a>
