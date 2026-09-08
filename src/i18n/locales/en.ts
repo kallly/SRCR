@@ -323,6 +323,7 @@ export const en: Translations = {
 
   runner: {
     quit: 'Quit',
+    previous: 'Previous exercise',
     step: 'Step {current} / {total}',
     next: 'Next — {name}',
     lastEffort: 'Last effort',

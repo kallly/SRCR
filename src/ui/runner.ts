@@ -31,6 +31,20 @@ const TICK_MS = 250;
 const WARNING_SECONDS = 3;
 
 /**
+ * Fleche du bouton « exercice precedent ». Un trace, pas le glyphe « ← » :
+ * celui-ci change d'epaisseur, de longueur et d'inclinaison d'une police
+ * systeme a l'autre, alors qu'un trait suit `currentColor` — donc la couleur
+ * de survol et l'opacite de l'etat desactive — et garde la meme allure
+ * partout. Meme langage que les figures d'exercice : trait, bouts arrondis,
+ * et `fill: none` pose par la CSS (un <path> sans fill est peint en noir).
+ * La pointe touche le fut : les deux s'arretent a x=5 une fois la moitie de
+ * l'epaisseur du trait ajoutee par `stroke-linecap: round`.
+ */
+const BACK_ARROW =
+  '<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+  '<path d="M19 12H6" /><path d="m12 5-7 7 7 7" /></svg>';
+
+/**
  * Phase courante du lecteur. Elle determine a la fois l'affichage et l'action
  * des deux boutons du bas, ce qui permet de repeindre l'ecran a tout moment
  * (changement de langue) sans toucher au chrono en cours.
@@ -146,6 +160,39 @@ export function createRunner(ctx: Context): Runner {
   }
 
   /**
+   * Position de l'effort precedent, ou -1 s'il n'y en a pas. On revient a un
+   * effort et jamais au repos qui le precede : le bouton sert a refaire une
+   * serie lancee ou validee par erreur, et retomber sur un decompte de repos
+   * obligerait a le passer a la main pour arriver la ou on voulait aller.
+   */
+  function previousWorkIndex(): number {
+    for (let i = Math.min(index, queue.length) - 1; i >= 0; i -= 1) {
+      if (queue[i]?.kind === 'work') return i;
+    }
+    return -1;
+  }
+
+  /**
+   * Retour en arriere, c'est-a-dire le bouton secondaire du bas pendant un
+   * effort. Il portait « Passer », qui ne servait a rien : le bouton
+   * principal (« Termine », « Serie terminee ») avance deja d'une etape, et
+   * personne n'a besoin de deux facons d'aller de l'avant — alors qu'une
+   * serie validee par erreur, elle, n'avait aucun recours.
+   *
+   * Interdit une fois la seance terminee : `finish()` a deja inscrit la
+   * seance dans l'historique, rouvrir le dernier effort permettrait de la
+   * terminer une seconde fois et de l'y compter deux fois. Le bouton est de
+   * toute facon masque sur cet ecran.
+   */
+  function goPrevious(): void {
+    if (phase === 'done') return;
+    const target = previousWorkIndex();
+    if (target < 0) return;
+    index = target;
+    enterStep();
+  }
+
+  /**
    * Repos et effort ne se distinguaient qu'a la couleur (teinte de fond,
    * anneau, pastille) : illisible en plein soleil ou pour un daltonien.
    * Icone dediee, de forme differente du rond plein utilise pour l'effort.
@@ -181,6 +228,12 @@ export function createRunner(ctx: Context): Runner {
         : step.reason === 'transition'
           ? t('runner.transitionCue')
           : '';
+    // Pendant un repos, le secondaire garde « +15 s » : c'est la seule
+    // commande qui n'a pas d'equivalent ailleurs. `textContent` efface la
+    // fleche laissee par l'effort precedent, et l'`aria-label` doit partir
+    // avec elle — sinon il masquerait « +15 s » pour un lecteur d'ecran.
+    secondary.disabled = false;
+    secondary.removeAttribute('aria-label');
     secondary.textContent = t('runner.addTime');
     primary.textContent = t('runner.skip');
   }
@@ -196,7 +249,14 @@ export function createRunner(ctx: Context): Runner {
     setLine.textContent = t('runner.setOf', { current: step.set, total: step.sets });
     figure.innerHTML = figureSvg(item.key);
     cue.textContent = exerciseCue(item);
-    secondary.textContent = t('runner.skip');
+    // Desactive plutot que masque au tout premier effort : les deux boutons
+    // du bas se partagent la largeur, en retirer un elargirait l'autre.
+    // `innerHTML` sur un fragment que nous produisons nous-memes, comme la
+    // figure juste au-dessus : le nom accessible passe par `aria-label`,
+    // puisque le bouton n'a plus de texte.
+    secondary.disabled = previousWorkIndex() < 0;
+    secondary.innerHTML = BACK_ARROW;
+    secondary.setAttribute('aria-label', t('runner.previous'));
 
     if (phase === 'reps') {
       reps.textContent = t('runner.reps', { count: item.reps });
@@ -394,7 +454,7 @@ export function createRunner(ctx: Context): Runner {
 
   secondary.addEventListener('click', () => {
     if (phase === 'rest') addTime(EXTRA_SECONDS);
-    else next();
+    else goPrevious();
   });
 
   byId('runQuit').addEventListener('click', stop);

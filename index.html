@@ -607,20 +607,20 @@ https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsIn
     <div class="run" id="run">
       <div class="rhead">
         <span id="runStep"></span>
-        <div class="rhead-actions">
-          <button
-            class="info-btn"
-            type="button"
-            id="runInfo"
-            aria-label=""
-            data-i18n-aria-label="exerciseInfo.trigger"
-            hidden
-            >ⓘ</button
-          >
-          <button class="x" type="button" id="runQuit" data-i18n="runner.quit"></button>
-        </div>
+        <button class="x" type="button" id="runQuit" data-i18n="runner.quit"></button>
       </div>
       <div class="prog"><i id="runProgress" style="width: 0"></i></div>
+      <div class="ractions">
+        <button
+          class="info-btn"
+          type="button"
+          id="runInfo"
+          aria-label=""
+          data-i18n-aria-label="exerciseInfo.trigger"
+          hidden
+          >ⓘ</button
+        >
+      </div>
       <div class="rbody">
         <div class="rlabel" id="runLabel"></div>
         <div class="rname" id="runName"></div>

@@ -161,11 +161,41 @@ traduction n'existe pas encore.
 décision assumée**, pas un oubli. C'est une action secondaire (l'action
 principale d'une carte est de l'ajouter au déroulé, celle d'une ligne est
 de régler ses paramètres) dans un espace déjà dense (grille 2 colonnes,
-ligne à 4-5 champs). Un seul style de base partagé (`.info-btn`), deux
+ligne à 4-5 champs). Un seul style de base partagé (`.info-btn`), trois
 contextes de positionnement (`.libcard .info-btn` en badge absolu sur la
 carte de bibliothèque, `.fields .info-btn` poussé au coin bas droit de la
-carte du déroulé). `.del` reprend le même gabarit 32px au coin haut droit —
+carte du déroulé, `.ractions .info-btn` au coin haut droit de l'encart de
+l'exercice dans le lecteur). `.del` reprend le même gabarit 32px au coin haut droit —
 voir « Cibles tactiles » plus haut pour la répartition complète.
+
+**Exception dans le lecteur : 40px** (`.ractions .info-btn`,
+`styles/runner.css`), ramenés à 32px sous 480px de hauteur. L'argument de
+densité qui justifie les 32px ne vaut plus là — on le vise en pleine séance,
+téléphone posé au sol — et il vit au coin haut droit de l'encart de
+l'exercice, pas dans l'en-tête : là-haut, à côté de « Quitter » et du
+compteur d'étapes, il se lisait comme une commande du lecteur et passait
+inaperçu. Piège vérifié en le déplaçant : dès qu'un sélecteur de
+contexte déclare un `display` sur `.info-btn`, il faut redéclarer
+`[hidden] { display: none }` derrière — `.info-btn[hidden]` (planner.css) et
+`.ractions .info-btn` sont à égalité de spécificité, et `runner.css` est
+importé après.
+
+**Le bouton secondaire du lecteur ramène à l'effort précédent, il ne
+« passe » plus.**
+Passer faisait doublon avec le bouton principal, qui avance déjà d'une étape
+(« Terminé », « Série terminée ») ; revenir sur une série validée par erreur
+n'avait au contraire aucun recours. Il revient à l'**effort** précédent et
+jamais au repos qui le précède (`previousWorkIndex()`, `ui/runner.ts`), il
+est désactivé et non masqué au premier effort (les deux boutons du bas se
+partagent la largeur, en retirer un élargirait l'autre), et il garde
+« +15 s » pendant un repos — la seule commande sans équivalent ailleurs.
+Il affiche une flèche tracée (`BACK_ARROW`) et non le glyphe « ← », dont
+l'épaisseur et l'inclinaison changent d'une police système à l'autre ; son
+nom accessible passe donc par un `aria-label`, que `paintRest()` doit
+retirer en repassant à « +15 s » sous peine de masquer ce texte.
+Interdit sur l'écran de fin : `finish()` a déjà inscrit la séance à
+l'historique, rouvrir le dernier effort permettrait de l'y compter deux
+fois.
 
 **Recherche et filtre (`ui/library.ts`).** État local au module (`search`,
 `group`), volontairement **hors de `State`** — un filtre d'affichage n'a rien

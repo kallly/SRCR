@@ -33,21 +33,8 @@
   color: var(--paper-dim);
 }
 
-/*
-  Groupe les boutons de droite (info + quitter) : pousser directement `.x`
-  via `margin-left: auto` casserait des que `#runInfo` (cache pendant un
-  repos, voir ui/runner.ts) redevient visible, chacun des deux tenterait
-  alors d'absorber sa part de l'espace libre et un vide s'ouvrirait entre
-  eux au lieu de les coller ensemble a droite.
-*/
-.rhead-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
-}
-
 .rhead .x {
+  margin-left: auto;
   background: transparent;
   border: 1px solid var(--line);
   color: var(--paper-dim);
@@ -78,6 +65,60 @@
 
 .run.resting .prog i {
   background: var(--mint);
+}
+
+/*
+  Le bouton d'info au coin haut droit de l'encart de l'exercice : pose dans
+  l'en-tete (`.rhead`) il se lisait comme une commande du lecteur, a cote de
+  « Quitter » et du compteur d'etapes, et passait inapercu.
+
+  Rangee reelle dans la colonne flex, et non un bouton pose en absolu sur
+  `.rbody` : `.rbody` defile (`overflow-y: auto`) des que le contenu depasse,
+  et un coin en absolu s'en irait avec lui ou passerait sous le texte.
+*/
+.ractions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 12px 20px 0;
+}
+
+/*
+  Plus grand que les 32px du meme bouton ailleurs dans l'app, et assume : ici
+  on le vise en pleine seance, telephone pose au sol ou a bout de bras, la ou
+  une carte du deroule se manipule assise et au calme. Rond comme partout
+  ailleurs — c'est a cette pastille qu'on le reconnait. Fond transparent et
+  non `var(--surface)` : l'ecran du lecteur est sombre dans les deux themes,
+  une surface claire y ferait une pastille brillante.
+*/
+.ractions .info-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--paper-dim);
+  font-size: 17px;
+  line-height: 1;
+}
+
+.ractions .info-btn:hover {
+  border-color: var(--lime);
+  color: var(--lime);
+}
+
+/*
+  Le `display: flex` ci-dessus est a egalite de specificite avec le
+  `.info-btn[hidden]` de planner.css, et cette feuille est importee apres :
+  sans ce garde, le bouton d'info resterait affiche pendant un repos. Meme
+  piege que celui deja documente dans planner.css.
+*/
+.ractions .info-btn[hidden] {
+  display: none;
 }
 
 .rbody {
@@ -311,6 +352,35 @@
   background: transparent;
   color: var(--paper);
   border-radius: 8px;
+  /* Centre le contenu quel qu'il soit : un `text-align` ne centrerait pas la
+     fleche du bouton « precedent », qui n'est pas du texte. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*
+  Fleche du bouton « exercice precedent » (`BACK_ARROW`, ui/runner.ts).
+  `fill: none` n'est pas cosmetique : un <path> sans fill est peint en noir,
+  donc invisible sur ce fond sombre — meme piege que `.fig-svg .s`.
+*/
+.rfoot .arrow {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/*
+  « Precedent » n'a rien avant lui au premier effort : desactive, jamais
+  masque — les deux boutons du bas se partagent la largeur (`flex: 1` / `2`),
+  en retirer un elargirait l'autre d'un ecran a l'autre.
+*/
+.rfoot button:disabled {
+  opacity: 0.35;
 }
 
 .rfoot .primary {
@@ -328,6 +398,18 @@
    isolee ici puisque la contrainte est reellement la hauteur, pas la
    largeur (toutes les autres media-queries du projet portent sur min/max-width). */
 @media (max-height: 480px) {
+  .ractions {
+    padding: 6px 20px 0;
+  }
+
+  /* Meme raison que le reste du palier : la hauteur manque avant la largeur.
+     On retombe sur le gabarit 32px du reste de l'app. */
+  .ractions .info-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 15px;
+  }
+
   .rbody {
     padding: 10px 20px;
   }

@@ -363,6 +363,7 @@ export const fr = {
 
   runner: {
     quit: 'Quitter',
+    previous: 'Exercice précédent',
     step: 'Étape {current} / {total}',
     next: 'Ensuite — {name}',
     lastEffort: 'Dernier effort',
