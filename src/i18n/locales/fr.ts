@@ -290,6 +290,15 @@ export const fr = {
     rest: 'Repos entre séries (s)',
     /** Suffixe court affiche a cote du champ ; `rest` reste l'aria-label complet. */
     restShort: 's repos',
+    weight: 'Charge (kg)',
+    /**
+     * L'unite reste « kg » dans les cinq langues, et le nombre stocke n'est
+     * jamais converti : la charge est un reglage personnel, celui qui
+     * recoit un lien ne souleve pas les kilos de celui qui l'a ecrit. Un
+     * reglage global kg/lb reste possible plus tard sans migration, la
+     * valeur etant stockee brute.
+     */
+    weightShort: 'kg',
     delete: 'Supprimer',
     moveUp: 'Monter',
     moveDown: 'Descendre',
@@ -379,6 +388,7 @@ export const fr = {
     addTime: '+15 s',
     skip: 'Passer',
     setOf: 'Série {current} sur {total}',
+    load: '{weight} kg',
     setDone: 'Série terminée',
     reps: {
       one: '{count} rep',

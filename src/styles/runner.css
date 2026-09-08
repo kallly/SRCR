@@ -183,6 +183,23 @@
   color: var(--paper-dim);
 }
 
+/*
+  La charge, plus lisible que la ligne de serie au-dessus : c'est le chiffre
+  qu'on va chercher des yeux avant de commencer, telephone pose au sol.
+  `:empty` la fait disparaitre quand l'exercice n'en a pas — un exercice au
+  poids du corps ne doit pas laisser une ligne vide dans le cadre.
+*/
+.rload {
+  margin-top: 6px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.rload:empty {
+  display: none;
+}
+
 .rfig {
   width: 220px;
   max-width: 68vw;

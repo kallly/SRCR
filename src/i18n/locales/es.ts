@@ -251,6 +251,8 @@ export const es: Translations = {
     group: 'Grupo muscular',
     rest: 'Descanso entre series (s)',
     restShort: 's descanso',
+    weight: 'Carga (kg)',
+    weightShort: 'kg',
     delete: 'Eliminar',
     moveUp: 'Subir',
     moveDown: 'Bajar',
@@ -339,6 +341,7 @@ export const es: Translations = {
     addTime: '+15 s',
     skip: 'Saltar',
     setOf: 'Serie {current} de {total}',
+    load: '{weight} kg',
     setDone: 'Serie terminada',
     reps: {
       one: '{count} rep',

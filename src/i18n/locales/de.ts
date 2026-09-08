@@ -251,6 +251,8 @@ export const de: Translations = {
     group: 'Muskelgruppe',
     rest: 'Pause zwischen Sätzen (s)',
     restShort: 's Pause',
+    weight: 'Gewicht (kg)',
+    weightShort: 'kg',
     delete: 'Löschen',
     moveUp: 'Nach oben',
     moveDown: 'Nach unten',
@@ -340,6 +342,7 @@ export const de: Translations = {
     addTime: '+15 s',
     skip: 'Überspringen',
     setOf: 'Satz {current} von {total}',
+    load: '{weight} kg',
     setDone: 'Satz beendet',
     reps: {
       one: '{count} Wdh.',

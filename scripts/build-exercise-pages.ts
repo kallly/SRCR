@@ -427,7 +427,10 @@ function aiExample(): { json: string; encoded: string; url: string } {
   };
   const items: PlanItem[] = [
     line('kneePushup', { sets: 4, reps: 12, rest: 60 }),
-    line('superman', { sets: 3, reps: 10, rest: 60 }),
+    // Une ligne chargee dans l'exemple, et pas seulement dans le tableau :
+    // c'est ce qui garantit que la 10e position decode reellement, l'exemple
+    // etant encode au build puis re-decode juste en dessous.
+    line('dumbbellRow', { sets: 3, reps: 10, rest: 60, weight: 12 }),
     line('plank', { sets: 3, seconds: 45, rest: 60 }),
     {
       id: '',
@@ -474,7 +477,7 @@ function aiKeysTable(dict: Translations): string {
     const sheet = slug
       ? `<a href="${SITE_URL}/exercises/${SOURCE_LOCALE}/${slug}">${slug}</a>`
       : '—';
-    return `          <tr><td><code>${e.key}</code></td><td>${esc(name)}</td><td><code>${e.group}</code></td><td><code>${e.mode}</code></td><td>${e.sets} × ${effort}, repos ${e.rest} s</td><td>${sheet}</td></tr>`;
+    return `          <tr><td><code>${e.key}</code></td><td>${esc(name)}</td><td><code>${e.group}</code></td><td><code>${e.mode}</code></td><td>${e.sets} × ${effort}, repos ${e.rest} s${e.load ? ', charge en kg' : ''}</td><td>${sheet}</td></tr>`;
   }).join('\n');
 }
 
@@ -605,7 +608,7 @@ function renderAiPlanPage(dict: Translations): string {
 
       <h2>Les lignes</h2>
       <p>Chaque ligne est un tableau positionnel, pas un objet.</p>
-      <pre><code>Exercice : ["e", clé, groupe, effort, séries, répétitions, secondes, repos, nomPerso?]</code></pre>
+      <pre><code>Exercice : ["e", clé, groupe, effort, séries, répétitions, secondes, repos, nomPerso?, charge?]</code></pre>
       <div class="tablewrap">
         <table>
           <thead><tr><th>Position</th><th>Valeur</th></tr></thead>
@@ -618,6 +621,7 @@ function renderAiPlanPage(dict: Translations): string {
             <tr><td>secondes</td><td>Entier ≥ 1. Utilisé si l’effort est <code>"t"</code>.</td></tr>
             <tr><td>repos</td><td>Secondes entre deux séries (mode classique).</td></tr>
             <tr><td>nomPerso</td><td>Neuvième élément, uniquement si la clé est <code>"custom"</code>.</td></tr>
+            <tr><td>charge</td><td>Dixième élément, en kilogrammes. Facultatif, et à ne mettre que sur un exercice qui se règle en poids — la colonne « Réglages » ci-dessous l’indique. Décimales acceptées (1,25 ou 2,5 kg). Les neuf premières positions doivent alors être présentes : sur un exercice de la bibliothèque, écrivez <code>""</code> en neuvième.</td></tr>
           </tbody>
         </table>
       </div>
@@ -634,6 +638,20 @@ function renderAiPlanPage(dict: Translations): string {
         c’est lui qui fait alterner les efforts en mode circuit.
       </p>
       <pre><code>["e", "custom", "cardio", "r", 3, 10, 30, 60, "Burpees"]</code></pre>
+
+      <h2>Charge</h2>
+      <p>
+        Les exercices qui se règlent en poids — haltères et machines à charge — acceptent une
+        dixième valeur, en kilogrammes. Un exercice personnalisé l’accepte aussi. Les élastiques
+        et les machines cardio (tapis, vélo, rameur) n’en prennent pas : leur réglage n’est pas un
+        poids. Une ligne sans charge s’écrit exactement comme avant, et c’est le cas normal.
+      </p>
+      <pre><code>["e", "dumbbellCurl", "arms", "r", 3, 10, 30, 60, "", 12]
+["e", "custom", "back", "r", 3, 10, 30, 90, "Tirage poulie", 35]</code></pre>
+      <p>
+        La chaîne vide en neuvième position n’est pas une coquille : les positions ne se sautent
+        pas. L’unité est toujours le kilogramme, et la valeur n’est jamais convertie.
+      </p>
 
       <h2>Encodage</h2>
       <p>
@@ -702,6 +720,7 @@ ${aiGroupsTable(dict)}
       <pre><code>${SITE_URL}/?plan={"name":"Haut du corps","mode":"circuit","pause":60,"items":[
   {"ex":"kneePushup","sets":4,"reps":12,"rest":60},
   {"ex":"plank","sets":3,"seconds":45},
+  {"ex":"dumbbellCurl","sets":3,"reps":10,"weight":12},
   {"ex":"Burpees","group":"cardio","sets":3,"reps":10}
 ]}</code></pre>
       <p>
@@ -709,7 +728,8 @@ ${aiGroupsTable(dict)}
         devient un exercice personnalisé) ; le groupe, le type d’effort et tout champ absent sont
         déduits de la bibliothèque ; <code>reps</code> seul impose l’effort en répétitions,
         <code>seconds</code> seul l’impose en durée ; <code>rest</code> donne le repos entre deux
-        séries de la ligne. Les noms de champs sont insensibles à la casse et
+        séries de la ligne ; <code>weight</code> (ou <code>poids</code>, <code>charge</code>,
+        <code>kg</code>) donne la charge en kilogrammes. Les noms de champs sont insensibles à la casse et
         les nombres acceptés sous forme de chaîne. Maximum 60 lignes.
       </p>
       <p>
@@ -951,7 +971,7 @@ function renderLlmsTxt(dict: Translations): string {
     const detail = DETAILS_BY_LOCALE[SOURCE_LOCALE]?.[e.key];
     const name = dict.exercise[e.key]?.name ?? e.key;
     const path = detail ? ` — /exercises/${SOURCE_LOCALE}/${detail.slug}` : '';
-    return `- ${e.key} (${e.group}, ${e.mode}) — ${name}${path}`;
+    return `- ${e.key} (${e.group}, ${e.mode}${e.load ? ', charge' : ''}) — ${name}${path}`;
   }).join('\n');
 
   // Exemple pris dans les donnees et jamais ecrit en dur : c'est lui qui montre
@@ -1000,12 +1020,23 @@ confirmation de la personne.
 Forme : ${SITE_URL}/?s=<base64url du JSON>
 
 Enveloppe : {"v":1,"n":nom,"m":"c"|"x","p":pauseCircuit,"t":transition,"i":[lignes]}
-Exercice  : ["e", clé, groupe, "r"|"t", séries, reps, secondes, repos, nomPerso?]
+Exercice  : ["e", clé, groupe, "r"|"t", séries, reps, secondes, repos, nomPerso?, charge?]
 
 "m" vaut "c" pour le mode classique (toutes les séries d'un exercice, puis le
 suivant) et "x" pour le circuit (les séries alternent les groupes musculaires).
 "r" mesure l'effort en répétitions, "t" en secondes. Un mouvement absent de la
 bibliothèque s'écrit avec la clé "custom" et son nom en neuvième position.
+
+La charge est la dixième position, en kilogrammes, et seuls les exercices
+marqués « charge » dans la liste plus bas en prennent — plus tout exercice
+personnalisé. Les positions ne se sautent pas : sur un exercice de la
+bibliothèque, mettez "" en neuvième.
+
+  ["e", "dumbbellCurl", "arms", "r", 3, 10, 30, 60, "", 12]
+
+Ni les élastiques ni les machines cardio n'ont de charge : leur réglage n'est
+pas un poids. Une ligne sans charge s'écrit comme avant, et c'est le cas
+normal.
 
 base64url = base64 standard, + → -, / → _, remplissage = retiré.
 
@@ -1020,7 +1051,7 @@ fonctionne qu'avec le lien exact.
 
 Repli si le base64 est incertain : ?plan= accepte le même contenu en JSON
 lisible non encodé, avec des noms de champs explicites (ex, sets, reps,
-seconds, rest, group, name, mode, pause). Dans cette forme, & et # doivent
+seconds, rest, weight, group, name, mode, pause). Dans cette forme, & et # doivent
 être encodés en %26 et %23, sinon l'URL est coupée. Voir la spécification
 complète.
 

@@ -419,17 +419,24 @@
           <p data-i18n="aiPlan.format"></p>
           <pre class="ai-code"><code>{"v":1,"n":"Haut du corps","m":"x","p":60,"t":0,"i":[
   ["e","kneePushup","push","r",4,12,30,60],
-  ["e","plank","core","t",3,10,45,60]
+  ["e","plank","core","t",3,10,45,60],
+  ["e","dumbbellCurl","arms","r",3,10,30,60,"",12]
 ]}
 
 v = version du format (1)          n = nom de la séance
 m = "c" classique | "x" circuit    p = pause imposée (s, mode circuit)
 t = transition entre exercices (s) i = lignes du déroulé
 
-Exercice : ["e", clé, groupe, "r" reps | "t" durée, séries, reps, secondes, repos, nomPerso?]
+Exercice : ["e", clé, groupe, "r" reps | "t" durée, séries, reps, secondes, repos, nomPerso?, charge?]
 Pause    : ["r", secondes]
 
-https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsInQiOjAsImkiOltbImUiLCJrbmVlUHVzaHVwIiwicHVzaCIsInIiLDQsMTIsMzAsNjBdLFsiZSIsInBsYW5rIiwiY29yZSIsInQiLDMsMTAsNDUsNjBdXX0</code></pre>
+charge   = kilogrammes, uniquement sur un exercice qui se règle en poids
+           (haltères, machines à charge) ou sur un exercice personnalisé.
+           Les positions ne se sautent pas : sur un exercice de la
+           bibliothèque, écrivez "" en neuvième, là où vivrait le nom
+           d'un exercice personnalisé.
+
+https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsInQiOjAsImkiOltbImUiLCJrbmVlUHVzaHVwIiwicHVzaCIsInIiLDQsMTIsMzAsNjBdLFsiZSIsInBsYW5rIiwiY29yZSIsInQiLDMsMTAsNDUsNjBdLFsiZSIsImR1bWJiZWxsQ3VybCIsImFybXMiLCJyIiwzLDEwLDMwLDYwLCIiLDEyXV19</code></pre>
           <p data-i18n="aiPlan.keys"></p>
           <p data-i18n="aiPlan.rawLink"></p>
         </div>
@@ -667,6 +674,13 @@ https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsIn
         <div class="rlabel" id="runLabel"></div>
         <div class="rname" id="runName"></div>
         <div class="rset" id="runSet"></div>
+        <!--
+          Charge de l'exercice (ExerciseItem.weight). Vide quand il n'y en a
+          pas, et `.rload:empty` le masque alors : rien a cacher ni a
+          reafficher a la main. Contenu par exercice, pas du chrome — meme
+          statut que #runName juste au-dessus, donc pas de data-i18n.
+        -->
+        <div class="rload" id="runLoad"></div>
         <div class="rfig" id="runFigure"></div>
         <div class="ring" id="runRing">
           <svg viewBox="0 0 230 230" aria-hidden="true">

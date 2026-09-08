@@ -117,13 +117,19 @@ export interface FieldOptions {
   itemId: string;
 }
 
+/**
+ * `value: null` rend un champ VIDE, pas un zero : c'est ce que demande la
+ * charge (`ExerciseItem.weight`), dont l'absence est une valeur a part
+ * entiere. Un `0` affiche laisserait croire qu'une charge nulle a ete reglee,
+ * et obligerait a distinguer « pas de charge » de « 0 kg » partout ailleurs.
+ */
 export function numberField(
-  options: FieldOptions & { value: number; attrs: Record<string, string> },
+  options: FieldOptions & { value: number | null; attrs: Record<string, string> },
 ): HTMLElement {
   const input = el('input', {
     attrs: {
       type: 'number',
-      value: String(options.value),
+      value: options.value === null ? '' : String(options.value),
       id: fieldId(options.field, options.itemId),
       'aria-label': options.ariaLabel,
       'data-field': options.field,

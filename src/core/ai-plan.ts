@@ -154,6 +154,11 @@ function adaptItem(raw: unknown): Record<string, unknown> | null {
     reps: reps ?? base.reps,
     seconds: seconds ?? base.seconds,
     rest: num(pick(source, 'rest', 'repos', 'restseconds')) ?? base.rest,
+    // Pas de defaut : une charge absente reste absente, la bibliotheque n'en
+    // propose aucune (elle depend de la personne, pas de l'exercice).
+    // `parseItem()` jette une valeur nulle ou negative, donc un modele qui
+    // ecrit `"weight": 0` pour dire « au poids du corps » se comprend seul.
+    weight: num(pick(source, 'weight', 'poids', 'charge', 'load', 'kg')),
   };
 }
 
@@ -244,6 +249,7 @@ export function encodeAiPlan(plan: SavedPlan): unknown {
             sets: item.sets,
             ...(item.mode === 'time' ? { seconds: item.seconds } : { reps: item.reps }),
             rest: item.rest,
+            ...(item.weight === undefined ? {} : { weight: item.weight }),
           },
     ),
   };

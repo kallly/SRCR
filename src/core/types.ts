@@ -140,6 +140,20 @@ export interface ExerciseItem {
   seconds: number;
   /** Repos entre deux series du meme exercice, en mode classique. */
   rest: number;
+  /**
+   * Charge en kilogrammes. ABSENT quand il n'y en a pas — c'est le cas de
+   * l'immense majorite des lignes, et c'est ce qui rend l'ajout gratuit :
+   * une seance au poids du corps ne gagne pas un octet en stockage ni un
+   * caractere dans son lien de partage.
+   *
+   * Seul champ non entier du schema (les disques font 1,25 et 2,5 kg), d'ou
+   * un parseur distinct de `positiveInt()` dans `core/storage.ts`.
+   *
+   * Ce que ce champ n'est PAS : un journal. Il decrit la seance prevue, au
+   * meme titre que `reps`, jamais ce qui a reellement ete souleve serie par
+   * serie — ce serait un carnet d'entrainement, donc une autre application.
+   */
+  weight?: number;
 }
 
 /**

@@ -76,6 +76,12 @@ const MAX_HISTORY = 200;
 export const MAX_SETS = 99;
 export const MAX_REPS = 9_999;
 export const MAX_SECONDS = 86_400;
+/**
+ * Charge, en kilogrammes. Meme esprit que les trois au-dessus : tres au-dela
+ * de ce que l'interface propose (250 kg), assez bas pour qu'on ne puisse pas
+ * loger un nombre absurde dans le champ le plus visible du lecteur.
+ */
+export const MAX_WEIGHT = 999;
 
 /**
  * Lignes retenues d'un deroule. Tres au-dessus de ce qu'une seance reelle
@@ -141,6 +147,24 @@ function positiveInt(value: unknown, fallback: number, max?: number): number {
   if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) return fallback;
   const rounded = Math.round(value);
   return max === undefined ? rounded : Math.min(rounded, max);
+}
+
+/**
+ * Charge en kg, ou `undefined` quand il n'y en a pas.
+ *
+ * Le seul champ du schema que `positiveInt()` ne peut pas lire : les disques
+ * font 1,25 et 2,5 kg, et arrondir a l'entier rendrait le champ faux pour les
+ * charges legeres — celles, precisement, ou le quart de kilo compte.
+ *
+ * Zero et negatif retombent sur `undefined` plutot que sur 0 : « aucune
+ * charge » n'a qu'une seule ecriture dans le stockage, ce qui evite d'avoir a
+ * traiter `weight: 0` comme un cas particulier a l'affichage, au partage et a
+ * la fusion. C'est aussi ce qui fait que vider le champ dans la carte efface
+ * la propriete au lieu d'y laisser un 0.
+ */
+function optionalWeight(value: unknown): number | undefined {
+  if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) return undefined;
+  return Math.min(MAX_WEIGHT, Math.round(value * 100) / 100);
 }
 
 /**
@@ -220,6 +244,19 @@ function parseItem(raw: unknown): PlanItem | null {
     rest: positiveInt(source['rest'], 90, MAX_SECONDS),
   };
   if (!known && customName) item.customName = customName;
+  // Affecte seulement si elle existe : `exactOptionalPropertyTypes` interdit
+  // d'ecrire `undefined` dans une propriete facultative, et c'est tant mieux
+  // — une ligne sans charge ne doit pas porter la clef du tout, sans quoi
+  // chaque exercice au poids du corps la trainerait dans le stockage, dans le
+  // document distant et dans le lien de partage.
+  //
+  // Aucun filtre sur la cle : ce parseur ne decide pas quels exercices ont le
+  // droit d'etre charges (`data/library.ts` le declare, `ui/planner.ts`
+  // l'affiche). Une charge sur une ligne qui n'en attend pas est conservee
+  // telle quelle plutot que jetee en silence — meme regle que partout ici, on
+  // borne, on ne censure pas.
+  const weight = optionalWeight(source['weight']);
+  if (weight !== undefined) item.weight = weight;
   return item;
 }
 

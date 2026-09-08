@@ -86,6 +86,10 @@ export function installWebMcp(ctx: Context, share: Share): void {
             // corps d'un exercice qui suppose une machine.
             category: entry.category,
             mode: entry.mode,
+            // Present uniquement quand l'exercice se regle en poids : c'est ce
+            // qui dit a une IA ou une charge est legitime. Absent ailleurs
+            // plutot que `false`, comme le champ lui-meme sur une ligne.
+            ...(entry.load ? { load: true } : {}),
             sets: entry.sets,
             reps: entry.reps,
             seconds: entry.seconds,
@@ -109,7 +113,7 @@ export function installWebMcp(ctx: Context, share: Share): void {
     {
       name: 'create_session',
       description:
-        "Propose une seance a l'utilisateur. Le parametre `session` est un objet JSON { name, mode: 'classic'|'circuit', pause, trans, items: [{ ex, group?, sets, reps?, seconds?, rest? } | { rest }] } ; `ex` accepte une cle de la bibliotheque ou un nom libre, qui devient un exercice personnalise. N'ecrit rien directement : ouvre une fenetre ou l'utilisateur choisit de creer une nouvelle seance, de remplacer une seance de meme nom, ou d'ajouter les exercices a la seance active.",
+        "Propose une seance a l'utilisateur. Le parametre `session` est un objet JSON { name, mode: 'classic'|'circuit', pause, trans, items: [{ ex, group?, sets, reps?, seconds?, rest?, weight? } | { rest }] } ; `ex` accepte une cle de la bibliotheque ou un nom libre, qui devient un exercice personnalise ; `weight` est une charge en kilogrammes, a ne mettre que sur un exercice marque `load` par get_library ou sur un exercice personnalise. N'ecrit rien directement : ouvre une fenetre ou l'utilisateur choisit de creer une nouvelle seance, de remplacer une seance de meme nom, ou d'ajouter les exercices a la seance active.",
       inputSchema: {
         type: 'object',
         properties: {

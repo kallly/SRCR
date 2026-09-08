@@ -43,7 +43,7 @@ id.
 
 **Le payload est volontairement dense, pas lisible.** Chaque ligne du
 déroulé est un tableau positionnel (`['e', clé, groupe, 'r'|'t', séries,
-répétitions, secondes, repos, nomPerso?]` pour un exercice, `['r',
+répétitions, secondes, repos, nomPerso?, charge?]` pour un exercice, `['r',
 secondes]` pour une pause) et non un objet : aucun nom de champ répété par
 ligne. Les deux enums à deux valeurs (mode de séance, type d'effort) sont
 réduits à une lettre. `decodeSharedPlan()` reconstruit la forme `{ type,
@@ -54,6 +54,23 @@ caractères encodés, et le QR correspondant passe de 129 à 77 modules de
 côté (bien plus confortable à scanner). Ne pas « clarifier » ce format en
 repassant à des objets à clés explicites sans mesurer l'impact sur la
 taille du lien — c'est tout l'intérêt de ce format.
+
+**La charge est la dixième position, et un tableau positionnel s'étend par la
+fin.** C'est ce qui a permis de l'ajouter sans toucher à `v` : un ancien build
+lit le neuvième élément comme un nom perso et ignore le dixième. Contrepartie,
+un exercice de la bibliothèque qui porte une charge écrit `""` en neuvième —
+les positions ne se sautent pas. Trois caractères pour ne pas avoir à deviner
+la nature d'un élément d'après son type, ce qu'aucune documentation lisible par
+une IA ne dirait simplement. `encodeItem()` n'écrit rien quand il n'y a pas de
+charge, donc une séance au poids du corps produit exactement le lien d'avant.
+
+**Le format est documenté sur QUATRE surfaces, et elles ont déjà divergé.** La
+page de spec générée, `llms.txt`, les outils WebMCP (`ui/webmcp.ts`) et — celle
+qu'on oublie — le bloc `#aiPlan` de l'accueil, écrit à la main, sans
+`data-i18n`, avec son propre exemple `?s=` en base64 littéral. C'est pourtant
+le premier que les modèles lisent : `aiHelp.createPrompt` leur donne l'adresse
+de l'accueil, pas celle de la page de spec. `check-build.ts` décode désormais
+cet exemple-là aussi, et exige qu'il porte une charge.
 
 **QR toujours noir sur blanc, jamais suivant le thème de l'app** (`.qr-card`
 dans `base.css`) : c'est la seule combinaison fiable pour un lecteur de QR,

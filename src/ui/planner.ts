@@ -1,8 +1,8 @@
 import { t } from '../i18n';
 import { groupColor } from '../data/groups';
 import { exerciseName, isExercise, move } from '../core/plan';
-import { isLibraryKey } from '../data/library';
-import { MAX_REPS, MAX_SECONDS, MAX_SETS } from '../core/storage';
+import { findLibraryEntry, isLibraryKey } from '../data/library';
+import { MAX_REPS, MAX_SECONDS, MAX_SETS, MAX_WEIGHT } from '../core/storage';
 import type { ExerciseItem, ExerciseKey, PlanItem, RestItem } from '../core/types';
 import type { Context } from './app';
 import { byId, dot, el, numberField, selectField } from './dom';
@@ -55,6 +55,23 @@ function deleteButton(id: string): HTMLElement {
     text: '×',
     attrs: { type: 'button', 'data-delete': id, 'aria-label': t('item.delete') },
   });
+}
+
+/**
+ * Le champ de charge apparait-il sur cette ligne ?
+ *
+ * Trois cas, dans cet ordre. La ligne PORTE deja une charge : le champ reste,
+ * quoi qu'en dise la bibliotheque — une valeur venue d'un lien, ou d'un
+ * exercice qui perdrait son drapeau demain, ne doit jamais devenir invisible
+ * et donc incorrigeable. C'est un exercice perso : on ne sait pas ce que
+ * c'est, donc la porte reste ouverte, champ vide. Sinon c'est la bibliotheque
+ * qui tranche (`load`, data/library.ts) — elastiques et machines cardio n'en
+ * ont pas.
+ */
+function takesLoad(item: ExerciseItem): boolean {
+  if (item.weight !== undefined) return true;
+  if (item.key === 'custom') return true;
+  return findLibraryEntry(item.key)?.load === true;
 }
 
 /** Un exercice perso n'a pas de fiche (aucun contenu associe a la cle `custom`). */
@@ -172,6 +189,24 @@ function exerciseRow(
         attrs: { min: '1', max: '10' },
       }),
       effort,
+      takesLoad(item)
+        ? numberField({
+            ariaLabel: t('item.weight'),
+            unit: t('item.weightShort'),
+            // `null` et non 0 : le champ doit etre VIDE tant qu'aucune charge
+            // n'est reglee (voir numberField, ui/dom.ts).
+            value: item.weight ?? null,
+            field: 'weight',
+            itemId: item.id,
+            // Le pas est ce qui rend le champ utilisable en salle : les
+            // petits disques font 1,25 et 2,5 kg, donc 0,25 et pas 0,5 — avec
+            // un pas de 0,5, une charge de 1,25 kg venue d'un lien est en
+            // `stepMismatch` et la moindre fleche du champ la remonte a 1,5.
+            // Le plafond affiche est celui de l'interface, pas celui du
+            // parseur (MAX_WEIGHT).
+            attrs: { min: '0', max: '250', step: '0.25', inputmode: 'decimal' },
+          })
+        : null,
       // Pas de selecteur de groupe ici, y compris pour un exercice perso : il
       // se choisit desormais au moment de la creation (`ui/app.ts`), une fois
       // pour toutes. La carte reste donc identique pour tous les exercices,
@@ -268,6 +303,35 @@ export function createPlanner(ctx: Context): { render: () => void } {
 
     const item = ctx.activePlan().items.find((entry) => entry.id === id);
     if (!item) return;
+
+    // La charge est le seul champ non entier de la carte : elle ne peut pas
+    // passer par NUMERIC_FIELDS, qui plafonne des entiers avec `parseInt` et
+    // arrondirait 2,5 kg a 3.
+    if (field === 'weight' && isExercise(item)) {
+      // Saisie que le navigateur ne sait pas lire (un point decimal la ou il
+      // attend une virgule, « 1.2.3 »...) : `value` vaut alors la chaine vide,
+      // exactement comme un champ vide, et l'effacer VIDERAIT une charge que
+      // personne n'a demande a retirer. `badInput` est ce qui distingue les
+      // deux — on ne touche a rien et on laisse la personne corriger.
+      if (input instanceof HTMLInputElement && input.validity.badInput) return;
+      // `type=number` normalise deja `value` avec un point decimal, mais
+      // certains navigateurs restituent la virgule telle qu'elle a ete tapee :
+      // la remplacer coute une ligne et ne peut rien casser.
+      const typed = Number.parseFloat(input.value.replace(',', '.'));
+      const value = Number.isFinite(typed)
+        ? Math.min(MAX_WEIGHT, Math.max(0, Math.round(typed * 100) / 100))
+        : 0;
+      // Vider le champ, ou y saisir 0, RETIRE la charge au lieu d'ecrire un
+      // zero : meme normalisation qu'`optionalWeight()` (core/storage.ts), pour
+      // que « pas de charge » n'ait qu'une seule ecriture dans le stockage.
+      if (value > 0) item.weight = value;
+      else delete item.weight;
+      const shown = value > 0 ? String(value) : '';
+      if (shown !== input.value) input.value = shown;
+      ctx.save();
+      ctx.renderDerived();
+      return;
+    }
 
     const max = NUMERIC_FIELDS.get(field);
     if (max !== undefined) {

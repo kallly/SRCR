@@ -164,6 +164,17 @@ export function formatTime(timestamp: number): string {
   }).format(new Date(timestamp));
 }
 
+/**
+ * Nombre decimal dans la langue active (« 2,5 » en francais, « 2.5 » en
+ * anglais). Existe pour la charge, premier nombre non entier que l'interface
+ * affiche : un `<input type="number">` localise deja ce qu'il montre, donc
+ * sans ca le lecteur ecrivait « 2.5 kg » pendant que la carte affichait
+ * « 2,5 » — la meme valeur ecrite de deux facons sur deux ecrans.
+ */
+export function formatNumber(value: number): string {
+  return new Intl.NumberFormat(current).format(value);
+}
+
 /** Date courte (« lun. 3 sept. ») dans la langue active. */
 export function formatDate(timestamp: number): string {
   return new Intl.DateTimeFormat(current, {

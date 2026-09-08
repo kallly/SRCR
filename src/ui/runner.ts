@@ -1,10 +1,10 @@
-import { t } from '../i18n';
+import { formatNumber, t } from '../i18n';
 import { groupColor } from '../data/groups';
 import { figureSvg } from '../data/figures';
 import { exerciseCue, exerciseName } from '../core/plan';
 import { buildQueue } from '../core/queue';
 import { isLibraryKey } from '../data/library';
-import type { ExerciseKey, RestStep, Step, WorkStep } from '../core/types';
+import type { ExerciseItem, ExerciseKey, RestStep, Step, WorkStep } from '../core/types';
 import { beep, beepExerciseEnd, beepWarning, primeAudio } from '../platform/audio';
 import { acquireWakeLock, releaseWakeLock } from '../platform/wakelock';
 import { byId, dot, el } from './dom';
@@ -78,6 +78,7 @@ export function createRunner(ctx: Context): Runner {
   const label = byId('runLabel');
   const name = byId('runName');
   const setLine = byId('runSet');
+  const load = byId('runLoad');
   const figure = byId('runFigure');
   const ring = byId('runRing');
   const ringFill = byId('runRingFill');
@@ -221,6 +222,9 @@ export function createRunner(ctx: Context): Runner {
       ? t('runner.then', { name: exerciseName(step.next) })
       : t('runner.recover');
     setLine.textContent = '';
+    // La charge du PROCHAIN exercice, pas de celui qu'on vient de finir : le
+    // repos est justement le moment ou on va la preparer.
+    paintLoad(step.next);
     figure.replaceChildren();
     cue.textContent =
       step.reason === 'forced'
@@ -238,9 +242,21 @@ export function createRunner(ctx: Context): Runner {
     primary.textContent = t('runner.skip');
   }
 
+  /**
+   * Ecrit la charge, ou vide la ligne quand il n'y en a pas — `.rload:empty`
+   * la retire alors du cadre (styles/runner.css).
+   */
+  function paintLoad(item: ExerciseItem | null): void {
+    load.textContent =
+      item && item.weight !== undefined
+        ? t('runner.load', { weight: formatNumber(item.weight) })
+        : '';
+  }
+
   function paintWork(step: WorkStep): void {
     const { item } = step;
     paintInfoButton(item.key);
+    paintLoad(item);
     label.replaceChildren(
       dot(groupColor(item.group)),
       document.createTextNode(t(`group.${item.group}`)),
@@ -277,6 +293,7 @@ export function createRunner(ctx: Context): Runner {
     label.replaceChildren();
     name.textContent = t('runner.finished');
     setLine.textContent = '';
+    paintLoad(null);
     figure.replaceChildren();
     reps.textContent = '✓';
     cue.textContent = t('runner.finishedCue');

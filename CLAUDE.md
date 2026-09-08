@@ -400,6 +400,68 @@ au-delà de son attribut `max` : sans le plafond de `NUMERIC_FIELDS`
 (`ui/planner.ts`), saisir 99999 séries dans une carte atteint la même faille
 sans le moindre lien.
 
+## La charge est facultative, et c'est ce qui la rend gratuite
+
+`ExerciseItem.weight` porte des kilogrammes, et **est absent quand il n'y en a
+pas**. Une séance au poids du corps ne gagne donc pas un octet en stockage, pas
+un caractère dans son lien, pas un champ dans sa carte — et le moteur
+(`core/queue.ts`) n'a rien eu à apprendre, le `WorkStep` portant déjà une
+référence à l'`ExerciseItem`. C'est l'optionalité, et elle seule, qui a permis
+d'ajouter la charge sans alourdir le reste : la défaire (un `weight: 0` par
+défaut) ferait payer le champ à toutes les lignes qui n'en veulent pas, et
+obligerait à distinguer partout « pas de charge » de « 0 kg ».
+
+**Pas de bump de version, contrairement à la règle n°3, et c'est argumenté.**
+Un champ facultatif se dégrade correctement dans les deux sens : un ancien
+build ignore la clef inconnue, un nouveau lit `undefined`. Bumper aurait au
+contraire un coût réel — l'ancien build continuerait d'écrire `seance.plans.v6`
+pendant que le nouveau écrit v7, et les deux divergeraient pour toujours. Le
+seul vrai risque (un appareil resté sur l'ancien bundle qui modifie une séance
+et la repousse au nuage sans les charges, `updatedAt` faisant foi) existe
+**identiquement** avec ou sans bump. La règle vaut pour un changement de forme,
+pas pour un ajout que les deux côtés savent ignorer.
+
+**Qui expose le champ.** Un drapeau explicite `load` sur `LibraryEntry`
+(`data/library.ts`, 12 exercices), et pas une déduction depuis `category` —
+pour la raison qui a fait naître `motion` : la catégorie ne sait pas répondre.
+Un élastique n'est pas du poids du corps mais n'a pas de kg, il a une couleur ;
+et `machine` range le tapis, le vélo et le rameur avec la presse à cuisses,
+alors que ces trois-là se règlent en vitesse, en niveau ou en frein. `load` est
+une métadonnée de catalogue comme `category` et `motion` : jamais recopiée dans
+une ligne persistée. Le champ apparaît aussi sur **tout exercice perso** (on ne
+sait pas ce que c'est) et sur **toute ligne qui porte déjà une charge** — une
+valeur venue d'un lien ne doit jamais devenir invisible, donc incorrigeable.
+
+**Deux pièges.** C'est le **seul champ non entier** du schéma (les disques font
+1,25 et 2,5 kg) : il a son propre parseur, `optionalWeight()`, et ne passe pas
+par `NUMERIC_FIELDS` dans `ui/planner.ts`, qui plafonne des entiers avec
+`parseInt`. Et dans le format `?s=`, la charge est la **dixième** position :
+un exercice de la bibliothèque qui en porte une écrit donc `""` en neuvième,
+là où vivrait le nom d'un perso. Trois caractères pour ne pas avoir à deviner
+la nature d'un élément d'après son type — ce qu'aucune documentation lisible
+par une IA ne dirait simplement. Le tableau positionnel s'étendant par la fin,
+`v` n'a pas bougé et les liens déjà partagés s'ouvrent entiers.
+
+**Le format est documenté sur quatre surfaces**, et la quatrième est celle
+qu'on oublie : la page de spec générée, `llms.txt`, `ui/webmcp.ts`, et le bloc
+`#aiPlan` de l'accueil — écrit à la main, avec son propre exemple `?s=` en
+base64 littéral. C'est pourtant le premier que les modèles lisent
+(`aiHelp.createPrompt` leur donne l'adresse de l'accueil, pas celle de la page
+de spec), et c'est le seul qui avait été oublié au premier jet. `check-build.ts`
+décode désormais cet exemple-là aussi.
+
+**L'unité est le kilogramme dans les cinq langues, et rien n'est jamais
+converti.** La charge est un réglage personnel : celui qui reçoit un lien ne
+soulève pas les kilos de celui qui l'a écrit. Un réglage global kg/lb reste
+possible plus tard sans migration, la valeur étant stockée brute.
+
+**Ce que ce champ n'est pas : un journal.** Il décrit la séance prévue, au même
+titre que `reps` — jamais ce qui a réellement été soulevé série par série. Pas
+d'historique des charges, pas de progression suggérée, pas de 1RM, pas de
+calculateur de disques : chacun est le premier pas vers un carnet
+d'entraînement, qui est une autre application et ferait exploser le schéma
+persisté comme la fusion nuage.
+
 ## Le moteur (`core/queue.ts`)
 
 C'est le cœur de valeur, et il est porté à l'identique du monolithe — vérifié
@@ -428,16 +490,16 @@ sans rien charger.
 
 | Tu touches à… | L'invariant qui te mordra sinon | Skill à charger |
 |---|---|---|
-| `core/share.ts`, `core/ai-plan.ts`, `ui/share.ts`, `ui/webmcp.ts`, `ui/ai-help.ts`, la section `#aiPlan` — bref lien de partage, QR, import, pilotage par une IA | Le payload `?s=` est **dense par conception** (7 exercices : 1120 → 430 caractères, QR de 129 → 77 modules). Ne jamais le « clarifier » en objets à clés explicites. `?plan=` n'entre **jamais** dans un QR. Aucune reconnaissance d'exercice par nom traduit. Et un lien est une entrée **hostile** : tout ce qu'il porte se borne par le haut, dans les parseurs de `core/storage.ts` et jamais ici. | `seance-partage-liens` |
+| `core/share.ts`, `core/ai-plan.ts`, `ui/share.ts`, `ui/webmcp.ts`, `ui/ai-help.ts`, la section `#aiPlan` — bref lien de partage, QR, import, pilotage par une IA | Le payload `?s=` est **dense par conception** (7 exercices : 1120 → 430 caractères, QR de 129 → 77 modules). Ne jamais le « clarifier » en objets à clés explicites. `?plan=` n'entre **jamais** dans un QR. Aucune reconnaissance d'exercice par nom traduit. La charge est la **dixième** position de la ligne `?s=` : un exercice de bibliothèque qui en porte une écrit `""` en neuvième, les positions ne se sautent pas. Et un lien est une entrée **hostile** : tout ce qu'il porte se borne par le haut, dans les parseurs de `core/storage.ts` et jamais ici. | `seance-partage-liens` |
 | `index.html`, `vite.config.ts`, les balises meta/JSON-LD/`og:*`, la police, le sitemap, `llms.txt` | Un élément `data-i18n` doit être **vide** dans la source : son texte français est injecté au build depuis `fr.ts`. `#plan`/`#library` réservent leur hauteur (`:empty`) — c'est ce qui tient le CLS à 0,013 au lieu de 0,43. `--disp` demande `'Archivo'`, jamais `'Archivo Expanded'` (HTTP 400 silencieux). | `seance-seo-html` |
 | `scripts/build-exercise-pages.ts`, `src/content/exercise-details/*`, `exercise-page.css`, `image-prompts.ts` | `dist/exercises/**` est **regénéré à chaque build** : l'éditer à la main est une perte de temps garantie. Le contenu long n'admet que du vérifiable et du stable — jamais d'étude citée, de % d'activation EMG ni de chiffre à fausse précision. Le `slug` est **traduit par langue**, et la fiche ne porte **nulle part** la clé interne : `llms.txt` et la colonne « Fiche » de la page de spec sont les deux seules passerelles du slug vers la clé, toutes deux vérifiées par `check-build.ts`. | `seance-fiches-generees` |
-| un module `src/ui/*.ts`, le `Context`, la taille/place d'un bouton, le schéma persisté | Une saisie chiffrée passe par `renderDerived()` — reconstruire la liste ferait perdre le focus du champ, et c'est aussi pourquoi elle doit réécrire elle-même la valeur qu'elle a plafonnée. Changer la forme de ce qui est persisté impose de bumper la version **et** d'écrire la migration. | `seance-ui-module` |
+| un module `src/ui/*.ts`, le `Context`, la taille/place d'un bouton, le schéma persisté | Une saisie chiffrée passe par `renderDerived()` — reconstruire la liste ferait perdre le focus du champ, et c'est aussi pourquoi elle doit réécrire elle-même la valeur qu'elle a plafonnée. `weight` est le seul champ non entier : il a sa propre branche, `NUMERIC_FIELDS` arrondirait 2,5 kg à 3. Changer la forme de ce qui est persisté impose de bumper la version **et** d'écrire la migration. | `seance-ui-module` |
 | `src/cloud/*`, `src/ui/account.ts`, le bouton de compte, la sauvegarde en ligne | La sauvegarde automatique tient à **un seul point d'accroche** : `cloud.notifyLocalChange()` dans `save()` (`ui/app.ts`). Ne jamais la recâbler site par site. Le SDK Firebase n'est chargé **que** sur un clic de connexion ou si `session-hint` dit que la personne était connectée — sinon un visiteur anonyme paierait ~200 Ko pour rien. Le document distant repasse **toujours** par les parseurs de `core/storage.ts` : c'est une entrée non fiable, au même titre qu'un lien `?s=`. **Ce qui se compte, ce sont les écritures** (20 000/jour, tous comptes confondus), pas les octets : d'où le regroupement à 4 s et la poussée conditionnelle au chargement. | *(pas de skill : tout est ici et dans `firestore.rules`)* |
 | `src/data/groups.ts`, l'ajout ou le retrait d'un groupe musculaire | Un id de groupe voyage dans les liens `?s=` : on en **ajoute**, on n'en renomme jamais. Et deux groupes se comparent par `groupsOverlap()`, jamais par `===` — l'arbre a deux étages, « jambes » recouvre « mollets ». | *(pas de skill : tout est dans la section « Les groupes musculaires forment un arbre »)* |
 | `src/data/tenants.ts`, l'ajout d'une salle de sport / d'un sous-domaine | Un exercice de salle est une ligne **perso** (`key: 'custom'` + son nom), jamais une clé de `LIBRARY` — l'y mettre réclamerait 5 pages générées, une figure et du contenu long en 5 langues. Et le sous-domaine doit être ajouté aux **domaines autorisés de Firebase Auth**, sinon la connexion Google échoue en silence. | `add-salle` |
 | une clé de traduction, un texte d'interface | `fr.ts` d'abord : les quatre autres langues deviennent alors des erreurs de compilation. Jamais de pluriel recomposé à la main. | `add-i18n-key` |
 | `src/data/figures.ts`, le champ `motion` de `library.ts`, le bloc `.fig-svg` — bref une figure d'exercice | Le bloc CSS `.fig-svg` existe en **deux copies** (bundle + `exercise-page.css`, hors bundle) et `check-build.ts` échoue si elles divergent. `fill: none` sur `.s` n'est pas cosmétique : un `<path>` sans `fill` est rempli en **noir**, invisible sur le thème sombre et pas sur le clair. Toutes les figures de profil regardent à gauche, et la flèche suit `motion`, pas `mode`. | `seance-figures` |
-| ajouter un exercice à la bibliothèque | Les 5 fichiers de contenu long sont **hors du contrat typechecké** : une langue oubliée ne casse pas le build, elle retombe en silence sur le français. `npm run exo <clé>` est le seul contrôle. | `add-exercise` |
+| ajouter un exercice à la bibliothèque | Un exercice qui se règle en poids porte `load: true` — sans lui, sa ligne n'aura jamais de champ de charge, et `check-build.ts` vérifie que `llms.txt` le marque. Les 5 fichiers de contenu long sont **hors du contrat typechecké** : une langue oubliée ne casse pas le build, elle retombe en silence sur le français. `npm run exo <clé>` est le seul contrôle. | `add-exercise` |
 
 `docs/decisions-ecartees.md` garde les pistes déjà explorées et rejetées, avec
 la donnée qui les a réfutées — à relire avant d'en reproposer une.

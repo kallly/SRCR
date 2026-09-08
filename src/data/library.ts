@@ -25,6 +25,23 @@ export interface LibraryEntry {
    * `seance-figures`) et a l'assertion de `scripts/check-build.ts`.
    */
   motion: MotionKind;
+  /**
+   * L'exercice se regle en kilogrammes, donc sa ligne du deroule expose un
+   * champ de charge (`ExerciseItem.weight`).
+   *
+   * Drapeau explicite et non deduit de `category`, pour la meme raison qui a
+   * fait naitre `motion` : la categorie ne sait pas repondre a cette
+   * question. Un elastique n'est pas du poids du corps mais n'a pas de kg —
+   * il a une couleur ; et `machine` range le tapis de course, le velo et le
+   * rameur avec la presse a cuisses, alors que ces trois-la se reglent en
+   * vitesse, en niveau ou en frein.
+   *
+   * Metadonnee de catalogue comme `category` et `motion` : jamais recopiee
+   * dans un `ExerciseItem` persiste. Ce qui est stocke, c'est la charge
+   * elle-meme, pas le droit d'en avoir une — un exercice qui perdrait ce
+   * drapeau garderait donc la sienne (voir `takesLoad()`, ui/planner.ts).
+   */
+  load?: true;
   sets: number;
   reps: number;
   seconds: number;
@@ -79,10 +96,10 @@ export const LIBRARY: readonly LibraryEntry[] = [
   // elastique / halteres / machine / etirements — voir CategoryId
   { key: 'bandPullApart', group: 'back', category: 'band', mode: 'reps', motion: 'move', sets: 3, reps: 12, seconds: 30, rest: 60 },
   { key: 'bandSquat', group: 'legs', category: 'band', mode: 'reps', motion: 'move', sets: 3, reps: 10, seconds: 30, rest: 90 },
-  { key: 'dumbbellGobletSquat', group: 'legs', category: 'dumbbell', mode: 'reps', motion: 'move', sets: 3, reps: 10, seconds: 30, rest: 90 },
-  { key: 'dumbbellRow', group: 'back', category: 'dumbbell', mode: 'reps', motion: 'move', sets: 3, reps: 10, seconds: 30, rest: 90 },
-  { key: 'legPressMachine', group: 'legs', category: 'machine', mode: 'reps', motion: 'move', sets: 3, reps: 10, seconds: 30, rest: 90 },
-  { key: 'latPulldownMachine', group: 'back', category: 'machine', mode: 'reps', motion: 'move', sets: 3, reps: 10, seconds: 30, rest: 90 },
+  { key: 'dumbbellGobletSquat', group: 'legs', category: 'dumbbell', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 10, seconds: 30, rest: 90 },
+  { key: 'dumbbellRow', group: 'back', category: 'dumbbell', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 10, seconds: 30, rest: 90 },
+  { key: 'legPressMachine', group: 'legs', category: 'machine', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 10, seconds: 30, rest: 90 },
+  { key: 'latPulldownMachine', group: 'back', category: 'machine', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 10, seconds: 30, rest: 90 },
   { key: 'hamstringStretch', group: 'legs', category: 'stretching', mode: 'time', motion: 'hold', sets: 3, reps: 10, seconds: 30, rest: 20 },
   { key: 'chestDoorwayStretch', group: 'push', category: 'stretching', mode: 'time', motion: 'hold', sets: 3, reps: 10, seconds: 30, rest: 20 },
 
@@ -112,17 +129,17 @@ export const LIBRARY: readonly LibraryEntry[] = [
 
   // halteres. Charniere de hanche -> glutes (RDL) ; flexion/extension de
   // genou -> legs. Regle ecrite ici pour qu'on ne la « corrige » pas plus tard.
-  { key: 'dumbbellShoulderPress', group: 'shoulders', category: 'dumbbell', mode: 'reps', motion: 'move', sets: 3, reps: 10, seconds: 30, rest: 90 },
-  { key: 'dumbbellFloorPress', group: 'push', category: 'dumbbell', mode: 'reps', motion: 'move', sets: 3, reps: 10, seconds: 30, rest: 90 },
-  { key: 'dumbbellRomanianDeadlift', group: 'glutes', category: 'dumbbell', mode: 'reps', motion: 'move', sets: 3, reps: 10, seconds: 30, rest: 90 },
-  { key: 'dumbbellCalfRaise', group: 'calves', category: 'dumbbell', mode: 'reps', motion: 'move', sets: 3, reps: 15, seconds: 30, rest: 60 },
-  { key: 'dumbbellCurl', group: 'arms', category: 'dumbbell', mode: 'reps', motion: 'move', sets: 3, reps: 10, seconds: 30, rest: 60 },
-  { key: 'dumbbellTricepsExtension', group: 'arms', category: 'dumbbell', mode: 'reps', motion: 'move', sets: 3, reps: 10, seconds: 30, rest: 60 },
+  { key: 'dumbbellShoulderPress', group: 'shoulders', category: 'dumbbell', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 10, seconds: 30, rest: 90 },
+  { key: 'dumbbellFloorPress', group: 'push', category: 'dumbbell', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 10, seconds: 30, rest: 90 },
+  { key: 'dumbbellRomanianDeadlift', group: 'glutes', category: 'dumbbell', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 10, seconds: 30, rest: 90 },
+  { key: 'dumbbellCalfRaise', group: 'calves', category: 'dumbbell', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 15, seconds: 30, rest: 60 },
+  { key: 'dumbbellCurl', group: 'arms', category: 'dumbbell', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 10, seconds: 30, rest: 60 },
+  { key: 'dumbbellTricepsExtension', group: 'arms', category: 'dumbbell', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 10, seconds: 30, rest: 60 },
 
   // machine. Les trois cardio suivent « Marche » : sets 1, rest 0 — c'est ce
   // qui fait qu'un bloc cardio se comporte correctement dans queue.ts.
-  { key: 'chestPressMachine', group: 'push', category: 'machine', mode: 'reps', motion: 'move', sets: 3, reps: 10, seconds: 30, rest: 90 },
-  { key: 'legCurlMachine', group: 'legs', category: 'machine', mode: 'reps', motion: 'move', sets: 3, reps: 10, seconds: 30, rest: 90 },
+  { key: 'chestPressMachine', group: 'push', category: 'machine', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 10, seconds: 30, rest: 90 },
+  { key: 'legCurlMachine', group: 'legs', category: 'machine', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 10, seconds: 30, rest: 90 },
   { key: 'treadmill', group: 'cardio', category: 'machine', mode: 'time', motion: 'move', sets: 1, reps: 10, seconds: 1200, rest: 0 },
   { key: 'stationaryBike', group: 'cardio', category: 'machine', mode: 'time', motion: 'move', sets: 1, reps: 10, seconds: 1200, rest: 0 },
   { key: 'rowingMachine', group: 'cardio', category: 'machine', mode: 'time', motion: 'move', sets: 1, reps: 10, seconds: 900, rest: 0 },

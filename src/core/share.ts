@@ -35,8 +35,16 @@ function fromBase64Url(encoded: string): string {
 
 /**
  * Une ligne encodee : `['r', secondes]` pour une pause, `['e', cle, groupe,
- * 'r'|'t', series, repetitions, secondes, repos, nomPerso?]` pour un
- * exercice (le dernier element n'existe que pour un exercice perso nomme).
+ * 'r'|'t', series, repetitions, secondes, repos, nomPerso?, charge?]` pour un
+ * exercice (les deux derniers elements n'existent que s'ils sont renseignes).
+ *
+ * Un tableau positionnel s'etend par la fin sans casser personne, et c'est ce
+ * qui a permis d'ajouter la charge sans toucher a `v` : un ancien build lit le
+ * 9e element comme un nom perso et ignore le 10e. D'ou la contrepartie, la
+ * chaine vide poussee en 9e position quand un exercice de la bibliotheque
+ * porte une charge — trois caracteres pour ne pas avoir a deviner la nature
+ * d'un element d'apres son type, ce qu'aucune documentation lisible par une IA
+ * ne saurait dire simplement.
  */
 type WireItem = [string, ...unknown[]];
 
@@ -52,7 +60,12 @@ function encodeItem(item: PlanItem): WireItem {
     item.seconds,
     item.rest,
   ];
-  if (item.key === 'custom' && item.customName) wire.push(item.customName);
+  const name = item.key === 'custom' ? (item.customName ?? '') : '';
+  if (name) wire.push(name);
+  if (item.weight !== undefined) {
+    if (!name) wire.push('');
+    wire.push(item.weight);
+  }
   return wire;
 }
 
@@ -68,7 +81,7 @@ function decodeItem(raw: unknown): Record<string, unknown> | null {
     return { type: 'rest', seconds: rest[0] };
   }
   if (kind === 'e') {
-    const [key, group, mode, sets, reps, seconds, restSeconds, customName] = rest;
+    const [key, group, mode, sets, reps, seconds, restSeconds, customName, weight] = rest;
     return {
       type: 'exercise',
       key,
@@ -79,6 +92,7 @@ function decodeItem(raw: unknown): Record<string, unknown> | null {
       seconds,
       rest: restSeconds,
       customName,
+      weight,
     };
   }
   return null;

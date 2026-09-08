@@ -141,6 +141,38 @@ for (const signal of ['ad_storage', 'ad_user_data', 'ad_personalization', 'analy
 
 check('marqueur EXERCISE_INDEX remplace', !index.includes('<!--EXERCISE_INDEX-->'));
 
+// L'accueil porte SA propre specification `?s=` (le bloc `#aiPlan`), ecrite a
+// la main et sans data-i18n — donc rien ne la relie a celle que
+// `build-exercise-pages.ts` genere, ni au format reel. C'est pourtant elle que
+// les modeles lisent en premier : `aiHelp.createPrompt` leur donne l'adresse
+// de cette page, pas celle de la page de spec. Un exemple faux ou perime y
+// coute plus cher qu'ailleurs, et les deux surfaces ont deja diverge une fois
+// — la charge documentee partout sauf ici.
+const homeLink = /[?&]s=([A-Za-z0-9_-]{40,})/.exec(index)?.[1];
+check("l'accueil porte un lien ?s= d'exemple", Boolean(homeLink));
+if (homeLink) {
+  const homePlan = decodeSharedPlan(homeLink);
+  check(
+    "l'exemple de l'accueil se decode par decodeSharedPlan()",
+    homePlan !== null && homePlan.items.length > 0,
+    homePlan === null ? 'decodeSharedPlan() renvoie null' : 'aucun exercice',
+  );
+  // La charge y est le seul element qui vive en DIXIEME position : si la
+  // chaine vide de la neuvieme sautait, tout se decalerait sans que rien
+  // d'autre ne le montre.
+  check(
+    'et il porte une charge, comme la ligne de format juste au-dessus',
+    homePlan !== null &&
+      homePlan.items.some((item) => item.type === 'exercise' && item.weight !== undefined),
+    'aucune ligne chargee dans l\'exemple de l\'accueil',
+  );
+  check(
+    "la specification de l'accueil annonce la charge",
+    index.includes('nomPerso?, charge?'),
+    'le bloc #aiPlan decrit encore une ligne a neuf positions',
+  );
+}
+
 console.log('\nPages generees pour les IA');
 
 const specPath = join(DIST, 'creer-une-seance-par-lien.html');
@@ -159,6 +191,17 @@ if (existsSync(specPath)) {
       'cet exemple se decode par decodeSharedPlan()',
       decoded !== null && decoded.items.length > 0,
       decoded === null ? 'decodeSharedPlan() renvoie null' : 'aucun exercice',
+    );
+    // Et il doit porter une ligne CHARGEE. C'est la seule chose qui prouve
+    // que la 10e position se decode reellement — donc que la chaine vide
+    // poussee en 9e sur un exercice de la bibliotheque n'a decale aucune
+    // autre valeur. Un exemple sans charge laisserait passer un encodeur qui
+    // la perd en silence, et c'est cet exemple-la que les modeles recopient.
+    check(
+      'et il porte une charge, qui survit au decodage',
+      decoded !== null &&
+        decoded.items.some((item) => item.type === 'exercise' && item.weight !== undefined),
+      'aucune ligne chargee dans l\'exemple',
     );
   }
 
@@ -509,6 +552,19 @@ check(
   missingSheets.length > 0
     ? missingSheets.join(', ')
     : `${sheetPaths.length} chemins pour ${LIBRARY.length} exercices`,
+);
+
+// 4. Quels exercices se reglent en poids. Une IA qui ecrit un lien doit savoir
+// ou une charge est legitime : la marque « charge » de la liste est sa seule
+// source, et elle derive de `load` (data/library.ts). Un drapeau ajoute sans
+// que la liste bouge, c'est un exercice pour lequel personne ne proposera
+// jamais de charge.
+const loadedKeys = LIBRARY.filter((entry) => entry.load).map((entry) => entry.key);
+const markedKeys = [...llms.matchAll(/^- (\S+) \([^)]*, charge\)/gm)].map((match) => match[1]!);
+check(
+  `llms.txt marque « charge » sur les ${loadedKeys.length} exercices concernes`,
+  markedKeys.length === loadedKeys.length && loadedKeys.every((key) => markedKeys.includes(key)),
+  `${markedKeys.length} marques pour ${loadedKeys.length} exercices declares`,
 );
 
 check(
