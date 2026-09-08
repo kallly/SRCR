@@ -157,39 +157,61 @@ Vérifier ensuite que `public/_headers` sert bien ces deux fichiers, et que
 
 ## 2. Connexion Google
 
-`signInWithPopup` **ne peut pas** fonctionner dans l'application, et ce n'est
-pas un défaut d'intégration : Google refuse OAuth depuis un WebView embarqué
-(`disallowed_useragent`), et le repli par redirection tombe sur le même mur.
-En attendant, le bouton est désactivé dans l'application avec sa raison
-(`account.nativeUnavailable`), plutôt que de mener à une page d'erreur de
-Google.
+**Branchée**, via `@capacitor-firebase/authentication`. `signInWithPopup` ne
+peut pas fonctionner dans une application — Google refuse OAuth depuis un
+WebView embarqué (`disallowed_useragent`), redirection comprise — donc le
+module natif ouvre la vraie feuille de connexion du système et ne rend qu'un
+jeton d'identité, que `src/cloud/firebase.ts` échange contre une session du
+SDK JavaScript.
 
-La réponse est `@capacitor-firebase/authentication`, qui passe par le SDK
-Google natif. **Ce n'est délibérément pas fait ici** : le module réclame
-`google-services.json` (Android) et `GoogleService-Info.plist` (iOS), tous deux
-téléchargés depuis la console Firebase après y avoir déclaré les deux
-applications — et sans le premier, le build Gradle **échoue**. Ajouter la
-dépendance maintenant aurait laissé la branche dans un état qui ne compile pas.
+**`skipNativeAuth: true` est le réglage qui décide de tout** (voir
+`capacitor.config.ts`). Tout `src/cloud/` parle à Firestore par le SDK
+JavaScript, et c'est l'état d'authentification de *celui-là* que les règles
+Firestore voient. À `false`, l'application « se connecterait » sans pouvoir
+lire ni écrire quoi que ce soit. À `true`, c'est le même compte, le même uid
+et le même document que sur cirkali.fr : une séance créée sur le site apparaît
+dans l'application, et `cloud/merge.ts` n'a rien eu à apprendre.
 
-Dans l'ordre :
+### Il reste deux choses, sans lesquelles ça ne marchera pas
 
-1. Console Firebase → Paramètres du projet → ajouter une application Android
-   (`fr.cirkali.app`, avec l'empreinte SHA-1 de signature) et une application
-   iOS (`fr.cirkali.app`) ; télécharger `google-services.json` vers
-   `android/app/` et `GoogleService-Info.plist` vers `ios/App/App/`.
-2. `npm i @capacitor-firebase/authentication` puis `npx cap sync`, et suivre
-   les instructions Gradle et Info.plist du paquet (dont le *reversed client
-   ID* dans `CFBundleURLTypes`).
-3. Dans `src/cloud/firebase.ts`, brancher `signIn()` sur le module natif quand
-   `isNativeApp()` : le plugin renvoie un jeton d'identité Google, que
-   `signInWithCredential(auth, GoogleAuthProvider.credential(idToken))` échange
-   contre la même session Firebase que sur le web. Le reste de `src/cloud/`
-   n'a rien à savoir de tout ça.
-4. Retirer la branche `isNativeApp()` de `src/ui/account.ts` et la clé
-   `account.nativeUnavailable` des cinq langues.
+**L'empreinte SHA-1, côté Android.** Le `google-services.json` déposé ne
+contient qu'un client OAuth de type 3 (le client web) et **aucun de type 1** —
+la preuve visible qu'aucune empreinte n'a été enregistrée. Sans elle, Google
+ne peut pas vérifier l'application qui l'appelle et la connexion échoue par un
+`DEVELOPER_ERROR` (code 10), qui ne dit rien de sa cause.
 
-Ne pas oublier d'ajouter les domaines de l'application aux **domaines
-autorisés** de Firebase Auth, comme pour un sous-domaine de salle.
+Console Firebase → Paramètres du projet → l'application Android → Ajouter une
+empreinte. Celle de la clé de débogage versionnée :
+
+```
+66:F1:8A:83:C7:A1:9F:BA:CC:17:4D:B8:8C:F3:86:59:C6:BE:AB:CD
+```
+
+Puis **re-télécharger `google-services.json`** dans `android/app/` : il doit
+alors porter un client de type 1. Le jour du Play Store, ajouter à côté
+l'empreinte de la clé de release ; Firebase en accepte plusieurs.
+
+**`GoogleService-Info.plist`, côté iOS.** Toujours manquant. Il va dans
+`ios/App/App/`, et son *reversed client ID* doit être ajouté aux
+`CFBundleURLTypes` d'`Info.plist` — c'est le schéma d'URL par lequel Google
+rend la main à l'application. Sans les deux, la connexion échoue sur iOS
+seulement.
+
+### Ce que ça a changé côté raisonnement
+
+L'invariant « le SDK Firebase n'est pas téléchargé sans compte » ne vaut plus
+dans l'application : le module natif est dans le binaire quoi qu'il arrive. Il
+reste vrai sur le web, où c'est un coût de réseau — dans un binaire déjà
+installé, ce n'en est plus un.
+
+Ne pas suivre les instructions Gradle génériques de la console Firebase : le
+`classpath com.google.gms:google-services` est **déjà** dans
+`android/build.gradle`, et `android/app/build.gradle` applique le plugin tout
+seul dès que `google-services.json` existe. Elles proposent aussi
+`firebase-analytics`, qui n'a rien à faire ici — le projet ne charge
+délibérément pas Analytics (voir `CONFIG` dans `src/cloud/firebase.ts`), et
+c'est justement ce qu'on retire du bundle applicatif pour ne pas avoir à
+déclarer un traqueur au questionnaire de confidentialité de l'App Store.
 
 ## 3. Publication
 

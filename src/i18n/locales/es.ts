@@ -61,8 +61,6 @@ export const es: Translations = {
     statusError: 'sincronización no disponible, sesiones guardadas aquí',
     statusTooLarge: 'demasiadas sesiones para la copia en línea',
     storageNotice: 'Este navegador borra las sesiones tras 7 días sin visita. Una cuenta las conserva.',
-    nativeUnavailable:
-      'La copia en línea aún no está disponible en la aplicación. Tus sesiones se quedan en este dispositivo; en cirkali.fr, iniciar sesión con Google funciona con normalidad.',
     signInError: 'No se pudo iniciar sesión. Inténtalo de nuevo en un momento.',
     merged: {
       one: '{count} sesión recuperada de tu cuenta',

@@ -61,8 +61,6 @@ export const en: Translations = {
     statusError: 'sync unavailable, sessions kept here',
     statusTooLarge: 'too many sessions for online backup',
     storageNotice: 'This browser erases sessions after 7 days without a visit. An account keeps them.',
-    nativeUnavailable:
-      'Online backup is not available in the app yet. Your sessions stay on this device; on cirkali.fr, signing in with Google works as usual.',
     signInError: 'Sign-in failed. Try again in a moment.',
     merged: {
       one: '{count} session restored from your account',

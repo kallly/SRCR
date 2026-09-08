@@ -61,8 +61,6 @@ export const de: Translations = {
     statusError: 'Synchronisierung nicht möglich, Einheiten bleiben hier',
     statusTooLarge: 'zu viele Einheiten für die Online-Sicherung',
     storageNotice: 'Dieser Browser löscht Einheiten nach 7 Tagen ohne Besuch. Ein Konto bewahrt sie.',
-    nativeUnavailable:
-      'Die Online-Sicherung ist in der App noch nicht verfügbar. Deine Einheiten bleiben auf diesem Gerät; auf cirkali.fr funktioniert die Google-Anmeldung wie gewohnt.',
     signInError: 'Anmeldung fehlgeschlagen. Versuche es gleich noch einmal.',
     merged: {
       one: '{count} Einheit aus deinem Konto geholt',

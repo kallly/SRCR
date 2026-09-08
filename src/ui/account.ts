@@ -1,5 +1,4 @@
 import { formatTime, t } from '../i18n';
-import { isNativeApp } from '../platform/native';
 import { evictsIdleStorage } from '../platform/storage';
 import type { Context } from './app';
 import { byId, el, wireDialogClose } from './dom';
@@ -85,19 +84,6 @@ export function createAccount(ctx: Context): { render: () => void } {
 
     signedOut.hidden = user !== null;
     signedIn.hidden = user === null;
-
-    // L'application native ne sait pas encore ouvrir la connexion Google, et
-    // c'est une limite du protocole, pas un oubli : Google refuse OAuth depuis
-    // un WebView embarque (`disallowed_useragent`), et le repli par
-    // redirection tombe sur le meme mur. La reponse est un module de connexion
-    // natif ; tant qu'il n'est pas branche (voir docs/portage-mobile.md), le
-    // bouton est desactive avec sa raison, plutot que de mener a une page
-    // d'erreur de Google.
-    if (isNativeApp() && user === null) {
-      signInBtn.disabled = true;
-      errorNote.textContent = t('account.nativeUnavailable');
-      errorNote.hidden = false;
-    }
 
     if (!user) return;
 

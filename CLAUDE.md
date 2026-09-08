@@ -566,7 +566,14 @@ n'arriverait nulle part.
 
 **La connexion Google ne peut pas passer par `signInWithPopup`** dans une
 application : Google refuse OAuth depuis un WebView embarqué, redirection
-comprise. Elle est désactivée avec sa raison en attendant le module natif.
+comprise. Le module natif (`@capacitor-firebase/authentication`) ouvre la
+feuille du système et rend un jeton, que `cloud/firebase.ts` échange contre
+une session du SDK **JavaScript** — c'est le seul état d'authentification que
+les règles Firestore voient, d'où `skipNativeAuth: true` : à `false`,
+l'application se connecterait sans pouvoir lire ni écrire. Même uid, même
+document que sur le site, `cloud/merge.ts` inchangé. Corollaire : l'invariant
+« le SDK Firebase n'est pas téléchargé sans compte » ne vaut que sur le web —
+dans un binaire déjà installé, ce n'est plus un coût.
 
 Deux pièges d'outillage : `npx cap sync` **recopie** le bundle dans les deux
 projets (à relancer après chaque changement du code web, ce n'est pas un lien),

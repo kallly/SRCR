@@ -37,6 +37,32 @@ const config: CapacitorConfig = {
   server: {
     androidScheme: 'https',
   },
+  plugins: {
+    FirebaseAuthentication: {
+      /*
+        `skipNativeAuth: true` est LE reglage qui compte, et se tromper ici
+        donne une application qui « se connecte » sans jamais pouvoir lire ni
+        ecrire quoi que ce soit.
+
+        Le module natif sait ouvrir la fenetre Google, ce que le WebView ne
+        peut pas faire (Google refuse OAuth depuis un navigateur embarque).
+        Mais tout `src/cloud/` parle a Firestore par le SDK JavaScript, et
+        c'est l'etat d'authentification de CE SDK-la que les regles Firestore
+        voient. A `false`, le plugin ouvrirait une session cote natif que la
+        couche JS ignorerait : chaque lecture partirait en anonyme et se
+        ferait refuser.
+
+        A `true`, le plugin ne fait qu'une chose — rapporter le jeton
+        d'identite Google — et `cloud/firebase.ts` l'echange lui-meme contre
+        une session JS par `signInWithCredential`. C'est le meme compte, le
+        meme uid et le meme document que sur cirkali.fr : une seance creee sur
+        le site apparait dans l'application, et `cloud/merge.ts` n'a rien a
+        apprendre.
+      */
+      skipNativeAuth: true,
+      providers: ['google.com'],
+    },
+  },
 };
 
 export default config;

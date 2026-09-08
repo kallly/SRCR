@@ -84,8 +84,6 @@ export const fr = {
      * au-dela, la rangee grandit et decale la page.
      */
     storageNotice: 'Ce navigateur efface les séances après 7 jours sans visite. Un compte les garde.',
-    nativeUnavailable:
-      'La sauvegarde en ligne n’est pas encore disponible dans l’application. Vos séances restent sur cet appareil ; sur cirkali.fr, la connexion Google fonctionne normalement.',
     signInError: 'Connexion impossible. Réessayez dans un instant.',
     merged: {
       one: '{count} séance récupérée depuis votre compte',

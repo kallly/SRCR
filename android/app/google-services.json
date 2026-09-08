@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "154209668174",
+    "project_id": "cirkali",
+    "storage_bucket": "cirkali.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154209668174:android:d8c81ba99cd7d113fbc71f",
+        "android_client_info": {
+          "package_name": "fr.cirkali.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "154209668174-u0rpp5jdgjit0c8ppfldhseeh570rgbf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApdUBZkczXBiXUHfHbOvRGB1XSVXZ1sMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "154209668174-u0rpp5jdgjit0c8ppfldhseeh570rgbf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

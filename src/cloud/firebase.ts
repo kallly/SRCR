@@ -1,6 +1,8 @@
 import type { Auth, User } from 'firebase/auth';
 import type { Firestore } from 'firebase/firestore';
 
+import { isNativeApp } from '../platform/native';
+
 /**
  * Configuration web du projet Firebase.
  *
@@ -85,6 +87,32 @@ async function initialise(): Promise<Sdk> {
     db,
 
     async signIn(): Promise<void> {
+      // Application native : ni popup ni redirection ne peuvent marcher.
+      // Google refuse OAuth depuis un WebView embarque
+      // (`disallowed_useragent`), et c'est une regle de son cote, pas un
+      // defaut d'integration — les deux chemins ci-dessous tombent sur le meme
+      // mur. Le module natif ouvre la vraie feuille de connexion du systeme et
+      // ne rend qu'un jeton d'identite ; c'est nous qui l'echangeons contre
+      // une session du SDK JavaScript, le seul dont l'etat compte pour
+      // Firestore (voir `skipNativeAuth` dans capacitor.config.ts).
+      if (isNativeApp()) {
+        // Import dynamique, comme partout ailleurs : le bundle web n'a pas a
+        // porter un module qui ne lui sert jamais.
+        const { FirebaseAuthentication } = await import('@capacitor-firebase/authentication');
+        const result = await FirebaseAuthentication.signInWithGoogle();
+        const idToken = result.credential?.idToken;
+        if (!idToken) {
+          // Sans jeton il n'y a rien a echanger. Erreur explicite plutot
+          // qu'un `signInWithCredential(undefined)` au message obscur.
+          throw new Error('Google n\'a pas renvoye de jeton d\'identite.');
+        }
+        await authMod.signInWithCredential(
+          auth,
+          authMod.GoogleAuthProvider.credential(idToken),
+        );
+        return;
+      }
+
       try {
         await authMod.signInWithPopup(auth, provider());
       } catch (error) {
@@ -98,6 +126,19 @@ async function initialise(): Promise<Sdk> {
     },
 
     async signOut(): Promise<void> {
+      // Les deux couches, et dans cet ordre. Le module natif garde en cache le
+      // compte Google choisi : sans cet appel, une reconnexion reprendrait
+      // silencieusement le meme compte, alors que `provider()` demande
+      // explicitement `prompt: 'select_account'` sur le web. Sur un telephone
+      // partage, c'est la meme raison qui vaut des deux cotes.
+      if (isNativeApp()) {
+        const { FirebaseAuthentication } = await import('@capacitor-firebase/authentication');
+        await FirebaseAuthentication.signOut().catch(() => {
+          // Le cache natif n'a pas pu etre vide : ce n'est pas une raison de
+          // laisser la session JS ouverte, qui est celle qui donne acces aux
+          // donnees.
+        });
+      }
       await authMod.signOut(auth);
     },
 
