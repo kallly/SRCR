@@ -127,6 +127,13 @@ export function createApp(state: State): { render: () => void } {
   // contenu utile trop bas. Le contenu reste dans le DOM dans les deux cas.
   // Appel defensif : replier une section est cosmetique et ne doit jamais
   // pouvoir empecher l'app de demarrer la ou matchMedia manque.
+  //
+  // Cette liste est deliberement incomplete : `#installApp` et
+  // `#supportProject` sont des `.about` eux aussi, et restent OUVERTS sur
+  // petit ecran. C'est precisement sur telephone que l'un explique comment
+  // installer l'application et que l'autre est lu ; les replier reviendrait a
+  // les cacher a leur seul public. Ils sont courts, ils ne repoussent pas le
+  // contenu utile comme le fait la specification `?s=`.
   if (window.matchMedia?.(ABOUT_COLLAPSE_BELOW).matches) {
     byId<HTMLDetailsElement>('about').open = false;
     byId<HTMLDetailsElement>('aiPlan').open = false;

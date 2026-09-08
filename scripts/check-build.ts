@@ -662,6 +662,38 @@ check(
   /\/sw\.js\s*\n\s*Cache-Control:[^\n]*max-age=0/.test(headers),
 );
 
+console.log("\nEncarts d'installation et de soutien");
+
+// Deux encarts de fin d'accueil, dont le texte francais est injecte au build
+// depuis fr.ts. Un `data-i18n` mal orthographie ne casse rien de visible : le
+// build echoue, certes, mais un encart SUPPRIME par megarde ne fait echouer
+// personne — la page se contente d'etre plus courte, et l'appel au soutien
+// disparait sans bruit.
+const DICT_FR = DICTIONARIES.fr;
+check(
+  "l'accueil explique comment installer l'application",
+  index.includes(DICT_FR.install.chrome) && index.includes(DICT_FR.install.ios),
+);
+check(
+  "l'accueil dit que les versions natives ont un cout",
+  index.includes(DICT_FR.install.native),
+);
+check("l'accueil porte l'encart de soutien", index.includes(DICT_FR.support.text));
+
+// Deux liens attendus, et deux seulement : celui de l'encart d'installation
+// (« aider a financer la publication ») et celui de l'encart de soutien.
+const kofi = index.split('https://ko-fi.com/cirkali').length - 1;
+check('les deux liens Ko-fi sont livres', kofi === 2, `${kofi} trouve(s)`);
+
+// `target="_blank"` sans `rel` laisse la page ouverte manipuler `window.opener`.
+// Les navigateurs recents l'impliquent, les anciens non, et ca ne coute rien.
+const blanks = [...index.matchAll(/<a\b[^>]*target="_blank"[^>]*>/g)].map((m) => m[0]);
+check(
+  'chaque lien en nouvel onglet porte rel="noopener"',
+  blanks.length > 0 && blanks.every((tag) => /rel="[^"]*noopener/.test(tag)),
+  blanks.filter((tag) => !/rel="[^"]*noopener/.test(tag)).join(' '),
+);
+
 console.log("\nLiens d'application");
 
 // `/.well-known/assetlinks.json` est ce qui fait qu'un lien cirkali.fr ouvre

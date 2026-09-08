@@ -201,6 +201,30 @@ export const fr = {
     copied: 'Message copié',
   },
 
+  /*
+    Installation et soutien. Deux blocs `.about.callout` a la fin de l'accueil,
+    livres ouverts et JAMAIS replies sur petit ecran (contrairement a
+    « A propos », « Toutes les fiches » et « Creer une seance avec une IA ») :
+    c'est precisement sur telephone que l'un explique comment installer et que
+    l'autre est lu.
+  */
+  install: {
+    title: 'Installer l’application',
+    chrome:
+      'Sur Android, ouvrez ce site dans Chrome, puis le menu ⋮ en haut à droite et « Installer l’application ». CIRKALI rejoint votre écran d’accueil avec sa propre icône, s’ouvre en plein écran sans barre d’adresse, et fonctionne sans connexion.',
+    ios: 'Sur iPhone et iPad, c’est dans Safari : le bouton Partager, puis « Sur l’écran d’accueil ».',
+    native:
+      'Des versions Android et iOS sont en préparation. Les publier sur les magasins d’applications a un coût — compte développeur, vérification d’identité, frais annuels — que le site ne couvre pas encore.',
+    support: 'Aider à financer la publication sur Ko-fi',
+  },
+
+  support: {
+    title: 'Soutenir CIRKALI',
+    text:
+      'CIRKALI est gratuit, s’utilise sans compte et n’affiche aucune publicité sur mobile. Si l’application vous sert, vous pouvez offrir un café : cela finance l’hébergement et les frais de publication sur les magasins d’applications.',
+    link: 'Offrir un café sur Ko-fi',
+  },
+
   exerciseInfo: {
     trigger: 'Informations sur l’exercice',
     close: 'Fermer',

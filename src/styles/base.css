@@ -417,6 +417,58 @@ h2::after {
 }
 
 /*
+  Encarts d'installation et de soutien, en fin d'accueil.
+
+  Meme squelette qu'une section `.about` — c'est ce qui les fait vivre dans la
+  meme colonne, a la meme taille de texte — mais elles s'adressent au visiteur
+  au lieu de documenter l'application. D'ou le liseré et le fond : assez pour
+  qu'on les distingue d'un paragraphe explicatif, pas assez pour qu'elles se
+  lisent comme une banniere.
+
+  Le `border-top` de `.about` est retire, sinon chaque encart porterait DEUX
+  traits : le sien et celui du separateur de section.
+*/
+.about.callout {
+  margin-top: 18px;
+  padding: 2px 16px 14px;
+  border-top: 0;
+  border-left: 2px solid var(--lime);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+/* Le titre reprend la couleur pleine du texte : c'est ce qui le sort de la
+   grisaille des sections documentaires voisines. */
+.about.callout summary {
+  color: var(--paper);
+}
+
+.about.callout summary:hover {
+  color: var(--lime);
+}
+
+/*
+  Le lien de soutien. Zone tactile portee a 44px par le PADDING seul, jamais
+  par une marge negative qui grignoterait l'espace annonce (voir la skill
+  seance-ui-module). `text-decoration` et non `border-bottom` : un border se
+  collerait au bord de la boite, donc loin du texte une fois la boite a 44px.
+*/
+.callout-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--lime);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+
+.callout-link:hover {
+  text-decoration-color: var(--lime);
+}
+
+/*
   Zone technique de la section « Creer une seance avec une IA ».
 
   Ce contenu s'adresse a une IA qui lit le HTML, pas au visiteur : le format du

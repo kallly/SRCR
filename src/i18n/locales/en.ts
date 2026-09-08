@@ -165,6 +165,23 @@ export const en: Translations = {
     copied: 'Message copied',
   },
 
+  install: {
+    title: 'Install the app',
+    chrome:
+      'On Android, open this site in Chrome, then the ⋮ menu at the top right and “Install app”. CIRKALI joins your home screen with its own icon, opens full screen without an address bar, and works offline.',
+    ios: 'On iPhone and iPad, use Safari: the Share button, then “Add to Home Screen”.',
+    native:
+      'Android and iOS versions are in the works. Publishing them on the app stores costs money — developer account, identity verification, yearly fees — which the site does not cover yet.',
+    support: 'Help fund the store release on Ko-fi',
+  },
+
+  support: {
+    title: 'Support CIRKALI',
+    text:
+      'CIRKALI is free, works without an account and shows no ads on mobile. If the app is useful to you, you can buy a coffee: it pays for hosting and for the app store fees.',
+    link: 'Buy a coffee on Ko-fi',
+  },
+
   exerciseInfo: {
     trigger: 'Exercise information',
     close: 'Close',

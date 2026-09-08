@@ -165,6 +165,23 @@ export const de: Translations = {
     copied: 'Nachricht kopiert',
   },
 
+  install: {
+    title: 'App installieren',
+    chrome:
+      'Öffne diese Seite unter Android in Chrome, dann das Menü ⋮ oben rechts und „App installieren“. CIRKALI landet mit eigenem Symbol auf deinem Startbildschirm, öffnet sich im Vollbild ohne Adressleiste und funktioniert offline.',
+    ios: 'Auf iPhone und iPad geht es über Safari: die Teilen-Schaltfläche, dann „Zum Home-Bildschirm“.',
+    native:
+      'Android- und iOS-Versionen sind in Arbeit. Ihre Veröffentlichung in den App-Stores kostet Geld — Entwicklerkonto, Identitätsprüfung, Jahresgebühren —, was die Seite bisher nicht deckt.',
+    support: 'Die Veröffentlichung auf Ko-fi mitfinanzieren',
+  },
+
+  support: {
+    title: 'CIRKALI unterstützen',
+    text:
+      'CIRKALI ist kostenlos, funktioniert ohne Konto und zeigt auf dem Handy keine Werbung. Wenn dir die App nützt, kannst du einen Kaffee ausgeben: Das finanziert das Hosting und die Gebühren der App-Stores.',
+    link: 'Einen Kaffee auf Ko-fi spendieren',
+  },
+
   exerciseInfo: {
     trigger: 'Informationen zur Übung',
     close: 'Schließen',
