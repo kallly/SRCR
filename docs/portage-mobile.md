@@ -59,6 +59,20 @@ Ce que chaque job prouve n'est pas la même chose :
   compilation simulateur attrape quand même l'essentiel — un plugin mal
   synchronisé, un `Package.swift` cassé, un `Info.plist` invalide.
 
+**La clé de débogage est versionnée** (`android/debug.keystore`), et ce n'est
+pas un relâchement. Par défaut Gradle signe l'APK de débogage avec
+`~/.android/debug.keystore`, qu'il fabrique lui-même s'il manque : sur un
+runner qui part d'une machine neuve, il en fabrique donc **une nouvelle à
+chaque build**, et Android refuse d'installer le nouvel APK par-dessus
+l'ancien — « conflit avec la version précédente ». Il fallait désinstaller
+entre chaque essai, en perdant les séances de test. Les identifiants
+(`android` / `androiddebugkey`) sont ceux qu'Android publie pour toutes les
+clés de débogage du monde, et un APK de débogage ne se distribue pas.
+
+**Elle ne sert jamais à publier.** La clé de release se crée au moment du Play
+Store, ne se versionne pas, et c'est *son* empreinte SHA-256 qui ira dans
+`assetlinks.json`.
+
 Deux détails qui expliquent la forme du fichier : le job tourne en **Node 22**
 là où `deploy.yml` est en 20 (la CLI Capacitor refuse en dessous), et la
 compilation iOS passe par `-target` et non `-scheme`, parce qu'Xcode ne crée le

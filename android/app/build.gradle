@@ -16,7 +16,40 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    /*
+        Cle de debogage FIXE, versionnee avec le projet.
+
+        Par defaut, Gradle signe un APK de debogage avec `~/.android/debug.keystore`,
+        qu'il fabrique tout seul s'il n'existe pas. Sur un runner GitHub, qui
+        part d'une machine neuve a chaque fois, il en fabrique donc UNE NOUVELLE
+        A CHAQUE BUILD : deux APK successifs sont signes par deux cles
+        differentes, et Android refuse d'installer le second par-dessus le
+        premier (« conflit avec la version precedente »). Il fallait
+        desinstaller entre chaque essai, en perdant les seances de test au
+        passage.
+
+        Ce n'est PAS un secret, et ce n'est pas un relachement : les
+        identifiants ci-dessous sont ceux qu'Android publie pour toutes les
+        cles de debogage du monde, et un APK de debogage ne se distribue pas.
+
+        A NE JAMAIS UTILISER POUR UNE PUBLICATION. La cle de release se cree au
+        moment du Play Store, ne se versionne pas, et c'est son empreinte
+        SHA-256 — pas celle-ci — qui ira dans `assetlinks.json` (voir
+        docs/portage-mobile.md).
+    */
+    signingConfigs {
+        debug {
+            storeFile rootProject.file('debug.keystore')
+            storeType 'PKCS12'
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
