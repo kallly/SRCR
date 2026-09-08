@@ -60,6 +60,10 @@ function encodeItem(item: PlanItem): WireItem {
 function decodeItem(raw: unknown): Record<string, unknown> | null {
   if (!Array.isArray(raw) || raw.length < 2) return null;
   const [kind, ...rest] = raw as unknown[];
+  // Rien n'ecrit plus de ligne 'r' (voir `RestItem`, core/types.ts) : ce
+  // decodage sert aux liens deja partages, qui doivent continuer de s'ouvrir
+  // entiers. `encodeItem()` la produit toujours, pour la meme raison — une
+  // seance qui en contient encore une se repartage sans la perdre.
   if (kind === 'r') {
     return { type: 'rest', seconds: rest[0] };
   }

@@ -1,6 +1,6 @@
 import { createCloudSync, type CloudSync } from '../cloud/sync';
 import { getLocale, onLocaleChange, setLocale as applyLocale, t } from '../i18n';
-import { createCustom, createRest, presetName, presetToPlan, uid } from '../core/plan';
+import { createCustom, presetName, presetToPlan, uid } from '../core/plan';
 import { defaultPreset, findPresetByPlanId, type AnyPreset } from '../data/presets';
 import {
   DEFAULT_SESSION_CONFIG,
@@ -32,9 +32,6 @@ import { createToast, type Toast } from './toast';
 
 /** Duree d'affichage du message « Enregistré ». */
 const SAVED_TOAST_MS = 1600;
-
-/** Duree par defaut d'une pause ajoutee manuellement, en secondes. */
-const DEFAULT_REST_SECONDS = 120;
 
 /** En dessous, « A propos » et « Creer une seance par lien » sont repliees pour ne pas allonger la page. */
 const ABOUT_COLLAPSE_BELOW = '(max-width: 759px)';
@@ -548,12 +545,6 @@ export function createApp(state: State): { render: () => void } {
     ctx.activePlan().config.trans = Math.max(0, Number.parseInt(transInput.value, 10) || 0);
     save();
     renderDerived();
-  });
-
-  byId('addRest').addEventListener('click', () => {
-    ctx.activePlan().items.push(createRest(DEFAULT_REST_SECONDS));
-    save();
-    renderAll();
   });
 
   createInlineInput(byId('addCustom'), {

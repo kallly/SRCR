@@ -429,7 +429,6 @@ function aiExample(): { json: string; encoded: string; url: string } {
     line('kneePushup', { sets: 4, reps: 12, rest: 60 }),
     line('superman', { sets: 3, reps: 10, rest: 60 }),
     line('plank', { sets: 3, seconds: 45, rest: 60 }),
-    { id: '', type: 'rest', seconds: 90 },
     {
       id: '',
       type: 'exercise',
@@ -588,8 +587,7 @@ function renderAiPlanPage(dict: Translations): string {
 
       <h2>Les lignes</h2>
       <p>Chaque ligne est un tableau positionnel, pas un objet.</p>
-      <pre><code>Exercice : ["e", clé, groupe, effort, séries, répétitions, secondes, repos, nomPerso?]
-Pause    : ["r", secondes]</code></pre>
+      <pre><code>Exercice : ["e", clé, groupe, effort, séries, répétitions, secondes, repos, nomPerso?]</code></pre>
       <div class="tablewrap">
         <table>
           <thead><tr><th>Position</th><th>Valeur</th></tr></thead>
@@ -669,15 +667,14 @@ ${aiGroupsTable(dict)}
       <pre><code>${SITE_URL}/?plan={"name":"Haut du corps","mode":"circuit","pause":60,"items":[
   {"ex":"kneePushup","sets":4,"reps":12,"rest":60},
   {"ex":"plank","sets":3,"seconds":45},
-  {"ex":"Burpees","group":"cardio","sets":3,"reps":10},
-  {"rest":90}
+  {"ex":"Burpees","group":"cardio","sets":3,"reps":10}
 ]}</code></pre>
       <p>
         Dans cette forme : <code>ex</code> accepte une clé de la bibliothèque ou un nom libre (qui
         devient un exercice personnalisé) ; le groupe, le type d’effort et tout champ absent sont
         déduits de la bibliothèque ; <code>reps</code> seul impose l’effort en répétitions,
-        <code>seconds</code> seul l’impose en durée ; une ligne sans <code>ex</code> est une pause
-        dont <code>rest</code> donne la durée. Les noms de champs sont insensibles à la casse et
+        <code>seconds</code> seul l’impose en durée ; <code>rest</code> donne le repos entre deux
+        séries de la ligne. Les noms de champs sont insensibles à la casse et
         les nombres acceptés sous forme de chaîne. Maximum 60 lignes.
       </p>
       <p>
@@ -930,7 +927,6 @@ Forme : ${SITE_URL}/?s=<base64url du JSON>
 
 Enveloppe : {"v":1,"n":nom,"m":"c"|"x","p":pauseCircuit,"t":transition,"i":[lignes]}
 Exercice  : ["e", clé, groupe, "r"|"t", séries, reps, secondes, repos, nomPerso?]
-Pause     : ["r", secondes]
 
 "m" vaut "c" pour le mode classique (toutes les séries d'un exercice, puis le
 suivant) et "x" pour le circuit (les séries alternent les groupes musculaires).

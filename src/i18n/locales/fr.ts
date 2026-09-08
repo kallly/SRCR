@@ -176,7 +176,7 @@ export const fr = {
     format:
       'Le lien attendu est de la forme ci-dessous : un objet JSON qui porte le nom de la séance, le mode d’enchaînement et la liste des lignes, compressé en base64url dans le paramètre s.',
     keys:
-      'La clé à utiliser pour chaque exercice est indiquée en petit sous son nom, dans la liste « Toutes les fiches d’exercice » ci-dessus (par exemple catCow sous « Chat-vache ») — ce n’est jamais le mot qui termine l’adresse de sa fiche. Le groupe musculaire, le type d’effort et les valeurs manquantes sont déduits de la bibliothèque. Une clé inconnue devient un exercice personnalisé portant ce nom. Une ligne sans clé insère une pause.',
+      'La clé à utiliser pour chaque exercice est indiquée en petit sous son nom, dans la liste « Toutes les fiches d’exercice » ci-dessus (par exemple catCow sous « Chat-vache ») — ce n’est jamais le mot qui termine l’adresse de sa fiche. Le groupe musculaire, le type d’effort et les valeurs manquantes sont déduits de la bibliothèque. Une clé inconnue devient un exercice personnalisé portant ce nom.',
     rawLink:
       'Donnez toujours ce lien tel quel — jamais enveloppé dans une recherche (google.com/search) ni raccourci. Certains assistants ajoutent cette enveloppe automatiquement : si le lien que vous vous apprêtez à donner en contient une, retirez-la avant de répondre — l’import en un clic ne fonctionne qu’avec le lien exact.',
     spec: 'Spécification complète du format',
@@ -262,7 +262,6 @@ export const fr = {
   },
 
   actions: {
-    addRest: '+ Ajouter une pause',
     addCustom: '+ Exercice perso',
     confirm: 'Valider',
     cancel: 'Annuler',

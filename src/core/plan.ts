@@ -2,7 +2,7 @@ import { t } from '../i18n';
 import { CUSTOM_DEFAULTS, findLibraryEntry, isLibraryKey } from '../data/library';
 import { presetPlanId, type AnyPreset } from '../data/presets';
 import type { TenantExercise } from '../data/tenants';
-import type { ExerciseItem, PlanItem, RestItem, SavedPlan } from './types';
+import type { ExerciseItem, PlanItem, SavedPlan } from './types';
 
 /** Longueur maximale d'un nom d'exercice saisi par l'utilisateur. */
 const MAX_CUSTOM_NAME = 60;
@@ -67,10 +67,6 @@ export function createFromTenant(entry: TenantExercise): ExerciseItem {
     seconds: entry.seconds,
     rest: entry.rest,
   };
-}
-
-export function createRest(seconds: number): RestItem {
-  return { id: uid(), type: 'rest', seconds };
 }
 
 /**

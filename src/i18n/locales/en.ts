@@ -140,7 +140,7 @@ export const en: Translations = {
     format:
       'The expected link has the shape below: a JSON object carrying the session name, the sequencing mode and the list of rows, encoded as base64url in the s parameter.',
     keys:
-      'The key to use for each exercise is shown in small print under its name, in the "All exercise guides" list above (e.g. catCow under "Cat-cow") — never the word at the end of its guide\'s address. The muscle group, effort type and any missing values are taken from the library. An unknown key becomes a custom exercise with that name. A row without a key inserts a rest.',
+      'The key to use for each exercise is shown in small print under its name, in the "All exercise guides" list above (e.g. catCow under "Cat-cow") — never the word at the end of its guide\'s address. The muscle group, effort type and any missing values are taken from the library. An unknown key becomes a custom exercise with that name.',
     rawLink:
       'Always give this link exactly as is — never wrapped in a search (google.com/search) or shortened. Some assistants add this wrapper automatically: if the link you are about to give contains one, strip it before answering — one-click import only works with the exact link.',
     spec: 'Full format specification',
@@ -224,7 +224,6 @@ export const en: Translations = {
   },
 
   actions: {
-    addRest: '+ Add a break',
     addCustom: '+ Custom exercise',
     confirm: 'Confirm',
     cancel: 'Cancel',

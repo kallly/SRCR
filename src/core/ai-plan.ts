@@ -123,6 +123,11 @@ function adaptItem(raw: unknown): Record<string, unknown> | null {
   );
   const label = key ?? custom;
 
+  // La pause n'est plus proposee nulle part — ni bouton dans l'app, ni ligne
+  // dans la specification `?plan=` livree aux IA (voir `RestItem`,
+  // core/types.ts). On continue de l'accepter en entree : un lien redige
+  // avant ce retrait, ou par un modele qui a garde l'ancienne page en
+  // memoire, doit s'importer sans perdre de ligne.
   if (!label || type === 'rest' || type === 'pause') {
     const seconds = num(pick(source, 'rest', 'pause', 'seconds', 'duration', 'duree'));
     return seconds === undefined ? null : { type: 'rest', seconds };

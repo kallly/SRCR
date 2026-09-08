@@ -52,6 +52,11 @@ function infoButton(key: ExerciseKey): HTMLElement | null {
   });
 }
 
+/**
+ * Carte d'une pause. Plus rien n'en cree (voir `RestItem`, core/types.ts) :
+ * ce rendu sert aux seances et aux liens qui en contiennent deja, ou la
+ * ligne reste modifiable et supprimable comme avant.
+ */
 function restRow(item: RestItem, index: number, total: number): HTMLElement {
   const top = el('div', {
     className: 'top',

@@ -131,7 +131,23 @@ export interface ExerciseItem {
   rest: number;
 }
 
-/** Une pause inseree manuellement dans le deroule. */
+/**
+ * Une pause posee dans le deroule, entre deux exercices.
+ *
+ * **Plus rien dans l'interface n'en cree** : le bouton « Ajouter une pause »
+ * a ete retire, parce que le repos est deja porte par les exercices
+ * eux-memes (`ExerciseItem.rest` en mode classique, `SessionConfig.pause` en
+ * circuit) — deux endroits pour regler la meme duree, dont un que la seance
+ * suivante ne se rappelait pas.
+ *
+ * Tout ce qui en LIT reste en place, et doit y rester : une seance
+ * enregistree avant ce retrait, un lien `?s=` deja partage, un document
+ * Firestore d'un autre appareil et un import `?plan=` en contiennent
+ * encore. Les parseurs (`core/storage.ts`, `core/share.ts`,
+ * `core/ai-plan.ts`), le moteur (`core/queue.ts`), la carte du deroule
+ * (`ui/planner.ts`) et le lecteur savent tous les afficher et les jouer ; on
+ * peut supprimer la ligne, plus en ajouter.
+ */
 export interface RestItem {
   id: string;
   type: 'rest';

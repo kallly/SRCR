@@ -140,7 +140,7 @@ export const de: Translations = {
     format:
       'Der erwartete Link hat die unten gezeigte Form: ein JSON-Objekt mit dem Namen der Einheit, dem Ablaufmodus und der Liste der Zeilen, als base64url im Parameter s abgelegt.',
     keys:
-      'Der zu verwendende Schlüssel steht klein unter dem Namen jeder Übung, in der Liste „Alle Übungsseiten“ oben (z. B. catCow unter „Katze-Kuh“) — niemals das Wort am Ende der Adresse ihrer Seite. Muskelgruppe, Belastungsart und fehlende Werte stammen aus der Bibliothek. Ein unbekannter Schlüssel wird zu einer eigenen Übung mit diesem Namen. Eine Zeile ohne Schlüssel fügt eine Pause ein.',
+      'Der zu verwendende Schlüssel steht klein unter dem Namen jeder Übung, in der Liste „Alle Übungsseiten“ oben (z. B. catCow unter „Katze-Kuh“) — niemals das Wort am Ende der Adresse ihrer Seite. Muskelgruppe, Belastungsart und fehlende Werte stammen aus der Bibliothek. Ein unbekannter Schlüssel wird zu einer eigenen Übung mit diesem Namen.',
     rawLink:
       'Gib diesen Link immer genau so an — niemals in eine Suche verpackt (google.com/search) oder gekürzt. Manche Assistenten fügen diese Hülle automatisch hinzu: enthält der Link, den du gerade geben willst, eine solche, entferne sie vor der Antwort — der Import per Klick funktioniert nur mit dem exakten Link.',
     spec: 'Vollständige Formatspezifikation',
@@ -224,7 +224,6 @@ export const de: Translations = {
   },
 
   actions: {
-    addRest: '+ Pause hinzufügen',
     addCustom: '+ Eigene Übung',
     confirm: 'Bestätigen',
     cancel: 'Abbrechen',

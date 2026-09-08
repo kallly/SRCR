@@ -140,7 +140,7 @@ export const it: Translations = {
     format:
       'Il link atteso ha la forma qui sotto: un oggetto JSON che porta il nome della seduta, la modalità di concatenamento e l’elenco delle righe, codificato in base64url nel parametro s.',
     keys:
-      'La chiave da usare per ciascun esercizio è indicata in piccolo sotto il suo nome, nell’elenco «Tutte le schede degli esercizi» qui sopra (per esempio catCow sotto «Gatto-mucca») — mai la parola con cui termina l’indirizzo della sua scheda. Il gruppo muscolare, il tipo di sforzo e i valori mancanti sono dedotti dalla libreria. Una chiave sconosciuta diventa un esercizio personalizzato con quel nome. Una riga senza chiave inserisce una pausa.',
+      'La chiave da usare per ciascun esercizio è indicata in piccolo sotto il suo nome, nell’elenco «Tutte le schede degli esercizi» qui sopra (per esempio catCow sotto «Gatto-mucca») — mai la parola con cui termina l’indirizzo della sua scheda. Il gruppo muscolare, il tipo di sforzo e i valori mancanti sono dedotti dalla libreria. Una chiave sconosciuta diventa un esercizio personalizzato con quel nome.',
     rawLink:
       'Dai sempre questo link così com’è — mai avvolto in una ricerca (google.com/search) né accorciato. Alcuni assistenti aggiungono questo involucro automaticamente: se il link che stai per dare ne contiene uno, toglilo prima di rispondere — l’importazione in un clic funziona solo con il link esatto.',
     spec: 'Specifica completa del formato',
@@ -224,7 +224,6 @@ export const it: Translations = {
   },
 
   actions: {
-    addRest: '+ Aggiungi una pausa',
     addCustom: '+ Esercizio personale',
     confirm: 'Conferma',
     cancel: 'Annulla',
