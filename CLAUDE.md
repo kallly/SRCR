@@ -266,8 +266,8 @@ langue active, comme ceux du filtre de la bibliotheque.
 
 **`customExercises` est la seule collection ecrivable sans compte.**
 `firestore.rules` en verrouille la *forme* — cinq champs, nom ≤ 60, groupe
-borné en longueur, `count` qui ne peut qu'augmenter de un, lecture et suppression
-interdites — mais **pas le volume** : quelqu'un peut epuiser les 20 000
+borné en longueur, horodatages typés `timestamp`, `count` qui ne peut
+qu'augmenter de un, lecture et suppression interdites — mais **pas le volume** : quelqu'un peut epuiser les 20 000
 ecritures/jour et casser la sauvegarde en ligne jusqu'a minuit. Sortie de
 secours : passer `create` a `if false`. Risque accepte en connaissance de
 cause.
@@ -281,10 +281,19 @@ trois groupes ont été ajoutés le lendemain du retrait de cette liste. Le clie
 n'envoie de toute façon que les identifiants connus, la modale étant un
 `<select>`.
 
+Le typage des deux horodatages n'est pas cosmétique : `keys().hasOnly()` teste
+un **sous-ensemble**, donc `firstAt` et `lastAt` étaient facultatifs *et* de
+type libre — une écriture anonyme pouvait y loger ~1 Mio de texte arbitraire.
+C'est un canal distinct du risque de quota assumé ci-dessus : celui-là, c'est
+du stockage.
+
 **La collecte est declaree dans la page de confidentialite et nulle part
 ailleurs** — decision explicite : rien n'a ete ajoute a l'accueil ni au
 formulaire de saisie. `check-build.ts` verifie la presence du paragraphe dans
-les cinq langues.
+les cinq langues, et que `firestore.rules` porte toujours ses cinq verrous —
+une assertion qui ne prouve rien de la production (la CI ne deploie pas ce
+fichier), mais une trace amputee garantit qu'on recollera un jour une regle
+trouee.
 
 ## Variantes par sous-domaine (`src/data/tenants.ts`)
 

@@ -402,6 +402,30 @@ check(
   withoutNotice.join(', '),
 );
 
+// L'autre moitie : `customExercises` est la seule collection ecrivable sans
+// compte, et c'est `firestore.rules` qui en borne la forme.
+//
+// Meme statut que l'assertion `wrangler.jsonc` plus haut — elle ne porte pas
+// sur `dist/`, et elle ne prouve rien de la PRODUCTION : ce fichier n'est
+// qu'une trace, la CI ne le deploie pas, seule compte la regle collee dans la
+// console. Mais une trace amputee garantit qu'on recollera un jour une regle
+// trouee, et un verrou retire ici ne casse strictement rien de visible.
+const rulesPath = join(process.cwd(), 'firestore.rules');
+const rulesText = existsSync(rulesPath) ? readFileSync(rulesPath, 'utf8') : '';
+const guards: [string, RegExp][] = [
+  ['la collection est reglee', /match \/customExercises\/\{slug\}/],
+  ['illisible et ineffacable', /allow read, delete: if false;/],
+  ['horodatages types', /firstAt is timestamp[\s\S]*lastAt is timestamp/],
+  ['compteur montant de un', /count == resource\.data\.count \+ 1/],
+  ['refus par defaut', /match \/\{document=\*\*\}[\s\S]*allow read, write: if false;/],
+];
+const openGuards = guards.filter(([, pattern]) => !pattern.test(rulesText)).map(([label]) => label);
+check(
+  `firestore.rules garde ses ${guards.length} verrous`,
+  rulesText !== '' && openGuards.length === 0,
+  rulesText === '' ? 'fichier absent' : openGuards.join(', '),
+);
+
 // Les groupes musculaires forment un arbre a deux etages (src/data/groups.ts),
 // et deux choses le trahissent sans rien casser.
 //

@@ -51,20 +51,33 @@ service cloud.firestore {
         // personne ne l'aurait vu. Seule la longueur est bornee, pour qu'on ne
         // puisse pas y loger autre chose qu'un identifiant.
         //
-        // Le client, lui, n'envoie que les 9 valeurs connues (la modale est un
-        // <select>) : cette regle est plus large que l'usage reel, elle ne
+        // Le client, lui, n'envoie que les identifiants connus (la modale est
+        // un <select>) : cette regle est plus large que l'usage reel, elle ne
         // protege que du remplissage hostile.
         && request.resource.data.group is string
         && request.resource.data.group.size() > 0
         && request.resource.data.group.size() <= 40
-        && request.resource.data.count == 1;
+        && request.resource.data.count == 1
+        // Les deux horodatages sont types, et pas seulement autorises.
+        // `hasOnly()` teste un SOUS-ENSEMBLE : sans ces deux lignes ils
+        // etaient facultatifs ET de type libre, donc une ecriture anonyme
+        // pouvait loger ~1 Mio de texte arbitraire dans `firstAt`. C'est un
+        // canal distinct du risque de quota ci-dessus — celui-la, c'est du
+        // stockage, et il se ferme ici. `is timestamp` exige aussi leur
+        // presence : un champ absent fait echouer la regle.
+        && request.resource.data.firstAt is timestamp
+        && request.resource.data.lastAt is timestamp;
 
       // Un seul geste autorise : incrementer le compteur de un. Le nom et le
       // groupe sont donc figes par le premier a les avoir ecrits, et un tiers
       // ne peut pas retourner l'entree en autre chose apres coup.
       allow update:
         if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['count', 'lastAt'])
-        && request.resource.data.count == resource.data.count + 1;
+        && request.resource.data.count == resource.data.count + 1
+        // Meme raison qu'a la creation : sans ce typage, on incremente le
+        // compteur tout a fait legalement tout en reecrivant `lastAt` avec ce
+        // qu'on veut.
+        && request.resource.data.lastAt is timestamp;
     }
 
     // Tout le reste est refuse. Regle explicite plutot qu'implicite : elle
