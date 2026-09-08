@@ -232,6 +232,8 @@ du moment, comme le suffixe de `duplicatePlan()`, et pour le meme motif.
 
 ## Variantes par sous-domaine (`src/data/tenants.ts`)
 
+**Skill `add-salle`** : la marche à suivre complète pour en ajouter une.
+
 Une salle de sport par hôte — `<salle>.cirkali.fr` — servie par **le même
 déploiement, le même `index.html` et le même bundle** que cirkali.fr. Rien
 n'est forké, rien n'est reconstruit : `main.ts` lit le premier libellé de
@@ -293,6 +295,7 @@ sans rien charger.
 | `scripts/build-exercise-pages.ts`, `src/content/exercise-details/*`, `exercise-page.css`, `image-prompts.ts` | `dist/exercises/**` est **regénéré à chaque build** : l'éditer à la main est une perte de temps garantie. Le contenu long n'admet que du vérifiable et du stable — jamais d'étude citée, de % d'activation EMG ni de chiffre à fausse précision. Le `slug` est **traduit par langue**. | `seance-fiches-generees` |
 | un module `src/ui/*.ts`, le `Context`, la taille/place d'un bouton, le schéma persisté | Une saisie chiffrée passe par `renderDerived()` — reconstruire la liste ferait perdre le focus du champ. Changer la forme de ce qui est persisté impose de bumper la version **et** d'écrire la migration. | `seance-ui-module` |
 | `src/cloud/*`, `src/ui/account.ts`, le bouton de compte, la sauvegarde en ligne | La sauvegarde automatique tient à **un seul point d'accroche** : `cloud.notifyLocalChange()` dans `save()` (`ui/app.ts`). Ne jamais la recâbler site par site. Le SDK Firebase n'est chargé **que** sur un clic de connexion ou si `session-hint` dit que la personne était connectée — sinon un visiteur anonyme paierait ~200 Ko pour rien. Le document distant repasse **toujours** par les parseurs de `core/storage.ts` : c'est une entrée non fiable, au même titre qu'un lien `?s=`. **Ce qui se compte, ce sont les écritures** (20 000/jour, tous comptes confondus), pas les octets : d'où le regroupement à 4 s et la poussée conditionnelle au chargement. | *(pas de skill : tout est ici et dans `firestore.rules`)* |
+| `src/data/tenants.ts`, l'ajout d'une salle de sport / d'un sous-domaine | Un exercice de salle est une ligne **perso** (`key: 'custom'` + son nom), jamais une clé de `LIBRARY` — l'y mettre réclamerait 5 pages générées, une figure et du contenu long en 5 langues. Et le sous-domaine doit être ajouté aux **domaines autorisés de Firebase Auth**, sinon la connexion Google échoue en silence. | `add-salle` |
 | une clé de traduction, un texte d'interface | `fr.ts` d'abord : les quatre autres langues deviennent alors des erreurs de compilation. Jamais de pluriel recomposé à la main. | `add-i18n-key` |
 | `src/data/figures.ts`, le champ `motion` de `library.ts`, le bloc `.fig-svg` — bref une figure d'exercice | Le bloc CSS `.fig-svg` existe en **deux copies** (bundle + `exercise-page.css`, hors bundle) et `check-build.ts` échoue si elles divergent. `fill: none` sur `.s` n'est pas cosmétique : un `<path>` sans `fill` est rempli en **noir**, invisible sur le thème sombre et pas sur le clair. Toutes les figures de profil regardent à gauche, et la flèche suit `motion`, pas `mode`. | `seance-figures` |
 | ajouter un exercice à la bibliothèque | Les 5 fichiers de contenu long sont **hors du contrat typechecké** : une langue oubliée ne casse pas le build, elle retombe en silence sur le français. `npm run exo <clé>` est le seul contrôle. | `add-exercise` |
