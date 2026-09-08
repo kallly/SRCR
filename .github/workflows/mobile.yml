@@ -1,0 +1,121 @@
+# Compilation de l'application mobile.
+#
+# Ce depot ne peut pas le faire tout seul : la machine de developpement est un
+# Raspberry Pi sans JDK, sans SDK Android et — par construction — sans Xcode.
+# Les runners GitHub ont les deux chaines preinstallees, et le depot etant
+# public, les minutes sont gratuites sur `ubuntu-latest` comme sur
+# `macos-latest` (ces derniers sont factures 10x sur un depot prive).
+#
+# Ce que chaque job prouve, exactement :
+#
+# - Android : un APK de debogage, publie en artefact. Il s'installe reellement
+#   sur un telephone (sideload) — c'est le seul vrai test de bout en bout
+#   disponible sans compte de magasin.
+# - iOS : que le projet COMPILE, et rien de plus. Sans identite de signature il
+#   n'y a ni .ipa, ni installation sur un appareil, ni TestFlight : tout cela
+#   est derriere le compte developpeur Apple. Une compilation simulateur
+#   attrape quand meme ce qui compte ici — un plugin mal synchronise, un
+#   Package.swift casse, un Info.plist invalide.
+#
+# Ce job ne remplace pas `deploy.yml`, qui reste le filet de CI du site
+# (typecheck + check-build sur `dist/`). Celui-ci ne regarde que `dist-app/`.
+name: Compiler l'application mobile
+
+on:
+  push:
+    branches: [portage-mobile, main]
+  workflow_dispatch:
+
+concurrency:
+  group: mobile-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  # La CLI Capacitor refuse de demarrer en dessous de Node 22, la ou le reste
+  # du depot tourne en 18 (machine de dev) et en 20 (deploy.yml). C'est la
+  # seule raison de cet ecart : ne pas l'aligner sur les autres workflows.
+  NODE_VERSION: 22
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      # JDK 21 : l'image du runner en embarque plusieurs, et laisser le choix
+      # au hasard du PATH est la meilleure facon d'avoir un build qui casse le
+      # jour ou l'image change de defaut.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - run: npm ci
+
+      # Le bundle embarque : ni publicite, ni analytique web, ni les 317 pages
+      # generees. Le script echoue s'il en trouve (scripts/build-app.ts).
+      - run: npm run build:app
+
+      # `cap sync` RECOPIE le bundle dans le projet natif, il ne le lie pas :
+      # sans cette etape l'APK contiendrait le bundle du dernier commit ou
+      # quelqu'un a lance la commande a la main.
+      - run: npx cap sync android
+
+      - run: ./gradlew assembleDebug --no-daemon
+        working-directory: android
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cirkali-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+
+  ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build:app
+      - run: npx cap sync ios
+
+      # Capacitor 8 passe par Swift Package Manager et non plus CocoaPods :
+      # pas d'etape `pod install`, mais une resolution de paquets explicite,
+      # pour que son echec eventuel se lise ici plutot que noye dans le log de
+      # compilation.
+      - run: xcodebuild -resolvePackageDependencies -project ios/App/App.xcodeproj
+
+      # Informatif, et volontairement garde : le jour ou la cible change de
+      # nom, cette ligne donne la reponse dans le log au lieu d'un « target
+      # not found » sec.
+      - run: xcodebuild -list -project ios/App/App.xcodeproj
+
+      # `-target` et non `-scheme` : Xcode ne cree le schema qu'a la premiere
+      # ouverture du projet, et il atterrit dans `xcuserdata/`, qui n'est pas
+      # versionne. Sur un runner, aucun schema n'existe donc.
+      #
+      # SDK simulateur et signature desactivee : compiler pour un appareil
+      # reel exigerait un certificat et un profil de provisionnement, donc le
+      # compte developpeur Apple. Ce n'est pas le but ici.
+      - run: |
+          xcodebuild build \
+            -project ios/App/App.xcodeproj \
+            -target App \
+            -sdk iphonesimulator \
+            -configuration Debug \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO

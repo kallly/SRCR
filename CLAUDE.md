@@ -560,6 +560,13 @@ Deux pièges d'outillage : `npx cap sync` **recopie** le bundle dans les deux
 projets (à relancer après chaque changement du code web, ce n'est pas un lien),
 et la CLI Capacitor exige **Node ≥ 22** là où le reste du dépôt tourne en 18.
 
+**Personne ici ne compile.** Ni JDK, ni SDK Android, ni Xcode sur la machine de
+développement : c'est `.github/workflows/mobile.yml` qui construit les deux
+plateformes, et il publie un APK de débogage en artefact. Le dépôt étant
+public, les runners macOS sont gratuits — ils ne le seraient pas sur un dépôt
+privé. Le job iOS prouve que ça **compile**, jamais que ça s'installe : sans
+identité de signature il n'y a ni `.ipa` ni TestFlight.
+
 ## Déploiement
 
 Le site public est **https://cirkali.fr**, servi par Cloudflare **Workers

@@ -35,10 +35,40 @@ plus bas :
    raison affichée ;
 3. la publication elle-même.
 
-**Rien n'a été compilé.** Cette machine n'a ni JDK, ni SDK Android, ni Xcode :
-le bundle web et les projets natifs sont vérifiés, le binaire ne l'est pas.
+**Rien n'est compilé sur cette machine** — elle n'a ni JDK, ni SDK Android, ni
+Xcode. C'est la CI qui s'en charge : voir « Compiler sans machine de
+compilation » plus bas.
 
-## Prérequis
+## Compiler sans machine de compilation
+
+`.github/workflows/mobile.yml` compile les deux plateformes à chaque push sur
+`portage-mobile` et sur `main`. Le dépôt étant **public**, les minutes sont
+gratuites sur `ubuntu-latest` comme sur `macos-latest` — ces derniers sont
+facturés 10× sur un dépôt privé, et c'est ce qui rend la compilation iOS
+gratuite ici.
+
+Ce que chaque job prouve n'est pas la même chose :
+
+- **Android** produit un **APK de débogage en artefact**, qui s'installe
+  réellement sur un téléphone. C'est le seul test de bout en bout disponible
+  sans compte de magasin — récupérable dans l'onglet Actions, ou avec
+  `gh run download`.
+- **iOS** prouve seulement que le projet **compile**. Sans identité de
+  signature il n'y a ni `.ipa`, ni installation sur un appareil, ni
+  TestFlight : tout cela est derrière le compte développeur Apple. Une
+  compilation simulateur attrape quand même l'essentiel — un plugin mal
+  synchronisé, un `Package.swift` cassé, un `Info.plist` invalide.
+
+Deux détails qui expliquent la forme du fichier : le job tourne en **Node 22**
+là où `deploy.yml` est en 20 (la CLI Capacitor refuse en dessous), et la
+compilation iOS passe par `-target` et non `-scheme`, parce qu'Xcode ne crée le
+schéma qu'à la première ouverture du projet et le range dans `xcuserdata/`,
+qui n'est pas versionné.
+
+## Prérequis pour travailler en local
+
+La CI suffit pour vérifier que ça compile. Pour déboguer sur un appareil, ou
+pour publier :
 
 | Pour | Il faut |
 |---|---|
