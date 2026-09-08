@@ -118,6 +118,8 @@ export const es: Translations = {
     lead: 'CIRKALI funciona sin cuenta y sin servidor: la sesión que compones vive en tu navegador. Esta página dice qué se guarda, qué sale del dispositivo y en qué condiciones.',
     updated: 'Última actualización: {date}',
     localTitle: 'Lo que se queda en tu dispositivo',
+    libraryTitle: 'Los ejercicios que creas tú',
+    libraryText: 'Cuando añades un ejercicio que no está en la biblioteca, nos llegan su nombre y el grupo muscular que has elegido. Sirven para una sola cosa: detectar los ejercicios que faltan en el catálogo y añadirlos. No se envía nada más —ni identificador, ni sesión, ni información sobre tu dispositivo— y estos envíos no pueden vincularse contigo.',
     localText: 'Tus sesiones, tus ajustes, el idioma elegido y el historial de sesiones terminadas se guardan en el almacenamiento local del navegador. No se envían a ninguna parte y nadie más que tú puede leerlos. Borrar los datos del sitio los elimina de forma definitiva.',
     accountTitle: 'El acceso con Google, opcional',
     accountText: 'Acceder con Google es una elección, nunca una obligación: mientras no lo hagas, el kit de Firebase ni siquiera se descarga. Si accedes, tu dirección de correo y tus sesiones se guardan en Google (Firebase Authentication y Cloud Firestore) para recuperarlas en tus demás dispositivos. Cerrar sesión detiene la sincronización; la copia en línea permanece hasta que pidas su supresión.',
@@ -262,15 +264,18 @@ export const es: Translations = {
   },
 
   group: {
+    upper: 'Tren superior',
     push: 'Pecho',
     shoulders: 'Hombros',
     back: 'Espalda',
     arms: 'Brazos',
-    legs: 'Muslos',
-    calves: 'Gemelos',
     core: 'Core',
-    cardio: 'Cardio',
+    lower: 'Piernas',
+    legs: 'Muslos',
     glutes: 'Glúteos',
+    calves: 'Gemelos',
+    cardio: 'Cardio',
+    fullbody: 'Cuerpo completo',
   },
 
   category: {
@@ -303,7 +308,8 @@ export const es: Translations = {
   },
 
   prompt: {
-    customName: '¿Nombre del ejercicio?',
+    customTitle: 'Nuevo ejercicio',
+    customName: 'Nombre del ejercicio',
   },
 
   history: {

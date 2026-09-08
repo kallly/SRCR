@@ -1,4 +1,6 @@
 import { t, type TranslationKey } from '../i18n';
+import { GROUP_TREE } from '../data/groups';
+import type { GroupId } from '../core/types';
 
 /** Recupere un element du document, en echouant tot si le markup a change. */
 export function byId<T extends HTMLElement = HTMLElement>(id: string): T {
@@ -40,6 +42,39 @@ export function el<K extends keyof HTMLElementTagNameMap>(
 /** Pastille de couleur d'un groupe musculaire. */
 export function dot(color: string): HTMLElement {
   return el('i', { attrs: { style: `background:${color}` } });
+}
+
+/**
+ * Options d'un selecteur de groupe musculaire, arbre compris.
+ *
+ * Chaque parent ouvre un <optgroup> dont il est LA PREMIERE OPTION : le label
+ * d'un <optgroup> n'est pas selectionnable en HTML, or le parent doit rester
+ * une reponse possible (`data/groups.ts`). Le libelle apparait donc deux fois
+ * dans la liste ouverte, et c'est voulu — une fois ferme, un <select> n'affiche
+ * que le texte de l'option choisie, jamais le titre de son groupe : une option
+ * « Tout » y deviendrait illisible, exactement le piege documente pour
+ * `.unit-select`.
+ *
+ * `accept` sert a masquer un groupe sans exercice a proposer ; un parent dont
+ * tous les enfants sont ecartes disparait avec eux. Les libelles sont lus a
+ * l'appel, donc a reconstruire a chaque rendu ou ouverture pour suivre la
+ * langue active.
+ */
+export function groupOptions(accept: (id: GroupId) => boolean = () => true): HTMLElement[] {
+  const option = (id: GroupId): HTMLOptionElement =>
+    el('option', { text: t(`group.${id}`), attrs: { value: id } });
+
+  return GROUP_TREE.flatMap((node) => {
+    const children = node.children.filter(accept);
+    const self = accept(node.id);
+    if (children.length === 0) return self ? [option(node.id)] : [];
+    return [
+      el('optgroup', {
+        attrs: { label: t(`group.${node.id}`) },
+        children: [self ? option(node.id) : null, ...children.map(option)],
+      }),
+    ];
+  });
 }
 
 /**

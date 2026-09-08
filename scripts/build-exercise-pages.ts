@@ -13,7 +13,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { LIBRARY, type LibraryEntry } from '../src/data/library';
-import { GROUP_IDS } from '../src/data/groups';
+import { GROUP_IDS, GROUP_TREE } from '../src/data/groups';
 import { encodeSharedPlan } from '../src/core/share';
 import type { ExerciseItem, PlanItem } from '../src/core/types';
 import { figureSvg } from '../src/data/figures';
@@ -468,10 +468,18 @@ function aiKeysTable(dict: Translations): string {
   }).join('\n');
 }
 
+/**
+ * L'arbre, et pas seulement les douze identifiants : une liste plate laisserait
+ * croire que `upper` et `push` sont deux zones distinctes, et une IA rangerait
+ * un developpe couche dans l'une ou l'autre au hasard.
+ */
 function aiGroupsTable(dict: Translations): string {
-  return GROUP_IDS.map(
-    (id) => `          <tr><td><code>${id}</code></td><td>${esc(dict.group[id])}</td></tr>`,
-  ).join('\n');
+  const row = (id: GroupId, contains: string): string =>
+    `          <tr><td><code>${id}</code></td><td>${esc(dict.group[id])}</td><td>${contains}</td></tr>`;
+  return GROUP_TREE.flatMap((node) => [
+    row(node.id, node.children.map((child) => `<code>${child}</code>`).join(', ') || '—'),
+    ...node.children.map((child) => row(child, '—')),
+  ]).join('\n');
 }
 
 function renderAiPlanPage(dict: Translations): string {
@@ -648,9 +656,15 @@ ${aiKeysTable(dict)}
       </div>
 
       <h2>Les ${GROUP_IDS.length} groupes musculaires</h2>
+      <p>
+        Ils forment un arbre de deux étages : les identifiants de la colonne « Contient »
+        sont des zones précises, celui qui les regroupe désigne la région entière.
+        <strong>Les deux sont des valeurs valides</strong> — utiliser le parent quand
+        l'exercice sollicite toute la région, l'enfant quand il vise une zone.
+      </p>
       <div class="tablewrap">
         <table>
-          <thead><tr><th>Identifiant</th><th>Nom</th></tr></thead>
+          <thead><tr><th>Identifiant</th><th>Nom</th><th>Contient</th></tr></thead>
           <tbody>
 ${aiGroupsTable(dict)}
           </tbody>
@@ -802,9 +816,12 @@ ${hreflang}
       <p class="page-meta">${esc(fill(dict.privacy.updated))}</p>
 
 ${section(dict.privacy.localTitle, dict.privacy.localText)}${section(
-    dict.privacy.accountTitle,
-    dict.privacy.accountText,
-  )}${section(dict.privacy.analyticsTitle, dict.privacy.analyticsText)}      <h2>${esc(
+    dict.privacy.libraryTitle,
+    dict.privacy.libraryText,
+  )}${section(dict.privacy.accountTitle, dict.privacy.accountText)}${section(
+    dict.privacy.analyticsTitle,
+    dict.privacy.analyticsText,
+  )}      <h2>${esc(
     dict.privacy.adsTitle,
   )}</h2>
       <p>${esc(fill(dict.privacy.adsText))}</p>
@@ -952,7 +969,14 @@ complète.
 
 ## Groupes musculaires
 
-${GROUP_IDS.map((id) => `- ${id} — ${dict.group[id]}`).join('\n')}
+${GROUP_TREE.map((node) =>
+  node.children.length === 0
+    ? `- ${node.id} — ${dict.group[node.id]}`
+    : [
+        `- ${node.id} — ${dict.group[node.id]} (region entiere ; regroupe ${node.children.join(', ')})`,
+        ...node.children.map((child) => `  - ${child} — ${dict.group[child]}`),
+      ].join('\n'),
+).join('\n')}
 
 ## Clés d'exercice
 

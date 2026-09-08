@@ -534,6 +534,49 @@ https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsIn
       </div>
     </dialog>
 
+    <!--
+      Creation d'un exercice perso : nom ET groupe musculaire, demandes
+      ensemble. Un <dialog> et non le formulaire inline partage
+      (`ui/inline-input.ts`) : celui-la ne porte qu'un champ, et deux champs
+      cote a cote dans la rangee d'actions y tenaient mal.
+
+      Le groupe se choisit ICI et nulle part ailleurs — la carte du deroule ne
+      le propose plus. Les <option> sont construites par
+      `ui/custom-exercise.ts` : leurs libelles suivent la langue active, comme
+      celles du filtre de la bibliotheque.
+    -->
+    <dialog class="info" id="customExercise" aria-labelledby="customExerciseTitle">
+      <div class="info-head">
+        <h3 id="customExerciseTitle" data-i18n="prompt.customTitle"></h3>
+        <button class="info-close" type="button" id="customExerciseClose" data-i18n="exerciseInfo.close"></button>
+      </div>
+      <!--
+        Motif `.f` du bloc reglages : etiquette empilee AU-DESSUS du champ, et
+        non `.f-inline` des cartes du deroule — un champ isole a besoin de son
+        libelle lisible au-dessus (CLAUDE.md, « deux styles de champ »). La
+        regle `.f input, .f select` leur donne deja les 44px de cible tactile
+        et la fleche du select, rien a ajouter en CSS.
+      -->
+      <form id="customExerciseForm" class="custom-form" method="dialog">
+        <div class="f">
+          <label for="customExerciseName" data-i18n="prompt.customName"></label>
+          <!--
+            autofocus : showModal() donnerait sinon le focus au bouton de
+            fermeture, alors que la premiere chose a faire est de taper un nom.
+          -->
+          <input type="text" id="customExerciseName" maxlength="60" autofocus />
+        </div>
+        <div class="f">
+          <label for="customExerciseGroup" data-i18n="item.group"></label>
+          <select id="customExerciseGroup"></select>
+        </div>
+        <div class="rowbtns">
+          <button class="ghost" type="button" id="customExerciseCancel" data-i18n="actions.cancel"></button>
+          <button class="go" type="submit" id="customExerciseConfirm" data-i18n="actions.confirm"></button>
+        </div>
+      </form>
+    </dialog>
+
     <dialog class="info" id="aiHelp">
       <div class="info-head">
         <h3 data-i18n="aiHelp.title"></h3>

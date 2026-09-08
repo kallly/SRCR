@@ -1084,3 +1084,16 @@
     min-height: calc(var(--lib-rows-3, 12) * 156.35px - 10px);
   }
 }
+
+/*
+  Formulaire de creation d'un exercice perso (modale #customExercise).
+
+  `.f` porte `flex: 1` pour les rangees du bloc reglages, ou deux champs se
+  partagent la largeur. Ici ils s'empilent : la colonne le remet a plat sans
+  toucher a `.f`, dont les autres usages ne doivent pas bouger.
+*/
+.custom-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

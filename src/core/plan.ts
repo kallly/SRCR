@@ -2,7 +2,7 @@ import { t } from '../i18n';
 import { CUSTOM_DEFAULTS, findLibraryEntry, isLibraryKey } from '../data/library';
 import { presetPlanId, type AnyPreset } from '../data/presets';
 import type { TenantExercise } from '../data/tenants';
-import type { ExerciseItem, PlanItem, SavedPlan } from './types';
+import type { ExerciseItem, GroupId, PlanItem, SavedPlan } from './types';
 
 /** Longueur maximale d'un nom d'exercice saisi par l'utilisateur. */
 const MAX_CUSTOM_NAME = 60;
@@ -32,14 +32,25 @@ export function createFromLibrary(key: string): ExerciseItem | null {
   };
 }
 
-/** Cree une ligne pour un exercice saisi par l'utilisateur. */
-export function createCustom(name: string): ExerciseItem {
+/**
+ * Cree une ligne pour un exercice saisi par l'utilisateur.
+ *
+ * `group` est REQUIS, alors qu'il pourrait retomber sur `CUSTOM_DEFAULTS` :
+ * c'est desormais la seule occasion de le renseigner, la carte du deroule ne
+ * propose plus de le changer. Un defaut silencieux serait donc une invitation
+ * a oublier de le demander.
+ *
+ * L'ordre du spread compte : `CUSTOM_DEFAULTS` porte lui aussi un `group`, il
+ * doit passer AVANT pour que celui-ci l'emporte.
+ */
+export function createCustom(name: string, group: GroupId): ExerciseItem {
   return {
     id: uid(),
     type: 'exercise',
     key: 'custom',
     customName: name.trim().slice(0, MAX_CUSTOM_NAME),
     ...CUSTOM_DEFAULTS,
+    group,
   };
 }
 

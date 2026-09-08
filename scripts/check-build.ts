@@ -23,6 +23,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { decodeSharedPlan } from '../src/core/share';
+import { GROUP_IDS, GROUP_TREE } from '../src/data/groups';
 import { LIBRARY } from '../src/data/library';
 import { figureSvg } from '../src/data/figures';
 import { DETAILS_BY_LOCALE } from '../src/content/exercise-details';
@@ -386,6 +387,55 @@ check(
   `les ${figPages.length} fiches livrent des figures classees fig-svg`,
   figPages.length > 0 && sansClasse.length === 0,
   sansClasse.slice(0, 5).join(', '),
+);
+
+// Les exercices crees a la main sont remontes (cloud/exercise-feedback.ts).
+// Deux choses peuvent casser en silence : la declaration disparait des pages
+// de confidentialite, ou les regles refusent un groupe pourtant valide.
+const withoutNotice = (Object.keys(DICTIONARIES) as Locale[]).filter((locale) => {
+  const page = join(DIST, `confidentialite/${locale}.html`);
+  return !existsSync(page) || !readFileSync(page, 'utf8').includes(DICTIONARIES[locale].privacy.libraryTitle);
+});
+check(
+  'la collecte des exercices perso est declaree dans les 5 langues',
+  withoutNotice.length === 0,
+  withoutNotice.join(', '),
+);
+
+// Les groupes musculaires forment un arbre a deux etages (src/data/groups.ts),
+// et deux choses le trahissent sans rien casser.
+//
+// 1. Une entree de LIBRARY rangee dans un groupe large. Le catalogue doit
+// nommer la zone precise : le parent existe pour l'exercice perso de quelqu'un
+// qui ne veut pas trancher, pas pour une fiche qu'on redige a tete reposee.
+// Un `upper` glisse ici ferait recouvrir tout le haut du corps en mode circuit,
+// et la seance perdrait son alternance sans qu'aucune erreur ne s'affiche.
+const wideEntries = LIBRARY.filter((entry) =>
+  GROUP_TREE.some((node) => node.children.length > 0 && node.id === entry.group),
+).map((entry) => entry.key);
+check(
+  'aucun exercice de la bibliotheque n\'est range dans un groupe large',
+  wideEntries.length === 0,
+  wideEntries.join(', '),
+);
+
+// 2. L'arbre aplati dans ce que lisent les IA. `llms.txt` est leur porte
+// d'entree : douze identifiants de meme rang y laisseraient croire a douze
+// zones distinctes, et un developpe couche partirait dans `upper` aussi
+// volontiers que dans `push`.
+const llms = readFileSync(join(DIST, 'llms.txt'), 'utf8');
+const missingGroup = GROUP_IDS.filter((id) => !llms.includes(`- ${id} — `));
+check(
+  `llms.txt declare les ${GROUP_IDS.length} groupes`,
+  missingGroup.length === 0,
+  missingGroup.join(', '),
+);
+check(
+  'llms.txt dit quels groupes en regroupent d\'autres',
+  GROUP_TREE.filter((node) => node.children.length > 0).every((node) =>
+    llms.includes(`regroupe ${node.children.join(', ')}`),
+  ),
+  'la hierarchie a disparu de llms.txt',
 );
 
 console.log('\nOrigine canonique');

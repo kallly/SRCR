@@ -1,14 +1,25 @@
-/** Groupes musculaires, dans l'ordre d'affichage des selecteurs. */
+/**
+ * Groupes musculaires, dans l'ordre d'affichage des selecteurs.
+ *
+ * Deux etages : `upper` et `lower` contiennent les groupes qui les suivent
+ * (l'arbre est dans `data/groups.ts`), et sont des reponses legales a part
+ * entiere — « toute la jambe » doit pouvoir se dire sans choisir entre
+ * cuisses, fessiers et mollets. Consequence : deux groupes ne se comparent
+ * pas par egalite mais par `groupsOverlap()`.
+ */
 export type GroupId =
+  | 'upper'
   | 'push'
   | 'shoulders'
   | 'back'
   | 'arms'
+  | 'core'
+  | 'lower'
   | 'legs'
   | 'glutes'
   | 'calves'
-  | 'core'
-  | 'cardio';
+  | 'cardio'
+  | 'fullbody';
 
 /**
  * Moment de la seance ou equipement requis, une seule valeur par exercice

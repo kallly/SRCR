@@ -1,6 +1,6 @@
 import { createCloudSync, type CloudSync } from '../cloud/sync';
 import { getLocale, onLocaleChange, setLocale as applyLocale, t } from '../i18n';
-import { createCustom, presetName, presetToPlan, uid } from '../core/plan';
+import { presetName, presetToPlan, uid } from '../core/plan';
 import { defaultPreset, findPresetByPlanId, type AnyPreset } from '../data/presets';
 import {
   DEFAULT_SESSION_CONFIG,
@@ -16,11 +16,11 @@ import { applyStaticTranslations, byId } from './dom';
 import { createExerciseInfo } from './exercise-info';
 import { createGuidesIndex } from './guides-index';
 import { createHistory } from './history';
-import { createInlineInput } from './inline-input';
 import { createLangSwitch } from './langswitch';
 import { createLibrary } from './library';
 import { createPlanner } from './planner';
 import { createPlanSwitcher } from './plan-switcher';
+import { createCustomExercise } from './custom-exercise';
 import { createPresetDialog } from './preset-dialog';
 import { createPreview } from './preview';
 import { createRunner } from './runner';
@@ -393,6 +393,7 @@ export function createApp(state: State): { render: () => void } {
 
   const planSwitcher = createPlanSwitcher(ctx);
   const presetDialog = createPresetDialog(ctx);
+  const customExercise = createCustomExercise(ctx);
   const planner = createPlanner(ctx);
   const preview = createPreview(ctx);
   const statusBar = createStatusBar(ctx);
@@ -547,17 +548,9 @@ export function createApp(state: State): { render: () => void } {
     renderDerived();
   });
 
-  createInlineInput(byId('addCustom'), {
-    label: () => t('prompt.customName'),
-    confirmLabel: () => t('actions.confirm'),
-    cancelLabel: () => t('actions.cancel'),
-    placeholder: () => t('prompt.customName'),
-    onConfirm: (name) => {
-      ctx.activePlan().items.push(createCustom(name));
-      save();
-      renderAll();
-    },
-  });
+  // Le nom ET le groupe se saisissent dans une modale (`ui/custom-exercise.ts`),
+  // pas dans le formulaire inline : celui-la ne porte qu'un champ.
+  byId('addCustom').addEventListener('click', () => customExercise.open());
 
   // La poussee aboutit une seconde ou deux apres que save() a peint
   // « Enregistré » : sans cet abonnement, le suffixe de synchronisation

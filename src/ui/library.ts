@@ -1,5 +1,5 @@
 import { getLocale, t } from '../i18n';
-import { GROUP_IDS, groupColor } from '../data/groups';
+import { GROUP_IDS, groupColor, groupsOverlap } from '../data/groups';
 import { CATEGORY_IDS } from '../data/categories';
 import { LIBRARY } from '../data/library';
 import { activeTenant } from '../data/tenants';
@@ -7,8 +7,17 @@ import { figureSvg } from '../data/figures';
 import { createFromLibrary, createFromTenant } from '../core/plan';
 import type { CategoryId, EffortMode, ExerciseKey, GroupId } from '../core/types';
 import type { Context } from './app';
-import { byId, dot, el } from './dom';
+import { byId, dot, el, groupOptions } from './dom';
 import { effortSummary } from './format';
+
+/**
+ * Les groupes qui ont au moins un exercice a montrer, parents compris. « Corps
+ * entier » n'en a aucun : l'offrir au filtre serait un cul-de-sac, une option
+ * qui ne renvoie jamais rien. Calcule une fois — `LIBRARY` ne bouge pas.
+ */
+const FILTERABLE = new Set(
+  GROUP_IDS.filter((id) => LIBRARY.some((entry) => groupsOverlap(entry.group, id))),
+);
 
 /** Insensible aux majuscules et aux accents : "epaule" trouve "Épaules". */
 function normalize(s: string): string {
@@ -176,7 +185,9 @@ export function createLibrary(ctx: Context): { render: () => void } {
   function renderGrid(): void {
     const term = normalize(search);
     const filtered = sortedLibrary().filter((entry) => {
-      if (group && entry.group !== group) return false;
+      // Par recouvrement : choisir « Jambes » doit montrer cuisses, fessiers
+      // et mollets, pas une grille vide (`data/groups.ts`).
+      if (group && !groupsOverlap(entry.group, group)) return false;
       if (categories.size > 0 && !categories.has(entry.category)) return false;
       if (term && !normalize(entry.name).includes(term)) return false;
       return true;
@@ -191,7 +202,7 @@ export function createLibrary(ctx: Context): { render: () => void } {
     // groupes suit la langue active.
     groupSelect.replaceChildren(
       el('option', { text: t('library.filterAll'), attrs: { value: '' } }),
-      ...GROUP_IDS.map((id) => el('option', { text: t(`group.${id}`), attrs: { value: id } })),
+      ...groupOptions((id) => FILTERABLE.has(id)),
     );
     groupSelect.value = group;
     searchInput.value = search;

@@ -118,6 +118,8 @@ export const en: Translations = {
     lead: 'CIRKALI works without an account and without a server: the session you build lives in your browser. This page states what is stored, what leaves the device, and on what conditions.',
     updated: 'Last updated: {date}',
     localTitle: 'What stays on your device',
+    libraryTitle: 'The exercises you create yourself',
+    libraryText: 'When you add an exercise that is not in the library, its name and the muscle group you picked are sent to us. They serve one purpose: spotting the exercises the catalogue is missing, so they can be added. Nothing else is sent — no identifier, no session, nothing about your device — and these entries cannot be traced back to you.',
     localText: 'Your sessions, your settings, the language you picked and the history of finished sessions are stored in the browser’s local storage. They are sent nowhere and nobody but you can read them. Clearing the site data deletes them for good.',
     accountTitle: 'Signing in with Google, optional',
     accountText: 'Signing in with Google is a choice, never a requirement: until you do, the Firebase kit is not even downloaded. If you do sign in, your email address and your sessions are stored with Google (Firebase Authentication and Cloud Firestore) so you can find them on your other devices. Signing out stops the sync; the online copy remains until you ask for its deletion.',
@@ -262,15 +264,18 @@ export const en: Translations = {
   },
 
   group: {
+    upper: 'Upper body',
     push: 'Chest',
     shoulders: 'Shoulders',
     back: 'Back',
     arms: 'Arms',
-    legs: 'Thighs',
-    calves: 'Calves',
     core: 'Core',
-    cardio: 'Cardio',
+    lower: 'Legs',
+    legs: 'Thighs',
     glutes: 'Glutes',
+    calves: 'Calves',
+    cardio: 'Cardio',
+    fullbody: 'Full body',
   },
 
   category: {
@@ -303,7 +308,8 @@ export const en: Translations = {
   },
 
   prompt: {
-    customName: 'Exercise name?',
+    customTitle: 'New exercise',
+    customName: 'Exercise name',
   },
 
   history: {

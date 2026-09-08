@@ -118,6 +118,8 @@ export const it: Translations = {
     lead: 'CIRKALI funziona senza account e senza server: la sessione che componi vive nel tuo browser. Questa pagina dice che cosa viene salvato, che cosa esce dal dispositivo e a quali condizioni.',
     updated: 'Ultimo aggiornamento: {date}',
     localTitle: 'Ciò che resta sul tuo dispositivo',
+    libraryTitle: 'Gli esercizi che crei tu',
+    libraryText: 'Quando aggiungi un esercizio che non è nella libreria, ci vengono trasmessi il suo nome e il gruppo muscolare che hai scelto. Servono a una cosa sola: individuare gli esercizi che mancano al catalogo e aggiungerli. Non parte nient’altro — nessun identificativo, nessuna sessione, nessuna informazione sul tuo dispositivo — e questi invii non possono essere ricondotti a te.',
     localText: 'Le tue sessioni, le tue impostazioni, la lingua scelta e lo storico delle sessioni concluse sono salvati nella memoria locale del browser. Non vengono inviati da nessuna parte e nessuno oltre a te può leggerli. Cancellare i dati del sito li elimina definitivamente.',
     accountTitle: 'L’accesso con Google, facoltativo',
     accountText: 'Accedere con Google è una scelta, mai un obbligo: finché non lo fai, il kit Firebase non viene nemmeno scaricato. Se accedi, il tuo indirizzo e-mail e le tue sessioni sono salvati presso Google (Firebase Authentication e Cloud Firestore) per ritrovarli sugli altri dispositivi. Disconnettersi ferma la sincronizzazione; la copia online resta finché non ne chiedi la cancellazione.',
@@ -262,15 +264,18 @@ export const it: Translations = {
   },
 
   group: {
+    upper: 'Parte superiore',
     push: 'Petto',
     shoulders: 'Spalle',
     back: 'Schiena',
     arms: 'Braccia',
-    legs: 'Cosce',
-    calves: 'Polpacci',
     core: 'Core',
-    cardio: 'Cardio',
+    lower: 'Gambe',
+    legs: 'Cosce',
     glutes: 'Glutei',
+    calves: 'Polpacci',
+    cardio: 'Cardio',
+    fullbody: 'Corpo intero',
   },
 
   category: {
@@ -303,7 +308,8 @@ export const it: Translations = {
   },
 
   prompt: {
-    customName: 'Nome dell’esercizio?',
+    customTitle: 'Nuovo esercizio',
+    customName: 'Nome dell’esercizio',
   },
 
   history: {

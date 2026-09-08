@@ -1,7 +1,7 @@
 import { t } from '../i18n';
 import { decodeAiPlan, encodeAiPlan } from '../core/ai-plan';
 import { encodeSharedPlan } from '../core/share';
-import { GROUP_IDS } from '../data/groups';
+import { GROUP_IDS, groupParent } from '../data/groups';
 import { LIBRARY } from '../data/library';
 import type { Context } from './app';
 import type { Share } from './share';
@@ -73,7 +73,10 @@ export function installWebMcp(ctx: Context, share: Share): void {
       inputSchema: { type: 'object', properties: {} },
       execute: async () =>
         text({
-          groups: GROUP_IDS.map((id) => ({ id, name: t(`group.${id}`) })),
+          // `parent` dit l'arbre : sans lui, une IA lit douze groupes de meme
+          // rang et rangerait un developpe couche dans `upper` aussi volontiers
+          // que dans `push`.
+          groups: GROUP_IDS.map((id) => ({ id, name: t(`group.${id}`), parent: groupParent(id) })),
           exercises: LIBRARY.map((entry) => ({
             key: entry.key,
             name: t(`exercise.${entry.key}.name`),

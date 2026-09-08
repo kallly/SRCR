@@ -50,7 +50,7 @@ src/
     session-hint.ts  un bit local : « etait connecte », pour ne pas charger le SDK pour rien
   data/            donnees sans texte
     tenants.ts     variantes par sous-domaine (salles de sport) — vide pour l'instant
-    groups.ts      ids + couleurs des 9 groupes musculaires
+    groups.ts      l'arbre des 12 groupes musculaires : ids, parents, couleurs
     library.ts     62 exercices : reglages seulement
     presets.ts     les 6 seances CIRKALI toutes faites (jamais persistees)
     categories.ts  ids des categories d'equipement (filtre bibliotheque)
@@ -230,6 +230,62 @@ donc un module ajoute demain est couvert sans cablage — ne pas eparpiller ce
 test dans les modules d'UI. Le nom fige a l'adoption est traduit dans la langue
 du moment, comme le suffixe de `duplicatePlan()`, et pour le meme motif.
 
+## Les exercices perso remontent, pour combler la bibliotheque
+
+Quand quelqu'un cree un exercice a la main, c'est qu'il ne l'a pas trouve : le
+nom tape est le meilleur signal disponible sur ce qui manque a `LIBRARY`.
+`cloud/exercise-feedback.ts` l'envoie dans la collection Firestore
+`customExercises`, un document par nom normalise, `count` comptant les
+**appareils distincts** grace au garde local `seance.customSent.v1`. On le lit
+depuis la console Firebase.
+
+**Ce module n'importe rien de `firebase/*`**, et c'est la contrainte qui a
+dicte sa forme : la collecte vise aussi les visiteurs anonymes, or leur faire
+telecharger les ~200 Ko du SDK annulerait tout ce que `session-hint.ts`
+protege. Un `fetch` sur l'API REST fait le meme travail a cout nul.
+
+**Le point d'accroche est unique et doit le rester** : le seul `onConfirm` du
+formulaire « Exercice perso » (`ui/app.ts`). Ni `createFromTenant()` — le
+catalogue d'une salle, deja connu — ni les lignes perso arrivant par un lien
+`?s=`/`?plan=`, souvent inventees par une IA plutot que demandees. Un second
+appelant, c'est une liste polluee.
+
+**Le groupe musculaire se choisit a la creation**, dans la modale
+`ui/custom-exercise.ts`, et nulle part ailleurs : `createCustom(name, group)`
+prend donc un parametre requis, et `ui/planner.ts` n'a plus de `selectField`
+de groupe. Contrepartie assumee, un groupe mal choisi impose de refaire la
+ligne — le badge et la bordure coloree le rendent visible.
+
+Une modale et non `createInlineInput()` (que la skill `seance-ui-module`
+recommande pourtant par defaut) : le formulaire inline ne porte qu'un champ,
+et deux champs cote a cote dans la rangee d'actions y tenaient mal. Ses deux
+autres appelants — creation et renommage d'une seance, un seul nom a saisir —
+le gardent. Le `<select>` de groupe reste **vide dans `index.html`** et se
+remplit a chaque ouverture (`fillGroups()`) : ses libelles doivent suivre la
+langue active, comme ceux du filtre de la bibliotheque.
+
+**`customExercises` est la seule collection ecrivable sans compte.**
+`firestore.rules` en verrouille la *forme* — cinq champs, nom ≤ 60, groupe
+borné en longueur, `count` qui ne peut qu'augmenter de un, lecture et suppression
+interdites — mais **pas le volume** : quelqu'un peut epuiser les 20 000
+ecritures/jour et casser la sauvegarde en ligne jusqu'a minuit. Sortie de
+secours : passer `create` a `if false`. Risque accepte en connaissance de
+cause.
+
+`group` y est un **champ libre**, borné en longueur seulement. La liste des
+valeurs y a vécu un temps, en copie de `GROUP_IDS` que les règles ne peuvent pas
+importer : ce couplage se serait payé au premier groupe ajouté, la règle rejetant
+en silence une valeur pourtant légitime — et la collecte étant muette par
+conception, personne ne l'aurait vu. Ce n'était pas une précaution théorique :
+trois groupes ont été ajoutés le lendemain du retrait de cette liste. Le client
+n'envoie de toute façon que les identifiants connus, la modale étant un
+`<select>`.
+
+**La collecte est declaree dans la page de confidentialite et nulle part
+ailleurs** — decision explicite : rien n'a ete ajoute a l'accueil ni au
+formulaire de saisie. `check-build.ts` verifie la presence du paragraphe dans
+les cinq langues.
+
 ## Variantes par sous-domaine (`src/data/tenants.ts`)
 
 **Skill `add-salle`** : la marche à suivre complète pour en ajouter une.
@@ -261,6 +317,51 @@ besoin : thème, textes propres, retrait des encarts publicitaires, et la
 réservation de hauteur `--lib-rows` (calculée depuis `LIBRARY.length`, elle
 ignore les exercices d'une salle). Tant qu'il ne s'agit que de données, rien de
 tout ça n'est nécessaire.
+
+## Les groupes musculaires forment un arbre, pas une liste
+
+`src/data/groups.ts` porte douze groupes sur **deux étages** : `upper` contient
+poitrine, épaules, dos et bras ; `lower` contient cuisses, fessiers et mollets ;
+`core`, `cardio` et `fullbody` sont des feuilles isolées.
+
+**Un parent est une réponse légale, pas un simple titre d'affichage.** C'est
+toute la raison d'être de l'arbre : « je travaille toute la jambe » doit pouvoir
+se dire sans trancher entre cuisses, fessiers et mollets. Une liste plate
+n'offrait que le choix entre trop précis et faux.
+
+**Trois conséquences à ne pas défaire :**
+
+- **Deux groupes se comparent par `groupsOverlap()`, jamais par `===`.** Ils se
+  recouvrent s'ils sont égaux ou si l'un contient l'autre. Le mode circuit
+  (`core/queue.ts`) et le filtre de la bibliothèque en dépendent : avec une
+  égalité, le circuit enchaînerait un exercice « jambes » et un exercice
+  « mollets » sans la pause qui leur est due, en croyant avoir changé de zone.
+  Le bug n'existait pas tant que la liste était plate — il naît avec les
+  parents.
+- **Les ids sont figés, on en ajoute mais on n'en renomme aucun.**
+  `core/share.ts` encode l'identifiant en clair dans les liens `?s=` (pas son
+  rang, ce qui rend au contraire un ajout parfaitement sûr). D'où deux noms
+  internes trompeurs qu'on garde : `push` désigne la poitrine — c'est un nom de
+  patron de mouvement, pas de muscle — et `legs` les seules cuisses. Ce que la
+  personne lit, ce sont les libellés i18n, qui disent juste.
+- **Une entrée de `LIBRARY` nomme toujours une zone précise, jamais un parent.**
+  Le parent existe pour l'exercice perso de quelqu'un qui ne veut pas trancher,
+  pas pour une fiche rédigée à tête reposée. `check-build.ts` l'impose.
+
+**Deux étages et pas trois.** Au troisième — pectoraux contre triceps,
+quadriceps contre ischios — la classification cesse d'être un arbre : le triceps
+relève de la poussée *et* du bras, l'avant-bras du tirage *et* du bras. Aucune
+application grand public n'y descend, et le format `?s=` ne saurait pas en
+porter deux à la fois. Ce qui manque encore (avant-bras, adducteurs, trapèzes)
+a partout un parent où se ranger sans hésiter : on y perd de la précision,
+jamais un endroit où classer. La collecte `customExercises` dira si ça se paie.
+
+Dans les sélecteurs (`groupOptions()`, `ui/dom.ts`), chaque parent ouvre un
+`<optgroup>` **dont il est la première option** : un label d'`<optgroup>` n'est
+pas sélectionnable en HTML. Le libellé apparaît donc deux fois dans la liste
+ouverte, et c'est voulu — refermé, un `<select>` n'affiche que le texte de
+l'option choisie, jamais le titre de son groupe, exactement le piège documenté
+pour `.unit-select`.
 
 ## Le moteur (`core/queue.ts`)
 
@@ -295,6 +396,7 @@ sans rien charger.
 | `scripts/build-exercise-pages.ts`, `src/content/exercise-details/*`, `exercise-page.css`, `image-prompts.ts` | `dist/exercises/**` est **regénéré à chaque build** : l'éditer à la main est une perte de temps garantie. Le contenu long n'admet que du vérifiable et du stable — jamais d'étude citée, de % d'activation EMG ni de chiffre à fausse précision. Le `slug` est **traduit par langue**. | `seance-fiches-generees` |
 | un module `src/ui/*.ts`, le `Context`, la taille/place d'un bouton, le schéma persisté | Une saisie chiffrée passe par `renderDerived()` — reconstruire la liste ferait perdre le focus du champ. Changer la forme de ce qui est persisté impose de bumper la version **et** d'écrire la migration. | `seance-ui-module` |
 | `src/cloud/*`, `src/ui/account.ts`, le bouton de compte, la sauvegarde en ligne | La sauvegarde automatique tient à **un seul point d'accroche** : `cloud.notifyLocalChange()` dans `save()` (`ui/app.ts`). Ne jamais la recâbler site par site. Le SDK Firebase n'est chargé **que** sur un clic de connexion ou si `session-hint` dit que la personne était connectée — sinon un visiteur anonyme paierait ~200 Ko pour rien. Le document distant repasse **toujours** par les parseurs de `core/storage.ts` : c'est une entrée non fiable, au même titre qu'un lien `?s=`. **Ce qui se compte, ce sont les écritures** (20 000/jour, tous comptes confondus), pas les octets : d'où le regroupement à 4 s et la poussée conditionnelle au chargement. | *(pas de skill : tout est ici et dans `firestore.rules`)* |
+| `src/data/groups.ts`, l'ajout ou le retrait d'un groupe musculaire | Un id de groupe voyage dans les liens `?s=` : on en **ajoute**, on n'en renomme jamais. Et deux groupes se comparent par `groupsOverlap()`, jamais par `===` — l'arbre a deux étages, « jambes » recouvre « mollets ». | *(pas de skill : tout est dans la section « Les groupes musculaires forment un arbre »)* |
 | `src/data/tenants.ts`, l'ajout d'une salle de sport / d'un sous-domaine | Un exercice de salle est une ligne **perso** (`key: 'custom'` + son nom), jamais une clé de `LIBRARY` — l'y mettre réclamerait 5 pages générées, une figure et du contenu long en 5 langues. Et le sous-domaine doit être ajouté aux **domaines autorisés de Firebase Auth**, sinon la connexion Google échoue en silence. | `add-salle` |
 | une clé de traduction, un texte d'interface | `fr.ts` d'abord : les quatre autres langues deviennent alors des erreurs de compilation. Jamais de pluriel recomposé à la main. | `add-i18n-key` |
 | `src/data/figures.ts`, le champ `motion` de `library.ts`, le bloc `.fig-svg` — bref une figure d'exercice | Le bloc CSS `.fig-svg` existe en **deux copies** (bundle + `exercise-page.css`, hors bundle) et `check-build.ts` échoue si elles divergent. `fill: none` sur `.s` n'est pas cosmétique : un `<path>` sans `fill` est rempli en **noir**, invisible sur le thème sombre et pas sur le clair. Toutes les figures de profil regardent à gauche, et la flèche suit `motion`, pas `mode`. | `seance-figures` |

@@ -1,5 +1,5 @@
 import { t } from '../i18n';
-import { groupColor, GROUP_IDS } from '../data/groups';
+import { groupColor } from '../data/groups';
 import { exerciseName, isExercise, move } from '../core/plan';
 import { isLibraryKey } from '../data/library';
 import type { ExerciseItem, ExerciseKey, PlanItem, RestItem } from '../core/types';
@@ -157,25 +157,13 @@ function exerciseRow(
         attrs: { min: '1', max: '10' },
       }),
       effort,
-      // Le groupe musculaire d'un exercice de la bibliotheque est intrinseque
-      // a l'exercice (donnee de src/data/library.ts) : le rendre modifiable
-      // desynchroniserait le badge affiche et fausserait le regroupement du
-      // mode circuit. Seul un exercice perso n'a pas d'autre moyen de le
-      // renseigner.
-      !isLibraryKey(item.key)
-        ? el('div', {
-            className: 'f-inline',
-            children: [
-              selectField({
-                ariaLabel: t('item.group'),
-                value: item.group,
-                field: 'group',
-                itemId: item.id,
-                choices: GROUP_IDS.map((id) => ({ value: id, label: t(`group.${id}`) })),
-              }),
-            ],
-          })
-        : null,
+      // Pas de selecteur de groupe ici, y compris pour un exercice perso : il
+      // se choisit desormais au moment de la creation (`ui/app.ts`), une fois
+      // pour toutes. La carte reste donc identique pour tous les exercices,
+      // et le groupe se lit au badge et a la bordure gauche coloree.
+      //
+      // Contrepartie assumee : un groupe mal choisi ne se corrige plus, il
+      // faut supprimer la ligne et la refaire.
       // En mode circuit, la pause est gouvernee par le reglage global : afficher
       // un repos par exercice laisserait croire qu'il a un effet.
       showRest
@@ -284,9 +272,6 @@ export function createPlanner(ctx: Context): { render: () => void } {
     if (!isExercise(item)) return;
     if (field === 'mode' && (input.value === 'reps' || input.value === 'time')) {
       item.mode = input.value;
-    } else if (field === 'group') {
-      const group = GROUP_IDS.find((id) => id === input.value);
-      if (group) item.group = group;
     }
     ctx.save();
     ctx.renderAll();

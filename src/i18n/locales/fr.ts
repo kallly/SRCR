@@ -154,6 +154,8 @@ export const fr = {
     lead: 'CIRKALI fonctionne sans compte et sans serveur : la séance que vous composez vit dans votre navigateur. Cette page dit ce qui est enregistré, ce qui sort de l’appareil, et à quelles conditions.',
     updated: 'Dernière mise à jour : {date}',
     localTitle: 'Ce qui reste sur votre appareil',
+    libraryTitle: 'Les exercices que vous créez à la main',
+    libraryText: 'Quand vous ajoutez un exercice qui ne figure pas dans la bibliothèque, son nom et le groupe musculaire choisi nous sont transmis. Ils servent à une seule chose : repérer les exercices qui manquent au catalogue et les ajouter. Rien d’autre ne part — ni identifiant, ni séance, ni information sur votre appareil — et ces envois ne peuvent pas être reliés à vous.',
     localText: 'Vos séances, vos réglages, la langue choisie et l’historique des séances terminées sont enregistrés dans le stockage local du navigateur. Ils ne sont envoyés nulle part et personne d’autre que vous n’y a accès. Effacer les données du site les supprime définitivement.',
     accountTitle: 'La connexion Google, facultative',
     accountText: 'Se connecter avec Google est un choix, jamais une obligation : tant que vous ne le faites pas, le kit Firebase n’est même pas téléchargé. Si vous vous connectez, votre adresse e-mail et vos séances sont enregistrées chez Google (Firebase Authentication et Cloud Firestore) pour être retrouvées sur vos autres appareils. Se déconnecter arrête la synchronisation ; la copie en ligne subsiste jusqu’à ce que vous en demandiez la suppression.',
@@ -302,15 +304,18 @@ export const fr = {
   },
 
   group: {
+    upper: 'Haut du corps',
     push: 'Poitrine',
     shoulders: 'Épaules',
     back: 'Dos',
     arms: 'Bras',
-    legs: 'Cuisses',
-    calves: 'Mollets',
     core: 'Gainage',
-    cardio: 'Cardio',
+    lower: 'Jambes',
+    legs: 'Cuisses',
     glutes: 'Fessiers',
+    calves: 'Mollets',
+    cardio: 'Cardio',
+    fullbody: 'Corps entier',
   },
 
   category: {
@@ -343,7 +348,8 @@ export const fr = {
   },
 
   prompt: {
-    customName: 'Nom de l’exercice ?',
+    customTitle: 'Nouvel exercice',
+    customName: 'Nom de l’exercice',
   },
 
   history: {

@@ -1,4 +1,5 @@
 import type { ExerciseItem, PlanItem, RestStep, SessionConfig, Step, WorkStep } from './types';
+import { groupsOverlap } from '../data/groups';
 import { isExercise } from './plan';
 
 /** Estimation de la duree d'une repetition, en secondes. */
@@ -37,6 +38,12 @@ export function buildClassic(plan: readonly PlanItem[]): Step[] {
  * Une pause n'est imposee que si le prochain effort touche le meme groupe que
  * celui qu'on vient de faire, c'est-a-dire quand aucun autre groupe n'a encore
  * de serie disponible.
+ *
+ * « Le meme groupe » se lit par recouvrement et non par egalite
+ * (`groupsOverlap()`, data/groups.ts) : les groupes forment un arbre a deux
+ * etages, et « jambes » recouvre « mollets ». Comparer les identifiants ferait
+ * enchainer un squat et un mollet debout comme deux zones distinctes, sans la
+ * pause qui leur est pourtant due.
  */
 function buildCircuitSegment(
   items: readonly ExerciseItem[],
@@ -49,7 +56,9 @@ function buildCircuitSegment(
 
   while (pool.some((slot) => slot.left > 0)) {
     const available = pool.filter((slot) => slot.left > 0);
-    const others = available.filter((slot) => slot.item.group !== last);
+    const others = available.filter(
+      (slot) => last === null || !groupsOverlap(slot.item.group, last),
+    );
     const candidates = others.length > 0 ? others : available;
     const forced = others.length === 0;
 

@@ -118,6 +118,8 @@ export const de: Translations = {
     lead: 'CIRKALI kommt ohne Konto und ohne Server aus: das Training, das du zusammenstellst, lebt in deinem Browser. Diese Seite sagt, was gespeichert wird, was das Gerät verlässt und unter welchen Bedingungen.',
     updated: 'Zuletzt aktualisiert: {date}',
     localTitle: 'Was auf deinem Gerät bleibt',
+    libraryTitle: 'Die Übungen, die du selbst anlegst',
+    libraryText: 'Wenn du eine Übung hinzufügst, die es in der Bibliothek nicht gibt, werden uns ihr Name und die gewählte Muskelgruppe übermittelt. Sie dienen einem einzigen Zweck: zu erkennen, welche Übungen im Katalog fehlen, um sie zu ergänzen. Mehr wird nicht gesendet — keine Kennung, kein Training, nichts über dein Gerät — und diese Einträge lassen sich nicht auf dich zurückführen.',
     localText: 'Deine Trainings, deine Einstellungen, die gewählte Sprache und der Verlauf abgeschlossener Einheiten liegen im lokalen Speicher des Browsers. Sie werden nirgendwohin gesendet und niemand außer dir kann sie lesen. Die Websitedaten zu löschen entfernt sie endgültig.',
     accountTitle: 'Die Google-Anmeldung, freiwillig',
     accountText: 'Sich mit Google anzumelden ist eine Wahl, nie eine Pflicht: solange du es nicht tust, wird das Firebase-Paket nicht einmal geladen. Meldest du dich an, werden deine E-Mail-Adresse und deine Trainings bei Google gespeichert (Firebase Authentication und Cloud Firestore), damit du sie auf deinen anderen Geräten wiederfindest. Abmelden beendet die Synchronisierung; die Onlinekopie bleibt, bis du ihre Löschung verlangst.',
@@ -262,15 +264,18 @@ export const de: Translations = {
   },
 
   group: {
+    upper: 'Oberkörper',
     push: 'Brust',
     shoulders: 'Schultern',
     back: 'Rücken',
     arms: 'Arme',
-    legs: 'Oberschenkel',
-    calves: 'Waden',
     core: 'Rumpf',
-    cardio: 'Ausdauer',
+    lower: 'Beine',
+    legs: 'Oberschenkel',
     glutes: 'Gesäß',
+    calves: 'Waden',
+    cardio: 'Ausdauer',
+    fullbody: 'Ganzkörper',
   },
 
   category: {
@@ -303,7 +308,8 @@ export const de: Translations = {
   },
 
   prompt: {
-    customName: 'Name der Übung?',
+    customTitle: 'Neue Übung',
+    customName: 'Name der Übung',
   },
 
   history: {
