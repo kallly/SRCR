@@ -32,6 +32,16 @@
 /ads.txt
   Content-Type: text/plain; charset=utf-8
 
+# Le service worker est le SEUL fichier du site dont une mise en cache longue
+# serait irreversible : un `sw.js` fige, c'est un site fige pour ses visiteurs
+# les plus fideles, et rien cote serveur ne permet de le detecter. Les
+# navigateurs plafonnent d'eux-memes sa duree de vie a 24 h, ce qui reste 24 h
+# de trop pour un correctif. Le nom est stable par obligation (changer d'URL
+# reinstallerait un second worker au lieu de mettre a jour le premier), donc
+# c'est cet en-tete, et lui seul, qui garantit qu'un deploiement le remplace.
+/sw.js
+  Cache-Control: public, max-age=0, must-revalidate
+
 /*
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Content-Type-Options: nosniff

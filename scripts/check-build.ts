@@ -385,7 +385,7 @@ check(
 // Un `.txt` ne peut pas dire son encodage de l'interieur, contrairement au HTML
 // (`<meta charset>`) et au XML (sa declaration) : sans `charset` dans l'en-tete,
 // Cloudflare sort un `text/plain` nu et le navigateur retombe sur l'encodage par
-// defaut de sa locale — windows-1252 en France, donc « sA©ance ». C'est arrive a
+// defaut de sa locale — windows-1252 en France, donc « sÃ©ance ». C'est arrive a
 // llms.txt, le fichier meme qu'on adresse aux IA. La regle vit dans
 // `public/_headers` ; on verifie ici qu'aucun .txt accentue n'y manque, plutot
 // que de figer une liste de noms qui divergerait au prochain fichier ajoute.
@@ -574,6 +574,68 @@ check(
     llms.includes(`regroupe ${node.children.join(', ')}`),
   ),
   'la hierarchie a disparu de llms.txt',
+);
+
+console.log('\nInstallation hors ligne');
+
+// Le manifeste et le service worker sont ce qui rend le site installable, et
+// ce sur quoi s'appuie le portage mobile. Ni l'un ni l'autre n'a de type qui
+// les protege : un manifeste au JSON casse, une icone absente ou un `sw.js`
+// oublie par le build ne cassent RIEN de visible — le site continue de
+// s'afficher, il cesse simplement d'etre installable, et personne ne s'en
+// apercoit avant de chercher pourquoi le bouton « Installer » a disparu.
+const manifestPath = join(DIST, 'manifest.webmanifest');
+check('dist/manifest.webmanifest est livre', existsSync(manifestPath));
+
+if (existsSync(manifestPath)) {
+  let manifest: Record<string, unknown> | null = null;
+  try {
+    manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as Record<string, unknown>;
+  } catch {
+    manifest = null;
+  }
+  check('le manifeste est du JSON valide', manifest !== null);
+
+  const icons = (manifest?.['icons'] ?? []) as { src?: string; purpose?: string }[];
+  const missing = icons
+    .map((icon) => icon.src ?? '')
+    .filter((src) => src !== '' && !existsSync(join(DIST, src)));
+  check(
+    `les ${icons.length} icones du manifeste existent dans dist/`,
+    icons.length >= 2 && missing.length === 0,
+    missing.join(', '),
+  );
+
+  // Une icone `maskable` n'est pas un confort : sans elle, Android recadre
+  // l'icone « any » dans un cercle et rogne l'anneau du chrono, qui est tout
+  // le dessin.
+  check(
+    'le manifeste porte une icone maskable',
+    icons.some((icon) => (icon.purpose ?? '').split(' ').includes('maskable')),
+  );
+
+  // `base: './'` (vite.config.ts) tient tout le site en chemins relatifs pour
+  // qu'il survive a un deploiement ailleurs qu'a la racine d'un domaine. Une
+  // URL absolue ici rouvrirait le trou par le manifeste.
+  const absolute = ['start_url', 'scope']
+    .map((key) => [key, String(manifest?.[key] ?? '')] as const)
+    .filter(([, value]) => value.startsWith('/') || /^https?:/.test(value));
+  check(
+    'start_url et scope restent relatifs',
+    absolute.length === 0,
+    absolute.map(([key, value]) => `${key}=${value}`).join(', '),
+  );
+}
+
+check('index.html lie le manifeste', index.includes('rel="manifest"'));
+check('dist/sw.js est livre', existsSync(join(DIST, 'sw.js')));
+
+// Un service worker mis en cache longtemps est le seul fichier du site dont
+// une erreur ne se rattrape pas depuis le serveur : voir public/_headers.
+// `headers` est deja lu plus haut, pour les .txt accentues.
+check(
+  '_headers empeche la mise en cache de sw.js',
+  /\/sw\.js\s*\n\s*Cache-Control:[^\n]*max-age=0/.test(headers),
 );
 
 console.log('\nOrigine canonique');

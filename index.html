@@ -122,6 +122,27 @@
     <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 
     <!--
+      Manifeste d'application web. Il fait deux choses : il rend le site
+      installable (« ajouter a l'ecran d'accueil », en plein ecran, avec son
+      icone et sa couleur de fond), et il est le socle du portage mobile —
+      c'est lui que lisent aussi bien Chrome sur Android que le Play Store via
+      une Trusted Web Activity. Les trois icones PNG qu'il declare derivent de
+      `public/favicon.svg` ; voir docs/portage-mobile.md pour les regenerer.
+
+      Les deux balises `apple-*` sont le pendant iOS, que Safari n'a jamais
+      remplace par le manifeste : sans la premiere, le raccourci d'ecran
+      d'accueil rouvre une fenetre de navigateur avec sa barre d'adresse.
+      `black` plutot que `black-translucent` : le contenu passerait sinon SOUS
+      la barre d'etat, et il faudrait reprendre toutes les hauteurs de l'entete
+      avec `env(safe-area-inset-top)`.
+    -->
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="CIRKALI" />
+
+    <!--
       Open Graph et JSON-LD : les bots de prévisualisation (Facebook, LinkedIn,
       Discord…) et la plupart des robots d'indexation ne lisent que le HTML
       statique de cette page, sans exécuter src/main.ts. Ces balises portent
