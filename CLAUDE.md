@@ -19,6 +19,9 @@ progression + bip).
 | `npm run dev` | Serveur de développement sur le port 8000, exposé sur le réseau local |
 | `npm run build` | `tsc --noEmit`, build Vite vers `dist/`, puis génère les pages d'exercice, `dist/creer-une-seance-par-lien.html`, `dist/llms.txt` et `dist/sitemap.xml` (`scripts/build-exercise-pages.ts`) |
 | `npm run preview` | Sert `dist/` sur le port 8000 |
+| `npm run build:app` | Construit `dist-app/`, le bundle embarque dans l'application mobile : ni publicite, ni analytique web, ni pages generees (`scripts/build-app.ts`) |
+| `npm run app:sync` | `build:app` puis `cap sync` — recopie le bundle dans `android/` et `ios/`. **Node ≥ 22 requis par la CLI Capacitor** |
+| `npm run app:android` / `app:ios` | Idem, puis ouvre Android Studio / Xcode |
 | `npm run typecheck` | Le filet du projet — il n'y a pas de suite de tests |
 | `npm run check` | Build, puis vérifie ce qu'il a **produit** dans `dist/` (`scripts/check-build.ts`) — lancé aussi par la CI |
 | `npm run indexnow` | Signale les URL du sitemap à Bing/Yandex/Seznam/Naver (`--dry` pour voir sans envoyer). **Pas Google.** À lancer après un vrai changement de contenu, pas à chaque déploiement |
@@ -490,12 +493,13 @@ sans rien charger.
 
 | Tu touches à… | L'invariant qui te mordra sinon | Skill à charger |
 |---|---|---|
-| `core/share.ts`, `core/ai-plan.ts`, `ui/share.ts`, `ui/webmcp.ts`, `ui/ai-help.ts`, la section `#aiPlan` — bref lien de partage, QR, import, pilotage par une IA | Le payload `?s=` est **dense par conception** (7 exercices : 1120 → 430 caractères, QR de 129 → 77 modules). Ne jamais le « clarifier » en objets à clés explicites. `?plan=` n'entre **jamais** dans un QR. Aucune reconnaissance d'exercice par nom traduit. La charge est la **dixième** position de la ligne `?s=` : un exercice de bibliothèque qui en porte une écrit `""` en neuvième, les positions ne se sautent pas. Et un lien est une entrée **hostile** : tout ce qu'il porte se borne par le haut, dans les parseurs de `core/storage.ts` et jamais ici. | `seance-partage-liens` |
-| `index.html`, `vite.config.ts`, les balises meta/JSON-LD/`og:*`, la police, le sitemap, `llms.txt` | Un élément `data-i18n` doit être **vide** dans la source : son texte français est injecté au build depuis `fr.ts`. `#plan`/`#library` réservent leur hauteur (`:empty`) — c'est ce qui tient le CLS à 0,013 au lieu de 0,43. `--disp` demande `'Archivo'`, jamais `'Archivo Expanded'` (HTTP 400 silencieux). | `seance-seo-html` |
+| `core/share.ts`, `core/ai-plan.ts`, `ui/share.ts`, `ui/webmcp.ts`, `ui/ai-help.ts`, la section `#aiPlan` — bref lien de partage, QR, import, pilotage par une IA | Le payload `?s=` est **dense par conception** (7 exercices : 1120 → 430 caractères, QR de 129 → 77 modules). Ne jamais le « clarifier » en objets à clés explicites. `?plan=` n'entre **jamais** dans un QR. Aucune reconnaissance d'exercice par nom traduit. La charge est la **dixième** position de la ligne `?s=` : un exercice de bibliothèque qui en porte une écrit `""` en neuvième, les positions ne se sautent pas. Et un lien est une entrée **hostile** : tout ce qu'il porte se borne par le haut, dans les parseurs de `core/storage.ts` et jamais ici. L'adresse d'un lien ne se construit plus depuis `location` : `shareBase()` (`platform/native.ts`), sans quoi l'application native produit des liens `https://localhost` que personne ne peut ouvrir. | `seance-partage-liens` |
+| `index.html`, `vite.config.ts`, les balises meta/JSON-LD/`og:*`, la police, le sitemap, `llms.txt` | Un élément `data-i18n` doit être **vide** dans la source : son texte français est injecté au build depuis `fr.ts`. `#plan`/`#library` réservent leur hauteur (`:empty`) — c'est ce qui tient le CLS à 0,013 au lieu de 0,43. `--disp` demande `'Archivo'`, jamais `'Archivo Expanded'` (HTTP 400 silencieux). Les blocs `<!--WEB_ONLY-->` encadrent ce que le build applicatif retire : leurs marqueurs vont par paires, un déséquilibre amputerait le `<head>`. | `seance-seo-html` |
 | `scripts/build-exercise-pages.ts`, `src/content/exercise-details/*`, `exercise-page.css`, `image-prompts.ts` | `dist/exercises/**` est **regénéré à chaque build** : l'éditer à la main est une perte de temps garantie. Le contenu long n'admet que du vérifiable et du stable — jamais d'étude citée, de % d'activation EMG ni de chiffre à fausse précision. Le `slug` est **traduit par langue**, et la fiche ne porte **nulle part** la clé interne : `llms.txt` et la colonne « Fiche » de la page de spec sont les deux seules passerelles du slug vers la clé, toutes deux vérifiées par `check-build.ts`. | `seance-fiches-generees` |
 | un module `src/ui/*.ts`, le `Context`, la taille/place d'un bouton, le schéma persisté | Une saisie chiffrée passe par `renderDerived()` — reconstruire la liste ferait perdre le focus du champ, et c'est aussi pourquoi elle doit réécrire elle-même la valeur qu'elle a plafonnée. `weight` est le seul champ non entier : il a sa propre branche, `NUMERIC_FIELDS` arrondirait 2,5 kg à 3. Changer la forme de ce qui est persisté impose de bumper la version **et** d'écrire la migration. | `seance-ui-module` |
 | `src/cloud/*`, `src/ui/account.ts`, le bouton de compte, la sauvegarde en ligne | La sauvegarde automatique tient à **un seul point d'accroche** : `cloud.notifyLocalChange()` dans `save()` (`ui/app.ts`). Ne jamais la recâbler site par site. Le SDK Firebase n'est chargé **que** sur un clic de connexion ou si `session-hint` dit que la personne était connectée — sinon un visiteur anonyme paierait ~200 Ko pour rien. Le document distant repasse **toujours** par les parseurs de `core/storage.ts` : c'est une entrée non fiable, au même titre qu'un lien `?s=`. **Ce qui se compte, ce sont les écritures** (20 000/jour, tous comptes confondus), pas les octets : d'où le regroupement à 4 s et la poussée conditionnelle au chargement. | *(pas de skill : tout est ici et dans `firestore.rules`)* |
 | `src/data/groups.ts`, l'ajout ou le retrait d'un groupe musculaire | Un id de groupe voyage dans les liens `?s=` : on en **ajoute**, on n'en renomme jamais. Et deux groupes se comparent par `groupsOverlap()`, jamais par `===` — l'arbre a deux étages, « jambes » recouvre « mollets ». | *(pas de skill : tout est dans la section « Les groupes musculaires forment un arbre »)* |
+| `capacitor.config.ts`, `android/`, `ios/`, `scripts/build-app.ts`, `src/platform/native.ts` — bref l'application mobile | Un seul bundle pour les deux cibles : `isNativeApp()` répond à l'exécution, sans importer `@capacitor/core`. Dans le WebView, `location.origin` vaut `https://localhost` — toute adresse publique passe par `shareBase()` ou `siteHref()`. Ni publicité ni analytique dans le binaire (blocs `<!--WEB_ONLY-->`). `cap sync` recopie le bundle, il ne le lie pas. | *(pas de skill : la marche à suivre est dans `docs/portage-mobile.md`)* |
 | `src/data/tenants.ts`, l'ajout d'une salle de sport / d'un sous-domaine | Un exercice de salle est une ligne **perso** (`key: 'custom'` + son nom), jamais une clé de `LIBRARY` — l'y mettre réclamerait 5 pages générées, une figure et du contenu long en 5 langues. Et le sous-domaine doit être ajouté aux **domaines autorisés de Firebase Auth**, sinon la connexion Google échoue en silence. | `add-salle` |
 | une clé de traduction, un texte d'interface | `fr.ts` d'abord : les quatre autres langues deviennent alors des erreurs de compilation. Jamais de pluriel recomposé à la main. | `add-i18n-key` |
 | `src/data/figures.ts`, le champ `motion` de `library.ts`, le bloc `.fig-svg` — bref une figure d'exercice | Le bloc CSS `.fig-svg` existe en **deux copies** (bundle + `exercise-page.css`, hors bundle) et `check-build.ts` échoue si elles divergent. `fill: none` sur `.s` n'est pas cosmétique : un `<path>` sans `fill` est rempli en **noir**, invisible sur le thème sombre et pas sur le clair. Toutes les figures de profil regardent à gauche, et la flèche suit `motion`, pas `mode`. | `seance-figures` |
@@ -503,6 +507,58 @@ sans rien charger.
 
 `docs/decisions-ecartees.md` garde les pistes déjà explorées et rejetées, avec
 la donnée qui les a réfutées — à relire avant d'en reproposer une.
+
+## Le portage mobile : un seul bundle, deux cibles
+
+Les applications Android et iOS sont **le même code**, posé par Capacitor dans
+un `WebView` (`capacitor.config.ts`, `android/`, `ios/`). Rien n'est forké :
+le moteur, le lecteur, l'i18n et le stockage sont ceux du site. La marche à
+suivre complète — ce qui reste à faire, les prérequis, la publication — vit
+dans **`docs/portage-mobile.md`**.
+
+**`isNativeApp()` (`src/platform/native.ts`) est la seule question posée**, et
+elle sonde le global que le runtime natif pose sur la page, **sans importer
+`@capacitor/core`** : le bundle web ne doit pas payer un paquet qui ne répond à
+rien chez lui. Même motif que `host()` dans `ui/webmcp.ts` pour
+`document.modelContext`. Ne pas remplacer ça par deux builds divergents : c'est
+toujours la copie oubliée qui casse.
+
+**Dans le WebView, `location.origin` vaut `https://localhost`.** Toute adresse
+publique se construit donc par `shareBase()` (les liens `?s=`) ou `siteHref()`
+(les fiches, la confidentialité), jamais à la main — un lien de partage bâti
+sur `location` y devient impartageable, dans la fonction « Partager ». Sur le
+web, ces deux fonctions rendent le comportement d'avant, ce qui garde le
+sous-domaine d'une salle.
+
+**Deux choses ne doivent jamais entrer dans le binaire**, et ce n'est pas une
+question de poids : la publicité (AdSense l'interdit dans un WebView, et le
+seuil de 1200 px ne protégeait pas — un iPad Pro en paysage fait 1366 px) et
+l'analytique web (elle obligerait à la déclarer au questionnaire de
+confidentialité de l'App Store, sans le bandeau de consentement, qui voyage
+avec le script publicitaire). D'où les blocs `<!--WEB_ONLY-->` d'`index.html`,
+retirés par `stripWebOnly()` (`vite.config.ts`) quand `CIRKALI_TARGET=app`, et
+les assertions de `scripts/build-app.ts` — qui vérifie ce qu'il a produit,
+comme `check-build.ts`, parce que la CI ne construit pas l'application.
+
+**`dist-app/` n'est pas `dist/`.** Les 317 pages générées, le sitemap,
+`llms.txt` et les fichiers de l'hébergeur n'ont pas d'usage dans un binaire :
+ce sont des surfaces d'indexation, elles vivent sur cirkali.fr et
+l'application y renvoie par des liens absolus.
+
+**Un lien profond est la seule entrée de l'application.** Toute l'importation
+de séance passe par une URL, et dans un binaire la page ne navigue jamais :
+sans `src/platform/deep-links.ts` et les deux fichiers d'association du
+domaine, un lien partagé ouvre le navigateur, donc s'importe dans le *site* —
+un autre stockage. La personne verrait le lien marcher et sa séance
+n'arriverait nulle part.
+
+**La connexion Google ne peut pas passer par `signInWithPopup`** dans une
+application : Google refuse OAuth depuis un WebView embarqué, redirection
+comprise. Elle est désactivée avec sa raison en attendant le module natif.
+
+Deux pièges d'outillage : `npx cap sync` **recopie** le bundle dans les deux
+projets (à relancer après chaque changement du code web, ce n'est pas un lien),
+et la CLI Capacitor exige **Node ≥ 22** là où le reste du dépôt tourne en 18.
 
 ## Déploiement
 

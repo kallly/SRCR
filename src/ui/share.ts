@@ -97,6 +97,8 @@ export interface Share {
    * rien ne s'ecrit sans que l'utilisateur ait choisi une destination.
    */
   proposeImport(shared: SharedPlan): void;
+  /** Import depuis une URL complete (liens profonds de l'application native). */
+  importFromUrl(rawUrl: string): boolean;
 }
 
 /**
@@ -274,24 +276,22 @@ export function createShare(ctx: Context): Share {
     if (!importDialog.open) importDialog.showModal();
   }
 
-  function checkIncomingShare(): void {
-    const params = new URLSearchParams(location.search);
+  /**
+   * Le coeur de l'import par lien, isole de l'endroit d'ou vient le lien.
+   *
+   * Deux appelants aujourd'hui : `checkIncomingShare()` au chargement de la
+   * page (le cas du web), et le pont de liens profonds de l'application
+   * native (`platform/deep-links.ts`), ou l'URL arrive par un evenement
+   * systeme alors que la page, elle, n'a pas bouge.
+   *
+   * Retourne `true` des qu'un parametre de partage etait present, valide ou
+   * non : c'est ce qui permet a l'appelant de savoir qu'il a affaire a un lien
+   * de seance et pas a une adresse quelconque.
+   */
+  function importFromParams(params: URLSearchParams): boolean {
     const encoded = params.get(SHARE_QUERY_PARAM);
     const aiRaw = params.get(AI_QUERY_PARAM);
-    if (encoded === null && aiRaw === null) return;
-
-    // Nettoyage immediat, que le lien soit valide ou non : recharger ou
-    // repartager cette URL ne doit pas reproposer le meme import a l'infini.
-    params.delete(SHARE_QUERY_PARAM);
-    params.delete(AI_QUERY_PARAM);
-    const query = params.toString();
-    // location.hash preserve : un lien partage vers une ancre (#section-plan)
-    // ne doit pas la perdre au nettoyage du parametre de partage.
-    history.replaceState(
-      null,
-      '',
-      location.pathname + (query ? `?${query}` : '') + location.hash,
-    );
+    if (encoded === null && aiRaw === null) return false;
 
     // `?s=` prioritaire : c'est le format que l'app produit elle-meme.
     const shared = encoded !== null ? decodeSharedPlan(encoded) : decodeAiPlan(aiRaw ?? '');
@@ -301,9 +301,48 @@ export function createShare(ctx: Context): Share {
       // plus du tout depuis qu'il peut venir d'une IA a qui on peut demander
       // de recommencer — encore faut-il le savoir.
       openImportError();
-      return;
+      return true;
     }
     openImportDialog(shared);
+    return true;
+  }
+
+  function checkIncomingShare(): void {
+    const params = new URLSearchParams(location.search);
+    if (params.get(SHARE_QUERY_PARAM) === null && params.get(AI_QUERY_PARAM) === null) return;
+
+    // Nettoyage immediat, que le lien soit valide ou non : recharger ou
+    // repartager cette URL ne doit pas reproposer le meme import a l'infini.
+    // Fait AVANT l'import, sur une copie des parametres, pour que l'URL soit
+    // deja propre si l'ouverture de la modale echouait.
+    const kept = new URLSearchParams(location.search);
+    kept.delete(SHARE_QUERY_PARAM);
+    kept.delete(AI_QUERY_PARAM);
+    const query = kept.toString();
+    // location.hash preserve : un lien partage vers une ancre (#section-plan)
+    // ne doit pas la perdre au nettoyage du parametre de partage.
+    history.replaceState(
+      null,
+      '',
+      location.pathname + (query ? `?${query}` : '') + location.hash,
+    );
+
+    importFromParams(params);
+  }
+
+  /**
+   * Import depuis une URL complete, telle que la donne le systeme quand il
+   * ouvre l'application sur un lien cirkali.fr. Rien n'est touche a l'URL
+   * courante : dans l'application, la page ne navigue pas.
+   */
+  function importFromUrl(rawUrl: string): boolean {
+    try {
+      return importFromParams(new URL(rawUrl).searchParams);
+    } catch {
+      // Une URL illisible n'est pas une erreur d'import : c'est une adresse
+      // qui ne nous concerne pas.
+      return false;
+    }
   }
 
   return {
@@ -313,6 +352,7 @@ export function createShare(ctx: Context): Share {
       void openShare().catch(() => {});
     },
     checkIncomingShare,
+    importFromUrl,
     proposeImport: openImportDialog,
   };
 }

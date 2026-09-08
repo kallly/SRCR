@@ -11,7 +11,7 @@ import {
   type State,
 } from '../core/storage';
 import type { ExerciseKey, Locale, PlanItem, SavedPlan, SessionConfig, SessionMode } from '../core/types';
-import { siteHref } from '../platform/native';
+import { isNativeApp, siteHref } from '../platform/native';
 import { requestPersistentStorage } from '../platform/storage';
 import { applyStaticTranslations, byId } from './dom';
 import { createExerciseInfo } from './exercise-info';
@@ -587,6 +587,17 @@ export function createApp(state: State): { render: () => void } {
   if ('modelContext' in navigator || 'modelContext' in document) {
     void import('./webmcp')
       .then((mod) => mod.installWebMcp(ctx, share))
+      .catch(() => {});
+  }
+
+  // Application native : le systeme peut nous ouvrir sur un lien cirkali.fr,
+  // alors que la page, elle, ne navigue jamais. Sans ce pont, l'application
+  // ne peut recevoir aucune seance partagee (voir platform/deep-links.ts).
+  // Meme motif que le bloc ci-dessus : le test precede l'import, pour que le
+  // bundle web ne paie pas un module qui ne le concerne pas.
+  if (isNativeApp()) {
+    void import('../platform/deep-links')
+      .then((mod) => mod.installDeepLinks((url) => share.importFromUrl(url)))
       .catch(() => {});
   }
 

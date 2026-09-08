@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+		Liens universels : un lien https://cirkali.fr/?s=... ouvre CIRKALI au
+		lieu de Safari. Meme raison que l'intent-filter Android — sans ca, une
+		seance partagee s'importerait dans le site et pas dans l'application,
+		qui a son propre stockage.
+
+		iOS ne fait confiance a cette declaration qu'apres avoir lu
+		https://cirkali.fr/.well-known/apple-app-site-association, qui doit
+		porter l'identifiant d'equipe Apple. Ce fichier n'existe pas encore
+		(voir docs/portage-mobile.md) ; en attendant, les liens ouvrent Safari
+		et rien ne casse.
+
+		Ce fichier doit encore etre rattache a la cible dans Xcode
+		(Signing & Capabilities -> Associated Domains) : le .pbxproj ne le
+		reference pas, il n'y avait pas de raison de l'editer a la main depuis
+		une machine sans Xcode.
+	-->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:cirkali.fr</string>
+	</array>
+</dict>
+</plist>

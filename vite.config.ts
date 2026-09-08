@@ -95,6 +95,15 @@ function injectExerciseIndex(): Plugin {
 }
 
 /**
+ * Cible du build : le site, ou le bundle embarque dans l'application native.
+ *
+ * Un seul et meme code source pour les deux — voir src/platform/native.ts,
+ * qui repond a l'execution. Ce drapeau ne sert QU'a ce qui ne peut pas se
+ * decider a l'execution parce que ca ne doit pas etre livre du tout.
+ */
+const APP_TARGET = process.env['CIRKALI_TARGET'] === 'app';
+
+/**
  * Injecte le portillon publicitaire a la place de <!--AD_RAILS-->.
  *
  * Le script lui-meme vit dans src/content/ad-rails.ts, partage avec les pages
@@ -105,6 +114,14 @@ function injectExerciseIndex(): Plugin {
  * Le libelle est en francais ici, comme tout ce que rend `index.html` en
  * statique ; `applyStaticTranslations()` le retraduit au demarrage grace au
  * `data-i18n` que le script pose sur l'element.
+ *
+ * **Rien du tout dans le build applicatif.** AdSense interdit ses annonces
+ * dans le WebView d'une application, et le script sait deja se taire s'il s'y
+ * decouvre (voir ad-rails.ts) — mais ne pas livrer une ligne de code
+ * publicitaire dans le binaire est la version forte de la meme promesse,
+ * celle qui ne depend d'aucun test a l'execution. Meme raisonnement que le
+ * portillon lui-meme, qui ne masque pas un encart deja demande : il ne le
+ * demande pas.
  */
 function injectAdRails(): Plugin {
   const MARKER = '<!--AD_RAILS-->';
@@ -116,8 +133,64 @@ function injectAdRails(): Plugin {
       }
       return html.replace(
         MARKER,
-        adRailsScript(AD_SLOTS.homeLeft, AD_SLOTS.homeRight, i18nFr.ads.label),
+        APP_TARGET
+          ? '<!-- Pas de publicite dans l\'application : politique AdSense. -->'
+          : adRailsScript(AD_SLOTS.homeLeft, AD_SLOTS.homeRight, i18nFr.ads.label),
       );
+    },
+  };
+}
+
+/**
+ * Retire du build applicatif tout ce qu'`index.html` encadre par
+ * `<!--WEB_ONLY-->` … `<!--/WEB_ONLY-->`.
+ *
+ * Aujourd'hui : le chargeur Google Analytics avec son Consent Mode, et la
+ * balise d'identification AdSense. Ce sont les deux seules choses du <head>
+ * qui s'adressent au web et a lui seul.
+ *
+ * Ce n'est pas un scrupule de poids. Une analytique web embarquee dans un
+ * binaire doit etre declaree au questionnaire de confidentialite de l'App
+ * Store et dans la fiche Play — pour une mesure que les deux magasins
+ * fournissent deja — et son bandeau de consentement voyage avec le script
+ * publicitaire, absent de l'application par obligation. On livrerait donc un
+ * traqueur sans le moyen d'y consentir.
+ *
+ * Un marqueur plutot qu'une expression reguliere sur le contenu des scripts :
+ * meme convention que `<!--AD_RAILS-->` et `<!--EXERCISE_INDEX-->`, et surtout
+ * la frontiere reste lisible dans `index.html`, la ou quelqu'un ajoutera le
+ * prochain script.
+ */
+function stripWebOnly(): Plugin {
+  const OPEN = '<!--WEB_ONLY-->';
+  const CLOSE = '<!--/WEB_ONLY-->';
+  // Le `(?!OPEN)` interdit a une region d'en avaler une autre. Sans lui, une
+  // marque fermante mal ecrite faisait retomber le `*?` sur la fermante
+  // SUIVANTE et emportait tout ce qui separait les deux blocs — le viewport,
+  // la meta description, les preuves de propriete. Piege verifie : le build
+  // reussissait, et le head y perdait la moitie de ses balises en silence.
+  const REGION = new RegExp(
+    `[ \\t]*${OPEN}(?:(?!${OPEN})[\\s\\S])*?${CLOSE}\\n?`,
+    'g',
+  );
+
+  const count = (html: string, needle: string): number => html.split(needle).length - 1;
+
+  return {
+    name: 'strip-web-only',
+    transformIndexHtml(html) {
+      if (!APP_TARGET) return html;
+
+      const opens = count(html, OPEN);
+      const closes = count(html, CLOSE);
+      if (opens === 0 || opens !== closes) {
+        throw new Error(
+          `index.html : ${opens} marqueur(s) ${OPEN} pour ${closes} ${CLOSE}. ` +
+            `Sans paires equilibrees, le build applicatif embarquerait ` +
+            `l'analytique web ou amputerait le <head>.`,
+        );
+      }
+      return html.replace(REGION, '');
     },
   };
 }
@@ -372,6 +445,7 @@ export default defineConfig({
   base: './',
   plugins: [
     stampBuildDate(),
+    stripWebOnly(),
     injectExerciseIndex(),
     fillStaticTranslations(),
     injectAdRails(),

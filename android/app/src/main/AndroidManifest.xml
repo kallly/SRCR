@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation|density"
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBarLaunch"
+            android:launchMode="singleTask"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!--
+                Liens d'application : un lien https://cirkali.fr/?s=... ouvre
+                CIRKALI au lieu du navigateur. Sans ca, une seance partagee
+                s'importerait dans le SITE et pas dans l'application, qui a son
+                propre stockage — le lien aurait l'air de marcher et la seance
+                n'arriverait nulle part (voir src/platform/deep-links.ts).
+
+                `autoVerify` demande a Android de verifier tout seul que le
+                domaine nous reconnait, en lisant
+                https://cirkali.fr/.well-known/assetlinks.json. Ce fichier
+                n'existe pas encore : il reclame l'empreinte SHA-256 de la cle
+                de signature, qui n'existe pas avant la premiere signature
+                (voir docs/portage-mobile.md). Tant qu'il manque, la
+                verification echoue et les liens continuent simplement d'ouvrir
+                le navigateur. Rien ne casse.
+            -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="cirkali.fr" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+
+    <!-- Permissions -->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>

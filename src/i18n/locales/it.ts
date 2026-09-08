@@ -61,6 +61,8 @@ export const it: Translations = {
     statusError: 'sincronizzazione non riuscita, sedute conservate qui',
     statusTooLarge: 'troppe sedute per il salvataggio online',
     storageNotice: 'Questo browser cancella le sedute dopo 7 giorni senza visite. Un account le conserva.',
+    nativeUnavailable:
+      'Il backup online non è ancora disponibile nell’app. Le tue sedute restano su questo dispositivo; su cirkali.fr, l’accesso con Google funziona normalmente.',
     signInError: 'Accesso non riuscito. Riprova tra un istante.',
     merged: {
       one: '{count} seduta recuperata dal tuo account',

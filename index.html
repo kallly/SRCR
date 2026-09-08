@@ -11,6 +11,16 @@
     -->
     <meta charset="utf-8" />
 
+    <!--WEB_ONLY-->
+    <!--
+      Ce bloc, et tout ce qui est encadre par <!==WEB_ONLY==>, n'existe que
+      sur le site : `stripWebOnly()` (vite.config.ts) le retire du build
+      applicatif. L'analytique web n'a rien a faire dans un binaire — elle
+      obligerait a la declarer au questionnaire de confidentialite de
+      l'App Store, pour une mesure que les magasins fournissent deja, et
+      son bandeau de consentement voyage avec le script publicitaire, lui
+      aussi absent de l'application.
+    -->
     <!--
       Google tag (gtag.js), charge APRES l'affichage et non pendant.
 
@@ -95,6 +105,7 @@
         else setTimeout(start, 1500);
       });
     </script>
+    <!--/WEB_ONLY-->
 
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <!-- ~155 caracteres : au-dela, Google tronque dans ses resultats. -->
@@ -110,7 +121,9 @@
       C'est une balise d'identification, pas un chargeur : elle ne declenche
       aucune requete, y compris sur mobile ou l'on n'affiche rien.
     -->
+    <!--WEB_ONLY-->
     <meta name="google-adsense-account" content="ca-pub-2139584209201341" />
+    <!--/WEB_ONLY-->
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#0e1210" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f5f4ee" media="(prefers-color-scheme: light)" />
