@@ -662,6 +662,62 @@ check(
   /\/sw\.js\s*\n\s*Cache-Control:[^\n]*max-age=0/.test(headers),
 );
 
+console.log("\nLiens d'application");
+
+// `/.well-known/assetlinks.json` est ce qui fait qu'un lien cirkali.fr ouvre
+// l'application Android au lieu du navigateur. C'est un fichier que SEUL LE
+// SITE peut servir — l'application ne peut pas se declarer elle-meme, c'est
+// tout le principe — et il vit donc dans `public/`, loin du reste du portage
+// mobile. Un chemin en `.well-known` commence par un point : c'est exactement
+// le genre de dossier qu'un outil de copie saute en silence.
+//
+// Rien ne casse s'il disparait : les liens se remettent simplement a ouvrir le
+// navigateur, donc a importer la seance dans le SITE et pas dans
+// l'application. Personne ne le signalerait.
+const assetLinksPath = join(DIST, '.well-known', 'assetlinks.json');
+check('dist/.well-known/assetlinks.json est livre', existsSync(assetLinksPath));
+
+if (existsSync(assetLinksPath)) {
+  type AssetLink = {
+    relation?: string[];
+    target?: { namespace?: string; package_name?: string; sha256_cert_fingerprints?: string[] };
+  };
+  let links: AssetLink[] = [];
+  try {
+    links = JSON.parse(readFileSync(assetLinksPath, 'utf8')) as AssetLink[];
+  } catch {
+    links = [];
+  }
+  const android = links.filter((l) => l.target?.namespace === 'android_app');
+  check(
+    'il declare le paquet fr.cirkali.app',
+    android.some((l) => l.target?.package_name === 'fr.cirkali.app'),
+  );
+  // Une empreinte SHA-256 s'ecrit en 32 octets separes par des deux-points, en
+  // majuscules. Android rejette silencieusement toute autre forme — et « rejette
+  // silencieusement » veut dire : les liens ouvrent le navigateur, sans erreur
+  // nulle part.
+  const fingerprints = android.flatMap((l) => l.target?.sha256_cert_fingerprints ?? []);
+  check(
+    'chaque empreinte est un SHA-256 bien forme',
+    fingerprints.length > 0 && fingerprints.every((f) => /^([0-9A-F]{2}:){31}[0-9A-F]{2}$/.test(f)),
+    fingerprints.filter((f) => !/^([0-9A-F]{2}:){31}[0-9A-F]{2}$/.test(f)).join(', '),
+  );
+  check(
+    'la relation demandee est bien handle_all_urls',
+    android.every((l) => (l.relation ?? []).includes('delegate_permission/common.handle_all_urls')),
+  );
+}
+
+// Un `Disallow` sur `.well-known` n'empecherait pas Android de lire le
+// fichier, mais c'est le meme dossier qui portera l'association iOS et, un
+// jour, d'autres protocoles : le bloquer aux robots n'a aucun benefice et se
+// paie au premier qui en depend.
+check(
+  'robots.txt ne bloque pas /.well-known/',
+  !/^\s*Disallow:\s*\/\.well-known/im.test(readFileSync(join(DIST, 'robots.txt'), 'utf8')),
+);
+
 console.log('\nOrigine canonique');
 
 // L'origine est ecrite a deux endroits que rien ne relie : `SITE_URL`

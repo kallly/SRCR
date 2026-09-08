@@ -50,6 +50,7 @@ const WEB_ONLY = [
   'icon-512.png',
   'icon-maskable-512.png',
   'og-image.png', // apercu de partage social
+  '.well-known', // association de domaine, servie par le site pas par l'app
 ];
 
 console.log('Build applicatif (CIRKALI_TARGET=app) vers dist-app/\n');

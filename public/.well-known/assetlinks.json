@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "fr.cirkali.app",
+      "sha256_cert_fingerprints": [
+        "7E:A2:E4:93:87:5B:3F:7B:9C:21:BE:49:2A:BD:29:38:23:41:8D:D9:2D:BF:FC:B2:FB:C4:97:12:32:6B:48:EE"
+      ]
+    }
+  }
+]

@@ -559,10 +559,19 @@ bord-à-bord par obligation : Android 15 l'impose au-delà de `targetSdk` 35.
 
 **Un lien profond est la seule entrée de l'application.** Toute l'importation
 de séance passe par une URL, et dans un binaire la page ne navigue jamais :
-sans `src/platform/deep-links.ts` et les deux fichiers d'association du
-domaine, un lien partagé ouvre le navigateur, donc s'importe dans le *site* —
-un autre stockage. La personne verrait le lien marcher et sa séance
-n'arriverait nulle part.
+sans `src/platform/deep-links.ts` et les fichiers d'association du domaine, un
+lien partagé ouvre le navigateur, donc s'importe dans le *site* — un autre
+stockage. La personne verrait le lien marcher et sa séance n'arriverait nulle
+part.
+
+**C'est le SITE qui autorise l'application, jamais l'inverse.**
+`public/.well-known/assetlinks.json` (Android, et un jour son équivalent
+Apple) vit donc dans `public/` et se déploie avec cirkali.fr — un dossier qui
+commence par un point, exactement le genre qu'un outil de copie saute en
+silence. Il déclare l'empreinte **SHA-256** de la clé qui signe l'APK ; si
+elle ne correspond pas, Android échoue la vérification **sans le dire** et les
+liens rouvrent simplement le navigateur. D'où les cinq assertions de
+`check-build.ts` et la comparaison faite par le job Android avant de compiler.
 
 **La connexion Google ne peut pas passer par `signInWithPopup`** dans une
 application : Google refuse OAuth depuis un WebView embarqué, redirection

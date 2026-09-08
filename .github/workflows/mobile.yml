@@ -77,7 +77,7 @@ jobs:
       # exactement le genre de panne qu'on ne diagnostique qu'en sachant
       # d'avance ou regarder — d'ou cette verification, qui la transforme en
       # echec de build explicite.
-      - name: Verifier l'empreinte de signature declaree a Firebase
+      - name: Verifier les empreintes de signature declarees
         run: |
           declared=$(jq -r '.client[0].oauth_client[] | select(.client_type == 1) | .android_info.certificate_hash' \
             android/app/google-services.json | tr 'A-Z' 'a-z')
@@ -92,7 +92,23 @@ jobs:
             echo "::error::Empreinte declaree a Firebase ($declared) differente de celle de android/debug.keystore ($actual). La connexion Google echouera par un DEVELOPER_ERROR."
             exit 1
           fi
-          echo "Empreinte concordante : $actual"
+          echo "Empreinte SHA-1 concordante : $actual"
+
+          # Meme piege, autre fichier : `public/.well-known/assetlinks.json`
+          # declare l'empreinte SHA-256 qui autorise l'application a ouvrir les
+          # liens cirkali.fr. Si elle ne correspond pas a la cle qui signe
+          # l'APK, Android echoue la verification EN SILENCE et les liens
+          # continuent d'ouvrir le navigateur — sans erreur nulle part.
+          declared256=$(jq -r '.[] | select(.target.namespace == "android_app") | .target.sha256_cert_fingerprints[]' \
+            public/.well-known/assetlinks.json | tr -d ':' | tr 'A-Z' 'a-z')
+          actual256=$(openssl pkcs12 -in android/debug.keystore -passin pass:android -nokeys -clcerts \
+            | openssl x509 -noout -fingerprint -sha256 \
+            | cut -d= -f2 | tr -d ':' | tr 'A-Z' 'a-z')
+          if ! echo "$declared256" | grep -qx "$actual256"; then
+            echo "::error::assetlinks.json ne declare pas l'empreinte SHA-256 de android/debug.keystore ($actual256). Les liens cirkali.fr continueront d'ouvrir le navigateur au lieu de l'application."
+            exit 1
+          fi
+          echo "Empreinte SHA-256 presente dans assetlinks.json"
 
       - run: ./gradlew assembleDebug --no-daemon
         working-directory: android

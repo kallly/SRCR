@@ -115,24 +115,25 @@ les déclarations natives (`android/app/src/main/AndroidManifest.xml`,
 `ios/App/App/App.entitlements`). Il manque les deux fichiers que **cirkali.fr**
 doit publier pour reconnaître l'application.
 
-### Android — `public/.well-known/assetlinks.json`
+### Android — fait, mais inerte jusqu'au déploiement
 
-Il faut l'empreinte SHA-256 de la clé qui signe l'application. Avec la
-signature par Google Play (recommandée), elle se lit dans la console Play →
-Configuration → Intégrité de l'application → certificat de signature.
+`public/.well-known/assetlinks.json` déclare l'empreinte **SHA-256** de
+`android/debug.keystore`, et le job Android refuse de compiler si les deux
+divergent — Android échoue la vérification **en silence**, sans erreur nulle
+part, et les liens se contentent de continuer d'ouvrir le navigateur.
 
-```json
-[
-  {
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "fr.cirkali.app",
-      "sha256_cert_fingerprints": ["AA:BB:…:FF"]
-    }
-  }
-]
-```
+**Rien ne change tant que le fichier n'est pas servi par cirkali.fr.** C'est le
+site qui autorise l'application, jamais l'inverse : tant que la branche n'est
+pas fusionnée et déployée, `https://cirkali.fr/.well-known/assetlinks.json`
+répond 404 et Android n'a personne à croire.
+
+Pour tester **avant** de déployer : Réglages → Applications → CIRKALI → Ouvrir
+par défaut → Ajouter un lien, et cocher cirkali.fr. C'est l'échappatoire
+manuelle qu'Android laisse quand la vérification automatique échoue.
+
+Le jour du Play Store, ajouter l'empreinte SHA-256 de la clé de release dans
+le même tableau `sha256_cert_fingerprints` — il en accepte plusieurs — et
+retirer celle de débogage, dont le keystore est public.
 
 ### iOS — `public/.well-known/apple-app-site-association`
 
