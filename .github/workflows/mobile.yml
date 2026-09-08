@@ -104,18 +104,37 @@ jobs:
       # not found » sec.
       - run: xcodebuild -list -project ios/App/App.xcodeproj
 
-      # `-target` et non `-scheme` : Xcode ne cree le schema qu'a la premiere
-      # ouverture du projet, et il atterrit dans `xcuserdata/`, qui n'est pas
-      # versionne. Sur un runner, aucun schema n'existe donc.
+      # `-scheme` et non `-target` : une cible ne construit pas les produits
+      # Swift Package Manager, une action de build de schema si. Tant que le
+      # projet n'avait qu'un paquet local trivial, `-target` suffisait ; il a
+      # cesse de suffire des l'arrivee de Firebase et Google Sign-In. Le schema
+      # est versionne (ios/App/App.xcodeproj/xcshareddata/), parce qu'Xcode ne
+      # le cree qu'a la premiere ouverture du projet et le range dans
+      # `xcuserdata/`, absent d'un runner.
       #
       # SDK simulateur et signature desactivee : compiler pour un appareil
       # reel exigerait un certificat et un profil de provisionnement, donc le
       # compte developpeur Apple. Ce n'est pas le but ici.
-      - run: |
+      - name: Compiler pour le simulateur
+        run: |
+          set -o pipefail
           xcodebuild build \
             -project ios/App/App.xcodeproj \
-            -target App \
+            -scheme App \
             -sdk iphonesimulator \
             -configuration Debug \
             CODE_SIGNING_ALLOWED=NO \
-            CODE_SIGNING_REQUIRED=NO
+            CODE_SIGNING_REQUIRED=NO \
+            2>&1 | tee /tmp/xcodebuild.log
+
+      # Un echec de xcodebuild ne laisse dans l'interface qu'un « exit code
+      # 65 », et le journal complet n'est telechargeable qu'avec les droits
+      # d'administration du depot. Les annotations, elles, sont publiques :
+      # on y recopie les lignes d'erreur, pour que la cause se lise sans
+      # ouvrir le journal.
+      - name: Remonter les erreurs xcodebuild
+        if: failure()
+        run: |
+          grep -E "(error:|fatal error|The following build commands failed)" /tmp/xcodebuild.log \
+            | tail -20 \
+            | while IFS= read -r line; do echo "::error::${line}"; done
