@@ -59,6 +59,8 @@ export const en: Translations = {
     statusSyncing: 'syncing…',
     statusOffline: 'offline, will resume when back online',
     statusError: 'sync unavailable, sessions kept here',
+    statusTooLarge: 'too many sessions for online backup',
+    safariNotice: 'Safari erases sessions after 7 days without a visit. An account keeps them.',
     signInError: 'Sign-in failed. Try again in a moment.',
     merged: {
       one: '{count} session restored from your account',
@@ -192,7 +194,6 @@ export const en: Translations = {
     plan: 'Running order',
     library: 'Library',
     allGuides: 'All exercise guides',
-    quicknav: 'Sections',
   },
 
   library: {

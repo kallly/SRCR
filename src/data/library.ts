@@ -128,17 +128,6 @@ export const LIBRARY: readonly LibraryEntry[] = [
   { key: 'rowingMachine', group: 'cardio', category: 'machine', mode: 'time', motion: 'move', sets: 1, reps: 10, seconds: 900, rest: 0 },
 ];
 
-/** Seance type proposee au tout premier lancement, avant toute sauvegarde. */
-export const DEFAULT_ORDER: readonly LibraryEntry['key'][] = [
-  'inclined',
-  'chairsquat',
-  'calf',
-  'wallsit',
-  'rotation',
-  'deadbug',
-  'plank',
-];
-
 /**
  * Reglages de depart d'un exercice saisi par l'utilisateur.
  *

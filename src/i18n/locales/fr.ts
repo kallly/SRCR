@@ -73,6 +73,15 @@ export const fr = {
     statusSyncing: 'synchronisation…',
     statusOffline: 'hors ligne, reprise au retour du réseau',
     statusError: 'synchronisation impossible, séances gardées ici',
+    statusTooLarge: 'trop de séances pour la sauvegarde en ligne',
+    /**
+     * Affichee seulement sur Safari et seulement deconnecte (ui/account.ts) :
+     * c'est le seul navigateur qui efface le stockage d'un site non visite
+     * depuis sept jours, et la seule parade depuis la page est de le dire.
+     * Deux lignes maximum sur un ecran etroit — au-dela, la rangee grandit et
+     * decale la page.
+     */
+    safariNotice: 'Safari efface les séances après 7 jours sans visite. Un compte les garde.',
     signInError: 'Connexion impossible. Réessayez dans un instant.',
     merged: {
       one: '{count} séance récupérée depuis votre compte',
@@ -219,8 +228,6 @@ export const fr = {
     plan: 'Déroulé',
     library: 'Bibliothèque',
     allGuides: 'Toutes les fiches d’exercice',
-    /** Nom accessible du bloc de liens de navigation rapide (`nav.quicknav`). */
-    quicknav: 'Sections',
   },
 
   library: {

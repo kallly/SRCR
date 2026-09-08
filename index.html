@@ -213,8 +213,8 @@
       <header class="head">
         <!--
           Titre a gauche, compte + aide IA a droite, SUR LA MEME RANGEE : la
-          langue n'occupant plus cette place (elle est descendue au niveau des
-          liens d'ancrage, voir `.quicknav-row` juste apres), il reste assez
+          langue n'occupant plus cette place (elle est descendue sur la
+          rangee suivante, voir `.quicknav-row` juste apres), il reste assez
           de place pour "CIRKALI" a cote des deux boutons — ce qui ne passait
           pas quand les trois commandes partageaient ce coin a elles seules.
         -->
@@ -257,14 +257,18 @@
         </div>
       </header>
       <!--
-        La langue partage sa rangee avec les liens d'ancrage : a droite d'eux,
-        dans l'espace qui restait sinon vide entre la tagline et « Séances ».
+        La langue occupe seule cette rangee, a droite, dans l'espace qui
+        restait sinon vide entre la tagline et « Séances ».
+
+        #storageNotice ne porte PAS de data-i18n et reste vide dans la source :
+        son texte n'existe que sur Safari et seulement deconnecte (voir
+        ui/account.ts). Ce n'est donc pas du chrome statique, et un robot ne
+        doit pas lire un avertissement qui ne le concerne pas. Il tient dans la
+        hauteur deja imposee par le selecteur de langue (44px), donc son
+        apparition ne decale rien.
       -->
       <div class="quicknav-row">
-        <nav class="quicknav" aria-label="" data-i18n-aria-label="section.quicknav">
-          <a href="#section-plan" data-i18n="section.plan"></a>
-          <a href="#section-library" data-i18n="section.library"></a>
-        </nav>
+        <p class="storage-notice" id="storageNotice" hidden></p>
         <div class="lang">
           <select id="locale" aria-label="" data-i18n-aria-label="lang.label"></select>
         </div>

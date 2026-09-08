@@ -145,14 +145,18 @@
   renommer/supprimer) qui tiennent sur deux rangees en mobile (44*2 + 8 de
   gouttiere), + le padding-bottom et la bordure du separateur ci-dessus
   (19px) — box-sizing: border-box oblige, `min-height` couvre le rendu FINAL
-  (padding+bordure+contenu), pas le contenu seul.
+  (padding+bordure+contenu), pas le contenu seul. Soit 169px.
 
-  `.plan-note` n'y entre pas : une seance CIRKALI n'est jamais la seance
-  active au chargement (elle n'est nulle part enregistree), donc la note
-  n'existe qu'apres un clic — bien apres la mesure du CLS.
+  S'y ajoute `.plan-note` (~53px sur mobile : badge et phrase sur deux
+  lignes, plus sa marge). Elle est reservee parce qu'un stockage vide ouvre
+  desormais un modele CIRKALI — c'est l'etat de toute premiere visite, et
+  celui que voit chaque mesure de performance, qui part toujours d'un profil
+  neuf. Contrepartie assumee : quelqu'un qui revient sur SES seances n'a pas
+  cette note, et son bloc remonte donc d'environ cette hauteur au premier
+  rendu. Estimation a verifier en reseau bride, comme le 169px d'origine.
 */
 #planSwitcher:empty {
-  min-height: 169px;
+  min-height: 222px;
 }
 
 /* formulaire inline : remplace un window.prompt() natif (ui/inline-input.ts) */

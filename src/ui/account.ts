@@ -1,4 +1,5 @@
 import { formatTime, t } from '../i18n';
+import { evictsIdleStorage } from '../platform/storage';
 import type { Context } from './app';
 import { byId, el, wireDialogClose } from './dom';
 
@@ -21,6 +22,11 @@ export function createAccount(ctx: Context): { render: () => void } {
   const signInBtn = byId<HTMLButtonElement>('accountSignIn');
   const signOutBtn = byId<HTMLButtonElement>('accountSignOut');
   const errorNote = byId('accountError');
+  const storageNotice = byId('storageNotice');
+
+  // Evalue une fois : le navigateur ne change pas en cours de route, et ce
+  // test lit l'UA — inutile de le refaire a chaque rendu.
+  const fragileStorage = evictsIdleStorage();
 
   wireDialogClose(dialog, byId('accountClose'));
 
@@ -55,6 +61,15 @@ export function createAccount(ctx: Context): { render: () => void } {
 
   function render(): void {
     const user = ctx.cloud.user();
+
+    // Safari efface le stockage d'un site non visite depuis sept jours, et
+    // aucune API ne permet de s'y soustraire (voir platform/storage.ts) : la
+    // seule chose a faire est de le dire, la ou c'est vrai et tant qu'aucun
+    // compte ne met les seances a l'abri. Texte pose ici et non dans
+    // index.html : il est conditionnel, donc transitoire par nature.
+    const warn = user === null && fragileStorage;
+    storageNotice.textContent = warn ? t('account.safariNotice') : '';
+    storageNotice.hidden = !warn;
 
     // Le contenu du bouton d'en-tete est du texte transitoire, jamais du
     // markup statique : l'initiale depend du compte connecte. Sa TAILLE, elle,
@@ -96,9 +111,11 @@ export function createAccount(ctx: Context): { render: () => void } {
           ? t('account.statusOffline')
           : status === 'error'
             ? t('account.statusError')
-            : syncedAt === null
-              ? t('account.neverSynced')
-              : t('account.lastSync', { time: formatTime(syncedAt) });
+            : status === 'too-large'
+              ? t('account.statusTooLarge')
+              : syncedAt === null
+                ? t('account.neverSynced')
+                : t('account.lastSync', { time: formatTime(syncedAt) });
   }
 
   return { render };

@@ -10,8 +10,18 @@ import { rememberSignedIn, wasSignedIn } from './session-hint';
  * `offline`  : une ecriture attend le retour du reseau (rien n'est perdu :
  *              le localStorage a deja ecrit).
  * `error`    : Firestore refuse (regles, quota) — meme filet local.
+ * `too-large`: l'etat depasse le plafond d'un document Firestore. Distinct de
+ *              `error` parce qu'il ne passera pas tout seul : reessayer eternellement
+ *              n'y changerait rien, seule la personne peut alleger ses seances.
  */
-export type SyncStatus = 'off' | 'signing-in' | 'syncing' | 'synced' | 'offline' | 'error';
+export type SyncStatus =
+  | 'off'
+  | 'signing-in'
+  | 'syncing'
+  | 'synced'
+  | 'offline'
+  | 'error'
+  | 'too-large';
 
 export interface CloudUser {
   name: string;
@@ -42,8 +52,29 @@ export interface CloudSync {
  * ecritures Firestore facturees pour un seul geste. Comme on ecrit toujours
  * l'etat COMPLET et courant (jamais un delta), regrouper est sans risque : la
  * derniere ecriture contient tout.
+ *
+ * Quatre secondes et non une et demie : le quota gratuit se compte en
+ * ECRITURES par jour (20 000, tous comptes confondus), pas en octets — et une
+ * seance se construit par gestes espaces de deux a trois secondes (ajouter un
+ * exercice, regler ses series, monter une ligne). A 1,5 s chacun de ces gestes
+ * payait sa propre ecriture ; a 4 s ils se regroupent. Rien n'est risque au
+ * passage : `flush()` force le depart au masquage de l'onglet, a la fermeture,
+ * au demarrage d'une seance et a la deconnexion.
  */
-const PUSH_DEBOUNCE_MS = 1500;
+const PUSH_DEBOUNCE_MS = 4000;
+
+/**
+ * Plafond d'un document Firestore : 1 Mio, limite dure du service. Au-dela,
+ * `setDoc` echoue definitivement — sans ce garde-fou, chaque modification
+ * relancerait une ecriture vouee a etre refusee, et l'interface afficherait
+ * « synchronisation impossible » sans jamais dire pourquoi.
+ *
+ * Mesure faite sur le JSON, qui surestime d'environ 10 % ce que Firestore
+ * compte vraiment (noms de champs + valeurs, sans guillemets ni virgules) : on
+ * refuse donc vers 90 % du plafond reel, et cette marge est voulue. Pour fixer
+ * l'ordre de grandeur : ~700 seances de douze lignes.
+ */
+const MAX_DOC_BYTES = 1024 * 1024;
 
 /** Schema des donnees ecrites dans le document distant (cf. core/storage.ts). */
 const REMOTE_SCHEMA = 6;
@@ -94,14 +125,15 @@ export function createCloudSync(host: SyncHost): CloudSync {
     if (typeof raw !== 'object' || raw === null) return null;
     const source = raw as Record<string, unknown>;
     const plans = parsePlansList(source['plans']);
+    // `null` = champ `plans` illisible, donc document inexploitable. Un tableau
+    // VIDE est en revanche legitime : quelqu'un peut n'avoir aucune seance a
+    // soi et n'utiliser que les modeles CIRKALI.
     if (!plans) return null;
-    const first = plans[0];
-    if (!first) return null;
     const activePlanId =
       typeof source['activePlanId'] === 'string' &&
       plans.some((plan) => plan.id === source['activePlanId'])
         ? source['activePlanId']
-        : first.id;
+        : (plans[0]?.id ?? '');
     return {
       plans,
       activePlanId,
@@ -112,6 +144,15 @@ export function createCloudSync(host: SyncHost): CloudSync {
       // pretexte que SA propre horloge la juge trop ancienne.
       deleted: parseDeleted(source['deleted'], Date.now(), false),
     };
+  }
+
+  /**
+   * De quoi comparer deux etats sans tenir compte de l'habillage du document
+   * (`schema`, `clientUpdatedAt`, `updatedAt`), qui change a chaque ecriture et
+   * rendrait toute comparaison vraie.
+   */
+  function fingerprint(state: State): string {
+    return JSON.stringify([state.plans, state.activePlanId, state.history, state.deleted]);
   }
 
   function snapshot(state: State): Record<string, unknown> {
@@ -146,10 +187,18 @@ export function createCloudSync(host: SyncHost): CloudSync {
     pending = false;
     notify('syncing');
     try {
+      const payload = snapshot(host.state());
+      // Avant le reseau : une ecriture au-dessus du plafond serait refusee de
+      // toute facon, et ce refus-la ne se repare pas tout seul.
+      if (new TextEncoder().encode(JSON.stringify(payload)).length > MAX_DOC_BYTES) {
+        if (uid === currentUid) notify('too-large');
+        report(new Error(`etat trop volumineux pour un document Firestore (> ${MAX_DOC_BYTES} o)`));
+        return;
+      }
       const sdk = await loadSdk();
       const { doc, setDoc, serverTimestamp } = await import('firebase/firestore');
       await setDoc(doc(sdk.db, 'users', currentUid), {
-        ...snapshot(host.state()),
+        ...payload,
         updatedAt: serverTimestamp(),
       });
       // Le compte a pu changer PENDANT l'ecriture (deconnexion, reconnexion sur
@@ -217,6 +266,22 @@ export function createCloudSync(host: SyncHost): CloudSync {
         host.adopt(merged);
         const added = merged.plans.filter((plan) => !before.has(plan.id)).length;
         if (added > 0) host.onPulled(added);
+
+        // Ne rien ecrire quand la fusion n'apporte rien au distant : c'etait
+        // l'ecriture la plus chere du systeme (une par chargement, par compte,
+        // meme sans la moindre modification) pour un document strictement
+        // identique a celui qu'on vient de lire.
+        //
+        // La comparaison porte sur l'etat FUSIONNE, jamais sur « rien n'a
+        // change localement » : une modification faite hors ligne puis perdue
+        // avec l'onglet n'a justement pas ete poussee, et c'est la fusion qui
+        // la fait ressortir ici — la comparer au distant est ce qui garantit
+        // qu'elle repart.
+        if (!pending && fingerprint(merged) === fingerprint(remote)) {
+          lastSyncedAt = Date.now();
+          notify('synced');
+          return;
+        }
       }
       await push();
     } catch (error) {

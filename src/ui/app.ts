@@ -1,7 +1,7 @@
 import { createCloudSync, type CloudSync } from '../cloud/sync';
 import { getLocale, onLocaleChange, setLocale as applyLocale, t } from '../i18n';
 import { createCustom, createRest, presetName, presetToPlan, uid } from '../core/plan';
-import { findPresetByPlanId, type PresetPlan } from '../data/presets';
+import { DEFAULT_PRESET, findPresetByPlanId, type PresetPlan } from '../data/presets';
 import {
   DEFAULT_SESSION_CONFIG,
   forgetPlanFingerprint,
@@ -11,6 +11,7 @@ import {
   type State,
 } from '../core/storage';
 import type { ExerciseKey, Locale, PlanItem, SavedPlan, SessionConfig, SessionMode } from '../core/types';
+import { requestPersistentStorage } from '../platform/storage';
 import { applyStaticTranslations, byId } from './dom';
 import { createExerciseInfo } from './exercise-info';
 import { createGuidesIndex } from './guides-index';
@@ -42,10 +43,12 @@ const ABOUT_COLLAPSE_BELOW = '(max-width: 759px)';
  * Ce que les modules d'interface partagent : l'etat, la persistance et les
  * deux niveaux de rendu.
  *
- * `state.plans` contient plusieurs seances sauvegardees ; `activePlan()` est
- * l'accesseur a utiliser partout ailleurs plutot que de re-chercher
- * `state.plans.find(...)` a chaque fois (invariant garanti : il y a toujours
- * au moins une seance).
+ * `state.plans` contient les seances de la personne — et PEUT etre vide : une
+ * premiere visite n'ecrit rien, elle s'ouvre sur un modele CIRKALI.
+ * `activePlan()` est l'accesseur a utiliser partout ailleurs plutot que de
+ * re-chercher `state.plans.find(...)` a chaque fois ; l'invariant qu'il tient
+ * n'est pas « il y a au moins une seance enregistree » mais « il y a toujours
+ * une seance AFFICHEE », a soi ou modele (voir `ensureActive()`).
  */
 export interface Context {
   state: State;
@@ -171,6 +174,45 @@ export function createApp(state: State): { render: () => void } {
     return draft !== null && presetFingerprint(draft.plan) !== draft.pristine;
   }
 
+  /**
+   * La seance a afficher : le modele ouvert s'il y en a un, sinon la seance
+   * active de la personne. `undefined` seulement le temps qu'`ensureActive()`
+   * tranche.
+   *
+   * Fonction a part et non deux lignes dans `activePlan()` : TypeScript garde
+   * le retrecissement d'un `let` capture (`draft`) a travers un appel qui le
+   * reaffecte, et lirait donc `draft` comme definitivement `null` juste apres
+   * `ensureActive()`.
+   */
+  function currentPlan(): SavedPlan | undefined {
+    if (draft) return draft.plan;
+    return ctx.state.plans.find((plan) => plan.id === ctx.state.activePlanId);
+  }
+
+  /**
+   * Garantit qu'il y a toujours une seance a l'ecran.
+   *
+   * Remplace l'ancien invariant « `loadState()` fabrique une seance type pour
+   * que `plans` ne soit jamais vide » : plus rien n'est fabrique ni ecrit, on
+   * ouvre le modele d'accueil (`DEFAULT_PRESET`). C'est ce qui rend une
+   * premiere visite gratuite en stockage, et ce qui a permis de retirer de
+   * `cloud/merge.ts` la reconnaissance des seances types dupliquees d'un
+   * appareil a l'autre : plus aucun appareil n'en cree.
+   *
+   * A appeler apres tout ce qui peut faire disparaitre la seance active :
+   * demarrage, suppression, fusion avec le nuage.
+   */
+  function ensureActive(): void {
+    if (draft) return;
+    if (ctx.state.plans.some((plan) => plan.id === ctx.state.activePlanId)) return;
+    const fallback = ctx.state.plans[0];
+    if (fallback) {
+      ctx.state.activePlanId = fallback.id;
+      return;
+    }
+    openPreset(DEFAULT_PRESET);
+  }
+
   // Cree avant le Context, mais ses rappels (`state`, `adopt`...) ne sont
   // invoques qu'apres coup, sur un evenement reseau : ils peuvent donc
   // referencer `ctx` en toute securite.
@@ -188,10 +230,14 @@ export function createApp(state: State): { render: () => void } {
       // la derniere seance de la personne : on y revient telle quelle en
       // sortant du modele, et le document distant n'a jamais a connaitre un id
       // de modele.
-      if (draft) return draft.plan;
-      const found = ctx.state.plans.find((plan) => plan.id === ctx.state.activePlanId);
-      // Invariant garanti par `loadState()` : `plans` n'est jamais vide.
-      return found ?? (ctx.state.plans[0] as SavedPlan);
+      const current = currentPlan();
+      if (current) return current;
+      // Filet. `ensureActive()` a normalement deja tranche (au demarrage,
+      // apres une suppression, apres une fusion) ; s'il restait quelque chose
+      // a resoudre, mieux vaut le faire ici que renvoyer une seance qui
+      // n'existe pas.
+      ensureActive();
+      return currentPlan() ?? presetToPlan(DEFAULT_PRESET);
     },
     getPlan: (id) =>
       draft && draft.plan.id === id
@@ -276,8 +322,8 @@ export function createApp(state: State): { render: () => void } {
       renderAll();
     },
     deletePlan: (id) => {
-      // On ne supprime jamais la derniere seance restante.
-      if (ctx.state.plans.length <= 1) return;
+      // Rien a proteger, meme sur la derniere : la liste peut rester vide, et
+      // l'app se rabat alors sur le modele d'accueil (`ensureActive()`).
       const index = ctx.state.plans.findIndex((plan) => plan.id === id);
       if (index === -1) return;
       ctx.state.plans.splice(index, 1);
@@ -287,9 +333,7 @@ export function createApp(state: State): { render: () => void } {
       // cet appareil n'aurait jamais recue.
       ctx.state.deleted[id] = Date.now();
       forgetPlanFingerprint(id);
-      if (ctx.state.activePlanId === id) {
-        ctx.state.activePlanId = (ctx.state.plans[0] as SavedPlan).id;
-      }
+      ensureActive();
       save();
       renderAll();
     },
@@ -329,6 +373,9 @@ export function createApp(state: State): { render: () => void } {
       // si cet appareil l'avait modifiee, et elle gagnerait a tort la fusion
       // d'apres.
       reseedFingerprints(ctx.state.plans);
+      // La fusion a pu emporter la seance active (supprimee depuis un autre
+      // appareil), voire toutes les seances.
+      ensureActive();
       saveState(ctx.state);
       renderAll();
     },
@@ -392,6 +439,11 @@ export function createApp(state: State): { render: () => void } {
       return;
     }
     const ok = saveState(ctx.state);
+    // Premiere ecriture reussie : le moment ou demander un stockage durable
+    // (src/platform/storage.ts). Pas au chargement — Firefox pose la question
+    // a l'utilisateur, et un visiteur qui n'a encore rien enregistre n'a pas a
+    // se la voir poser.
+    if (ok) requestPersistentStorage();
     // Sauvegarde en ligne : toute modification passant par save(), il suffit de
     // brancher ici pour que TOUT parte dans le nuage — y compris ce qu'un
     // module futur ajoutera. Sans effet si personne n'est connecte.
@@ -413,7 +465,13 @@ export function createApp(state: State): { render: () => void } {
     }
     const cloudNote = cloudStatusNote();
     savedNote.textContent = cloudNote ? `${t('storage.saved')} · ${cloudNote}` : t('storage.saved');
-    if (cloudNote === t('account.statusOffline') || cloudNote === t('account.statusError')) return;
+    // Un ennui de synchronisation reste affiche (pas de minuteur) : il est
+    // moins grave qu'un echec local — le localStorage a ecrit, la modification
+    // est en retard, pas perdue — mais il doit rester lisible. Teste sur le
+    // STATUT et non sur le libelle traduit : deux traductions egales par
+    // hasard suffiraient a fausser une comparaison de chaines.
+    const status = cloud.status();
+    if (status === 'offline' || status === 'error' || status === 'too-large') return;
     savedTimer = window.setTimeout(() => {
       savedNote.textContent = '';
     }, SAVED_TOAST_MS);
@@ -431,6 +489,8 @@ export function createApp(state: State): { render: () => void } {
         return t('account.statusOffline');
       case 'error':
         return t('account.statusError');
+      case 'too-large':
+        return t('account.statusTooLarge');
       case 'off':
         return null;
     }
@@ -525,6 +585,10 @@ export function createApp(state: State): { render: () => void } {
     if (draft) draft.plan.name = presetName(draft.preset);
     renderAll();
   });
+
+  // Avant le premier rendu : sans seance enregistree (premiere visite, ou tout
+  // supprime), c'est ici que le modele d'accueil s'ouvre.
+  ensureActive();
 
   // Une seule fois au demarrage : un lien partage ouvert directement propose
   // son import, puis nettoie l'URL (voir ui/share.ts).

@@ -71,7 +71,8 @@ src/
     dom.ts         el(), byId(), applyStaticTranslations()
     share.ts       modales partage (QR) et import ; lecture de ?s= et ?plan=
     webmcp.ts      outils exposes a un navigateur agentique — charge a la demande
-  platform/        audio.ts (bip), wakelock.ts (ecran allume)
+  platform/        audio.ts (bip), wakelock.ts (ecran allume),
+                   storage.ts (stockage durable + politique Safari)
 scripts/
   build-exercise-pages.ts  genere dist/exercises/*, dist/creer-une-seance-par-lien.html,
                            dist/llms.txt, dist/sitemap.xml, docs/image-prompts.md
@@ -182,10 +183,27 @@ migre l'ancien schéma v4 (un seul plan + une config qui
 mélangeait réglages et langue) en une unique `SavedPlan` nommée `null` ; les
 clés v4 et v3 restent lisibles et ne sont jamais effacées. Partout dans l'UI,
 `ctx.activePlan()` (`ui/app.ts`) est l'accesseur à utiliser — jamais
-`ctx.state.plans.find(...)` répété à chaque endroit — avec un invariant
-garanti par `loadState()` : il y a toujours au moins une séance.
+`ctx.state.plans.find(...)` répété à chaque endroit. **`state.plans` peut être
+vide** : une première visite n'écrit rien du tout (voir la section suivante),
+et l'invariant tenu n'est pas « il y a au moins une séance enregistrée » mais
+« il y a toujours une séance affichée » — c'est `ensureActive()` (`ui/app.ts`)
+qui le garantit, en ouvrant le modèle d'accueil quand il ne reste rien.
 
 ## Les seances CIRKALI ne sont pas des donnees de l'utilisateur
+
+**Une première visite s'ouvre sur l'une d'elles** (`DEFAULT_PRESET`, « Full
+body sans matériel ») et n'écrit rien : plus de « séance type » fabriquée dans
+`loadState()`. Ce n'est pas qu'une économie de stockage, c'est ce qui a
+supprimé le code le plus retors du projet — chaque appareil se créait *sa*
+séance type avant même de connaître le compte, et `cloud/merge.ts` devait donc
+reconnaître ces copies pour ne pas les empiler à chaque nouvel appareil
+connecté (`isPristineDefaultPlan()`, `dropPristineDefaults()`, comparaison
+champ à champ contre un `defaultPlan()` de référence). Plus aucun appareil
+n'en crée, donc il n'y a plus rien à dédupliquer, plus de dernière séance à
+protéger de la suppression, et un tableau `plans` vide est une réponse
+valide — que `parsePlansList()` distingue soigneusement d'un « illisible »,
+sans quoi tout supprimer ferait ressusciter les données v5 au rechargement
+suivant.
 
 `src/data/presets.ts` porte six seances toutes faites, en dur dans le bundle.
 Elles n'existent **ni dans le `localStorage` ni dans Firestore** : elles sont
@@ -243,7 +261,7 @@ sans rien charger.
 | `index.html`, `vite.config.ts`, les balises meta/JSON-LD/`og:*`, la police, le sitemap, `llms.txt` | Un élément `data-i18n` doit être **vide** dans la source : son texte français est injecté au build depuis `fr.ts`. `#plan`/`#library` réservent leur hauteur (`:empty`) — c'est ce qui tient le CLS à 0,013 au lieu de 0,43. `--disp` demande `'Archivo'`, jamais `'Archivo Expanded'` (HTTP 400 silencieux). | `seance-seo-html` |
 | `scripts/build-exercise-pages.ts`, `src/content/exercise-details/*`, `exercise-page.css`, `image-prompts.ts` | `dist/exercises/**` est **regénéré à chaque build** : l'éditer à la main est une perte de temps garantie. Le contenu long n'admet que du vérifiable et du stable — jamais d'étude citée, de % d'activation EMG ni de chiffre à fausse précision. Le `slug` est **traduit par langue**. | `seance-fiches-generees` |
 | un module `src/ui/*.ts`, le `Context`, la taille/place d'un bouton, le schéma persisté | Une saisie chiffrée passe par `renderDerived()` — reconstruire la liste ferait perdre le focus du champ. Changer la forme de ce qui est persisté impose de bumper la version **et** d'écrire la migration. | `seance-ui-module` |
-| `src/cloud/*`, `src/ui/account.ts`, le bouton de compte, la sauvegarde en ligne | La sauvegarde automatique tient à **un seul point d'accroche** : `cloud.notifyLocalChange()` dans `save()` (`ui/app.ts`). Ne jamais la recâbler site par site. Le SDK Firebase n'est chargé **que** sur un clic de connexion ou si `session-hint` dit que la personne était connectée — sinon un visiteur anonyme paierait ~200 Ko pour rien. Le document distant repasse **toujours** par les parseurs de `core/storage.ts` : c'est une entrée non fiable, au même titre qu'un lien `?s=`. | *(pas de skill : tout est ici et dans `firestore.rules`)* |
+| `src/cloud/*`, `src/ui/account.ts`, le bouton de compte, la sauvegarde en ligne | La sauvegarde automatique tient à **un seul point d'accroche** : `cloud.notifyLocalChange()` dans `save()` (`ui/app.ts`). Ne jamais la recâbler site par site. Le SDK Firebase n'est chargé **que** sur un clic de connexion ou si `session-hint` dit que la personne était connectée — sinon un visiteur anonyme paierait ~200 Ko pour rien. Le document distant repasse **toujours** par les parseurs de `core/storage.ts` : c'est une entrée non fiable, au même titre qu'un lien `?s=`. **Ce qui se compte, ce sont les écritures** (20 000/jour, tous comptes confondus), pas les octets : d'où le regroupement à 4 s et la poussée conditionnelle au chargement. | *(pas de skill : tout est ici et dans `firestore.rules`)* |
 | une clé de traduction, un texte d'interface | `fr.ts` d'abord : les quatre autres langues deviennent alors des erreurs de compilation. Jamais de pluriel recomposé à la main. | `add-i18n-key` |
 | `src/data/figures.ts`, le champ `motion` de `library.ts`, le bloc `.fig-svg` — bref une figure d'exercice | Le bloc CSS `.fig-svg` existe en **deux copies** (bundle + `exercise-page.css`, hors bundle) et `check-build.ts` échoue si elles divergent. `fill: none` sur `.s` n'est pas cosmétique : un `<path>` sans `fill` est rempli en **noir**, invisible sur le thème sombre et pas sur le clair. Toutes les figures de profil regardent à gauche, et la flèche suit `motion`, pas `mode`. | `seance-figures` |
 | ajouter un exercice à la bibliothèque | Les 5 fichiers de contenu long sont **hors du contrat typechecké** : une langue oubliée ne casse pas le build, elle retombe en silence sur le français. `npm run exo <clé>` est le seul contrôle. | `add-exercise` |
@@ -284,6 +302,48 @@ les `.woff2` de `public/fonts/` sont cités en `/fonts/…` parce qu'ils doivent
 l'être depuis deux profondeurs à la fois (le bundle et `exercise-page.css`, hors
 bundle). Conséquence : une copie servie ailleurs qu'à la racine d'un domaine
 perd ses polices.
+
+## Ce qui coûte, côté sauvegarde en ligne
+
+Le quota gratuit de Firestore se compte en **opérations**, pas en volume : 20 000
+écritures et 50 000 lectures par jour, **partagées par tous les comptes**. Le
+stockage, lui, n'est jamais la contrainte — une séance de douze lignes pèse
+1,5 Ko, un compte bien rempli 16 Ko, et le plafond d'un document (1 Mio) tient
+~700 séances. Trois choix en découlent, à ne pas défaire sans les remplacer :
+
+- **Le regroupement des écritures est à 4 s** (`PUSH_DEBOUNCE_MS`,
+  `cloud/sync.ts`). Une séance se construit par gestes espacés de deux à trois
+  secondes ; à 1,5 s chacun payait sa propre écriture. Rien n'est risqué :
+  `flush()` force le départ au masquage de l'onglet, à la fermeture, au
+  démarrage d'une séance et à la déconnexion.
+- **Le chargement n'écrit que si la fusion apporte quelque chose au distant.**
+  C'était l'écriture la plus chère du système : une par compte et par
+  chargement, pour un document identique à celui qu'on venait de lire. La
+  comparaison porte sur l'état **fusionné**, jamais sur « rien n'a changé
+  localement » — une modification faite hors ligne puis perdue avec l'onglet
+  n'a justement pas été poussée, et c'est la fusion qui la fait ressortir.
+- **Au-delà de 1 Mio, on n'essaie pas** : `setDoc` échouerait définitivement et
+  chaque modification relancerait une écriture vouée au refus. Statut
+  `too-large`, distinct d'`error` parce qu'il ne passera pas tout seul.
+
+Dépasser le quota ne perd rien : le `localStorage` a déjà écrit, la
+modification est en retard et repart au chargement suivant.
+
+## Durabilité du stockage local (`src/platform/storage.ts`)
+
+Le `localStorage` est la source de vérité, mais aucun navigateur ne promet de
+le garder. Deux politiques, donc deux réponses :
+
+- Chrome et Firefox n'effacent que sous pression disque et acceptent
+  `navigator.storage.persist()`. Il est demandé **à la première sauvegarde
+  réussie**, jamais au chargement : Firefox pose la question à l'utilisateur, et
+  un visiteur qui n'a encore rien enregistré n'a pas à se la voir poser.
+- Safari efface tout stockage écrit par script après **sept jours sans visite**,
+  et rien depuis la page ne permet de s'y soustraire. La seule réponse est de le
+  dire : `#storageNotice`, une phrase affichée uniquement sur Safari et
+  uniquement déconnecté (`ui/account.ts`). Elle tient dans la hauteur déjà
+  imposée par le sélecteur de langue, donc elle ne décale rien — la garder
+  courte fait partie du contrat.
 
 ## Publicité
 

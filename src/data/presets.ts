@@ -13,9 +13,8 @@ import type { ExerciseKey, SessionConfig } from '../core/types';
  *
  * Aucun texte ici, comme dans `data/library.ts` : le nom affiche vit sous la
  * cle `presets.name.<id>` des cinq dictionnaires et se resout a l'affichage
- * (`presetName()`, core/plan.ts). La materialisation en seance manipulable est
- * dans `core/plan.ts`, a cote de `defaultPlan()` — meme partage des roles que
- * `DEFAULT_ORDER` ici / `defaultPlan()` la-bas.
+ * (`presetName()`, core/plan.ts), ou vit aussi la materialisation en seance
+ * manipulable — memes roles que `LIBRARY` ici / `createFromLibrary()` la-bas.
  */
 export type PresetId =
   | 'fullBody'
@@ -53,21 +52,38 @@ export interface PresetPlan {
  */
 const PRESET_PLAN_PREFIX = 'cirkali:';
 
+/**
+ * Le modele sur lequel s'ouvre une premiere visite.
+ *
+ * L'app ne cree plus de « seance type » a soi au premier lancement : elle
+ * affiche celui-ci, et rien n'est ecrit tant que la personne n'y touche pas.
+ * C'est ce qui permet a `state.plans` d'etre vide (voir core/storage.ts) et ce
+ * qui a supprime toute la mecanique de reconnaissance des seances types
+ * dupliquees d'un appareil a l'autre (cloud/merge.ts).
+ *
+ * Sans materiel et en circuit : le plus grand denominateur commun, et la
+ * demonstration la plus parlante de ce que fait le lecteur.
+ */
+const FULL_BODY: PresetPlan = {
+  id: 'fullBody',
+  // Circuit : six groupes differents s'enchainent sans jamais se repeter,
+  // c'est le cas ou le moteur (core/queue.ts) n'impose aucune pause.
+  config: { mode: 'circuit', pause: 45, trans: 10 },
+  items: [
+    { key: 'squat', sets: 3, reps: 12 },
+    { key: 'pushup', sets: 3, reps: 8 },
+    { key: 'superman', sets: 3, reps: 10 },
+    { key: 'gluteBridge', sets: 3, reps: 12 },
+    { key: 'plank', sets: 3, seconds: 30 },
+    { key: 'mountainClimber', sets: 3, seconds: 40 },
+  ],
+};
+
+/** Alias parlant : c'est ce modele que l'app ouvre quand rien n'est enregistre. */
+export const DEFAULT_PRESET = FULL_BODY;
+
 export const PRESETS: readonly PresetPlan[] = [
-  {
-    id: 'fullBody',
-    // Circuit : six groupes differents s'enchainent sans jamais se repeter,
-    // c'est le cas ou le moteur (core/queue.ts) n'impose aucune pause.
-    config: { mode: 'circuit', pause: 45, trans: 10 },
-    items: [
-      { key: 'squat', sets: 3, reps: 12 },
-      { key: 'pushup', sets: 3, reps: 8 },
-      { key: 'superman', sets: 3, reps: 10 },
-      { key: 'gluteBridge', sets: 3, reps: 12 },
-      { key: 'plank', sets: 3, seconds: 30 },
-      { key: 'mountainClimber', sets: 3, seconds: 40 },
-    ],
-  },
+  FULL_BODY,
   {
     id: 'beginner',
     config: { mode: 'classic', pause: 60, trans: 0 },

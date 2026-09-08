@@ -1,7 +1,7 @@
 import { isLocale } from '../i18n';
 import { isGroupId } from '../data/groups';
 import { findLibraryEntry, isLibraryKey } from '../data/library';
-import { defaultPlan, uid } from './plan';
+import { uid } from './plan';
 import type { ExerciseItem, Locale, PlanItem, RestItem, SavedPlan, SessionConfig } from './types';
 
 /**
@@ -253,24 +253,37 @@ export function parseDeleted(
   return deleted;
 }
 
+/**
+ * `null` signifie « rien de lisible ici » (cle absente, JSON casse), et
+ * DECLENCHE le repli sur la version precedente du schema. Un tableau vide est
+ * au contraire une reponse valide : depuis que l'app n'impose plus de seance
+ * type, quelqu'un peut n'avoir aucune seance a soi et n'utiliser que les
+ * modeles CIRKALI. Confondre les deux ferait ressusciter ses anciennes seances
+ * v5 au rechargement suivant, juste apres qu'il les a toutes supprimees.
+ */
 export function parsePlansList(raw: unknown): SavedPlan[] | null {
-  if (!Array.isArray(raw) || raw.length === 0) return null;
-  const plans = raw.map(parsePlanEntry).filter((entry): entry is SavedPlan => entry !== null);
-  return plans.length > 0 ? plans : null;
+  if (!Array.isArray(raw)) return null;
+  return raw.map(parsePlanEntry).filter((entry): entry is SavedPlan => entry !== null);
 }
 
-/** Enveloppe l'ancien schema v4 (retombant lui-meme sur la v3) en une seule seance. */
-function migrateFromV4(): SavedPlan | null {
+/**
+ * Enveloppe l'ancien schema v4 (retombant lui-meme sur la v3) en une seule
+ * seance. Renvoie une LISTE — vide s'il n'y a rien a migrer — pour tenir dans
+ * la chaine de replis de `loadState()` sans cas particulier.
+ */
+function migrateFromV4(): SavedPlan[] {
   const rawPlan = readJson(V4_KEYS.plan) ?? readJson(LEGACY_KEYS.plan);
   const rawConfig = readJson(V4_KEYS.config) ?? readJson(LEGACY_KEYS.config);
-  if (rawPlan === undefined && rawConfig === undefined) return null;
-  return {
-    id: uid(),
-    name: null,
-    items: parsePlan(rawPlan) ?? defaultPlan(),
-    config: parseSessionConfig(rawConfig),
-    updatedAt: Date.now(),
-  };
+  if (rawPlan === undefined && rawConfig === undefined) return [];
+  return [
+    {
+      id: uid(),
+      name: null,
+      items: parsePlan(rawPlan) ?? [],
+      config: parseSessionConfig(rawConfig),
+      updatedAt: Date.now(),
+    },
+  ];
 }
 
 function legacyLocale(): unknown {
@@ -299,68 +312,6 @@ export function saveLocale(locale: Locale): void {
   } catch {
     // Sauvegarde best-effort.
   }
-}
-
-/** Une seance neuve, quand rien de lisible n'a ete trouve nulle part. */
-export function createDefaultPlan(): SavedPlan {
-  return {
-    id: uid(),
-    name: null,
-    items: defaultPlan(),
-    // Copie, jamais la reference : sinon muter le mode d'une session
-    // (ctx.activePlan().config.mode = ...) mute ce singleton partage,
-    // et toute session creee ensuite via createPlan() en herite.
-    config: { ...DEFAULT_SESSION_CONFIG },
-    updatedAt: Date.now(),
-  };
-}
-
-/** Deux lignes identiques au champ pres, `id` exclu (il est tire au hasard). */
-function sameItemIgnoringId(item: PlanItem, reference: PlanItem | undefined): boolean {
-  if (reference === undefined || item.type !== reference.type) return false;
-  if (item.type === 'rest' || reference.type === 'rest') {
-    return item.type === 'rest' && reference.type === 'rest' && item.seconds === reference.seconds;
-  }
-  return (
-    item.key === reference.key &&
-    item.customName === reference.customName &&
-    item.group === reference.group &&
-    item.mode === reference.mode &&
-    item.sets === reference.sets &&
-    item.reps === reference.reps &&
-    item.seconds === reference.seconds &&
-    item.rest === reference.rest
-  );
-}
-
-/**
- * Vrai si cette seance est encore la seance type, telle que le tout premier
- * lancement l'a posee — sans nom, reglages par defaut, deroule identique a
- * `defaultPlan()`.
- *
- * Sert a la fusion avec le nuage (cloud/merge.ts) : chaque appareil se cree sa
- * propre seance type avant meme toute connexion, et sans ce test, se connecter
- * depuis un deuxieme puis un troisieme appareil empilerait autant de copies de
- * cette meme seance dans le compte.
- *
- * Comparaison champ a champ plutot qu'un `JSON.stringify` des deux cotes : les
- * `id` de lignes sont tires au hasard a chaque creation, et l'ordre des cles
- * d'un objet n'est pas un contrat sur lequel s'appuyer (`parseItem()` et
- * `createFromLibrary()` les posent dans le meme ordre aujourd'hui, rien ne le
- * garantit demain).
- */
-export function isPristineDefaultPlan(plan: SavedPlan): boolean {
-  if (plan.name !== null) return false;
-  if (
-    plan.config.mode !== DEFAULT_SESSION_CONFIG.mode ||
-    plan.config.pause !== DEFAULT_SESSION_CONFIG.pause ||
-    plan.config.trans !== DEFAULT_SESSION_CONFIG.trans
-  ) {
-    return false;
-  }
-  const reference = defaultPlan();
-  if (plan.items.length !== reference.length) return false;
-  return plan.items.every((item, index) => sameItemIgnoringId(item, reference[index]));
 }
 
 /**
@@ -408,19 +359,21 @@ function stampUpdated(plans: SavedPlan[], now: number): void {
  * ecrite a cote.
  */
 export function loadState(): State {
+  // Chaine de replis inchangee, sauf sa fin : plus de seance fabriquee quand
+  // rien n'a ete trouve. `plans` PEUT donc etre vide, et ce n'est pas une
+  // anomalie — une premiere visite n'ecrit rien du tout, elle s'ouvre sur un
+  // modele CIRKALI (voir data/presets.ts). C'est `ui/app.ts` (`ensureActive()`)
+  // qui garantit desormais qu'il y a toujours une seance AFFICHEE, a soi ou
+  // modele.
   const plans =
     parsePlansList(readJson(KEYS.plans)) ??
     parsePlansList(readJson(V5_KEYS.plans)) ??
-    [migrateFromV4() ?? createDefaultPlan()];
-
-  // Invariant preserve partout dans l'app : il y a toujours au moins une
-  // seance, meme fraichement creee ci-dessus si tout le reste a echoue.
-  const firstPlan = plans[0] as SavedPlan;
+    migrateFromV4();
   const rawActiveId = readJson(KEYS.activePlanId) ?? readJson(V5_KEYS.activePlanId);
   const activePlanId =
     typeof rawActiveId === 'string' && plans.some((plan) => plan.id === rawActiveId)
       ? rawActiveId
-      : firstPlan.id;
+      : (plans[0]?.id ?? '');
 
   // Sème les empreintes : sans ca, la premiere sauvegarde qui suit le
   // chargement redaterait toutes les seances comme si elles venaient d'etre

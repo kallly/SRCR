@@ -1,4 +1,3 @@
-import { createDefaultPlan, isPristineDefaultPlan } from '../core/storage';
 import type { State } from '../core/storage';
 import type { SavedPlan } from '../core/types';
 
@@ -46,49 +45,23 @@ export function mergeStates(local: State, remote: State): State {
     plans.push(plan);
   }
 
-  // 4. Invariant tenu partout dans l'app (`ctx.activePlan()`, `plans[0] as
-  //    SavedPlan`) : il y a toujours au moins une seance. Une fusion qui rend
-  //    la liste vide — tout supprime des deux cotes — ne doit pas etre ce qui
-  //    le casse.
-  if (plans.length === 0) plans.push(createDefaultPlan());
-
-  // 5. Chaque appareil se cree sa propre seance type au tout premier
-  //    lancement, avant meme d'avoir vu le compte. Sans ce filtre, se
-  //    connecter depuis un deuxieme puis un troisieme appareil empilerait
-  //    autant de copies de cette meme seance. Une seance type INTACTE ne porte
-  //    aucun travail : la jeter ne perd rien, et des que la personne y touche
-  //    elle cesse d'etre reconnue ici et redevient une seance comme une autre.
-  const kept = dropPristineDefaults(plans, remote);
-
-  const first = kept[0] as SavedPlan;
+  // 4. Une liste vide est une reponse valide : tout supprime des deux cotes
+  //    veut dire qu'il ne reste rien, et l'app s'ouvre alors sur un modele
+  //    CIRKALI (voir data/presets.ts). C'est ce qui a permis de retirer d'ici
+  //    la fabrication d'une seance type et la reconnaissance de ses copies :
+  //    plus aucun appareil n'en cree, donc il n'y en a plus a dedupliquer.
   const activePlanId = [local.activePlanId, remote.activePlanId].find((id) =>
-    kept.some((plan) => plan.id === id),
+    plans.some((plan) => plan.id === id),
   );
 
   return {
-    plans: kept,
-    activePlanId: activePlanId ?? first.id,
-    // 6. L'historique n'est qu'une liste d'horodatages de seances terminees :
+    plans,
+    activePlanId: activePlanId ?? plans[0]?.id ?? '',
+    // 5. L'historique n'est qu'une liste d'horodatages de seances terminees :
     //    aucun conflit possible, l'union dedoublonnee est la bonne reponse.
     history: mergeHistory(local.history, remote.history),
     deleted,
   };
-}
-
-/**
- * Retire les seances restees a l'etat de seance type, sauf s'il n'y a QUE ca.
- *
- * Quand tout est encore a l'etat de seance type, on en garde une seule, et de
- * preference celle qui vient deja du nuage : sinon chaque appareil imposerait
- * la sienne a tour de role, et l'id changerait a chaque connexion sans que
- * rien de visible ne bouge.
- */
-function dropPristineDefaults(plans: SavedPlan[], remote: State): SavedPlan[] {
-  const meaningful = plans.filter((plan) => !isPristineDefaultPlan(plan));
-  if (meaningful.length > 0) return meaningful;
-
-  const fromRemote = new Set(remote.plans.map((plan) => plan.id));
-  return [plans.find((plan) => fromRemote.has(plan.id)) ?? (plans[0] as SavedPlan)];
 }
 
 /** Plafond repris de core/storage.ts (MAX_HISTORY), volontairement identique. */

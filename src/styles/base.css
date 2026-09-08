@@ -69,8 +69,8 @@ input[type='number'] {
 
   Ca ne tenait pas quand la langue partageait encore ce coin : langue + compte
   + IA a eux trois approchaient les 240px, ne laissant pas assez de place pour
-  "CIRKALI" a 34px sur la meme ligne. La langue est descendue rejoindre les
-  liens d'ancrage (`.quicknav-row`) precisement pour liberer cette rangee.
+  "CIRKALI" a 34px sur la meme ligne. La langue est descendue sur la rangee
+  suivante (`.quicknav-row`) precisement pour liberer ce coin.
 */
 .head {
   display: flex;
@@ -142,8 +142,8 @@ h2::after {
 
 /*
   Compte + aide IA, a droite du titre dans `.head` (voir son commentaire). La
-  langue n'y est plus : elle partage la rangee des liens d'ancrage juste sous
-  le titre (voir `.quicknav-row`).
+  langue n'y est plus : elle occupe la rangee juste sous le titre (voir
+  `.quicknav-row`).
 
   `flex: none` : cette rangee ne doit jamais retrecir sous sa largeur de
   contenu — les boutons sont deja au minimum tactile de 44px, les comprimer
@@ -162,18 +162,35 @@ h2::after {
 }
 
 /*
-  Les liens d'ancrage a gauche, la langue a droite : meme rangee, pour ne pas
-  laisser un grand vide entre la tagline et « Séances » — c'est l'espace que
-  la langue occupait autrefois dans l'en-tete, avant que compte et aide IA ne
-  l'y rejoignent.
+  La langue a droite, pour ne pas laisser un grand vide entre la tagline et
+  « Séances » — c'est l'espace qu'elle occupait autrefois dans l'en-tete, avant
+  que compte et aide IA ne l'y rejoignent. L'avertissement Safari, quand il y
+  en a un, occupe le reste de la rangee a gauche.
 */
 .quicknav-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* `flex-end` et non `space-between` : la rangee ne contient plus qu'un seul
+     element la plupart du temps (la langue), et `space-between` le collerait
+     alors a gauche. C'est `.storage-notice` qui prend la place restante quand
+     il est visible. */
+  justify-content: flex-end;
   gap: 12px;
-  /* Reprise de la marge basse que .quicknav portait seul auparavant. */
   margin: 0 0 24px;
+}
+
+/*
+  Avertissement Safari (ui/account.ts) : discret, et surtout contenu dans la
+  hauteur du selecteur de langue (44px) — deux lignes de 12px y tiennent, donc
+  son apparition apres le premier rendu ne pousse rien vers le bas.
+*/
+.storage-notice {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--paper-dim);
 }
 
 /* selecteur de langue */
@@ -338,41 +355,6 @@ h2::after {
   display: block;
   width: 100%;
   min-height: 44px;
-}
-
-/* nav d'ancrage vers les sections de la page */
-.quicknav {
-  display: flex;
-  gap: 16px;
-  /* Pas de largeur figee : `.quicknav-row` (flex, space-between) pousse la
-     langue a droite et laisse ce nav prendre sa largeur naturelle a gauche. */
-  flex: none;
-}
-
-.quicknav a {
-  display: inline-flex;
-  align-items: center;
-  /*
-    Zone tactile a 44px sans agrandir le texte. border-bottom collerait au
-    bord de cette boite plus haute, loin du texte centre : text-decoration
-    reste au contraire colle a la ligne de base, quelle que soit la hauteur
-    de la zone cliquable. Pas de marge negative pour compenser le padding :
-    ca grignoterait le gap de 16px du conteneur (l'espacement visible entre
-    les deux liens tomberait a 8px). Le padding s'ajoute donc au gap.
-  */
-  min-height: 44px;
-  padding: 4px;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--paper-dim);
-  text-decoration: underline;
-  text-decoration-color: var(--line);
-  text-underline-offset: 3px;
-}
-
-.quicknav a:hover {
-  color: var(--lime);
-  text-decoration-color: var(--lime);
 }
 
 /* section « A propos » : depliee sur grand ecran, repliee sur mobile */

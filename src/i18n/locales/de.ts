@@ -59,6 +59,8 @@ export const de: Translations = {
     statusSyncing: 'wird synchronisiert…',
     statusOffline: 'offline, wird bei Netz fortgesetzt',
     statusError: 'Synchronisierung nicht möglich, Einheiten bleiben hier',
+    statusTooLarge: 'zu viele Einheiten für die Online-Sicherung',
+    safariNotice: 'Safari löscht Einheiten nach 7 Tagen ohne Besuch. Ein Konto bewahrt sie.',
     signInError: 'Anmeldung fehlgeschlagen. Versuche es gleich noch einmal.',
     merged: {
       one: '{count} Einheit aus deinem Konto geholt',
@@ -192,7 +194,6 @@ export const de: Translations = {
     plan: 'Ablauf',
     library: 'Bibliothek',
     allGuides: 'Alle Übungsanleitungen',
-    quicknav: 'Abschnitte',
   },
 
   library: {

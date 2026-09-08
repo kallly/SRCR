@@ -64,11 +64,15 @@ export function createPlanSwitcher(ctx: Context): { render: () => void } {
     const select = el('select', {
       attrs: { id: 'planSelect', 'aria-label': t('plans.label') },
       children: [
-        optionGroup(
-          t('presets.groupMine'),
-          plans.map((plan) => ({ id: plan.id, label: plan.name ?? t('plans.unnamed') })),
-          activePlan.id,
-        ),
+        // Aucune seance a soi (premiere visite, ou tout supprime) : pas de
+        // groupe vide dans la liste, seulement les modeles.
+        plans.length > 0
+          ? optionGroup(
+              t('presets.groupMine'),
+              plans.map((plan) => ({ id: plan.id, label: plan.name ?? t('plans.unnamed') })),
+              activePlan.id,
+            )
+          : null,
         optionGroup(
           t('presets.group'),
           PRESETS.map((entry) => ({ id: presetPlanId(entry), label: presetName(entry) })),
@@ -136,10 +140,11 @@ export function createPlanSwitcher(ctx: Context): { render: () => void } {
       text: t('plans.delete'),
       attrs: { type: 'button' },
     });
-    // Desactive plutot que confirme-puis-refuse : plus clair, evite une
-    // confirmation qui ne mene a rien quand il ne reste qu'une seule seance —
-    // ou quand la seance affichee est un modele, qui n'existe nulle part.
-    deleteBtn.disabled = plans.length <= 1 || preset !== null;
+    // Desactive plutot que confirme-puis-refuse : un modele n'existe nulle
+    // part, il n'y a rien a supprimer. Une seance a soi se supprime en
+    // revanche toujours, meme la derniere : la liste a le droit d'etre vide,
+    // l'app se rabat alors sur le modele d'accueil.
+    deleteBtn.disabled = preset !== null;
     renameBtn.disabled = preset !== null;
     if (preset) {
       for (const button of [renameBtn, deleteBtn]) {
@@ -178,7 +183,7 @@ export function createPlanSwitcher(ctx: Context): { render: () => void } {
     });
 
     deleteBtn.addEventListener('click', () => {
-      if (plans.length <= 1 || preset) return;
+      if (preset) return;
       if (!window.confirm(t('plans.confirmDelete'))) return;
       ctx.deletePlan(activePlan.id);
     });

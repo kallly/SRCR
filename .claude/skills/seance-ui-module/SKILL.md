@@ -126,7 +126,7 @@ sur `.mini` × 2 + le `gap`, soit 96px), ce qui imposait 96px de haut à la
 rangée du nom et laissait un vide sous le badge de groupe ; puis les trois en
 rangée horizontale, qui poussait les champs à passer à la ligne sur les
 écrans étroits. Pour un lien texte
-court (`.quicknav a`, `.credit a`), la zone cliquable s'étend par `padding`
+court (`.credit a`), la zone cliquable s'étend par `padding`
 seul — jamais de marge négative pour « rattraper » ce padding : le `gap` du
 conteneur flex mesure l'espace entre les boîtes (`border-box`), le padding
 est à l'intérieur de la boîte de chaque lien et ne le grignote pas ; une

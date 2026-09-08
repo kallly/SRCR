@@ -59,6 +59,8 @@ export const es: Translations = {
     statusSyncing: 'sincronizando…',
     statusOffline: 'sin conexión, se reanudará al volver la red',
     statusError: 'sincronización no disponible, sesiones guardadas aquí',
+    statusTooLarge: 'demasiadas sesiones para la copia en línea',
+    safariNotice: 'Safari borra las sesiones tras 7 días sin visita. Una cuenta las conserva.',
     signInError: 'No se pudo iniciar sesión. Inténtalo de nuevo en un momento.',
     merged: {
       one: '{count} sesión recuperada de tu cuenta',
@@ -192,7 +194,6 @@ export const es: Translations = {
     plan: 'Desarrollo',
     library: 'Biblioteca',
     allGuides: 'Todas las fichas de ejercicio',
-    quicknav: 'Secciones',
   },
 
   library: {

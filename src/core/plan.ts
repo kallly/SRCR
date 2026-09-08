@@ -1,5 +1,5 @@
 import { t } from '../i18n';
-import { CUSTOM_DEFAULTS, DEFAULT_ORDER, findLibraryEntry, isLibraryKey } from '../data/library';
+import { CUSTOM_DEFAULTS, findLibraryEntry, isLibraryKey } from '../data/library';
 import { presetPlanId, type PresetPlan } from '../data/presets';
 import type { ExerciseItem, PlanItem, RestItem, SavedPlan } from './types';
 
@@ -46,13 +46,6 @@ export function createRest(seconds: number): RestItem {
   return { id: uid(), type: 'rest', seconds };
 }
 
-/** Seance type proposee au tout premier lancement (core/storage.ts). */
-export function defaultPlan(): PlanItem[] {
-  return DEFAULT_ORDER.map(createFromLibrary).filter(
-    (item): item is ExerciseItem => item !== null,
-  );
-}
-
 /**
  * Nom affiche d'une seance CIRKALI, resolu dans la langue active — jamais
  * stocke, exactement comme `plans.unnamed` pour une seance sans nom. Il n'est
@@ -64,9 +57,9 @@ export function presetName(preset: PresetPlan): string {
 }
 
 /**
- * Materialise un modele en seance manipulable. Meme partage des roles que
- * `defaultPlan()` juste au-dessus : les donnees sont dans `data/presets.ts`,
- * la construction ici.
+ * Materialise un modele en seance manipulable : les donnees sont dans
+ * `data/presets.ts`, la construction ici — meme partage des roles que
+ * `LIBRARY` / `createFromLibrary()`.
  *
  * Le resultat n'est PAS ajoute a `state.plans` : il vit en memoire le temps
  * qu'on regarde le modele (ui/app.ts). Chaque ligne repart des reglages de la

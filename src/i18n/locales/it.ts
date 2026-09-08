@@ -59,6 +59,8 @@ export const it: Translations = {
     statusSyncing: 'sincronizzazione…',
     statusOffline: 'offline, riprenderà al ritorno della rete',
     statusError: 'sincronizzazione non riuscita, sedute conservate qui',
+    statusTooLarge: 'troppe sedute per il salvataggio online',
+    safariNotice: 'Safari cancella le sedute dopo 7 giorni senza visite. Un account le conserva.',
     signInError: 'Accesso non riuscito. Riprova tra un istante.',
     merged: {
       one: '{count} seduta recuperata dal tuo account',
@@ -192,7 +194,6 @@ export const it: Translations = {
     plan: 'Svolgimento',
     library: 'Libreria',
     allGuides: 'Tutte le schede degli esercizi',
-    quicknav: 'Sezioni',
   },
 
   library: {
