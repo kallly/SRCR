@@ -2,12 +2,27 @@ import { t } from '../i18n';
 import { groupColor } from '../data/groups';
 import { exerciseName, isExercise, move } from '../core/plan';
 import { isLibraryKey } from '../data/library';
+import { MAX_REPS, MAX_SECONDS, MAX_SETS } from '../core/storage';
 import type { ExerciseItem, ExerciseKey, PlanItem, RestItem } from '../core/types';
 import type { Context } from './app';
 import { byId, dot, el, numberField, selectField } from './dom';
 
-/** Champs numeriques dont la modification ne touche pas la structure du deroule. */
-const NUMERIC_FIELDS = new Set(['sets', 'reps', 'seconds', 'rest']);
+/**
+ * Champs numeriques dont la modification ne touche pas la structure du
+ * deroule, chacun avec son plafond.
+ *
+ * L'attribut `max` du champ ne suffit pas : un `<input type="number">` laisse
+ * TAPER au-dela, il se contente d'echouer a la validation. Sans ce plafond,
+ * saisir 99999 series gelait l'onglet aussi surement qu'un lien forge — meme
+ * faille que celle documentee sur MAX_SETS (core/storage.ts), atteinte sans le
+ * moindre lien. Les valeurs viennent de la, jamais recopiees ici.
+ */
+const NUMERIC_FIELDS = new Map<string, number>([
+  ['sets', MAX_SETS],
+  ['reps', MAX_REPS],
+  ['seconds', MAX_SECONDS],
+  ['rest', MAX_SECONDS],
+]);
 
 /**
  * Rail de reordonnancement, colle au bord gauche de la carte : monter, le
@@ -254,8 +269,14 @@ export function createPlanner(ctx: Context): { render: () => void } {
     const item = ctx.activePlan().items.find((entry) => entry.id === id);
     if (!item) return;
 
-    if (NUMERIC_FIELDS.has(field)) {
-      const value = Math.max(0, Number.parseInt(input.value, 10) || 0);
+    const max = NUMERIC_FIELDS.get(field);
+    if (max !== undefined) {
+      const value = Math.min(max, Math.max(0, Number.parseInt(input.value, 10) || 0));
+      // `renderDerived()` ne reconstruit pas la liste (c'est tout son interet,
+      // le focus reste dans le champ) : le champ afficherait donc encore la
+      // valeur refusee. On la corrige a la main, sinon l'ecran ment sur ce qui
+      // a ete enregistre.
+      if (String(value) !== input.value) input.value = String(value);
       if (field === 'seconds') item.seconds = value;
       else if (isExercise(item)) {
         if (field === 'sets') item.sets = value;

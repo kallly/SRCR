@@ -4,8 +4,18 @@ import { presetPlanId, type AnyPreset } from '../data/presets';
 import type { TenantExercise } from '../data/tenants';
 import type { ExerciseItem, GroupId, PlanItem, SavedPlan } from './types';
 
-/** Longueur maximale d'un nom d'exercice saisi par l'utilisateur. */
-const MAX_CUSTOM_NAME = 60;
+/**
+ * Longueur maximale d'un nom saisi par l'utilisateur : nom d'exercice perso
+ * comme nom de seance.
+ *
+ * Applique aux deux bouts, et il a longtemps manque au second. A la CREATION
+ * ici, `maxlength` sur les champs (`index.html`, `ui/inline-input.ts`) ; a la
+ * RELECTURE dans `parseItem()` et `parsePlanName()` (core/storage.ts), sans
+ * quoi un lien `?s=` forge fait stocker puis afficher un nom de 200 000
+ * caracteres — ce que `core/ai-plan.ts` plafonnait deja de son cote, pour le
+ * seul format `?plan=`.
+ */
+export const MAX_NAME = 60;
 
 export function uid(): string {
   return Math.random().toString(36).slice(2, 9);
@@ -48,7 +58,7 @@ export function createCustom(name: string, group: GroupId): ExerciseItem {
     id: uid(),
     type: 'exercise',
     key: 'custom',
-    customName: name.trim().slice(0, MAX_CUSTOM_NAME),
+    customName: name.trim().slice(0, MAX_NAME),
     ...CUSTOM_DEFAULTS,
     group,
   };
@@ -70,7 +80,7 @@ export function createFromTenant(entry: TenantExercise): ExerciseItem {
     id: uid(),
     type: 'exercise',
     key: 'custom',
-    customName: entry.name.trim().slice(0, MAX_CUSTOM_NAME),
+    customName: entry.name.trim().slice(0, MAX_NAME),
     group: entry.group,
     mode: entry.mode,
     sets: entry.sets,

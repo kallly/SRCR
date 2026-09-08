@@ -1,6 +1,6 @@
 import { CUSTOM_DEFAULTS, LIBRARY } from '../data/library';
 import { isGroupId } from '../data/groups';
-import { isExercise } from './plan';
+import { MAX_NAME, isExercise } from './plan';
 import { parsePlan, parseSessionConfig } from './storage';
 import type { SharedPlan } from './share';
 import type { SavedPlan } from './types';
@@ -35,12 +35,6 @@ import type { LibraryEntry } from '../data/library';
 const MAX_RAW = 8000;
 /** Lignes retenues. Le surplus est ignore, pas rejete. */
 const MAX_ITEMS = 60;
-/**
- * `parseItem()` trim les noms mais ne les plafonne pas : sans ca, une URL
- * forgee ferait stocker puis afficher un nom de 100 000 caracteres. Meme
- * valeur que `MAX_CUSTOM_NAME` (core/plan.ts), pour la meme raison.
- */
-const MAX_TEXT = 60;
 
 /**
  * `"30"` devient 30. `positiveInt()` (core/storage.ts) n'accepte QUE des
@@ -116,10 +110,10 @@ function adaptItem(raw: unknown): Record<string, unknown> | null {
   if (!source) return null;
 
   const type = str(source['type'], 16)?.toLowerCase();
-  const key = str(pick(source, 'ex', 'exercise', 'exercice', 'key', 'cle'), MAX_TEXT);
+  const key = str(pick(source, 'ex', 'exercise', 'exercice', 'key', 'cle'), MAX_NAME);
   const custom = str(
     pick(source, 'custom', 'customname', 'nom', 'name', 'title', 'titre'),
-    MAX_TEXT,
+    MAX_NAME,
   );
   const label = key ?? custom;
 
@@ -219,7 +213,7 @@ export function decodeAiPlan(encoded: string): SharedPlan | null {
   });
 
   return {
-    name: str(pick(root, 'name', 'nom', 'title', 'titre'), MAX_TEXT) ?? null,
+    name: str(pick(root, 'name', 'nom', 'title', 'titre'), MAX_NAME) ?? null,
     items,
     config,
   };

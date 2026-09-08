@@ -363,6 +363,34 @@ ouverte, et c'est voulu — refermé, un `<select>` n'affiche que le texte de
 l'option choisie, jamais le titre de son groupe, exactement le piège documenté
 pour `.unit-select`.
 
+## Ce qui arrive par une URL est hostile, pas seulement peu fiable
+
+Les parseurs de `core/storage.ts` lisent quatre entrées que personne ne
+contrôle : le `localStorage`, un lien `?s=`, un lien `?plan=` et le document
+distant. Ils étaient tolérants et bornés **par le bas** (`Math.max(1, …)`),
+jamais par le haut — et ça n'était pas théorique : un lien de 138 caractères
+portant `sets: 1e9` gelait l'onglet, `buildClassic()` construisant une étape
+par série et la barre de statut reconstruisant la file à chaque rendu. La
+séance étant écrite en `localStorage` **avant** ce rendu, l'app regelait à
+chaque rechargement, sans autre recours que vider les données du site.
+
+**Toute valeur venue de l'extérieur se borne donc aux deux bouts**, dans
+`parseItem()` / `parsePlan()` / `parsePlanName()` et nulle part ailleurs :
+c'est le goulot par lequel passent les quatre sources, et un second jeu de
+bornes posé dans `share.ts` ou `ai-plan.ts` divergerait. Les plafonds
+(`MAX_SETS`, `MAX_REPS`, `MAX_SECONDS`, `MAX_ITEMS`, `MAX_NAME`) sont
+volontairement très au-dessus des maxima de l'interface : ils disent « ce
+n'est plus une séance », pas « ce n'est pas ce que le formulaire propose » —
+un lien écrit par une IA qui demande 12 séries doit s'importer tel quel, et
+une séance existante ne doit jamais se faire tronquer au rechargement.
+
+Deux pièges qui ont chacun laissé un champ dehors. `core/share.ts` relisait le
+nom de séance lui-même au lieu d'appeler `parsePlanName()` — c'était le seul
+champ non borné du format. Et un `<input type="number">` laisse **taper**
+au-delà de son attribut `max` : sans le plafond de `NUMERIC_FIELDS`
+(`ui/planner.ts`), saisir 99999 séries dans une carte atteint la même faille
+sans le moindre lien.
+
 ## Le moteur (`core/queue.ts`)
 
 C'est le cœur de valeur, et il est porté à l'identique du monolithe — vérifié
@@ -391,10 +419,10 @@ sans rien charger.
 
 | Tu touches à… | L'invariant qui te mordra sinon | Skill à charger |
 |---|---|---|
-| `core/share.ts`, `core/ai-plan.ts`, `ui/share.ts`, `ui/webmcp.ts`, `ui/ai-help.ts`, la section `#aiPlan` — bref lien de partage, QR, import, pilotage par une IA | Le payload `?s=` est **dense par conception** (7 exercices : 1120 → 430 caractères, QR de 129 → 77 modules). Ne jamais le « clarifier » en objets à clés explicites. `?plan=` n'entre **jamais** dans un QR. Aucune reconnaissance d'exercice par nom traduit. | `seance-partage-liens` |
+| `core/share.ts`, `core/ai-plan.ts`, `ui/share.ts`, `ui/webmcp.ts`, `ui/ai-help.ts`, la section `#aiPlan` — bref lien de partage, QR, import, pilotage par une IA | Le payload `?s=` est **dense par conception** (7 exercices : 1120 → 430 caractères, QR de 129 → 77 modules). Ne jamais le « clarifier » en objets à clés explicites. `?plan=` n'entre **jamais** dans un QR. Aucune reconnaissance d'exercice par nom traduit. Et un lien est une entrée **hostile** : tout ce qu'il porte se borne par le haut, dans les parseurs de `core/storage.ts` et jamais ici. | `seance-partage-liens` |
 | `index.html`, `vite.config.ts`, les balises meta/JSON-LD/`og:*`, la police, le sitemap, `llms.txt` | Un élément `data-i18n` doit être **vide** dans la source : son texte français est injecté au build depuis `fr.ts`. `#plan`/`#library` réservent leur hauteur (`:empty`) — c'est ce qui tient le CLS à 0,013 au lieu de 0,43. `--disp` demande `'Archivo'`, jamais `'Archivo Expanded'` (HTTP 400 silencieux). | `seance-seo-html` |
 | `scripts/build-exercise-pages.ts`, `src/content/exercise-details/*`, `exercise-page.css`, `image-prompts.ts` | `dist/exercises/**` est **regénéré à chaque build** : l'éditer à la main est une perte de temps garantie. Le contenu long n'admet que du vérifiable et du stable — jamais d'étude citée, de % d'activation EMG ni de chiffre à fausse précision. Le `slug` est **traduit par langue**. | `seance-fiches-generees` |
-| un module `src/ui/*.ts`, le `Context`, la taille/place d'un bouton, le schéma persisté | Une saisie chiffrée passe par `renderDerived()` — reconstruire la liste ferait perdre le focus du champ. Changer la forme de ce qui est persisté impose de bumper la version **et** d'écrire la migration. | `seance-ui-module` |
+| un module `src/ui/*.ts`, le `Context`, la taille/place d'un bouton, le schéma persisté | Une saisie chiffrée passe par `renderDerived()` — reconstruire la liste ferait perdre le focus du champ, et c'est aussi pourquoi elle doit réécrire elle-même la valeur qu'elle a plafonnée. Changer la forme de ce qui est persisté impose de bumper la version **et** d'écrire la migration. | `seance-ui-module` |
 | `src/cloud/*`, `src/ui/account.ts`, le bouton de compte, la sauvegarde en ligne | La sauvegarde automatique tient à **un seul point d'accroche** : `cloud.notifyLocalChange()` dans `save()` (`ui/app.ts`). Ne jamais la recâbler site par site. Le SDK Firebase n'est chargé **que** sur un clic de connexion ou si `session-hint` dit que la personne était connectée — sinon un visiteur anonyme paierait ~200 Ko pour rien. Le document distant repasse **toujours** par les parseurs de `core/storage.ts` : c'est une entrée non fiable, au même titre qu'un lien `?s=`. **Ce qui se compte, ce sont les écritures** (20 000/jour, tous comptes confondus), pas les octets : d'où le regroupement à 4 s et la poussée conditionnelle au chargement. | *(pas de skill : tout est ici et dans `firestore.rules`)* |
 | `src/data/groups.ts`, l'ajout ou le retrait d'un groupe musculaire | Un id de groupe voyage dans les liens `?s=` : on en **ajoute**, on n'en renomme jamais. Et deux groupes se comparent par `groupsOverlap()`, jamais par `===` — l'arbre a deux étages, « jambes » recouvre « mollets ». | *(pas de skill : tout est dans la section « Les groupes musculaires forment un arbre »)* |
 | `src/data/tenants.ts`, l'ajout d'une salle de sport / d'un sous-domaine | Un exercice de salle est une ligne **perso** (`key: 'custom'` + son nom), jamais une clé de `LIBRARY` — l'y mettre réclamerait 5 pages générées, une figure et du contenu long en 5 langues. Et le sous-domaine doit être ajouté aux **domaines autorisés de Firebase Auth**, sinon la connexion Google échoue en silence. | `add-salle` |

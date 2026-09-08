@@ -1,5 +1,5 @@
 import { isExercise } from './plan';
-import { parsePlan, parseSessionConfig } from './storage';
+import { parsePlan, parsePlanName, parseSessionConfig } from './storage';
 import type { PlanItem, SessionConfig } from './types';
 
 /**
@@ -115,6 +115,10 @@ export interface SharedPlan {
  * parseurs tolerants que `core/storage.ts` plutot qu'une seconde validation.
  * Rejette un payload sans le moindre exercice (que des pauses) : ce n'est
  * pas une seance importable.
+ *
+ * Le nom passe par `parsePlanName()` et non par un test local : c'est ce
+ * parseur qui le plafonne, et le relire ici laissait justement le seul champ
+ * de ce format sans plafond.
  */
 export function decodeSharedPlan(encoded: string): SharedPlan | null {
   try {
@@ -129,7 +133,7 @@ export function decodeSharedPlan(encoded: string): SharedPlan | null {
     const items = parsePlan(rawItems);
     if (!items || !items.some(isExercise)) return null;
 
-    const name = typeof source['n'] === 'string' && source['n'].trim() ? source['n'] : null;
+    const name = parsePlanName(source['n']);
     const config = parseSessionConfig({
       mode: source['m'] === 'x' ? 'circuit' : 'classic',
       pause: source['p'],

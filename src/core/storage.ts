@@ -1,7 +1,7 @@
 import { isLocale } from '../i18n';
 import { isGroupId } from '../data/groups';
 import { findLibraryEntry, isLibraryKey } from '../data/library';
-import { uid } from './plan';
+import { MAX_NAME, uid } from './plan';
 import type { ExerciseItem, Locale, PlanItem, RestItem, SavedPlan, SessionConfig } from './types';
 
 /**
@@ -51,6 +51,45 @@ const LEGACY_KEYS = {
 const MAX_HISTORY = 200;
 
 /**
+ * Plafonds des valeurs numeriques d'une ligne.
+ *
+ * Ce parseur lit QUATRE entrees non fiables — le stockage local, un lien
+ * `?s=`, un lien `?plan=` et le document distant — et il ne les bornait que
+ * par le bas (`Math.max(1, ...)`). C'etait exploitable, pas theorique : un
+ * lien de 138 caracteres portant `sets: 1e9` faisait sauter l'onglet, parce
+ * que `buildClassic()` construit une etape par serie et que la barre de
+ * statut reconstruit la file a CHAQUE rendu. La seance ayant deja ete ecrite
+ * en `localStorage` avant ce rendu, l'app regelait a chaque rechargement, sans
+ * autre recours que vider les donnees du site.
+ *
+ * `sets` est donc le seul de ces trois plafonds qui protege la memoire ; les
+ * deux autres ne bornent que des durees affichees, et sont la par uniformite —
+ * une valeur venue de l'exterieur se borne aux deux bouts, sans exception a
+ * retenir.
+ *
+ * Genereux devant les maxima de l'interface (10 series, 3600 s d'effort, 600 s
+ * de repos) : ces bornes-ci disent « ce n'est plus une seance », pas « ce
+ * n'est pas ce que le formulaire propose ». Un lien ecrit par une IA qui
+ * demande 12 series doit s'importer tel quel, et non se faire rogner en
+ * silence.
+ */
+export const MAX_SETS = 99;
+export const MAX_REPS = 9_999;
+export const MAX_SECONDS = 86_400;
+
+/**
+ * Lignes retenues d'un deroule. Tres au-dessus de ce qu'une seance reelle
+ * contient (la bibliotheque n'a que 62 exercices) : ce plafond ne doit JAMAIS
+ * tronquer la seance de quelqu'un au rechargement, il ne vise que le lien
+ * forge — `?s=` acceptait 20 000 lignes, chacune rendue en carte.
+ *
+ * `core/ai-plan.ts` en a un autre, bien plus bas (60), qui n'est pas le meme
+ * garde-fou : la, le surplus d'un modele bavard est ignore a l'import, ici on
+ * refuse un deroule qui n'en est pas un.
+ */
+const MAX_ITEMS = 500;
+
+/**
  * Duree de vie d'une pierre tombale. Passe ce delai, on suppose que tous les
  * appareils de la personne ont vu la suppression ; garder la liste indefiniment
  * la ferait grossir sans fin dans un stockage qui n'a que quelques Mo.
@@ -93,10 +132,15 @@ function readJson(key: string): unknown {
   }
 }
 
-function positiveInt(value: unknown, fallback: number): number {
-  return typeof value === 'number' && Number.isFinite(value) && value >= 0
-    ? Math.round(value)
-    : fallback;
+/**
+ * `max` est facultatif parce qu'un des appelants n'en veut pas : `updatedAt`
+ * est un horodatage, borner sa valeur n'aurait aucun sens. Partout ailleurs il
+ * est fourni — voir MAX_SETS et ses voisins.
+ */
+function positiveInt(value: unknown, fallback: number, max?: number): number {
+  if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) return fallback;
+  const rounded = Math.round(value);
+  return max === undefined ? rounded : Math.min(rounded, max);
 }
 
 /**
@@ -123,7 +167,11 @@ function parseItem(raw: unknown): PlanItem | null {
   const id = typeof source['id'] === 'string' ? source['id'] : uid();
 
   if (source['type'] === 'rest') {
-    const item: RestItem = { id, type: 'rest', seconds: positiveInt(source['seconds'], 120) };
+    const item: RestItem = {
+      id,
+      type: 'rest',
+      seconds: positiveInt(source['seconds'], 120, MAX_SECONDS),
+    };
     return item;
   }
   if (source['type'] !== 'exercise' && source['type'] !== 'ex') return null;
@@ -138,8 +186,11 @@ function parseItem(raw: unknown): PlanItem | null {
   // `rawKey === 'custom'` est le sentinel legitime (aucun nom a en deduire) ;
   // toute AUTRE cle inconnue est vraisemblablement une cle mal formee — voir
   // humanizeUnknownKey().
-  const customName =
-    providedName || (!known && rawKey !== 'custom' ? humanizeUnknownKey(rawKey) : '');
+  // `.slice()` et pas seulement `.trim()` : le nom vient peut-etre d'un lien
+  // `?s=`, ou rien ne le bornait (voir MAX_NAME, core/plan.ts).
+  const customName = (
+    providedName || (!known && rawKey !== 'custom' ? humanizeUnknownKey(rawKey) : '')
+  ).slice(0, MAX_NAME);
 
   // Pour une cle connue, le groupe est intrinseque a l'exercice (LIBRARY),
   // jamais une valeur a faire confiance depuis le payload : c'est deja
@@ -163,10 +214,10 @@ function parseItem(raw: unknown): PlanItem | null {
     key: known ? rawKey : 'custom',
     group,
     mode,
-    sets: Math.max(1, positiveInt(source['sets'], 3)),
-    reps: Math.max(1, positiveInt(source['reps'], 10)),
-    seconds: Math.max(1, positiveInt(source['seconds'], 30)),
-    rest: positiveInt(source['rest'], 90),
+    sets: Math.max(1, positiveInt(source['sets'], 3, MAX_SETS)),
+    reps: Math.max(1, positiveInt(source['reps'], 10, MAX_REPS)),
+    seconds: Math.max(1, positiveInt(source['seconds'], 30, MAX_SECONDS)),
+    rest: positiveInt(source['rest'], 90, MAX_SECONDS),
   };
   if (!known && customName) item.customName = customName;
   return item;
@@ -174,7 +225,10 @@ function parseItem(raw: unknown): PlanItem | null {
 
 export function parsePlan(raw: unknown): PlanItem[] | null {
   if (!Array.isArray(raw)) return null;
-  const items = raw.map(parseItem).filter((item): item is PlanItem => item !== null);
+  const items = raw
+    .slice(0, MAX_ITEMS)
+    .map(parseItem)
+    .filter((item): item is PlanItem => item !== null);
 
   // Un id duplique (donnee corrompue, ou lien de partage manipule a la
   // main) ferait pointer suppression/edition d'une ligne sur la mauvaise :
@@ -196,14 +250,21 @@ export function parseSessionConfig(raw: unknown): SessionConfig {
   const source = typeof raw === 'object' && raw !== null ? (raw as Record<string, unknown>) : {};
   return {
     mode: source['mode'] === 'circuit' ? 'circuit' : 'classic',
-    pause: positiveInt(source['pause'], DEFAULT_SESSION_CONFIG.pause),
-    trans: positiveInt(source['trans'], DEFAULT_SESSION_CONFIG.trans),
+    pause: positiveInt(source['pause'], DEFAULT_SESSION_CONFIG.pause, MAX_SECONDS),
+    trans: positiveInt(source['trans'], DEFAULT_SESSION_CONFIG.trans, MAX_SECONDS),
   };
 }
 
-/** Jamais de texte traduit : une chaine vide ou absente devient `null`. */
-function parsePlanName(raw: unknown): string | null {
-  return typeof raw === 'string' && raw.trim() ? raw : null;
+/**
+ * Jamais de texte traduit : une chaine vide ou absente devient `null`.
+ *
+ * Exporte pour `core/share.ts`, qui construit sa `SharedPlan` sans passer par
+ * `parsePlanEntry()` et relisait donc le nom lui-meme — un lien `?s=` forge y
+ * a longtemps fait passer un nom de 200 000 caracteres, alors que la meme
+ * valeur venue du stockage ou du document distant etait bornee ici.
+ */
+export function parsePlanName(raw: unknown): string | null {
+  return typeof raw === 'string' && raw.trim() ? raw.slice(0, MAX_NAME) : null;
 }
 
 /**

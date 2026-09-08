@@ -1,3 +1,4 @@
+import { MAX_NAME } from '../core/plan';
 import { el } from './dom';
 
 export interface InlineInputOptions {
@@ -31,6 +32,11 @@ export function createInlineInput(trigger: HTMLElement, options: InlineInputOpti
         type: 'text',
         value: options.initialValue?.() ?? '',
         placeholder: options.placeholder?.() ?? '',
+        // Meme plafond que le champ « Exercice perso » d'index.html, et que
+        // celui applique a la relecture (`parsePlanName()`, core/storage.ts) :
+        // sans lui, un nom de seance plus long serait accepte a la saisie puis
+        // rogne au rechargement suivant, sans que rien ne le dise.
+        maxlength: String(MAX_NAME),
         'aria-label': options.label(),
       },
     });

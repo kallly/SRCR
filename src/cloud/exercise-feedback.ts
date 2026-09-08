@@ -50,7 +50,7 @@ const BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databas
  */
 const SENT_KEY = 'seance.customSent.v1';
 
-/** Meme plafond que `MAX_CUSTOM_NAME` (`core/plan.ts`). */
+/** Meme plafond que `MAX_NAME` (`core/plan.ts`). */
 const MAX_NAME = 60;
 
 /**
