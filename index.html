@@ -487,11 +487,13 @@ https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsIn
         francais injecte au build depuis fr.ts, donc les elements data-i18n
         sont VIDES ici.
 
-        Aucun style propre, volontairement : elles reprennent `.about` tel
-        quel, comme `#allGuides` qui n'ajoute que la grille de liens dont il a
-        besoin. Une version precedente leur donnait un liseré et un fond ;
-        elles ne se lisaient plus comme les sections voisines, alors qu'elles
-        vivent dans la meme colonne et disent la meme sorte de chose.
+        Elles reprennent `.about` tel quel — meme marge, meme bordure haute,
+        meme gris — et `.callout` n'ajoute QUE la couleur de leurs liens, sur
+        le modele de `#allGuides` qui n'ajoute a `.about` que la grille dont il
+        a besoin. Une version precedente donnait a `.callout` un liseré et un
+        fond : elles ne se lisaient plus comme les sections voisines, alors
+        qu'elles vivent dans la meme colonne et disent la meme sorte de chose.
+        Ne pas y revenir ; c'est le lien, et lui seul, qui doit attirer l'oeil.
 
         Un seul ecart avec les trois autres sections repliables :
         `ui/app.ts` ne les replie PAS sous 760 px, contrairement a « A
@@ -505,7 +507,7 @@ https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsIn
         ecrit dans textContent, donc un <p> traduit qui contiendrait un <a>
         emporterait le lien au premier rendu.
       -->
-      <details class="about" id="installApp" open>
+      <details class="callout about" id="installApp" open>
         <summary data-i18n="install.title"></summary>
         <p data-i18n="install.chrome"></p>
         <p data-i18n="install.ios"></p>
@@ -520,7 +522,7 @@ https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsIn
         </p>
       </details>
 
-      <details class="about" id="supportProject" open>
+      <details class="callout about" id="supportProject" open>
         <summary data-i18n="support.title"></summary>
         <p data-i18n="support.text"></p>
         <p>

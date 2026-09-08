@@ -417,6 +417,37 @@ h2::after {
 }
 
 /*
+  Encarts d'installation et de soutien : `.about` pour tout le reste, et
+  `.callout` UNIQUEMENT pour la couleur de leurs liens. Meme rapport que
+  `.guides` a `.about` — le modificateur n'ajoute que ce que son contenu
+  reclame, jamais un second habillage de section.
+
+  Le lime plutot que le gris des autres liens documentaires : ce sont les deux
+  seules adresses de l'accueil sur lesquelles on cherche vraiment a faire
+  cliquer. Le reste de l'encart, lui, reste gris comme ses voisins — c'est le
+  lien qui attire l'oeil, pas le bloc.
+
+  Meme gabarit que `.guides a` pour la zone tactile : 44px atteints par le
+  PADDING implicite de la boite inline-flex, jamais par une marge negative qui
+  grignoterait l'espace annonce. Et `text-decoration` plutot que
+  `border-bottom`, qui se collerait au bord de la boite une fois celle-ci a
+  44px, donc loin du texte.
+*/
+.callout a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--lime);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+
+.callout a:hover {
+  text-decoration-color: var(--lime);
+}
+
+/*
   Zone technique de la section « Creer une seance avec une IA ».
 
   Ce contenu s'adresse a une IA qui lit le HTML, pas au visiteur : le format du
