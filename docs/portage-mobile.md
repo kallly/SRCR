@@ -173,13 +173,24 @@ lire ni écrire quoi que ce soit. À `true`, c'est le même compte, le même uid
 et le même document que sur cirkali.fr : une séance créée sur le site apparaît
 dans l'application, et `cloud/merge.ts` n'a rien eu à apprendre.
 
-### Il reste une chose, côté iOS
+### iOS, en place aussi
 
-**`GoogleService-Info.plist`.** Toujours manquant. Il va dans
-`ios/App/App/`, et son *reversed client ID* doit être ajouté aux
-`CFBundleURLTypes` d'`Info.plist` — c'est le schéma d'URL par lequel Google
-rend la main à l'application. Sans les deux, la connexion échoue sur iOS
-seulement ; Android fonctionne.
+`ios/App/App/GoogleService-Info.plist` est là, **et référencé dans la phase
+Resources du projet Xcode** — le poser dans le dossier ne suffit pas, c'est le
+projet qui décide de ce qui entre dans l'application. Son *reversed client ID*
+est recopié dans les `CFBundleURLTypes` d'`Info.plist` : c'est le schéma d'URL
+par lequel Google rend la main après la connexion, et sans lui la feuille
+s'ouvre et ne revient jamais, sans message d'erreur.
+
+Les deux valeurs sont tenues égales à la main — un plist ne sait pas en lire un
+autre — donc le job iOS les compare avant de compiler, et vérifie aussi que le
+fichier est bien dans la phase Resources.
+
+Ce que le projet Xcode ne référence **toujours pas** : `App.entitlements`, qui
+porte `associated-domains` pour les liens universels. Le rattacher (Signing &
+Capabilities → Associated Domains) demande un profil de provisionnement qui
+autorise cette capacité, donc le compte développeur Apple. L'ajouter d'ici
+créerait un échec de compilation le jour de la première vraie signature.
 
 ### L'empreinte de signature, et le piège qu'elle tend
 

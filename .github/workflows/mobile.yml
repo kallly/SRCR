@@ -133,6 +133,30 @@ jobs:
       - run: npm run build:app
       - run: npx cap sync ios
 
+      # Deux verifications qui n'ont pas d'equivalent a la compilation, parce
+      # que leurs pannes sont muettes a l'execution.
+      #
+      # 1. GoogleService-Info.plist doit etre EMBARQUE, pas seulement pose dans
+      #    le dossier : c'est la phase Resources du projet Xcode qui decide, et
+      #    sans lui le module Firebase ne trouve pas sa configuration.
+      # 2. Le schema d'URL d'Info.plist doit egaler le REVERSED_CLIENT_ID. Ils
+      #    sont recopies a la main faute qu'un plist puisse en lire un autre ;
+      #    s'ils divergent, la feuille de connexion Google s'ouvre et ne revient
+      #    jamais, sans message d'erreur.
+      - name: Verifier la configuration Firebase iOS
+        run: |
+          if ! grep -q "GoogleService-Info.plist in Resources" ios/App/App.xcodeproj/project.pbxproj; then
+            echo "::error::GoogleService-Info.plist n'est pas dans la phase Resources du projet Xcode : il ne sera pas embarque dans l'application."
+            exit 1
+          fi
+          reversed=$(plutil -extract REVERSED_CLIENT_ID raw ios/App/App/GoogleService-Info.plist)
+          scheme=$(plutil -extract CFBundleURLTypes.0.CFBundleURLSchemes.0 raw ios/App/App/Info.plist)
+          if [ "$reversed" != "$scheme" ]; then
+            echo "::error::Le schema d'URL d'Info.plist ($scheme) ne correspond pas au REVERSED_CLIENT_ID ($reversed). La connexion Google s'ouvrira sans jamais revenir."
+            exit 1
+          fi
+          echo "Schema de retour concordant : $scheme"
+
       # Capacitor 8 passe par Swift Package Manager et non plus CocoaPods :
       # pas d'etape `pod install`, mais une resolution de paquets explicite,
       # pour que son echec eventuel se lise ici plutot que noye dans le log de
