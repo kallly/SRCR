@@ -28,7 +28,14 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 18px 20px 0;
+  /*
+    Le lecteur est en `position: fixed; inset: 0` : il couvre donc la barre
+    d'etat, et « Quitter » passait dessous. Les insets lateraux comptent ici
+    et pas dans `.wrap` — cette barre va d'un bord a l'autre, donc une encoche
+    en paysage tombe pile sur le bouton.
+  */
+  padding: calc(18px + var(--safe-area-inset-top)) calc(20px + var(--safe-area-inset-right)) 0
+    calc(20px + var(--safe-area-inset-left));
   font-size: 12.5px;
   color: var(--paper-dim);
 }
@@ -354,7 +361,8 @@
 }
 
 .rfoot {
-  padding: 16px 20px calc(22px + env(safe-area-inset-bottom));
+  padding: 16px calc(20px + var(--safe-area-inset-right))
+    calc(22px + var(--safe-area-inset-bottom)) calc(20px + var(--safe-area-inset-left));
   display: flex;
   gap: 10px;
 }
@@ -444,7 +452,7 @@
   }
 
   .rfoot {
-    padding: 10px 20px calc(14px + env(safe-area-inset-bottom));
+    padding: 10px 20px calc(14px + var(--safe-area-inset-bottom));
   }
 
   .rfoot button {

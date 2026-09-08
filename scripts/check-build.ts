@@ -576,6 +576,30 @@ check(
   'la hierarchie a disparu de llms.txt',
 );
 
+// Zones sures : `env(safe-area-inset-*)` ne repond PAS dans le WebView
+// d'Android — le plugin SystemBars de Capacitor pose a la place des
+// proprietes personnalisees du meme nom sur `documentElement`. Une feuille qui
+// ecrit `env(...)` en direct produit donc un ecart invisible partout sauf sur
+// un telephone Android, ou les boutons passent sous les icones de batterie.
+// C'est exactement ce qui est arrive au premier APK. `tokens.css` est le seul
+// endroit ou l'`env()` a le droit d'apparaitre : il l'enferme dans une
+// variable que les deux plateformes savent remplir.
+const STYLE_DIR = join(process.cwd(), 'src', 'styles');
+// Commentaires retires d'abord : `base.css` EXPLIQUE pourquoi l'onglet d'aide
+// n'est plus hors flux, et cite `env(safe-area-inset-*)` en prose. Une
+// mention n'est pas un appel.
+const withoutComments = (css: string): string => css.replace(/\/\*[\s\S]*?\*\//g, '');
+const strayEnv = readdirSync(STYLE_DIR)
+  .filter((name) => name.endsWith('.css') && name !== 'tokens.css')
+  .filter((name) =>
+    /env\(\s*safe-area-inset/.test(withoutComments(readFileSync(join(STYLE_DIR, name), 'utf8'))),
+  );
+check(
+  'aucune feuille hors tokens.css n\'appelle env(safe-area-inset-*)',
+  strayEnv.length === 0,
+  `${strayEnv.join(', ')} — utiliser var(--safe-area-inset-*)`,
+);
+
 console.log('\nInstallation hors ligne');
 
 // Le manifeste et le service worker sont ce qui rend le site installable, et

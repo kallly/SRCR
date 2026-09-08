@@ -72,6 +72,33 @@
 }
 
 :root {
+  /*
+    Zones sures : la barre d'etat en haut, la barre de gestes en bas, une
+    encoche sur les cotes en paysage.
+
+    Deux sources, une seule variable, et c'est tout l'interet du detour. Sur le
+    web et sur iOS, c'est `env(safe-area-inset-*)` qui repond, a condition que
+    la balise viewport porte `viewport-fit=cover` (index.html). Sur Android,
+    NON : le WebView ne remplit pas ces `env()`, et le plugin SystemBars de
+    Capacitor pose a la place des proprietes personnalisees du meme nom
+    directement sur `documentElement`. Un style en ligne l'emporte sur cette
+    regle-ci, donc Android ecrase ces valeurs et le reste du fichier ne sait
+    pas laquelle des deux sources l'a servi.
+
+    Ecrire `env(safe-area-inset-top)` ailleurs dans les feuilles est donc un
+    bug qui ne se voit que sur un telephone Android : les boutons passent sous
+    les icones de batterie. Toujours `var(--safe-area-inset-*)`.
+
+    Le repli `0px` n'est pas decoratif : sans lui, `calc(28px + env(...))` est
+    une expression INVALIDE partout ou l'`env()` n'existe pas, donc toute la
+    declaration est ignoree — et c'est le padding entier qui disparait, pas
+    seulement la marge de securite.
+  */
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-right: env(safe-area-inset-right, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-inset-left: env(safe-area-inset-left, 0px);
+
   --bg: #0e1210;
   --surface: #161d19;
   --surface-2: #1d2620;

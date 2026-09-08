@@ -914,7 +914,7 @@
   position: fixed;
   left: 16px;
   right: 16px;
-  bottom: calc(84px + env(safe-area-inset-bottom));
+  bottom: calc(84px + var(--safe-area-inset-bottom));
   z-index: 30;
   display: none;
   align-items: center;
@@ -948,7 +948,7 @@
   bottom: 0;
   background: var(--surface);
   border-top: 1px solid var(--line);
-  padding: 13px 18px calc(13px + env(safe-area-inset-bottom));
+  padding: 13px 18px calc(13px + var(--safe-area-inset-bottom));
   display: flex;
   gap: 12px;
   align-items: center;

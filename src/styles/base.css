@@ -22,7 +22,17 @@ body {
 .wrap {
   max-width: 560px;
   margin: 0 auto;
-  padding: 28px 18px 130px;
+  /*
+    Le haut porte la zone sure : dans l'application native, la fenetre est en
+    bord-a-bord (Android 15 l'impose au-dela de targetSdk 35) et l'en-tete se
+    retrouvait sinon SOUS les icones de batterie et de reseau. Vaut 0 sur le
+    web, ou l'expression se reduit a 28px.
+
+    Pas d'inset lateral ici : la colonne est bornee a 560px et centree, donc
+    une encoche en paysage tombe dans la marge, jamais sur le contenu. Le
+    lecteur, lui, est en pleine largeur et en a besoin (voir .rhead).
+  */
+  padding: calc(28px + var(--safe-area-inset-top)) 18px 130px;
 }
 
 /*

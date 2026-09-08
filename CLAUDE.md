@@ -499,7 +499,7 @@ sans rien charger.
 | un module `src/ui/*.ts`, le `Context`, la taille/place d'un bouton, le schéma persisté | Une saisie chiffrée passe par `renderDerived()` — reconstruire la liste ferait perdre le focus du champ, et c'est aussi pourquoi elle doit réécrire elle-même la valeur qu'elle a plafonnée. `weight` est le seul champ non entier : il a sa propre branche, `NUMERIC_FIELDS` arrondirait 2,5 kg à 3. Changer la forme de ce qui est persisté impose de bumper la version **et** d'écrire la migration. | `seance-ui-module` |
 | `src/cloud/*`, `src/ui/account.ts`, le bouton de compte, la sauvegarde en ligne | La sauvegarde automatique tient à **un seul point d'accroche** : `cloud.notifyLocalChange()` dans `save()` (`ui/app.ts`). Ne jamais la recâbler site par site. Le SDK Firebase n'est chargé **que** sur un clic de connexion ou si `session-hint` dit que la personne était connectée — sinon un visiteur anonyme paierait ~200 Ko pour rien. Le document distant repasse **toujours** par les parseurs de `core/storage.ts` : c'est une entrée non fiable, au même titre qu'un lien `?s=`. **Ce qui se compte, ce sont les écritures** (20 000/jour, tous comptes confondus), pas les octets : d'où le regroupement à 4 s et la poussée conditionnelle au chargement. | *(pas de skill : tout est ici et dans `firestore.rules`)* |
 | `src/data/groups.ts`, l'ajout ou le retrait d'un groupe musculaire | Un id de groupe voyage dans les liens `?s=` : on en **ajoute**, on n'en renomme jamais. Et deux groupes se comparent par `groupsOverlap()`, jamais par `===` — l'arbre a deux étages, « jambes » recouvre « mollets ». | *(pas de skill : tout est dans la section « Les groupes musculaires forment un arbre »)* |
-| `capacitor.config.ts`, `android/`, `ios/`, `scripts/build-app.ts`, `src/platform/native.ts` — bref l'application mobile | Un seul bundle pour les deux cibles : `isNativeApp()` répond à l'exécution, sans importer `@capacitor/core`. Dans le WebView, `location.origin` vaut `https://localhost` — toute adresse publique passe par `shareBase()` ou `siteHref()`. Ni publicité ni analytique dans le binaire (blocs `<!--WEB_ONLY-->`). `cap sync` recopie le bundle, il ne le lie pas. | *(pas de skill : la marche à suivre est dans `docs/portage-mobile.md`)* |
+| `capacitor.config.ts`, `android/`, `ios/`, `scripts/build-app.ts`, `src/platform/native.ts` — bref l'application mobile | Un seul bundle pour les deux cibles : `isNativeApp()` répond à l'exécution, sans importer `@capacitor/core`. Dans le WebView, `location.origin` vaut `https://localhost` — toute adresse publique passe par `shareBase()` ou `siteHref()`. Ni publicité ni analytique dans le binaire (blocs `<!--WEB_ONLY-->`). `env(safe-area-inset-*)` ne répond pas sur Android : toujours `var(--safe-area-inset-*)`. `cap sync` recopie le bundle, il ne le lie pas. | *(pas de skill : la marche à suivre est dans `docs/portage-mobile.md`)* |
 | `src/data/tenants.ts`, l'ajout d'une salle de sport / d'un sous-domaine | Un exercice de salle est une ligne **perso** (`key: 'custom'` + son nom), jamais une clé de `LIBRARY` — l'y mettre réclamerait 5 pages générées, une figure et du contenu long en 5 langues. Et le sous-domaine doit être ajouté aux **domaines autorisés de Firebase Auth**, sinon la connexion Google échoue en silence. | `add-salle` |
 | une clé de traduction, un texte d'interface | `fr.ts` d'abord : les quatre autres langues deviennent alors des erreurs de compilation. Jamais de pluriel recomposé à la main. | `add-i18n-key` |
 | `src/data/figures.ts`, le champ `motion` de `library.ts`, le bloc `.fig-svg` — bref une figure d'exercice | Le bloc CSS `.fig-svg` existe en **deux copies** (bundle + `exercise-page.css`, hors bundle) et `check-build.ts` échoue si elles divergent. `fill: none` sur `.s` n'est pas cosmétique : un `<path>` sans `fill` est rempli en **noir**, invisible sur le thème sombre et pas sur le clair. Toutes les figures de profil regardent à gauche, et la flèche suit `motion`, pas `mode`. | `seance-figures` |
@@ -544,6 +544,18 @@ comme `check-build.ts`, parce que la CI ne construit pas l'application.
 `llms.txt` et les fichiers de l'hébergeur n'ont pas d'usage dans un binaire :
 ce sont des surfaces d'indexation, elles vivent sur cirkali.fr et
 l'application y renvoie par des liens absolus.
+
+**`env(safe-area-inset-*)` ne répond pas sur Android**, et c'est le premier
+bug qu'a montré l'APK : l'en-tête et le bouton « Quitter » du lecteur
+passaient sous les icônes de batterie. Le WebView d'Android ne remplit pas ces
+`env()` ; le plugin `SystemBars` de Capacitor pose à la place des propriétés
+personnalisées du même nom sur `documentElement`, qui écrasent la règle
+`:root`. Une seule source côté feuilles, donc : **`var(--safe-area-inset-*)`
+partout**, définies dans `tokens.css` avec un repli `env(…, 0px)` — et le
+repli n'est pas décoratif, un `calc()` contenant un `env()` inexistant est une
+déclaration invalide, donc *tout* le padding disparaît. `check-build.ts`
+refuse un `env(safe-area-…)` ailleurs que dans `tokens.css`. La fenêtre est
+bord-à-bord par obligation : Android 15 l'impose au-delà de `targetSdk` 35.
 
 **Un lien profond est la seule entrée de l'application.** Toute l'importation
 de séance passe par une URL, et dans un binaire la page ne navigue jamais :
