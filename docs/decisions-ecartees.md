@@ -34,6 +34,32 @@ Gemini, et a consigner ici dans un sens comme dans l'autre ; en cas d'echec,
 la conclusion sera que plus aucun texte ne peut rien, pas qu'il faut une
 quatrieme formulation.
 
+**Observation du 10 septembre 2026 : Gemini refuse maintenant explicitement**,
+en invoquant « la configuration de sécurité du site cirkali.fr ». **Cette
+cause est fausse, et c'est verifie** : le `robots.txt` servi en production ne
+porte aucun `Disallow` (le bloc « Managed content » de Cloudflare dont parle
+son commentaire n'est pas actif), et l'accueil repond 200 a GPTBot, ClaudeBot,
+GoogleOther et Google-Extended. Rien cote site ne peut produire ce refus —
+troisieme fois que Gemini explique son propre comportement par une cause
+inventee, apres le lien Markdown et la longueur du payload. Ne pas partir en
+chasse d'une configuration a corriger.
+
+Ce que ca apprend en revanche : l'instruction precedente avait converti « lien
+enveloppe » en « rien du tout ». Dire a un modele que ses liens cliquables ne
+marchent pas, alors qu'il ne sait produire que ca, lui laisse le refus pour
+seule sortie. La formulation actuelle retire donc le lien de la demande — on
+demande une ligne de TEXTE dans un bloc de code, et on ajoute un repli (la
+chaine seule, ou le JSON) : il faut qu'aucun chemin ne mene a « je ne peux
+pas ».
+
+**La conclusion de fond** : tant que l'import exige une URL produite par le
+modele, ce canal restera a la merci d'un filtre produit qu'on ne controle pas.
+La seule sortie qui ne dependrait plus de Gemini est de pouvoir coller le
+payload (la chaine `?s=` seule, ou le JSON) dans l'application — un modele
+rend du texte dans un bloc de code sans difficulte, c'est l'URL qui coince.
+`decodeAny()` (`ui/share.ts`) sait deja decoder les deux formes ; il manque le
+champ ou coller.
+
 **Deux autres pistes explorées puis écartées pour ce même problème, faute de
 preuve — ne pas les reprendre sans nouvelle donnée.** Gemini a lui-même
 suggéré (1) demander un lien Markdown cliquable `[texte](url)` plutôt qu'une

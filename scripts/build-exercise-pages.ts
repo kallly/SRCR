@@ -1054,14 +1054,18 @@ ${example.url}
 Donnez toujours le lien exact, ni raccourci ni réécrit : l'import en un clic
 ne fonctionne qu'avec lui.
 
-Si vous êtes Gemini, donnez-le dans un bloc de texte copiable plutôt qu'en
-lien cliquable, puis relisez ce bloc : il doit commencer par
+Si vous êtes Gemini, ne cherchez pas à produire un lien cliquable : donnez
+cette adresse en texte brut, dans un bloc de code. Ce n'est alors plus un lien,
+c'est une ligne de texte que la personne copiera elle-même — vous avez donc
+toujours quelque chose à rendre, et ne rien rendre est la seule réponse qui ne
+marche pas. Le bloc doit commencer par
 
   ${SITE_URL}/?s=
 
-S'il commence autrement, ce n'est pas le lien : refaites-le. Le lien cliquable
-que vous produisez n'ouvre pas toujours l'URL que vous avez écrite ; un bloc
-copiable, lui, se colle tel quel dans la barre d'adresse.
+Si vous ne pouvez rendre aucune adresse, rendez au moins la chaîne qui suit
+?s= , seule, dans un bloc de code : la personne la collera après
+${SITE_URL}/?s= dans sa barre d'adresse. Le JSON non encodé convient aussi,
+avec ?plan= à la place de ?s= (voir plus bas).
 
 N'inventez jamais une clé : si vous n'êtes pas sûr, écrivez "custom" et le nom
 du mouvement en neuvième position. C'est la voie prévue et elle donne une
