@@ -175,6 +175,12 @@ n'a aucune issue. Trois invariants :
 - **la coercition chaîne→nombre (`"3"` → 3) vit dans `ai-plan.ts`**, jamais
   en relâchant `positiveInt()` : le parseur du schéma persisté n'a pas à
   s'assouplir pour une source tierce.
+`llms.txt` demande en plus de **ne jamais inventer une clef** et donne la
+sortie de secours dans la meme phrase (`custom` + le nom en neuvieme
+position), et precise que le groupe d'une clef connue est **ignore** — l'UI
+l'impose deja, autant ne pas laisser le modele depenser une devinette sur un
+champ qui ne compte que pour `custom`.
+
 Une clé inconnue devient un exercice perso **portant ce nom** (et non un
 `custom` anonyme) : le modèle peut toujours écrire `ex`. Mais **jamais de
 reconnaissance par nom traduit** (« Planche » → `plank`) : ça ferait dépendre
@@ -243,13 +249,84 @@ l'UI le permet aussi.
 recherche** (`google.com/search?q=<lien>` chez Gemini, notamment) : un
 comportement du produit, pas quelque chose que ce site contrôle. L'instruction
 « donnez ce lien tel quel, jamais enveloppé » vit dans `aiPlan.rawLink`
-(section `#aiPlan` de l'accueil, la page de spec générée et `llms.txt`) —
+(section `#aiPlan` de l'accueil) et dans la page de spec générée —
 **volontairement pas dans les prompts prêts à copier** (`aiHelp.createPrompt`/
 `.modifyPrompt`, `ui/ai-help.ts`, redevenus plus courts) : le but est qu'une
 IA qui lit la page l'applique d'elle-même, sans dépendre d'un prompt
 particulier tapé par l'utilisateur — cohérent avec le principe déjà posé pour
 tout `#aiPlan` (« documentée dans la page elle-même pour que le modèle le
 découvre sans qu'on le lui explique »).
+
+**La doctrine : cadre strict dans le texte, rattrapage silencieux dans le
+code.** Un modele qui se trompe d'un cheveu ne s'en apercoit pas — Gemini ne
+sait pas qu'il a enveloppe son lien dans une recherche — et la personne qui
+recoit le lien encore moins : elle voit une page qui ne s'ouvre pas. On joue
+donc sur les deux tableaux. Cote texte, on dit exactement ce qu'on attend, on
+donne la solution plutot que l'interdit, et on s'adresse nommement au produit
+concerne quand le probleme lui est propre. Cote code, on repare en silence ce
+qui est reparable sans ambiguite. **Les filets ne se documentent jamais aux
+IA** : un modele qui sait qu'un JSON en clair passe dans `?s=` arretera
+d'encoder, et on perdra le format canonique pour gagner une tolerance qu'on
+avait deja.
+
+**Ce qui est rattrape, et pourquoi chaque cas est sans ambiguite.**
+- `repairBase64Url()` (`core/share.ts`) : un espace redevient `+` (c'est du
+  base64 **standard** ecrit la ou on demande base64url, que
+  `URLSearchParams` a deja decode), les autres blancs disparaissent (retour a
+  la ligne d'un bloc de code recopie), et la ponctuation collee **en fin** de
+  chaine tombe (`)`, `.`, `»`, le `]` d'un lien Markdown). Rien n'est touche
+  au milieu : la, un caractere etranger signale une chaine vraiment corrompue,
+  et deviner importerait une autre seance que celle qui a ete partagee.
+- `carveJson()` (`core/ai-plan.ts`) : le JSON de `?plan=` entoure de texte ou
+  d'un bloc ```` ```json ```` se decoupe de la premiere ouvrante a la derniere
+  fermante.
+- `decodeAny()` (`ui/share.ts`) : **le nom du parametre est un indice, pas une
+  declaration.** Du JSON en clair dans `?s=` ou du base64 dans `?plan=` essaie
+  l'autre decodeur — une chaine base64url ne commence jamais par `{`, donc la
+  forme tranche sans risque. Si les deux parametres sont la et que le premier
+  echoue, le second est tente. Ce point d'arbitrage est **unique**, comme
+  `save()` cote etat : ne pas disperser la tolerance dans les deux decodeurs.
+- `createSlugKeyResolver()` (`ui/guides-index.ts`), branche sur
+  `setExerciseKeyResolver()` (`core/storage.ts`) : une clef ni connue ni
+  `custom` est cherchee dans le catalogue **slug -> clef des cinq langues**
+  (`chat-vache` comme `cat-cow` -> `catCow`), separateurs et casse ignores.
+  **Ce catalogue n'est pas embarque** : il est deja livre dans l'accueil, en
+  attributs `data-key`/`data-slug-<langue>` sur l'index des fiches
+  (`injectExerciseIndex()`, vite.config.ts), donc on le lit dans le DOM — zero
+  octet de plus, et incapable de diverger de `LIBRARY` puisque c'est la meme
+  injection qui sert les liens. Table construite au **premier appel
+  seulement**, donc jamais sur un chargement sain. Un slug qui designerait
+  deux clefs est refuse (`null`) plutot qu'arbitre.
+  **Ce n'est pas la reconnaissance par nom traduit qu'on a ecartee** : les
+  cinq langues sont dans la meme table, donc la resolution ne depend pas de
+  la langue active et un lien produit en francais s'importe a l'identique en
+  italien ; et elle ne s'applique qu'a la POSITION de la clef, jamais a un nom
+  saisi — `custom` reste exempte, donc un exercice perso legitime n'est jamais
+  converti en exercice de la bibliotheque.
+- `humanizeUnknownKey()` (`core/storage.ts`) couvre desormais les deux formes
+  de clef devinee, le slug (`chat-vache`) et le camelCase approchant
+  (`inclinedPushup`). Et `?plan=` ne fabrique plus son propre nom : il passe
+  la clef inconnue telle quelle a `parseItem()`, seul endroit qui sache en
+  tirer un nom — deux regles de mise en forme auraient diverge alors que les
+  deux formats recoivent la meme erreur. Un `name` explicite l'emporte
+  toujours sur la clef, meme quand les deux sont la.
+
+**`llms.txt` ne porte plus l'instruction « jamais enveloppe » : il en porte une
+autre, adressee a Gemini.** Plutot que de demander de retirer l'enveloppe — ce que le propre
+test de Gemini a deja vu echouer, l'enveloppe venant vraisemblablement d'un
+filtre produit insensible au texte environnant — il demande de livrer le lien
+dans un **bloc de texte copiable** et non en lien cliquable, **et de verifier
+que ce bloc commence par `https://cirkali.fr/?s=`** : on ne combat plus le
+filtre, on sort du format ou il s'applique, et on donne au modele le seul
+critere de tout le fichier qu'il puisse verifier lui-meme. Sans cet ancrage,
+un bloc copiable contenant l'URL enveloppee satisfait l'instruction a la
+lettre et ne sert a rien. Divergence assumee entre
+les deux surfaces, et le seul endroit ou elle est tenable : `llms.txt` est
+lu par des outils agentiques, il n'est ni traduit ni affiche a un humain,
+donc on peut y nommer un produit — `aiPlan.rawLink` vit en cinq langues dans
+une page publique, ou « si vous etes Gemini » serait du texte d'interface
+adresse a personne. Efficacite **non verifiee** elle aussi : ne pas la
+presenter comme reglee.
 
 **Deux mitigations de plus ont ete examinees puis ecartees** (lien Markdown
 cliquable, raccourcissement du payload), ainsi que la note d'honnetete sur

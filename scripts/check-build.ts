@@ -74,6 +74,23 @@ check('aucune cle inconnue dans l\'index des fiches', unknown.length === 0, unkn
 const visible = LIBRARY.filter((e) => !index.includes(`<code>${e.key}</code>`)).map((e) => e.key);
 check('chaque cle est aussi visible en <code>', visible.length === 0, visible.join(', '));
 
+// Ces attributs portent DEUX fonctions, et la seconde est muette si elle
+// disparait : ui/guides-index.ts reoriente les liens vers la langue active
+// (visible tout de suite), et `createSlugKeyResolver()` les relit a l'envers
+// pour rattraper une IA qui a pris un slug de fiche pour une cle. Ce
+// catalogue n'est nulle part ailleurs — il n'est pas embarque dans le bundle,
+// justement parce qu'il est deja livre ici. Sans lui, un tel lien redevient
+// une seance entiere d'« Exercice perso » sans que rien n'echoue.
+for (const locale of Object.keys(DETAILS_BY_LOCALE) as Locale[]) {
+  const expected = Object.keys(DETAILS_BY_LOCALE[locale]!).length;
+  const found = [...index.matchAll(new RegExp(`data-slug-${locale}="`, 'g'))].length;
+  check(
+    `l'index des fiches porte les ${expected} slugs "${locale}"`,
+    found === expected,
+    `${found} trouve(s)`,
+  );
+}
+
 for (const [i, block] of [...index.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].entries()) {
   let ok = true;
   let err = '';

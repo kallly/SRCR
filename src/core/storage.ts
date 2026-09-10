@@ -182,8 +182,48 @@ function optionalWeight(value: unknown): number | undefined {
  * exercice de la seance, rendant le lien inutilisable une fois importe.
  */
 function humanizeUnknownKey(key: string): string {
-  const spaced = key.replace(/[-_]+/g, ' ').trim();
+  // Les deux formes vues : le slug d'une fiche (`chat-vache`) et une clef
+  // camelCase approchante (`inclinedPushup`), qu'un modele fabrique quand il
+  // devine au lieu d'ecrire `custom`. Un nom imparfait reste lisible ; c'est
+  // l'absence de nom qui rendait la seance meconnaissable.
+  const spaced = key
+    .replace(/[-_]+/g, ' ')
+    .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+    .trim();
   return spaced ? spaced.charAt(0).toUpperCase() + spaced.slice(1) : '';
+}
+
+/**
+ * Derniere chance d'une clef mal formee, avant de la degrader en exercice
+ * perso : un resolveur optionnel, branche par l'interface.
+ *
+ * Le catalogue qui permet de reconnaitre un slug de fiche (`chat-vache` ->
+ * `catCow`) est **deja livre**, en attributs `data-key`/`data-slug-<langue>`
+ * sur l'index des fiches de l'accueil (`injectExerciseIndex()`,
+ * vite.config.ts). Le lire dans le DOM ne coute donc pas un octet de plus, la
+ * ou embarquer les 310 slugs dans le bundle en aurait coute quelques milliers
+ * pour un chemin de secours — et ne peut pas diverger de `LIBRARY`, puisque
+ * c'est la meme injection qui sert les liens. D'ou ce point d'accroche plutot
+ * qu'un import : `core/` ne touche pas au DOM (voir CLAUDE.md), c'est
+ * `ui/guides-index.ts` qui fournit la fonction et `ui/app.ts` qui la branche.
+ *
+ * Pose ici, dans `parseItem()`, et pas dans les decodeurs de lien : c'est le
+ * goulot des quatre entrees (localStorage, `?s=`, `?plan=`, document
+ * distant), exactement comme les bornes.
+ *
+ * Ce n'est PAS la reconnaissance par nom traduit qu'on a ecartee (« Planche »
+ * -> `plank`) : le catalogue porte les slugs des cinq langues a la fois, donc
+ * la resolution ne depend pas de la langue active et un lien produit en
+ * francais s'importe a l'identique en italien. Et elle ne s'applique qu'a la
+ * POSITION de la clef, jamais a un nom saisi : `custom` reste exempte, donc
+ * un exercice perso legitime n'est jamais converti.
+ */
+type ExerciseKeyResolver = (rawKey: string) => string | undefined;
+
+let resolveForeignKey: ExerciseKeyResolver | undefined;
+
+export function setExerciseKeyResolver(resolver: ExerciseKeyResolver): void {
+  resolveForeignKey = resolver;
 }
 
 /** Accepte aussi bien une ligne v4 qu'une ligne v3 (`type: 'ex'`, nom inline). */
@@ -203,7 +243,13 @@ function parseItem(raw: unknown): PlanItem | null {
   if (source['type'] !== 'exercise' && source['type'] !== 'ex') return null;
 
   const rawKey = typeof source['key'] === 'string' ? source['key'] : 'custom';
-  const known = isLibraryKey(rawKey);
+  // Une clef ni connue ni `custom` est mal formee : on laisse le resolveur
+  // tenter de la reconnaitre avant de la degrader (voir plus haut).
+  const key =
+    rawKey === 'custom' || isLibraryKey(rawKey)
+      ? rawKey
+      : (resolveForeignKey?.(rawKey) ?? rawKey);
+  const known = isLibraryKey(key);
   // v3 : le nom etait recopie dans la ligne. On ne le garde que s'il ne peut
   // pas etre retrouve depuis la bibliotheque, c'est-a-dire pour un perso.
   const legacyName = typeof source['name'] === 'string' ? source['name'].trim() : '';
@@ -215,7 +261,7 @@ function parseItem(raw: unknown): PlanItem | null {
   // `.slice()` et pas seulement `.trim()` : le nom vient peut-etre d'un lien
   // `?s=`, ou rien ne le bornait (voir MAX_NAME, core/plan.ts).
   const customName = (
-    providedName || (!known && rawKey !== 'custom' ? humanizeUnknownKey(rawKey) : '')
+    providedName || (!known && key !== 'custom' ? humanizeUnknownKey(key) : '')
   ).slice(0, MAX_NAME);
 
   // Pour une cle connue, le groupe est intrinseque a l'exercice (LIBRARY),
@@ -228,7 +274,7 @@ function parseItem(raw: unknown): PlanItem | null {
   // sans ce garde-fou, `isGroupId('pull')` est faux et le groupe retombait
   // sur 'core' au lieu du vrai groupe de l'exercice (epaules, dos...).
   const group = known
-    ? (findLibraryEntry(rawKey)?.group ?? 'core')
+    ? (findLibraryEntry(key)?.group ?? 'core')
     : isGroupId(source['group'])
       ? source['group']
       : 'core';
@@ -237,7 +283,7 @@ function parseItem(raw: unknown): PlanItem | null {
   const item: ExerciseItem = {
     id,
     type: 'exercise',
-    key: known ? rawKey : 'custom',
+    key: known ? key : 'custom',
     group,
     mode,
     sets: Math.max(1, positiveInt(source['sets'], 3, MAX_SETS)),

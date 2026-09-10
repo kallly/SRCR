@@ -43,3 +43,72 @@ export function createGuidesIndex(): { render: () => void } {
 
   return { render };
 }
+
+/**
+ * Reduit un identifiant a sa forme comparable : minuscules, accents retires,
+ * tout separateur efface. `Chat-Vache`, `chat vache` et `chatvache` se
+ * rejoignent donc, et `catCow` rejoint le slug anglais `cat-cow`.
+ *
+ * Effacer les separateurs plutot que les normaliser rattrape aussi la casse
+ * d'une clef interne ecrite en minuscules (`catcow`), ce que `?s=` ne savait
+ * pas faire. Sans risque de confusion : seule une clef NI connue NI `custom`
+ * arrive jusqu'ici (voir `setExerciseKeyResolver`, core/storage.ts), donc
+ * jamais un nom saisi par quelqu'un.
+ */
+function comparable(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '');
+}
+
+/**
+ * Le meme index des fiches, lu dans l'autre sens : du slug vers la clef.
+ *
+ * `createGuidesIndex()` ci-dessus va de la clef vers l'URL de la fiche ; ici
+ * on remonte, pour rattraper une IA qui a pris le slug visible dans une URL
+ * (`chat-vache`) pour la clef interne (`catCow`) — piege verifie avec Gemini,
+ * voir `humanizeUnknownKey()` (core/storage.ts), qui reste le filet suivant
+ * quand meme ce catalogue ne reconnait rien.
+ *
+ * Dans ce module et pas dans un module a lui : c'est ici que vit la
+ * connaissance du contrat `data-key`/`data-slug-<langue>` depose par
+ * `injectExerciseIndex()` (vite.config.ts). Deux lecteurs de ces attributs
+ * dans deux fichiers, c'est la copie oubliee au premier changement de forme.
+ *
+ * La table est construite **au premier appel seulement**, donc jamais sur un
+ * chargement normal : un lien correct, un stockage sain et un document
+ * distant sain ne contiennent aucune clef mal formee.
+ */
+export function createSlugKeyResolver(): (rawKey: string) => string | undefined {
+  let table: Map<string, string | null> | undefined;
+
+  function build(): Map<string, string | null> {
+    const map = new Map<string, string | null>();
+    const add = (value: string | undefined, key: string): void => {
+      const id = comparable(value ?? '');
+      if (!id) return;
+      const seen = map.get(id);
+      // Deux clefs pour un meme identifiant : on refuse plutot que de choisir
+      // (`null`). Meme doctrine que partout dans les parseurs — on repare ce
+      // qui est sans ambiguite, on ne devine jamais.
+      map.set(id, seen === undefined || seen === key ? key : null);
+    };
+
+    for (const link of document.querySelectorAll<HTMLAnchorElement>('.guides a[data-key]')) {
+      const key = link.dataset['key'];
+      if (!key) continue;
+      add(key, key);
+      for (const [name, value] of Object.entries(link.dataset)) {
+        if (name.startsWith('slug')) add(value, key);
+      }
+    }
+    return map;
+  }
+
+  return (rawKey) => {
+    table ??= build();
+    return table.get(comparable(rawKey)) ?? undefined;
+  };
+}

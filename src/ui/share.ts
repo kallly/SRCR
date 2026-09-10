@@ -290,13 +290,32 @@ export function createShare(ctx: Context): Share {
    * non : c'est ce qui permet a l'appelant de savoir qu'il a affaire a un lien
    * de seance et pas a une adresse quelconque.
    */
+  /**
+   * Le choix du parametre est un indice, pas une declaration. Un modele met
+   * regulierement du JSON en clair dans `?s=` ou du base64 dans `?plan=` — il
+   * n'a aucun moyen de s'en apercevoir, et la personne qui recoit le lien
+   * encore moins. La forme du contenu tranche donc avant le nom du parametre,
+   * et l'autre decodeur sert de repli. Aucun risque de confusion : une chaine
+   * base64url ne commence jamais par `{` ni par `[`.
+   */
+  function decodeAny(raw: string): SharedPlan | null {
+    const trimmed = raw.trim();
+    return /^[{[]/.test(trimmed) || trimmed.startsWith('%7B')
+      ? (decodeAiPlan(trimmed) ?? decodeSharedPlan(trimmed))
+      : (decodeSharedPlan(trimmed) ?? decodeAiPlan(trimmed));
+  }
+
   function importFromParams(params: URLSearchParams): boolean {
     const encoded = params.get(SHARE_QUERY_PARAM);
     const aiRaw = params.get(AI_QUERY_PARAM);
     if (encoded === null && aiRaw === null) return false;
 
-    // `?s=` prioritaire : c'est le format que l'app produit elle-meme.
-    const shared = encoded !== null ? decodeSharedPlan(encoded) : decodeAiPlan(aiRaw ?? '');
+    // `?s=` prioritaire : c'est le format que l'app produit elle-meme. Si le
+    // parametre annonce echoue, on essaie l'autre plutot que d'echouer : un
+    // modele qui envoie les deux par prudence s'en sort des que l'un tient.
+    const shared =
+      (encoded !== null ? decodeAny(encoded) : null) ??
+      (aiRaw !== null ? decodeAny(aiRaw) : null);
     if (!shared) {
       // Un lien casse echouait en silence. Acceptable tant qu'il venait d'un
       // tiers (messagerie qui tronque) et que l'utilisateur n'y pouvait rien ;

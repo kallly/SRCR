@@ -97,9 +97,15 @@ function readMode(value: unknown): 'reps' | 'time' | undefined {
  * Reconstruit une ligne au format attendu par `parsePlan()`.
  *
  * Trois inferences font tout le travail de simplification cote IA :
- * - une clef inconnue devient un exercice perso PORTANT CE NOM, au lieu du
- *   `custom` anonyme que produirait `parseItem()` seul — le modele peut donc
- *   toujours ecrire `ex`, sans savoir ce que contient la bibliotheque ;
+ * - une clef inconnue devient un exercice perso PORTANT CE NOM — le modele
+ *   peut donc toujours ecrire `ex`, sans savoir ce que contient la
+ *   bibliotheque. La clef inconnue est passee telle quelle a `parseItem()`,
+ *   qui sait deja en tirer un nom lisible (`humanizeUnknownKey()`) : une
+ *   seconde regle de mise en forme ici aurait divergé de celle de `?s=`,
+ *   alors que les deux formats recoivent la meme erreur (un slug de fiche
+ *   pris pour une clef). Un nom explicitement fourni l'emporte toujours sur
+ *   la clef, meme quand les deux sont la : c'est le champ que le modele a
+ *   ecrit pour etre lu ;
  * - le type d'effort se deduit du champ fourni (`reps` seul, `seconds` seul) ;
  * - tout champ absent reprend le defaut de la bibliotheque.
  *
@@ -117,7 +123,7 @@ function adaptItem(raw: unknown): Record<string, unknown> | null {
     pick(source, 'custom', 'customname', 'nom', 'name', 'title', 'titre'),
     MAX_NAME,
   );
-  const label = key ?? custom;
+  const label = custom ?? key;
 
   // La pause n'est plus proposee nulle part — ni bouton dans l'app, ni ligne
   // dans la specification `?plan=` livree aux IA (voir `RestItem`,
@@ -146,10 +152,12 @@ function adaptItem(raw: unknown): Record<string, unknown> | null {
 
   return {
     type: 'exercise',
-    key: entry ? entry.key : 'custom',
+    // La clef inconnue repart telle quelle : sans nom fourni, c'est elle qui
+    // donne le nom affiche, et `parseItem()` s'en charge.
+    key: entry ? entry.key : (key ?? 'custom'),
     // `parseItem()` ne garde `customName` que pour une clef inconnue de la
     // bibliotheque : inutile de le transmettre pour un exercice connu.
-    customName: entry ? undefined : label,
+    customName: entry ? undefined : custom,
     group: isGroupId(group) ? group : base.group,
     mode,
     sets: num(pick(source, 'sets', 'series', 'serie')) ?? base.sets,
@@ -164,22 +172,48 @@ function adaptItem(raw: unknown): Record<string, unknown> | null {
   };
 }
 
-/**
- * Un client de messagerie ou de chat percent-encode parfois une URL deja
- * encodee par le modele. `URLSearchParams.get()` en a defait un niveau ;
- * on tente le second ici plutot que d'echouer sur un lien recuperable.
- */
-function parseLoose(raw: string): unknown {
+function tryJson(text: string): unknown {
   try {
-    return JSON.parse(raw);
-  } catch {
-    /* seconde tentative ci-dessous */
-  }
-  try {
-    return JSON.parse(decodeURIComponent(raw));
+    return JSON.parse(text);
   } catch {
     return undefined;
   }
+}
+
+/**
+ * Le JSON entoure d'autre chose : une phrase d'introduction laissee dans le
+ * parametre, une parenthese fermante de lien Markdown, un `\`\`\`json` recopie.
+ * On decoupe de la premiere ouvrante a la derniere fermante — jamais au
+ * milieu, ou l'on inventerait une seance.
+ */
+function carveJson(text: string): unknown {
+  const start = text.search(/[{[]/);
+  const end = Math.max(text.lastIndexOf('}'), text.lastIndexOf(']'));
+  if (start < 0 || end <= start) return undefined;
+  return tryJson(text.slice(start, end + 1));
+}
+
+/**
+ * Un client de messagerie ou de chat percent-encode parfois une URL deja
+ * encodee par le modele. `URLSearchParams.get()` en a defait un niveau ;
+ * on tente le second ici plutot que d'echouer sur un lien recuperable. Et
+ * dans les deux formes, on accepte que le JSON soit entoure de texte : le
+ * modele qui l'ecrit ne relit pas son lien, personne d'autre ne le peut.
+ */
+function parseLoose(raw: string): unknown {
+  let decoded: string | undefined;
+  try {
+    decoded = decodeURIComponent(raw);
+  } catch {
+    /* percent-encodage invalide : il ne reste que la forme brute */
+  }
+  for (const text of decoded === undefined || decoded === raw ? [raw] : [raw, decoded]) {
+    const direct = tryJson(text);
+    if (direct !== undefined) return direct;
+    const carved = carveJson(text);
+    if (carved !== undefined) return carved;
+  }
+  return undefined;
 }
 
 /**

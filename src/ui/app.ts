@@ -10,6 +10,7 @@ import {
   reseedFingerprints,
   saveLocale,
   saveState,
+  setExerciseKeyResolver,
   type State,
 } from '../core/storage';
 import type { ExerciseKey, Locale, PlanItem, SavedPlan, SessionConfig, SessionMode } from '../core/types';
@@ -17,7 +18,7 @@ import { isNativeApp, siteHref } from '../platform/native';
 import { requestPersistentStorage } from '../platform/storage';
 import { applyStaticTranslations, byId } from './dom';
 import { createExerciseInfo } from './exercise-info';
-import { createGuidesIndex } from './guides-index';
+import { createGuidesIndex, createSlugKeyResolver } from './guides-index';
 import { createHistory } from './history';
 import { createLangSwitch } from './langswitch';
 import { createLibrary } from './library';
@@ -422,6 +423,11 @@ export function createApp(state: State): { render: () => void } {
   const langSwitch = createLangSwitch(ctx);
   const runner = createRunner(ctx);
   const guidesIndex = createGuidesIndex();
+  // Branche le rattrapage des clefs mal formees sur l'index des fiches deja
+  // livre dans la page (voir setExerciseKeyResolver, core/storage.ts). Avant
+  // `share.checkIncomingShare()` plus bas, et avant la premiere fusion du
+  // nuage : ce sont les deux entrees ou une clef devinee par une IA arrive.
+  setExerciseKeyResolver(createSlugKeyResolver());
   const exerciseInfo = createExerciseInfo();
   const share = createShare(ctx);
   const account = createAccount(ctx);

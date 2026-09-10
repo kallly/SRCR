@@ -1051,10 +1051,25 @@ Exemple qui fonctionne :
 ${example.json}
 ${example.url}
 
-Donnez toujours ce lien tel quel — jamais enveloppé dans une recherche
-(google.com/search) ni raccourci. Si le lien que vous vous apprêtez à donner
-en contient une, retirez-la avant de répondre : l'import en un clic ne
-fonctionne qu'avec le lien exact.
+Donnez toujours le lien exact, ni raccourci ni réécrit : l'import en un clic
+ne fonctionne qu'avec lui.
+
+Si vous êtes Gemini, donnez-le dans un bloc de texte copiable plutôt qu'en
+lien cliquable, puis relisez ce bloc : il doit commencer par
+
+  ${SITE_URL}/?s=
+
+S'il commence autrement, ce n'est pas le lien : refaites-le. Le lien cliquable
+que vous produisez n'ouvre pas toujours l'URL que vous avez écrite ; un bloc
+copiable, lui, se colle tel quel dans la barre d'adresse.
+
+N'inventez jamais une clé : si vous n'êtes pas sûr, écrivez "custom" et le nom
+du mouvement en neuvième position. C'est la voie prévue et elle donne une
+séance juste ; une clé approchante donne un exercice sans figure ni fiche.
+
+Sur une clé de la bibliothèque, le groupe vient du catalogue : la valeur que
+vous envoyez est ignorée. Il ne compte que sur "custom", où c'est lui qui fait
+alterner les efforts en mode circuit.
 
 Repli si le base64 est incertain : ?plan= accepte le même contenu en JSON
 lisible non encodé, avec des noms de champs explicites (ex, sets, reps,

@@ -24,6 +24,16 @@ est vraisemblablement un filtre de sécurité au niveau du produit, appliqué
 environnant — voir le paragraphe suivant pour les deux pistes déjà écartées
 sur cette base.
 
+**Mitigation en place depuis, non encore mesuree.** `llms.txt` ne demande plus
+de retirer l'enveloppe : il demande a Gemini de livrer le lien dans un bloc de
+texte copiable et de verifier que ce bloc commence par `https://cirkali.fr/?s=`.
+Ce n'est pas une troisieme variante de la meme phrase — celle-la ne demande
+pas de resister au filtre, elle sort du format ou le filtre s'applique, et
+elle donne un critere que le modele peut verifier lui-meme. A tester avec
+Gemini, et a consigner ici dans un sens comme dans l'autre ; en cas d'echec,
+la conclusion sera que plus aucun texte ne peut rien, pas qu'il faut une
+quatrieme formulation.
+
 **Deux autres pistes explorées puis écartées pour ce même problème, faute de
 preuve — ne pas les reprendre sans nouvelle donnée.** Gemini a lui-même
 suggéré (1) demander un lien Markdown cliquable `[texte](url)` plutôt qu'une

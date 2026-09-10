@@ -27,8 +27,32 @@ function toBase64Url(text: string): string {
   return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
+/**
+ * Rattrapages silencieux, avant le decodage. Un modele qui se trompe d'un
+ * cheveu ne le sait pas et ne le saura jamais : le lien part chez quelqu'un
+ * d'autre, qui n'a aucun moyen de le reparer. Trois deformations vues, toutes
+ * sans ambiguite parce que l'alphabet base64url est ferme :
+ *
+ * - un espace est un `+` que `URLSearchParams` a deja decode — c'est ce que
+ *   produit un modele qui ecrit du base64 STANDARD la ou on demande base64url ;
+ * - les autres blancs (retour a la ligne d'un bloc de code recopie a la main)
+ *   n'appartiennent a aucun des deux alphabets, donc ne peuvent rien signifier ;
+ * - ce qui depasse l'alphabet EN FIN de chaine est la ponctuation de la phrase
+ *   qui portait le lien (`)`, `.`, `»`, `]` d'un lien Markdown).
+ *
+ * Rien n'est retire au milieu : la, un caractere etranger signale une chaine
+ * vraiment corrompue, et deviner reviendrait a importer une autre seance que
+ * celle qui a ete partagee.
+ */
+function repairBase64Url(encoded: string): string {
+  return encoded
+    .replace(/ /g, '+')
+    .replace(/\s+/g, '')
+    .replace(/[^A-Za-z0-9+/\-_=]+$/, '');
+}
+
 function fromBase64Url(encoded: string): string {
-  const base64 = encoded.replace(/-/g, '+').replace(/_/g, '/');
+  const base64 = repairBase64Url(encoded).replace(/-/g, '+').replace(/_/g, '/');
   const padded = base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), '=');
   const binary = atob(padded);
   const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
