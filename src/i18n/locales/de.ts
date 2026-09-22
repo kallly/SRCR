@@ -609,6 +609,18 @@ export const de: Translations = {
       name: 'Bizepscurl mit Band',
       cue: 'Band unter den Füßen, Ellbogen am Körper, die Hände zu den Schultern führen.',
     },
+    bandRow: {
+      name: 'Rudern mit Band',
+      cue: 'Band unter den Füßen, Oberkörper 45° vorgebeugt, die Hände zum Bauchnabel ziehen und die Schulterblätter zusammenführen.',
+    },
+    bandSeatedRow: {
+      name: 'Sitzendes Rudern mit Band',
+      cue: 'Sitzend mit gestreckten Beinen, Band um die Füße, zum Bauch ziehen, ohne den Rücken zu runden.',
+    },
+    bandExternalRotation: {
+      name: 'Außenrotation der Schulter mit Band',
+      cue: 'Band auf Ellbogenhöhe an einem Pfosten fixiert, Ellbogen an den Rippen, den Unterarm nach außen öffnen. Ein Arm nach dem anderen.',
+    },
     dumbbellShoulderPress: {
       name: 'Schulterdrücken mit Kurzhanteln',
       cue: 'Kurzhanteln auf Schulterhöhe, über den Kopf drücken ohne im unteren Rücken ins Hohlkreuz zu gehen.',

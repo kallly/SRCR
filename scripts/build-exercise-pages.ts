@@ -68,7 +68,7 @@ const OG_LOCALES: Record<Locale, string> = {
  * REDIRIGE `/exercises/fr/pompes.html` vers elle, en 307.
  *
  * Tant que les balises declaraient la forme avec extension, chaque canonical,
- * chaque hreflang et les 317 entrees du sitemap designaient une URL qui
+ * chaque hreflang et les 332 entrees du sitemap designaient une URL qui
  * redirige, pendant que Google indexait l'autre — l'incoherence exacte qui
  * laisse une page en « Detectee, actuellement non indexee ». Rien ne cassait,
  * donc rien ne le signalait.
@@ -472,7 +472,7 @@ function aiExample(): { json: string; encoded: string; url: string } {
 /**
  * Table des cles, derivee de LIBRARY : jamais une seconde liste a tenir a jour.
  *
- * La derniere colonne mene a la fiche. Sans elle, cette page annonce 62 cles
+ * La derniere colonne mene a la fiche. Sans elle, cette page annonce 65 cles
  * sans dire nulle part ou en lire le contenu — et une IA ne peut pas deviner
  * l'URL, le slug etant traduit et sans rapport avec la cle.
  */

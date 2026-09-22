@@ -190,7 +190,7 @@ Flat minimalist illustration, solid very dark green background (#0e1210), simpli
 
 *Squat élastique · Band squat · Sentadilla con banda · Kniebeuge mit Band · Squat con elastico*
 
-Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person in a squat, a resistance band looped around the ankles and stretched taut, knees pressing outward against it, side view.
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person in a squat, standing on the middle of a long resistance band, both ends held taut at shoulder height, band stretched from feet to hands, front view.
 
 ## Squat gobelet
 
@@ -317,6 +317,24 @@ Flat minimalist illustration, solid very dark green background (#0e1210), simpli
 *Curl biceps élastique · Band biceps curl · Curl de bíceps con banda · Bizepscurl mit Band · Curl per i bicipiti con elastico*
 
 Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing on a resistance band, elbows tight to the body, curling both hands toward the shoulders, side view.
+
+## Rowing élastique
+
+*Rowing élastique · Band bent-over row · Remo con banda elástica · Rudern mit Band · Rowing con elastico*
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing on a resistance band, torso hinged forward about 45 degrees with a flat back, pulling both hands to the navel with elbows close to the body, side view.
+
+## Tirage horizontal élastique
+
+*Tirage horizontal élastique · Band seated row · Remo horizontal con banda · Sitzendes Rudern mit Band · Rematore orizzontale con elastico*
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person seated on the floor with legs extended, a resistance band looped around the feet, pulling both hands toward the belly with an upright torso, side view.
+
+## Rotation externe d’épaule élastique
+
+*Rotation externe d’épaule élastique · Band external shoulder rotation · Rotación externa de hombro con banda · Außenrotation der Schulter mit Band · Rotazione esterna della spalla con elastico*
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing side-on to a vertical post, a resistance band anchored to it at elbow height and running across the front of the body to one hand, that elbow pinned to the ribs and bent at 90 degrees, forearm rotated outward away from the anchor, front view.
 
 ## Développé militaire haltères
 

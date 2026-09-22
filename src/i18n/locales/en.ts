@@ -607,6 +607,18 @@ export const en: Translations = {
       name: 'Band biceps curl',
       cue: 'Band under your feet, elbows tight to the body, curl your hands toward your shoulders.',
     },
+    bandRow: {
+      name: 'Band bent-over row',
+      cue: 'Band under your feet, torso hinged to 45°, pull your hands to the navel and squeeze the shoulder blades.',
+    },
+    bandSeatedRow: {
+      name: 'Band seated row',
+      cue: 'Seated with legs straight, band around your feet, pull to the belly without rounding the back.',
+    },
+    bandExternalRotation: {
+      name: 'Band external shoulder rotation',
+      cue: 'Band anchored to a post at elbow height, elbow pinned to the ribs, rotate the forearm outward. One arm at a time.',
+    },
     dumbbellShoulderPress: {
       name: 'Dumbbell shoulder press',
       cue: 'Dumbbells at shoulder height, press overhead without arching the lower back.',

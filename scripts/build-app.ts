@@ -5,8 +5,8 @@
  *
  *     npm run build:app
  *
- * Pourquoi un dossier distinct de `dist/`. Le build du site produit 317 pages
- * — 310 fiches d'exercice, la page de specification, les cinq politiques de
+ * Pourquoi un dossier distinct de `dist/`. Le build du site produit 332 pages
+ * — 325 fiches d'exercice, la page de specification, les cinq politiques de
  * confidentialite, la 404 — plus un sitemap, un llms.txt, un robots.txt et les
  * en-tetes de l'hebergeur. Rien de tout cela n'a de sens dans un binaire : ce
  * sont des surfaces d'indexation, elles vivent sur cirkali.fr et l'application
@@ -134,7 +134,7 @@ if (found.length > 0) {
   process.exit(1);
 }
 if (existsSync(join(OUT, 'exercises'))) {
-  console.error('\ndist-app/exercises existe : les 310 fiches ne vont pas dans le binaire.');
+  console.error('\ndist-app/exercises existe : les 325 fiches ne vont pas dans le binaire.');
   process.exit(1);
 }
 

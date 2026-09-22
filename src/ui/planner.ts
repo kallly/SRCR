@@ -67,8 +67,8 @@ function deleteButton(id: string): HTMLElement {
  * exercice qui perdrait son drapeau demain, ne doit jamais devenir invisible
  * et donc incorrigeable. C'est un exercice perso : on ne sait pas ce que
  * c'est, donc la porte reste ouverte, champ vide. Sinon c'est la bibliotheque
- * qui tranche (`load`, data/library.ts) — elastiques et machines cardio n'en
- * ont pas.
+ * qui tranche (`load`, data/library.ts) — seules les machines cardio n'en ont
+ * pas, elles qui se reglent en vitesse, en niveau ou en frein.
  */
 function takesLoad(item: ExerciseItem): boolean {
   if (item.weight !== undefined) return true;

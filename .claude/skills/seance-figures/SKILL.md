@@ -1,7 +1,7 @@
 ---
 name: seance-figures
 description: >
-  Regles de dessin des 63 figures SVG d'exercice de CIRKALI : vocabulaire des
+  Regles de dessin des 66 figures SVG d'exercice de CIRKALI : vocabulaire des
   classes, trois niveaux de lecture, convention d'orientation, convention de
   fleche et marque de tension, et ou vit la CSS qui les colore. A charger avant
   de toucher a src/data/figures.ts, au champ `motion` de src/data/library.ts,
@@ -13,7 +13,7 @@ description: >
 
 # Les figures d'exercice de CIRKALI
 
-63 figures (62 exercices + `custom`), corps SVG bruts dans `src/data/figures.ts`,
+66 figures (65 exercices + `custom`), corps SVG bruts dans `src/data/figures.ts`,
 `viewBox 0 0 200 118`. Elles sont inlinees dans cinq surfaces et n'ont **aucun
 texte** : la meme figure sert les cinq langues.
 
@@ -109,7 +109,7 @@ sur un `motion: 'hold'`, et l'assertion le verifie.
 
 ```
 node .claude/skills/seance-figures/figure-space.mjs <cle>   # une figure
-node .claude/skills/seance-figures/figure-space.mjs         # les 63
+node .claude/skills/seance-figures/figure-space.mjs         # les 66
 ```
 
 Sort la boite englobante du corps, les colonnes libres a gauche et a droite, et
@@ -136,7 +136,7 @@ les 16.
 
 `npm run check` porte cinq assertions sur les figures : la fleche contre
 `motion`, `pull` reserve aux tenues, l'orientation, l'egalite des deux copies du
-bloc CSS, et la presence de la classe `fig-svg` sur les 310 fiches livrees.
+bloc CSS, et la presence de la classe `fig-svg` sur les 325 fiches livrees.
 `npm run typecheck` ne voit rien de tout cela — ce sont des contenus de chaines.
 
 ## Ce qui a ete essaye et ecarte

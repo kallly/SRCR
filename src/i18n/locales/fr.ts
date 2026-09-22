@@ -662,6 +662,18 @@ export const fr = {
       name: 'Curl biceps élastique',
       cue: 'Élastique sous les pieds, coudes collés au corps, remonte les mains vers les épaules.',
     },
+    bandRow: {
+      name: 'Rowing élastique',
+      cue: 'Élastique sous les pieds, buste penché à 45°, tire les mains vers le nombril en serrant les omoplates.',
+    },
+    bandSeatedRow: {
+      name: 'Tirage horizontal élastique',
+      cue: 'Assis au sol jambes tendues, élastique autour des pieds, tire vers le ventre sans arrondir le dos.',
+    },
+    bandExternalRotation: {
+      name: 'Rotation externe d’épaule élastique',
+      cue: 'Élastique fixé à un poteau à hauteur de coude, coude collé aux côtes, ouvre l’avant-bras vers l’extérieur. Un bras à la fois.',
+    },
     dumbbellShoulderPress: {
       name: 'Développé militaire haltères',
       cue: 'Haltères à hauteur d’épaules, pousse au-dessus de la tête sans cambrer le bas du dos.',

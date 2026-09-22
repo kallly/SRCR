@@ -1178,40 +1178,42 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
 
   bandSquat: {
     slug: 'squat-elastique',
-    muscles: { primary: 'Quadriceps, fessiers', secondary: 'Moyen fessier, ischio-jambiers' },
+    muscles: { primary: 'Quadriceps, fessiers', secondary: 'Ischio-jambiers, gainage, épaules' },
     steps: [
-      'Place l’élastique juste au-dessus des genoux, pieds écartés à la largeur des hanches.',
-      'Pousse les hanches vers l’arrière et descends comme un squat classique, genoux qui repoussent l’élastique vers l’extérieur.',
-      'Descends jusqu’à ce que les cuisses soient proches de l’horizontale, poids sur les talons.',
-      'Remonte en poussant dans les talons jusqu’à l’extension complète, sans laisser les genoux rentrer.',
+      'Place le milieu de l’élastique sous la voûte des deux pieds, écartés à la largeur des hanches.',
+      'Remonte les extrémités et tiens-les à hauteur d’épaules, coudes vers l’avant, élastique déjà légèrement tendu debout.',
+      'Pousse les hanches vers l’arrière et descends comme un squat classique, buste droit et poids réparti sur tout le pied.',
+      'Descends jusqu’à ce que les cuisses soient proches de l’horizontale, genoux dans l’axe des pieds.',
+      'Remonte en poussant dans le sol jusqu’à l’extension complète, sans laisser l’élastique ramener le buste vers l’avant.',
     ],
     mistakes: [
-      'Laisser les genoux rentrer vers l’intérieur au lieu de repousser l’élastique.',
-      'Descendre sans contrôle, en laissant l’élastique ramener brutalement les genoux.',
-      'Buste qui bascule trop en avant.',
+      'Laisser les mains descendre pendant la montée : l’élastique se détend et la résistance disparaît là où elle devrait être maximale.',
+      'Se pencher vers l’avant pour compenser la traction de l’élastique sur les épaules.',
+      'Prendre un élastique si fort qu’il empêche d’atteindre la profondeur habituelle du squat.',
+      'Poser l’élastique sur la pointe des pieds plutôt que sous la voûte : il glisse en cours de série.',
     ],
     sensation:
-      'Le travail se sent dans l’avant des cuisses et sur le côté des fessiers, qui doivent activement repousser l’élastique. Une tension au genou signale que l’alignement genou-pied n’est pas maintenu.',
+      'L’effort se concentre dans l’avant des cuisses et les fessiers, avec une tension constante sur les épaules qui tiennent l’élastique. Une brûlure dans le haut du dos ou les bras avant les jambes signale que la prise est trop courte ou l’élastique trop résistant.',
     rangeOfMotion:
-      'Descends jusqu’à ce que les cuisses soient proches de l’horizontale, sans dépasser ce que permet une mobilité de hanche confortable.',
+      'Descends jusqu’à ce que les cuisses soient proches de l’horizontale, ou jusqu’où le dos reste droit et les talons au sol. En haut, tends complètement les hanches sans cambrer le bas du dos.',
     tempo:
-      'Trois secondes pour descendre, une à deux pour remonter. Inspire en descendant, souffle en poussant dans les talons.',
+      'Deux à trois secondes pour descendre, une à deux pour remonter. Inspire en descendant, souffle en poussant. L’élastique aide en bas et résiste en haut : c’est la fin de la montée qu’il faut tenir, pas le départ.',
     anatomy:
-      'Les quadriceps et le grand fessier restent les moteurs principaux du squat ; l’élastique ajoute une résistance latérale que le moyen fessier doit contrer en continu pour empêcher le genou de rentrer, ce qu’un squat au poids du corps ne sollicite pas de la même façon.',
+      'Le quadriceps étend le genou, le grand fessier et les ischio-jambiers étendent la hanche. Le transverse de l’abdomen et les érecteurs du rachis verrouillent le tronc contre la traction de l’élastique vers l’avant, tandis que les deltoïdes et le haut du dos maintiennent les mains à hauteur d’épaules pendant toute la série — un travail d’endurance discret qu’un squat au poids du corps ne demande pas.',
     mechanics:
-      'Double flexion puis double extension de la hanche et du genou dans le plan sagittal, combinée à une résistance en abduction de hanche imposée par l’élastique dans le plan frontal.',
+      'Double flexion puis double extension de la hanche et du genou dans le plan sagittal. La particularité tient à la courbe de résistance : la tension de l’élastique croît avec son étirement, donc elle est faible en bas du squat, là où le mouvement est déjà le plus difficile mécaniquement, et maximale en haut, là où les jambes sont les plus fortes. C’est l’inverse d’une barre ou d’un haltère, dont la charge ne varie pas, et cela rend la fin de la montée nettement plus exigeante.',
     benefits: [
-      'Renforce le squat classique en ajoutant un travail actif du moyen fessier, utile pour la stabilité du genou à la marche et à la course.',
-      'Donne un retour tactile immédiat sur l’alignement du genou : si l’élastique se relâche, le genou est rentré.',
-      'Équipement léger et peu coûteux, facile à emporter.',
+      'Ajoute une résistance réelle au squat au poids du corps sans matériel lourd ni encombrant.',
+      'Charge la fin de la montée, la partie qu’un squat au poids du corps laisse trop facile.',
+      'Se règle finement : écarter les pieds, raccourcir la prise ou changer d’élastique suffit à changer de difficulté.',
     ],
     progression: {
-      easier: 'Utilise un élastique moins résistant, ou réduis la profondeur de la descente.',
-      harder: 'Prends un élastique plus résistant, ou ajoute un temps d’arrêt de deux secondes en bas.',
-      readyWhen: 'Quand trois séries de quinze passent sans que l’élastique se relâche à aucun moment.',
+      easier: 'Rapproche les pieds sur l’élastique pour réduire sa tension, ou tiens les extrémités plus bas, à hauteur de hanches.',
+      harder: 'Prends un élastique plus résistant, raccourcis la prise, ou ajoute deux secondes d’arrêt en bas.',
+      readyWhen: 'Quand trois séries de quinze passent sans que les mains ne descendent des épaules et sans que le buste ne se penche.',
     },
     precautions:
-      'Choisis une résistance qui permette de garder les genoux alignés sur toute la série : un élastique trop fort qui force à les laisser rentrer est contre-productif.',
+      'Vérifie que l’élastique est centré sous les deux pieds avant chaque série et qu’il n’est ni entaillé ni usé : une bande qui se dérobe sous tension part vers le visage. Monte en résistance progressivement, la tension en haut du mouvement surprend la première fois.',
   },
 
   dumbbellGobletSquat: {
@@ -1967,6 +1969,124 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Une douleur au pli du coude n’est pas la brûlure recherchée : réduis la résistance et vérifie que la descente est freinée plutôt que subie.',
+  },
+  bandRow: {
+    slug: 'rowing-elastique',
+    muscles: { primary: 'Grand dorsal, rhomboïdes, trapèze moyen', secondary: 'Biceps, deltoïde postérieur, érecteurs du rachis' },
+    steps: [
+      'Debout, pieds écartés à la largeur des hanches, place le milieu de l’élastique sous la voûte des pieds et saisis une extrémité dans chaque main.',
+      'Pousse les hanches vers l’arrière et penche le buste à environ 45°, dos plat, genoux légèrement fléchis.',
+      'Laisse les bras pendre vers le sol, élastique déjà légèrement tendu : c’est la position de départ.',
+      'Tire les mains vers le nombril en gardant les coudes près du corps, jusqu’à rapprocher les omoplates.',
+      'Marque un temps d’arrêt court en haut, puis laisse les bras redescendre en retenant l’élastique.',
+    ],
+    mistakes: [
+      'Arrondir le bas du dos : c’est la charnière de hanche, pas la colonne, qui doit produire l’inclinaison.',
+      'Tirer des seuls biceps, coudes écartés : les omoplates ne bougent plus et le dos ne travaille pas.',
+      'Se redresser à chaque répétition pour aider le tirage : le buste doit rester à la même hauteur du début à la fin de la série.',
+      'Laisser l’élastique rappeler les bras sans les retenir : la moitié utile du mouvement est perdue.',
+    ],
+    sensation:
+      'L’effort se sent entre les omoplates et sur les côtés du dos. Si ce sont surtout les biceps ou les avant-bras qui brûlent, les coudes partent trop en dehors ou les mains serrent trop fort. Une tension dans le bas du dos signale que la position du buste n’est plus tenue.',
+    rangeOfMotion:
+      'Tire jusqu’à ce que les mains atteignent le bas des côtes ou le nombril et que les coudes dépassent la ligne du buste. Inutile d’aller plus loin : au-delà, c’est l’épaule qui s’enroule vers l’avant, pas l’omoplate qui recule. Redescends bras tendus, sans relâcher complètement la tension de l’élastique.',
+    tempo:
+      'Une seconde pour tirer, deux à trois pour laisser revenir. Souffle pendant le tirage, inspire pendant le retour. Le retour est la phase que l’élastique rend la plus facile à bâcler, donc celle qu’il faut le plus retenir.',
+    anatomy:
+      'Le grand dorsal ramène le bras vers l’arrière et le long du tronc ; les rhomboïdes et le trapèze moyen rapprochent les omoplates de la colonne, ce qui est le vrai travail de l’exercice. Le deltoïde postérieur assiste l’extension de l’épaule, le biceps brachial et le brachial fléchissent le coude. En arrière-plan, les érecteurs du rachis et les ischio-jambiers tiennent le buste incliné sans que la colonne s’arrondisse : ils travaillent en isométrie pendant toute la série.',
+    mechanics:
+      'Tirage horizontal dans le plan sagittal, associant une extension d’épaule, une rétraction des omoplates et une flexion de coude. Particularité de l’élastique : sa résistance croît avec l’étirement, donc le point le plus dur se situe en fin de tirage, là où les omoplates sont le plus rapprochées — l’inverse d’un rowing haltère, où la charge est constante et le point dur se trouve au décollage.',
+    benefits: [
+      'Construit le tirage horizontal, le mouvement qui équilibre toutes les poussées — pompes, développés — et qu’une séance sans matériel couvre mal.',
+      'Renforce les muscles qui tiennent les omoplates en arrière, donc la tenue du haut du dos quand on passe la journée assis.',
+      'La résistance croissante de l’élastique reste douce au départ du mouvement, là où une épaule sensible est le plus exposée.',
+    ],
+    progression: {
+      easier: 'Écarte les pieds sur l’élastique pour réduire sa tension, ou redresse un peu le buste.',
+      harder: 'Rapproche les pieds, prends un élastique plus résistant, ou marque deux secondes d’arrêt en fin de tirage.',
+      readyWhen: 'Quand trois séries de quinze passent sans que le buste ne se redresse sur les dernières répétitions.',
+    },
+    precautions:
+      'Vérifie avant chaque série que l’élastique est bien centré sous les pieds et qu’il n’est ni entaillé ni usé : une bande qui glisse ou qui casse sous tension part vers le visage. Si la charnière de hanche est inconfortable, le tirage horizontal assis donne le même travail de dos sans incliner le buste.',
+  },
+  bandSeatedRow: {
+    slug: 'tirage-horizontal-elastique',
+    muscles: { primary: 'Grand dorsal, rhomboïdes, trapèze moyen', secondary: 'Biceps, deltoïde postérieur' },
+    steps: [
+      'Assieds-toi au sol, jambes tendues devant toi, et passe le milieu de l’élastique autour de la plante des pieds.',
+      'Saisis une extrémité dans chaque main, bras tendus, buste droit et légèrement au-delà de la verticale.',
+      'Grandis-toi : poitrine ouverte, épaules basses, bas du dos ni arrondi ni cambré.',
+      'Tire les mains vers le ventre en ramenant les coudes le long du corps, jusqu’à rapprocher les omoplates.',
+      'Laisse les bras se retendre lentement, sans que le buste parte en arrière ni ne s’arrondisse vers l’avant.',
+    ],
+    mistakes: [
+      'Basculer le buste en arrière au tirage puis vers l’avant au retour : le mouvement devient un balancement du tronc, plus un tirage.',
+      'Arrondir le haut du dos au retour, en se laissant tirer vers les pieds.',
+      'Hausser les épaules vers les oreilles : le trapèze supérieur prend la place du trapèze moyen.',
+    ],
+    sensation:
+      'Le travail se sent entre les omoplates et sur les côtés du dos, jamais dans le cou. Une brûlure dans la nuque ou le haut des trapèzes indique que les épaules remontent au lieu de rester basses.',
+    rangeOfMotion:
+      'Tire jusqu’à ce que les mains touchent le bas du ventre et que les coudes passent derrière la ligne du buste. Reviens bras tendus, mais garde l’élastique sous tension : le relâcher complètement fait repartir chaque répétition d’un à-coup.',
+    tempo:
+      'Une seconde pour tirer, deux à trois pour revenir. Souffle en tirant, inspire en revenant. Le buste ne bouge pas : si le tempo demande un coup de reins, c’est que la tension est trop forte.',
+    anatomy:
+      'Mêmes moteurs que le rowing penché — grand dorsal, rhomboïdes, trapèze moyen, assistés du deltoïde postérieur et du biceps. La différence est ailleurs : assis, le buste est tenu par la position elle-même et non par les érecteurs du rachis et les ischio-jambiers, qui travaillaient en isométrie dans la version penchée. Tout l’effort se concentre donc sur le tirage.',
+    mechanics:
+      'Tirage horizontal dans le plan sagittal : extension d’épaule, rétraction des omoplates, flexion de coude. La position assise supprime la charnière de hanche à maintenir, ce qui en fait l’entrée la plus simple du tirage horizontal — et la version à choisir tant que le bas du dos ne supporte pas de tenir un buste incliné. Comme pour tout élastique, la résistance croît avec l’étirement : la fin du tirage est le point le plus dur.',
+    benefits: [
+      'Donne le travail de dos du rowing sans demander de tenir un buste incliné : accessible dès le premier jour et utile en reprise.',
+      'Apprend à dissocier le mouvement des omoplates de celui des bras, ce qui rend tous les autres tirages plus efficaces.',
+      'Se pratique au sol, sans ancrage ni appui : un élastique et deux mètres carrés suffisent.',
+    ],
+    progression: {
+      easier: 'Plie légèrement les genoux et écarte les mains sur l’élastique pour réduire la tension.',
+      harder: 'Raccourcis la prise, prends un élastique plus résistant, ou tiens deux secondes en fin de tirage.',
+      readyWhen: 'Quand trois séries de quinze passent sans que le buste ne parte en arrière : le rowing élastique penché devient la suite logique.',
+    },
+    precautions:
+      'Si les ischio-jambiers tirent et forcent le bas du dos à s’arrondir, assieds-toi sur un coussin ou plie légèrement les genoux — un dos rond sous tension est exactement ce qu’on cherche à éviter ici.',
+  },
+  bandExternalRotation: {
+    slug: 'rotation-externe-epaule-elastique',
+    muscles: { primary: 'Infra-épineux, petit rond', secondary: 'Deltoïde postérieur, rhomboïdes' },
+    steps: [
+      'Fixe l’élastique à un poteau, un montant de porte ou une poignée, à hauteur de coude.',
+      'Place-toi debout de côté par rapport à l’ancrage, et saisis l’élastique de la main la plus éloignée, en le faisant passer devant le ventre.',
+      'Colle le coude contre les côtes et plie-le à 90°, avant-bras horizontal, main devant le nombril.',
+      'Éloigne-toi de l’ancrage jusqu’à ce que l’élastique soit déjà légèrement tendu dans cette position de départ.',
+      'Sans décoller le coude, ouvre l’avant-bras vers l’extérieur, à l’opposé de l’ancrage, et marque un temps d’arrêt.',
+      'Ramène lentement la main devant le ventre en retenant l’élastique. Finis la série, puis change de côté.',
+    ],
+    mistakes: [
+      'Décoller le coude du corps : l’épaule part en abduction et le mouvement cesse d’être une rotation.',
+      'Faire pivoter le buste vers l’extérieur pour gagner de l’amplitude : c’est le tronc qui travaille, plus l’épaule.',
+      'Prendre un élastique trop résistant : la coiffe des rotateurs est faite de petits muscles, une tension excessive fait compenser par le trapèze et le grand dorsal.',
+      'Se placer trop loin de l’ancrage : l’élastique tire alors le bras vers l’avant et décolle le coude avant même le départ.',
+    ],
+    sensation:
+      'Le travail se sent profondément à l’arrière de l’épaule qui travaille et le long du bord externe de l’omoplate. C’est un effort discret : si ça tire fort dans le trapèze, dans le cou ou à l’avant de l’épaule, la tension est trop forte ou le coude a quitté les côtes.',
+    rangeOfMotion:
+      'Ouvre jusqu’où le coude reste collé au corps, le buste de face et le poignet aligné avec l’avant-bras — pour la plupart des gens, entre 30 et 45° vers l’extérieur. L’amplitude utile est courte par nature : aller chercher plus loin ne recrute pas davantage la coiffe, ça fait simplement pivoter le buste.',
+    tempo:
+      'Deux secondes pour ouvrir, deux à trois pour revenir, sans à-coup ni élan. Respiration continue. C’est un exercice de contrôle : la lenteur fait tout le travail, la vitesse le supprime.',
+    anatomy:
+      'L’infra-épineux et le petit rond sont les deux rotateurs externes de la coiffe : ils font tourner la tête humérale vers l’extérieur et, ce faisant, la maintiennent centrée dans sa cavité pendant que le deltoïde élève le bras. Le subscapulaire, leur antagoniste, assure la rotation interne. Les rhomboïdes et le trapèze moyen stabilisent l’omoplate pour que la rotation se produise bien à l’épaule et non par un déplacement de l’omoplate.',
+    mechanics:
+      'Rotation externe de l’articulation gléno-humérale dans le plan transversal, coude fixé à 90° et bras maintenu le long du tronc. L’ouverture est une contraction concentrique des rotateurs externes, le retour retenu une contraction excentrique. Ancré à hauteur de coude sur un point fixe, l’élastique tire dans l’axe de la rotation sur toute l’amplitude, et sa tension croît avec l’étirement : le maximum de résistance tombe en fin d’ouverture, là précisément où ces muscles sont les plus courts. Travailler un côté à la fois laisse le buste face à l’ancrage, ce qui rend toute compensation par rotation du tronc immédiatement visible.',
+    benefits: [
+      'Renforce les rotateurs externes, presque toujours plus faibles que les rotateurs internes chez qui pousse plus qu’il ne tire.',
+      'Entretient le centrage de la tête humérale, ce qui rend les mouvements au-dessus de la tête plus confortables.',
+      'Un bras à la fois révèle un écart de force entre les deux épaules, et permet de le rattraper côté faible.',
+      'Se place aussi bien à l’échauffement, avant un développé ou des pompes, qu’en fin de séance comme travail de rattrapage.',
+    ],
+    progression: {
+      easier: 'Rapproche-toi de l’ancrage pour réduire la tension, ou réduis l’amplitude d’ouverture.',
+      harder: 'Éloigne-toi de l’ancrage, prends un élastique plus résistant, ou tiens trois secondes en position ouverte à chaque répétition.',
+      readyWhen: 'Quand trois séries de quinze par bras passent sans que le coude ne quitte les côtes ni que le buste ne pivote.',
+    },
+    precautions:
+      'Un exercice de coiffe se fait léger et lent : une douleur vive à l’avant ou sur le dessus de l’épaule est un signal d’arrêt, pas quelque chose à traverser. Une serviette roulée entre le coude et les côtes aide à garder le coude en place. Vérifie l’ancrage avant chaque série : un élastique qui se décroche sous tension part vers le visage.',
   },
 
   dumbbellShoulderPress: {

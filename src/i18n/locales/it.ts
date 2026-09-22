@@ -608,6 +608,18 @@ export const it: Translations = {
       name: 'Curl per i bicipiti con elastico',
       cue: 'Elastico sotto i piedi, gomiti aderenti al corpo, porta le mani verso le spalle.',
     },
+    bandRow: {
+      name: 'Rowing con elastico',
+      cue: 'Elastico sotto i piedi, busto inclinato a 45°, tira le mani verso l’ombelico stringendo le scapole.',
+    },
+    bandSeatedRow: {
+      name: 'Rematore orizzontale con elastico',
+      cue: 'Seduto a gambe tese, elastico intorno ai piedi, tira verso la pancia senza inarcare la schiena.',
+    },
+    bandExternalRotation: {
+      name: 'Rotazione esterna della spalla con elastico',
+      cue: 'Elastico fissato a un palo all’altezza del gomito, gomito aderente alle costole, apri l’avambraccio verso l’esterno. Un braccio alla volta.',
+    },
     dumbbellShoulderPress: {
       name: 'Lento avanti con manubri',
       cue: 'Manubri all’altezza delle spalle, spingi sopra la testa senza inarcare la zona lombare.',

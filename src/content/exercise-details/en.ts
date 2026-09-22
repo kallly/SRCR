@@ -1120,40 +1120,42 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
 
   bandSquat: {
     slug: 'band-squat',
-    muscles: { primary: 'Quadriceps, glutes', secondary: 'Glute medius, hamstrings' },
+    muscles: { primary: 'Quadriceps, glutes', secondary: 'Hamstrings, core, shoulders' },
     steps: [
-      'Place the band just above your knees, feet hip-width apart.',
-      'Push your hips back and lower into a squat as usual, knees pressing the band outward.',
-      'Lower until the thighs are close to parallel with the floor, weight on the heels.',
-      'Push through the heels back to full extension, without letting the knees cave in.',
+      'Stand on the middle of the band with both feet, hip-width apart, the band under the arch of each foot.',
+      'Bring the ends up and hold them at shoulder height, elbows forward, the band already under slight tension standing tall.',
+      'Push your hips back and lower into a squat as usual, torso upright and weight spread across the whole foot.',
+      'Lower until the thighs are close to parallel with the floor, knees tracking over the feet.',
+      'Drive through the floor back to full extension, without letting the band pull your torso forward.',
     ],
     mistakes: [
-      'Letting the knees cave inward instead of pressing the band outward.',
-      'Dropping down without control, letting the band snap the knees back in.',
-      'Torso tipping too far forward.',
+      'Letting the hands drift down on the way up: the band goes slack and the resistance vanishes exactly where it should peak.',
+      'Leaning forward to compensate for the band pulling on the shoulders.',
+      'Using a band so strong it stops you reaching your usual squat depth.',
+      'Standing on the band with the balls of the feet rather than the arches: it slips mid-set.',
     ],
     sensation:
-      'The work should be felt at the front of the thighs and on the side of the glutes, which have to actively press the band outward. Tension at the knee signals the knee-foot alignment isn’t being held.',
+      'The effort sits in the front of the thighs and the glutes, with a constant pull on the shoulders holding the band. Burning in the upper back or arms before the legs means the grip is too short or the band too strong.',
     rangeOfMotion:
-      'Lower until the thighs are close to parallel with the floor, without exceeding what comfortable hip mobility allows.',
+      'Lower until the thighs are close to parallel with the floor, or as far as the back stays flat and the heels stay down. At the top, extend the hips fully without arching the lower back.',
     tempo:
-      'Three seconds to lower, one to two to rise. Inhale going down, exhale pushing through the heels.',
+      'Two to three seconds down, one to two up. Inhale on the way down, exhale on the drive. The band helps at the bottom and resists at the top: it is the end of the ascent you have to hold, not the start.',
     anatomy:
-      'The quadriceps and gluteus maximus remain the main movers of the squat; the band adds a lateral resistance that the gluteus medius must continuously counter to stop the knee caving in — something a bodyweight squat doesn’t demand in the same way.',
+      'The quadriceps extend the knee; the gluteus maximus and hamstrings extend the hip. The transverse abdominis and the spinal erectors lock the trunk against the band pulling forward, while the deltoids and upper back hold the hands at shoulder height for the whole set — a quiet endurance job a bodyweight squat never asks for.',
     mechanics:
-      'Double flexion then double extension of the hip and knee in the sagittal plane, combined with resistance to hip abduction from the band in the frontal plane.',
+      'Double flexion then double extension of the hip and knee in the sagittal plane. What is specific here is the resistance curve: band tension grows with stretch, so it is low at the bottom of the squat — where the movement is already hardest mechanically — and highest at the top, where the legs are strongest. That is the opposite of a barbell or a dumbbell, whose load never varies, and it makes the end of the ascent markedly harder.',
     benefits: [
-      'Builds on the classic squat by adding active gluteus medius work, useful for knee stability while walking and running.',
-      'Gives immediate tactile feedback on knee alignment: if the band goes slack, the knee has caved in.',
-      'Light, inexpensive equipment that’s easy to bring along.',
+      'Adds real resistance to the bodyweight squat without heavy or bulky equipment.',
+      'Loads the end of the ascent, the part a bodyweight squat leaves too easy.',
+      'Adjusts finely: widening the stance, shortening the grip or changing band is enough to change difficulty.',
     ],
     progression: {
-      easier: 'Use a less resistant band, or reduce how deep you lower.',
-      harder: 'Use a stronger band, or add a two-second pause at the bottom.',
-      readyWhen: 'When three sets of fifteen go by without the band ever going slack.',
+      easier: 'Bring the feet closer together on the band to reduce its tension, or hold the ends lower, at hip height.',
+      harder: 'Use a stronger band, shorten the grip, or add a two-second pause at the bottom.',
+      readyWhen: 'When three sets of fifteen go by without the hands dropping from the shoulders and without the torso tipping forward.',
     },
     precautions:
-      'Pick a resistance that lets you keep the knees aligned for the whole set: a band strong enough to force them inward is counterproductive.',
+      'Check before every set that the band is centred under both feet and is neither nicked nor worn: a band that slips out under tension flies toward your face. Step up resistance gradually — the tension at the top of the movement is surprising the first time.',
   },
 
   dumbbellGobletSquat: {
@@ -1909,6 +1911,124 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Pain in the crease of the elbow is not the burn you are after: reduce the resistance and check that the descent is braked rather than dropped.',
+  },
+  bandRow: {
+    slug: 'band-bent-over-row',
+    muscles: { primary: 'Latissimus dorsi, rhomboids, middle trapezius', secondary: 'Biceps, rear deltoid, spinal erectors' },
+    steps: [
+      'Stand with your feet hip-width apart, the middle of the band under the arch of each foot, one end in each hand.',
+      'Push your hips back and hinge the torso to about 45°, back flat, knees slightly bent.',
+      'Let the arms hang toward the floor with the band already under slight tension: that is the starting position.',
+      'Pull your hands to the navel keeping the elbows close to the body, until the shoulder blades draw together.',
+      'Pause briefly at the top, then let the arms lower while resisting the band.',
+    ],
+    mistakes: [
+      'Rounding the lower back: the hinge comes from the hips, not from the spine.',
+      'Pulling with the biceps alone, elbows flared: the shoulder blades stop moving and the back does no work.',
+      'Standing up a little on every rep to help the pull: the torso should stay at the same height from the first rep to the last.',
+      'Letting the band snap the arms back down without resisting: half the useful movement is lost.',
+    ],
+    sensation:
+      'The effort is felt between the shoulder blades and along the sides of the back. If the biceps or forearms burn first, the elbows are flaring out or the hands are gripping too hard. Tension in the lower back means the torso position is no longer being held.',
+    rangeOfMotion:
+      'Pull until the hands reach the lower ribs or the navel and the elbows pass behind the line of the torso. No need to go further: beyond that it is the shoulder rolling forward, not the shoulder blade moving back. Lower to straight arms without letting the band go fully slack.',
+    tempo:
+      'One second to pull, two to three to let it return. Exhale on the pull, inhale on the return. The return is the phase a band makes easiest to rush, so it is the one to resist most.',
+    anatomy:
+      'The latissimus dorsi draws the arm backward and along the trunk; the rhomboids and middle trapezius pull the shoulder blades toward the spine, which is the real work of the exercise. The rear deltoid assists shoulder extension, the biceps brachii and brachialis flex the elbow. In the background, the spinal erectors and hamstrings hold the hinged torso so the spine does not round: they work isometrically for the whole set.',
+    mechanics:
+      'A horizontal pull in the sagittal plane, combining shoulder extension, scapular retraction and elbow flexion. The band’s particularity: its resistance grows with stretch, so the hardest point is at the end of the pull, where the shoulder blades are most retracted — the opposite of a dumbbell row, where the load is constant and the hard point is at the lift-off.',
+    benefits: [
+      'Builds the horizontal pull, the movement that balances every push — push-ups, presses — and that an equipment-free session covers poorly.',
+      'Strengthens the muscles that hold the shoulder blades back, so the posture of the upper back after a day spent sitting.',
+      'The band’s rising resistance stays gentle at the start of the movement, where a sensitive shoulder is most exposed.',
+    ],
+    progression: {
+      easier: 'Widen your feet on the band to reduce its tension, or hinge a little less.',
+      harder: 'Bring the feet closer, use a stronger band, or hold two seconds at the end of the pull.',
+      readyWhen: 'When three sets of fifteen go by without the torso standing up on the last reps.',
+    },
+    precautions:
+      'Check before every set that the band is centred under the feet and is neither nicked nor worn: a band that slips or snaps under tension flies toward your face. If the hip hinge is uncomfortable, the seated row gives the same back work without hinging the torso.',
+  },
+  bandSeatedRow: {
+    slug: 'band-seated-row',
+    muscles: { primary: 'Latissimus dorsi, rhomboids, middle trapezius', secondary: 'Biceps, rear deltoid' },
+    steps: [
+      'Sit on the floor with your legs extended in front of you and loop the middle of the band around the soles of your feet.',
+      'Take one end in each hand, arms straight, torso upright and just past vertical.',
+      'Sit tall: chest open, shoulders down, lower back neither rounded nor arched.',
+      'Pull your hands to your belly, drawing the elbows along the body until the shoulder blades come together.',
+      'Let the arms straighten slowly, without the torso rocking back or rounding forward.',
+    ],
+    mistakes: [
+      'Rocking the torso back on the pull and forward on the return: the movement becomes a swing of the trunk, not a row.',
+      'Rounding the upper back on the return, letting yourself be pulled toward your feet.',
+      'Shrugging the shoulders toward the ears: the upper trapezius takes the place of the middle trapezius.',
+    ],
+    sensation:
+      'The work is felt between the shoulder blades and along the sides of the back, never in the neck. Burning in the neck or the upper traps means the shoulders are rising instead of staying down.',
+    rangeOfMotion:
+      'Pull until the hands touch the lower belly and the elbows pass behind the line of the torso. Return to straight arms, but keep the band under tension: letting it go fully slack restarts every rep with a jerk.',
+    tempo:
+      'One second to pull, two to three to return. Exhale on the pull, inhale on the return. The torso does not move: if the tempo needs a heave of the back, the tension is too high.',
+    anatomy:
+      'The same movers as the bent-over row — latissimus dorsi, rhomboids, middle trapezius, assisted by the rear deltoid and the biceps. The difference lies elsewhere: seated, the torso is held by the position itself rather than by the spinal erectors and hamstrings, which worked isometrically in the hinged version. All the effort concentrates on the pull.',
+    mechanics:
+      'A horizontal pull in the sagittal plane: shoulder extension, scapular retraction, elbow flexion. Sitting removes the hip hinge to hold, which makes it the simplest way into horizontal pulling — and the version to choose while the lower back cannot yet hold a hinged torso. As with any band, resistance grows with stretch: the end of the pull is the hardest point.',
+    benefits: [
+      'Gives the back work of a row without asking you to hold a hinged torso: accessible from day one and useful when easing back into training.',
+      'Teaches you to separate shoulder-blade movement from arm movement, which makes every other pull more effective.',
+      'Done on the floor, with no anchor and no bench: a band and two square metres are enough.',
+    ],
+    progression: {
+      easier: 'Bend the knees slightly and widen your hands on the band to reduce the tension.',
+      harder: 'Shorten the grip, use a stronger band, or hold two seconds at the end of the pull.',
+      readyWhen: 'When three sets of fifteen go by without the torso rocking back: the bent-over band row is the logical next step.',
+    },
+    precautions:
+      'If the hamstrings pull and force the lower back to round, sit on a cushion or bend the knees slightly — a rounded back under tension is exactly what this is meant to avoid.',
+  },
+  bandExternalRotation: {
+    slug: 'band-external-shoulder-rotation',
+    muscles: { primary: 'Infraspinatus, teres minor', secondary: 'Rear deltoid, rhomboids' },
+    steps: [
+      'Anchor the band to a post, a door frame or a handle, at elbow height.',
+      'Stand side-on to the anchor and take the band in the hand furthest from it, letting it run across the front of your belly.',
+      'Pin your elbow against your ribs and bend it to 90°, forearm horizontal, hand in front of the navel.',
+      'Step away from the anchor until the band is already under slight tension in that starting position.',
+      'Without letting the elbow leave your side, rotate the forearm outward, away from the anchor, and pause there.',
+      'Bring the hand slowly back in front of the belly, resisting the band. Finish the set, then switch sides.',
+    ],
+    mistakes: [
+      'Letting the elbow leave the body: the shoulder drifts into abduction and the movement stops being a rotation.',
+      'Turning the torso away to gain range: that is the trunk working, not the shoulder.',
+      'Using too strong a band: the rotator cuff is made of small muscles, and excess tension makes the trapezius and latissimus take over.',
+      'Standing too far from the anchor: the band then pulls the arm forward and lifts the elbow off the ribs before you even start.',
+    ],
+    sensation:
+      'The work is felt deep at the back of the working shoulder and along the outer border of the shoulder blade. It is a quiet effort: strong pulling in the trapezius, the neck or the front of the shoulder means the tension is too high or the elbow has left the ribs.',
+    rangeOfMotion:
+      'Open as far as the elbow stays against the body, the torso stays square and the wrist stays in line with the forearm — for most people, 30 to 45° outward. The useful range is short by nature: reaching further does not recruit the cuff more, it simply turns the torso.',
+    tempo:
+      'Two seconds to open, two to three to return, with no jerk and no swing. Keep breathing throughout. This is a control exercise: slowness does all the work, speed removes it.',
+    anatomy:
+      'The infraspinatus and teres minor are the two external rotators of the cuff: they turn the head of the humerus outward and, in doing so, keep it centred in its socket while the deltoid raises the arm. The subscapularis, their antagonist, handles internal rotation. The rhomboids and middle trapezius stabilise the shoulder blade so the rotation happens at the shoulder rather than through the blade sliding.',
+    mechanics:
+      'External rotation of the glenohumeral joint in the transverse plane, elbow fixed at 90° and the upper arm kept along the trunk. The opening is a concentric contraction of the external rotators, the resisted return an eccentric one. Anchored at elbow height on a fixed point, the band pulls along the axis of the rotation through the whole range, and its tension grows with stretch: peak resistance lands at the end of the opening, exactly where these muscles are shortest. Working one side at a time keeps the torso square to the anchor, which makes any compensation by trunk rotation immediately visible.',
+    benefits: [
+      'Strengthens the external rotators, almost always weaker than the internal rotators in anyone who pushes more than they pull.',
+      'Maintains the centring of the humeral head, which makes overhead movements more comfortable.',
+      'One arm at a time exposes a strength gap between the two shoulders, and lets you close it on the weaker side.',
+      'Fits equally well in a warm-up, before a press or push-ups, or at the end of a session as catch-up work.',
+    ],
+    progression: {
+      easier: 'Step closer to the anchor to reduce the tension, or reduce how far you open.',
+      harder: 'Step further from the anchor, use a stronger band, or hold three seconds in the open position on every rep.',
+      readyWhen: 'When three sets of fifteen per arm go by without the elbow leaving the ribs and without the torso turning.',
+    },
+    precautions:
+      'Cuff work is done light and slow: a sharp pain at the front or on top of the shoulder is a stop signal, not something to push through. A rolled towel between the elbow and the ribs helps keep the elbow in place. Check the anchor before every set: a band that comes loose under tension flies toward your face.',
   },
 
   dumbbellShoulderPress: {

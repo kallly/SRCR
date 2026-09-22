@@ -1129,40 +1129,42 @@ export const it: Partial<Record<ExerciseKey, ExerciseDetail>> = {
 
   bandSquat: {
     slug: 'squat-con-elastico',
-    muscles: { primary: 'Quadricipiti, glutei', secondary: 'Medio gluteo, femorali' },
+    muscles: { primary: 'Quadricipiti, glutei', secondary: 'Ischiocrurali, core, spalle' },
     steps: [
-      'Posiziona l’elastico appena sopra le ginocchia, piedi larghi quanto le anche.',
-      'Spingi le anche indietro e scendi come in uno squat classico, le ginocchia spingono l’elastico verso l’esterno.',
-      'Scendi finché le cosce sono vicine all’orizzontale, peso sui talloni.',
-      'Risali spingendo sui talloni fino all’estensione completa, senza lasciare che le ginocchia cedano verso l’interno.',
+      'Sali con entrambi i piedi sul centro dell’elastico, larghezza anche, con l’elastico sotto l’arco plantare.',
+      'Porta le estremità verso l’alto e tienile all’altezza delle spalle, gomiti in avanti, elastico già leggermente in tensione da in piedi.',
+      'Spingi le anche indietro e scendi come in uno squat classico, busto eretto e peso distribuito su tutto il piede.',
+      'Scendi finché le cosce sono vicine alla parallela al suolo, ginocchia in linea con i piedi.',
+      'Risali spingendo contro il pavimento fino alla completa estensione, senza lasciare che l’elastico porti il busto in avanti.',
     ],
     mistakes: [
-      'Lasciare che le ginocchia cedano verso l’interno invece di spingere l’elastico verso l’esterno.',
-      'Scendere senza controllo, lasciando che l’elastico riporti le ginocchia bruscamente verso l’interno.',
-      'Busto che si inclina troppo in avanti.',
+      'Lasciare scendere le mani durante la risalita: l’elastico si allenta e la resistenza sparisce proprio dove dovrebbe essere massima.',
+      'Inclinarsi in avanti per compensare la trazione dell’elastico sulle spalle.',
+      'Usare un elastico così forte da impedire di raggiungere la profondità abituale dello squat.',
+      'Appoggiare l’elastico sull’avampiede invece che sotto l’arco: scivola a metà serie.',
     ],
     sensation:
-      'Il lavoro si sente nella parte anteriore delle cosce e sul lato dei glutei, che devono spingere attivamente l’elastico. Una tensione al ginocchio segnala che l’allineamento ginocchio-piede non viene mantenuto.',
+      'Lo sforzo si concentra nella parte anteriore delle cosce e nei glutei, con una tensione costante sulle spalle che reggono l’elastico. Se bruciano la parte alta della schiena o le braccia prima delle gambe, la presa è troppo corta o l’elastico troppo resistente.',
     rangeOfMotion:
-      'Scendi finché le cosce sono vicine all’orizzontale, senza superare ciò che consente una mobilità dell’anca confortevole.',
+      'Scendi finché le cosce sono vicine alla parallela, o fin dove la schiena resta dritta e i talloni a terra. In alto estendi completamente le anche senza inarcare la zona lombare.',
     tempo:
-      'Tre secondi per scendere, uno o due per risalire. Inspira scendendo, espira spingendo sui talloni.',
+      'Due o tre secondi per scendere, uno o due per risalire. Inspira scendendo, espira spingendo. L’elastico aiuta in basso e resiste in alto: è la fine della risalita che va retta, non la partenza.',
     anatomy:
-      'Il quadricipite e il grande gluteo restano i motori principali dello squat; l’elastico aggiunge una resistenza laterale che il medio gluteo deve contrastare in continuazione per impedire al ginocchio di cedere verso l’interno, cosa che uno squat a corpo libero non richiede allo stesso modo.',
+      'Il quadricipite estende il ginocchio, il grande gluteo e gli ischiocrurali estendono l’anca. Il trasverso dell’addome e gli erettori spinali bloccano il tronco contro la trazione in avanti dell’elastico, mentre i deltoidi e la parte alta della schiena mantengono le mani all’altezza delle spalle per tutta la serie: un lavoro di resistenza discreto che uno squat a corpo libero non richiede.',
     mechanics:
-      'Doppia flessione poi doppia estensione di anca e ginocchio nel piano sagittale, combinata a una resistenza in abduzione d’anca imposta dall’elastico nel piano frontale.',
+      'Doppia flessione e poi doppia estensione di anca e ginocchio sul piano sagittale. La particolarità sta nella curva di resistenza: la tensione dell’elastico cresce con il suo allungamento, quindi è bassa in fondo allo squat — dove il movimento è già meccanicamente più difficile — e massima in alto, dove le gambe sono più forti. È l’opposto di un bilanciere o di un manubrio, il cui carico non varia, e rende la fine della risalita nettamente più impegnativa.',
     benefits: [
-      'Rinforza lo squat classico aggiungendo un lavoro attivo del medio gluteo, utile per la stabilità del ginocchio nella camminata e nella corsa.',
-      'Dà un riscontro tattile immediato sull’allineamento del ginocchio: se l’elastico si allenta, il ginocchio è ceduto verso l’interno.',
-      'Attrezzatura leggera ed economica, facile da portare ovunque.',
+      'Aggiunge una resistenza reale allo squat a corpo libero senza attrezzatura pesante né ingombrante.',
+      'Carica la fine della risalita, la parte che uno squat a corpo libero lascia troppo facile.',
+      'Si regola con precisione: allargare i piedi, accorciare la presa o cambiare elastico basta per cambiare difficoltà.',
     ],
     progression: {
-      easier: 'Usa un elastico meno resistente, o riduci la profondità della discesa.',
-      harder: 'Usa un elastico più resistente, o aggiungi una pausa di due secondi in basso.',
-      readyWhen: 'Quando tre serie da quindici passano senza che l’elastico si allenti mai.',
+      easier: 'Avvicina i piedi sull’elastico per ridurne la tensione, o tieni le estremità più in basso, all’altezza delle anche.',
+      harder: 'Usa un elastico più resistente, accorcia la presa, o aggiungi due secondi di pausa in basso.',
+      readyWhen: 'Quando tre serie da quindici passano senza che le mani scendano dalle spalle e senza che il busto si inclini.',
     },
     precautions:
-      'Scegli una resistenza che permetta di mantenere le ginocchia allineate per tutta la serie: un elastico troppo forte che le costringe a cedere è controproducente.',
+      'Prima di ogni serie controlla che l’elastico sia centrato sotto entrambi i piedi e non sia intaccato né usurato: una banda che sfugge sotto tensione parte verso il viso. Aumenta la resistenza gradualmente, la tensione in cima al movimento sorprende la prima volta.',
   },
 
   dumbbellGobletSquat: {
@@ -1918,6 +1920,124 @@ export const it: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Un dolore alla piega del gomito non è il bruciore cercato: riduci la resistenza e verifica che la discesa sia frenata anziché subita.',
+  },
+  bandRow: {
+    slug: 'rowing-con-elastico',
+    muscles: { primary: 'Gran dorsale, romboidi, trapezio medio', secondary: 'Bicipiti, deltoide posteriore, erettori spinali' },
+    steps: [
+      'In piedi, piedi alla larghezza delle anche, appoggia il centro dell’elastico sotto l’arco di ciascun piede e afferra un’estremità per mano.',
+      'Spingi le anche indietro e inclina il busto di circa 45°, schiena piatta e ginocchia leggermente flesse.',
+      'Lascia le braccia pendere verso il suolo con l’elastico già leggermente in tensione: è la posizione di partenza.',
+      'Tira le mani verso l’ombelico tenendo i gomiti vicini al corpo, fino ad avvicinare le scapole.',
+      'Fai una breve pausa in alto, poi lascia scendere le braccia frenando l’elastico.',
+    ],
+    mistakes: [
+      'Incurvare la zona lombare: l’inclinazione nasce dalla cerniera d’anca, non dalla colonna.',
+      'Tirare con i soli bicipiti e i gomiti larghi: le scapole smettono di muoversi e la schiena non lavora.',
+      'Rialzarsi un po’ a ogni ripetizione per aiutare la trazione: il busto deve restare alla stessa altezza dall’inizio alla fine della serie.',
+      'Lasciare che l’elastico richiami le braccia senza frenarle: si perde la metà utile del movimento.',
+    ],
+    sensation:
+      'Lo sforzo si sente tra le scapole e sui lati della schiena. Se bruciano soprattutto i bicipiti o gli avambracci, i gomiti si allargano troppo o le mani stringono eccessivamente. Una tensione nella zona lombare indica che la posizione del busto non è più mantenuta.',
+    rangeOfMotion:
+      'Tira finché le mani raggiungono le costole basse o l’ombelico e i gomiti superano la linea del busto. Non serve andare oltre: più in là è la spalla che si arrotola in avanti, non la scapola che arretra. Riscendi a braccia tese senza allentare del tutto la tensione dell’elastico.',
+    tempo:
+      'Un secondo per tirare, due o tre per lasciar tornare. Espira tirando, inspira nel ritorno. Il ritorno è la fase che l’elastico rende più facile da trascurare, quindi quella da frenare di più.',
+    anatomy:
+      'Il gran dorsale porta il braccio indietro e lungo il tronco; i romboidi e il trapezio medio avvicinano le scapole alla colonna, ed è questo il vero lavoro dell’esercizio. Il deltoide posteriore assiste l’estensione di spalla, il bicipite brachiale e il brachiale flettono il gomito. Sullo sfondo, gli erettori spinali e gli ischiocrurali reggono il busto inclinato perché la colonna non si incurvi: lavorano in isometria per tutta la serie.',
+    mechanics:
+      'Trazione orizzontale sul piano sagittale, che combina estensione di spalla, retrazione scapolare e flessione di gomito. La particolarità dell’elastico: la sua resistenza cresce con l’allungamento, quindi il punto più difficile è a fine trazione, dove le scapole sono più ravvicinate — l’opposto di un rematore con manubrio, dove il carico è costante e il punto duro è allo stacco.',
+    benefits: [
+      'Costruisce la trazione orizzontale, il movimento che bilancia tutte le spinte — piegamenti, distensioni — e che un allenamento senza attrezzi copre male.',
+      'Rinforza i muscoli che tengono le scapole indietro, e con essi la postura della parte alta della schiena dopo una giornata seduti.',
+      'La resistenza crescente dell’elastico resta dolce all’inizio del movimento, proprio dove una spalla sensibile è più esposta.',
+    ],
+    progression: {
+      easier: 'Allarga i piedi sull’elastico per ridurne la tensione, o inclina un po’ meno il busto.',
+      harder: 'Avvicina i piedi, usa un elastico più resistente, o tieni due secondi a fine trazione.',
+      readyWhen: 'Quando tre serie da quindici passano senza che il busto si rialzi nelle ultime ripetizioni.',
+    },
+    precautions:
+      'Prima di ogni serie controlla che l’elastico sia centrato sotto i piedi e non sia intaccato né usurato: una banda che scivola o si rompe sotto tensione parte verso il viso. Se la cerniera d’anca risulta scomoda, il rematore orizzontale da seduto dà lo stesso lavoro di schiena senza inclinare il busto.',
+  },
+  bandSeatedRow: {
+    slug: 'rematore-orizzontale-con-elastico',
+    muscles: { primary: 'Gran dorsale, romboidi, trapezio medio', secondary: 'Bicipiti, deltoide posteriore' },
+    steps: [
+      'Siediti a terra con le gambe tese davanti a te e passa il centro dell’elastico attorno alla pianta dei piedi.',
+      'Afferra un’estremità per mano, braccia tese, busto eretto e appena oltre la verticale.',
+      'Allungati verso l’alto: petto aperto, spalle basse, zona lombare né incurvata né inarcata.',
+      'Tira le mani verso la pancia portando i gomiti lungo il corpo, fino ad avvicinare le scapole.',
+      'Lascia che le braccia si tendano lentamente, senza che il busto vada indietro né si incurvi in avanti.',
+    ],
+    mistakes: [
+      'Dondolare il busto indietro nella trazione e in avanti nel ritorno: il movimento diventa un’oscillazione del tronco, non un rematore.',
+      'Incurvare la parte alta della schiena nel ritorno, facendosi tirare verso i piedi.',
+      'Alzare le spalle verso le orecchie: il trapezio superiore prende il posto del trapezio medio.',
+    ],
+    sensation:
+      'Il lavoro si sente tra le scapole e sui lati della schiena, mai nel collo. Un bruciore nella nuca o nella parte alta dei trapezi indica che le spalle salgono invece di restare basse.',
+    rangeOfMotion:
+      'Tira finché le mani toccano il basso ventre e i gomiti superano la linea del busto. Torna a braccia tese, ma mantieni l’elastico in tensione: lasciarlo del tutto allentato fa ripartire ogni ripetizione con uno strappo.',
+    tempo:
+      'Un secondo per tirare, due o tre per tornare. Espira tirando, inspira tornando. Il busto non si muove: se il tempo richiede una spinta di reni, la tensione è eccessiva.',
+    anatomy:
+      'Gli stessi motori del rowing inclinato — gran dorsale, romboidi, trapezio medio, assistiti dal deltoide posteriore e dal bicipite. La differenza è altrove: da seduti il busto è retto dalla posizione stessa e non dagli erettori spinali e dagli ischiocrurali, che nella versione inclinata lavoravano in isometria. Tutto lo sforzo si concentra quindi sulla trazione.',
+    mechanics:
+      'Trazione orizzontale sul piano sagittale: estensione di spalla, retrazione scapolare, flessione di gomito. La posizione seduta elimina la cerniera d’anca da mantenere, il che ne fa l’ingresso più semplice alla trazione orizzontale — e la versione da scegliere finché la zona lombare non regge un busto inclinato. Come per ogni elastico, la resistenza cresce con l’allungamento: la fine della trazione è il punto più difficile.',
+    benefits: [
+      'Dà il lavoro di schiena del rematore senza chiedere di reggere un busto inclinato: accessibile dal primo giorno e utile alla ripresa.',
+      'Insegna a separare il movimento delle scapole da quello delle braccia, il che rende più efficace qualunque altra trazione.',
+      'Si esegue a terra, senza ancoraggio né panca: bastano un elastico e due metri quadri.',
+    ],
+    progression: {
+      easier: 'Fletti leggermente le ginocchia e allarga le mani sull’elastico per ridurre la tensione.',
+      harder: 'Accorcia la presa, usa un elastico più resistente, o tieni due secondi a fine trazione.',
+      readyWhen: 'Quando tre serie da quindici passano senza che il busto vada indietro: il rowing con elastico inclinato diventa il passo successivo.',
+    },
+    precautions:
+      'Se gli ischiocrurali tirano e costringono la zona lombare a incurvarsi, siediti su un cuscino o fletti un po’ le ginocchia: una schiena incurvata sotto tensione è esattamente ciò che qui si vuole evitare.',
+  },
+  bandExternalRotation: {
+    slug: 'rotazione-esterna-spalla-con-elastico',
+    muscles: { primary: 'Infraspinato, piccolo rotondo', secondary: 'Deltoide posteriore, romboidi' },
+    steps: [
+      'Fissa l’elastico a un palo, allo stipite di una porta o a una maniglia, all’altezza del gomito.',
+      'Mettiti in piedi di lato rispetto all’ancoraggio e afferra l’elastico con la mano più lontana, facendolo passare davanti alla pancia.',
+      'Appoggia il gomito alle costole e piegalo a 90°, avambraccio orizzontale e mano davanti all’ombelico.',
+      'Allontanati dall’ancoraggio finché l’elastico è già leggermente in tensione in questa posizione di partenza.',
+      'Senza staccare il gomito, apri l’avambraccio verso l’esterno, dalla parte opposta all’ancoraggio, e fai una pausa.',
+      'Riporta lentamente la mano davanti alla pancia frenando l’elastico. Finisci la serie, poi cambia lato.',
+    ],
+    mistakes: [
+      'Staccare il gomito dal corpo: la spalla va in abduzione e il movimento smette di essere una rotazione.',
+      'Ruotare il busto verso l’esterno per guadagnare ampiezza: lavora il tronco, non la spalla.',
+      'Usare un elastico troppo resistente: la cuffia dei rotatori è fatta di piccoli muscoli, e una tensione eccessiva fa compensare trapezio e gran dorsale.',
+      'Posizionarsi troppo lontano dall’ancoraggio: l’elastico tira allora il braccio in avanti e stacca il gomito ancora prima di partire.',
+    ],
+    sensation:
+      'Il lavoro si sente in profondità nella parte posteriore della spalla che lavora e lungo il bordo esterno della scapola. È uno sforzo discreto: se tira forte nel trapezio, nel collo o davanti alla spalla, la tensione è eccessiva o il gomito ha lasciato le costole.',
+    rangeOfMotion:
+      'Apri fin dove il gomito resta attaccato al corpo, il busto resta frontale e il polso resta allineato all’avambraccio: per la maggior parte delle persone, tra 30 e 45° verso l’esterno. L’ampiezza utile è corta per natura: andare oltre non recluta di più la cuffia, fa solo ruotare il busto.',
+    tempo:
+      'Due secondi per aprire, due o tre per tornare, senza strappi né slancio. Respirazione continua. È un esercizio di controllo: la lentezza fa tutto il lavoro, la velocità lo annulla.',
+    anatomy:
+      'L’infraspinato e il piccolo rotondo sono i due rotatori esterni della cuffia: fanno ruotare la testa dell’omero verso l’esterno e, così facendo, la mantengono centrata nella sua cavità mentre il deltoide solleva il braccio. Il sottoscapolare, loro antagonista, si occupa della rotazione interna. I romboidi e il trapezio medio stabilizzano la scapola perché la rotazione avvenga nella spalla e non attraverso uno spostamento della scapola.',
+    mechanics:
+      'Rotazione esterna dell’articolazione gleno-omerale sul piano trasversale, gomito fisso a 90° e braccio mantenuto lungo il tronco. L’apertura è una contrazione concentrica dei rotatori esterni, il ritorno frenato una contrazione eccentrica. Ancorato all’altezza del gomito a un punto fisso, l’elastico tira nell’asse della rotazione su tutta l’ampiezza, e la sua tensione cresce con l’allungamento: la resistenza massima cade a fine apertura, proprio dove questi muscoli sono più corti. Lavorare un lato alla volta lascia il busto frontale all’ancoraggio, il che rende subito visibile qualunque compenso con una rotazione del tronco.',
+    benefits: [
+      'Rinforza i rotatori esterni, quasi sempre più deboli dei rotatori interni in chi spinge più di quanto tiri.',
+      'Mantiene il centraggio della testa omerale, il che rende più confortevoli i movimenti sopra la testa.',
+      'Un braccio alla volta rivela una differenza di forza tra le due spalle e permette di colmarla sul lato debole.',
+      'Trova posto tanto nel riscaldamento, prima di una distensione o di piegamenti, quanto a fine seduta come lavoro di recupero.',
+    ],
+    progression: {
+      easier: 'Avvicinati all’ancoraggio per ridurre la tensione, o riduci l’ampiezza di apertura.',
+      harder: 'Allontanati dall’ancoraggio, usa un elastico più resistente, o tieni tre secondi in posizione aperta a ogni ripetizione.',
+      readyWhen: 'Quando tre serie da quindici per braccio passano senza che il gomito lasci le costole né che il busto ruoti.',
+    },
+    precautions:
+      'Il lavoro di cuffia si fa leggero e lento: un dolore acuto davanti o sopra la spalla è un segnale di stop, non qualcosa da attraversare. Un asciugamano arrotolato tra gomito e costole aiuta a tenere il gomito al suo posto. Controlla l’ancoraggio prima di ogni serie: un elastico che si sgancia sotto tensione parte verso il viso.',
   },
 
   dumbbellShoulderPress: {

@@ -82,7 +82,7 @@ const SCENES: Record<ExerciseKey, string> = {
   bandPullApart:
     'Person standing, arms extended forward at chest height holding a resistance band stretched between the hands, pulling it apart, front view.',
   bandSquat:
-    'Person in a squat, a resistance band looped around the ankles and stretched taut, knees pressing outward against it, side view.',
+    'Person in a squat, standing on the middle of a long resistance band, both ends held taut at shoulder height, band stretched from feet to hands, front view.',
   dumbbellGobletSquat:
     'Person in a squat, holding a single dumbbell with both hands close to the chest, elbows tracking inside the knees, side view.',
   dumbbellRow:
@@ -125,6 +125,12 @@ const SCENES: Record<ExerciseKey, string> = {
     'Person in a half squat with a band above the knees, stepping sideways with the band stretched taut, front view.',
   bandCurl:
     'Person standing on a resistance band, elbows tight to the body, curling both hands toward the shoulders, side view.',
+  bandRow:
+    'Person standing on a resistance band, torso hinged forward about 45 degrees with a flat back, pulling both hands to the navel with elbows close to the body, side view.',
+  bandSeatedRow:
+    'Person seated on the floor with legs extended, a resistance band looped around the feet, pulling both hands toward the belly with an upright torso, side view.',
+  bandExternalRotation:
+    'Person standing side-on to a vertical post, a resistance band anchored to it at elbow height and running across the front of the body to one hand, that elbow pinned to the ribs and bent at 90 degrees, forearm rotated outward away from the anchor, front view.',
   dumbbellShoulderPress:
     'Person pressing two dumbbells overhead from shoulder height, torso upright, front view.',
   dumbbellFloorPress:

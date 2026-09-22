@@ -1129,40 +1129,42 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
 
   bandSquat: {
     slug: 'kniebeuge-mit-band',
-    muscles: { primary: 'Quadrizeps, Gesäß', secondary: 'Mittlerer Gesäßmuskel, hintere Oberschenkelmuskulatur' },
+    muscles: { primary: 'Quadrizeps, Gesäßmuskulatur', secondary: 'Ischiocrurale Muskulatur, Rumpf, Schultern' },
     steps: [
-      'Lege das Band direkt über die Knie, Füße hüftbreit auseinander.',
-      'Schiebe die Hüfte nach hinten und senke dich wie bei einer normalen Kniebeuge ab, die Knie drücken das Band nach außen.',
-      'Senke dich ab, bis die Oberschenkel nahezu waagerecht sind, Gewicht auf den Fersen.',
-      'Drücke dich über die Fersen zurück zur vollen Streckung, ohne die Knie nach innen fallen zu lassen.',
+      'Stell dich mit beiden Füßen hüftbreit auf die Mitte des Bandes, sodass es unter dem Fußgewölbe liegt.',
+      'Führe die Enden nach oben und halte sie auf Schulterhöhe, Ellbogen nach vorn, das Band im Stand bereits leicht gespannt.',
+      'Schiebe die Hüfte nach hinten und senke dich wie bei einer normalen Kniebeuge ab, Oberkörper aufrecht, Gewicht über dem ganzen Fuß.',
+      'Geh so tief, bis die Oberschenkel nahezu waagerecht sind, die Knie in Richtung der Füße.',
+      'Drücke dich über den Boden bis zur vollständigen Streckung hoch, ohne dass das Band den Oberkörper nach vorn zieht.',
     ],
     mistakes: [
-      'Die Knie fallen nach innen, statt das Band nach außen zu drücken.',
-      'Unkontrolliertes Absenken, wodurch das Band die Knie ruckartig nach innen zieht.',
-      'Der Oberkörper kippt zu weit nach vorne.',
+      'Die Hände beim Hochkommen absinken lassen: das Band wird locker und der Widerstand verschwindet genau dort, wo er am größten sein sollte.',
+      'Sich nach vorn lehnen, um den Zug des Bandes an den Schultern auszugleichen.',
+      'Ein so starkes Band wählen, dass die gewohnte Tiefe der Kniebeuge nicht mehr erreicht wird.',
+      'Mit dem Fußballen statt mit dem Fußgewölbe auf dem Band stehen: es rutscht mitten im Satz weg.',
     ],
     sensation:
-      'Die Arbeit soll an der Oberschenkelvorderseite und seitlich am Gesäß spürbar sein, das aktiv gegen das Band nach außen drückt. Spannung im Knie zeigt, dass die Knie-Fuß-Ausrichtung nicht gehalten wird.',
+      'Die Anstrengung sitzt in der Oberschenkelvorderseite und im Gesäß, bei gleichbleibendem Zug auf den Schultern, die das Band halten. Brennt der obere Rücken oder brennen die Arme vor den Beinen, ist der Griff zu kurz oder das Band zu stark.',
     rangeOfMotion:
-      'Senke dich ab, bis die Oberschenkel nahezu waagerecht sind, ohne das hinauszugehen, was eine bequeme Hüftbeweglichkeit erlaubt.',
+      'Geh so tief, bis die Oberschenkel nahezu waagerecht sind, oder so weit, wie der Rücken gerade bleibt und die Fersen am Boden stehen. Oben die Hüfte vollständig strecken, ohne ins Hohlkreuz zu gehen.',
     tempo:
-      'Drei Sekunden zum Absenken, ein bis zwei zum Hochkommen. Einatmen beim Absenken, ausatmen beim Hochdrücken über die Fersen.',
+      'Zwei bis drei Sekunden abwärts, ein bis zwei aufwärts. Beim Absenken einatmen, beim Drücken ausatmen. Das Band hilft unten und bremst oben: zu halten ist das Ende der Aufwärtsbewegung, nicht der Start.',
     anatomy:
-      'Quadrizeps und großer Gesäßmuskel bleiben die Hauptmotoren der Kniebeuge; das Band fügt einen seitlichen Widerstand hinzu, den der mittlere Gesäßmuskel durchgehend ausgleichen muss, um das Einknicken des Knies zu verhindern — etwas, das eine Kniebeuge ohne Band nicht in gleicher Weise fordert.',
+      'Der Quadrizeps streckt das Knie, der große Gesäßmuskel und die ischiocrurale Muskulatur strecken die Hüfte. Der Transversus abdominis und die Rückenstrecker sichern den Rumpf gegen den Zug des Bandes nach vorn, während Deltamuskeln und oberer Rücken die Hände den ganzen Satz über auf Schulterhöhe halten — eine unauffällige Ausdauerarbeit, die eine Kniebeuge mit dem eigenen Körpergewicht nicht verlangt.',
     mechanics:
-      'Doppelte Beugung, dann doppelte Streckung von Hüfte und Knie in der Sagittalebene, kombiniert mit einem Widerstand gegen Hüftabduktion durch das Band in der Frontalebene.',
+      'Doppelte Beugung und anschließend doppelte Streckung von Hüfte und Knie in der Sagittalebene. Das Besondere ist die Widerstandskurve: die Spannung des Bandes wächst mit seiner Dehnung, ist unten in der Kniebeuge also gering — dort, wo die Bewegung mechanisch ohnehin am schwersten ist — und oben am größten, wo die Beine am stärksten sind. Das ist das Gegenteil einer Langhantel oder Kurzhantel, deren Last sich nicht ändert, und macht das Ende der Aufwärtsbewegung deutlich anspruchsvoller.',
     benefits: [
-      'Erweitert die klassische Kniebeuge um aktive Arbeit des mittleren Gesäßmuskels, nützlich für die Kniestabilität beim Gehen und Laufen.',
-      'Gibt sofortiges taktiles Feedback zur Knieausrichtung: Lässt das Band nach, ist das Knie eingeknickt.',
-      'Leichtes, günstiges Equipment, leicht mitzunehmen.',
+      'Fügt der Kniebeuge mit dem eigenen Körpergewicht echten Widerstand hinzu, ohne schweres oder sperriges Material.',
+      'Belastet das Ende der Aufwärtsbewegung — genau den Abschnitt, den eine Kniebeuge ohne Zusatzlast zu leicht lässt.',
+      'Lässt sich fein dosieren: die Füße weiter stellen, den Griff verkürzen oder das Band wechseln genügt, um die Schwierigkeit zu ändern.',
     ],
     progression: {
-      easier: 'Nimm ein weniger widerstandsfähiges Band, oder verringere die Tiefe.',
-      harder: 'Nimm ein widerstandsfähigeres Band, oder füge unten eine Pause von zwei Sekunden hinzu.',
-      readyWhen: 'Wenn drei Sätze zu fünfzehn gelingen, ohne dass das Band jemals nachlässt.',
+      easier: 'Stell die Füße auf dem Band enger, um die Spannung zu verringern, oder halte die Enden tiefer, auf Hüfthöhe.',
+      harder: 'Nimm ein stärkeres Band, verkürze den Griff oder halte unten zwei Sekunden.',
+      readyWhen: 'Wenn drei Sätze zu fünfzehn gelingen, ohne dass die Hände von den Schultern sinken und ohne dass sich der Oberkörper nach vorn neigt.',
     },
     precautions:
-      'Wähle einen Widerstand, bei dem die Knie über den ganzen Satz ausgerichtet bleiben: ein zu starkes Band, das sie nach innen zwingt, ist kontraproduktiv.',
+      'Prüfe vor jedem Satz, dass das Band mittig unter beiden Füßen liegt und weder eingerissen noch abgenutzt ist: ein Band, das sich unter Spannung löst, schnellt ins Gesicht. Steigere den Widerstand schrittweise — die Spannung am oberen Punkt überrascht beim ersten Mal.',
   },
 
   dumbbellGobletSquat: {
@@ -1918,6 +1920,124 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Schmerz in der Ellenbeuge ist nicht das gesuchte Brennen: verringere den Widerstand und prüfe, ob das Absenken gebremst und nicht fallengelassen wird.',
+  },
+  bandRow: {
+    slug: 'rudern-mit-band',
+    muscles: { primary: 'Latissimus, Rhomboiden, mittlerer Trapezmuskel', secondary: 'Bizeps, hintere Deltamuskulatur, Rückenstrecker' },
+    steps: [
+      'Steh hüftbreit, die Mitte des Bandes unter dem Fußgewölbe beider Füße, je ein Ende in jeder Hand.',
+      'Schiebe die Hüfte nach hinten und neige den Oberkörper auf etwa 45°, Rücken flach, Knie leicht gebeugt.',
+      'Lass die Arme zum Boden hängen, das Band bereits leicht gespannt: das ist die Ausgangsposition.',
+      'Zieh die Hände zum Bauchnabel, die Ellbogen nah am Körper, bis sich die Schulterblätter annähern.',
+      'Halte oben kurz inne und lass die Arme dann gegen den Zug des Bandes wieder absinken.',
+    ],
+    mistakes: [
+      'Den unteren Rücken rund machen: die Neigung kommt aus dem Hüftgelenk, nicht aus der Wirbelsäule.',
+      'Nur mit dem Bizeps und abgespreizten Ellbogen ziehen: die Schulterblätter bewegen sich nicht mehr und der Rücken arbeitet nicht.',
+      'Sich bei jeder Wiederholung ein Stück aufrichten, um den Zug zu unterstützen: der Oberkörper bleibt vom ersten bis zum letzten Mal auf derselben Höhe.',
+      'Das Band die Arme zurückreißen lassen, ohne zu bremsen: die nützliche Hälfte der Bewegung geht verloren.',
+    ],
+    sensation:
+      'Die Anstrengung ist zwischen den Schulterblättern und an den Rückenseiten zu spüren. Brennen vor allem Bizeps oder Unterarme, stehen die Ellbogen zu weit ab oder die Hände greifen zu fest zu. Spannung im unteren Rücken zeigt, dass die Oberkörperposition nicht mehr gehalten wird.',
+    rangeOfMotion:
+      'Zieh, bis die Hände die unteren Rippen oder den Bauchnabel erreichen und die Ellbogen hinter die Linie des Oberkörpers kommen. Weiter zu ziehen bringt nichts: dahinter rollt die Schulter nach vorn, statt dass das Schulterblatt zurückgeht. Senke bis zu gestreckten Armen ab, ohne die Spannung des Bandes ganz aufzugeben.',
+    tempo:
+      'Eine Sekunde für den Zug, zwei bis drei für das Zurückführen. Beim Ziehen ausatmen, beim Zurückführen einatmen. Das Zurückführen ist die Phase, die ein Band am leichtesten verschludern lässt — also die, die am meisten gebremst gehört.',
+    anatomy:
+      'Der Latissimus führt den Arm nach hinten und an den Rumpf heran; Rhomboiden und mittlerer Trapezmuskel ziehen die Schulterblätter zur Wirbelsäule, und das ist die eigentliche Arbeit der Übung. Die hintere Deltamuskulatur unterstützt die Schulterstreckung, Bizeps und Brachialis beugen den Ellbogen. Im Hintergrund halten Rückenstrecker und ischiocrurale Muskulatur den geneigten Oberkörper, damit die Wirbelsäule nicht rund wird: sie arbeiten den ganzen Satz über isometrisch.',
+    mechanics:
+      'Horizontaler Zug in der Sagittalebene, der Schulterstreckung, Schulterblattretraktion und Ellbogenbeugung verbindet. Die Besonderheit des Bandes: sein Widerstand wächst mit der Dehnung, der schwerste Punkt liegt also am Ende des Zuges, wo die Schulterblätter am engsten beieinander sind — umgekehrt zum Kurzhantelrudern, wo die Last konstant ist und der schwere Punkt am Abheben liegt.',
+    benefits: [
+      'Baut den horizontalen Zug auf, also die Bewegung, die alle Druckbewegungen — Liegestütze, Drücken — ausgleicht und die ein Training ohne Geräte schlecht abdeckt.',
+      'Kräftigt die Muskeln, die die Schulterblätter hinten halten, und damit die Haltung des oberen Rückens nach einem Tag im Sitzen.',
+      'Der wachsende Widerstand des Bandes bleibt am Bewegungsbeginn sanft, genau dort, wo eine empfindliche Schulter am meisten ausgesetzt ist.',
+    ],
+    progression: {
+      easier: 'Stell die Füße auf dem Band weiter auseinander, um die Spannung zu verringern, oder neige den Oberkörper etwas weniger.',
+      harder: 'Stell die Füße enger, nimm ein stärkeres Band oder halte am Ende des Zuges zwei Sekunden.',
+      readyWhen: 'Wenn drei Sätze zu fünfzehn gelingen, ohne dass sich der Oberkörper bei den letzten Wiederholungen aufrichtet.',
+    },
+    precautions:
+      'Prüfe vor jedem Satz, dass das Band mittig unter den Füßen liegt und weder eingerissen noch abgenutzt ist: ein Band, das unter Spannung wegrutscht oder reißt, schnellt ins Gesicht. Ist die Hüftbeuge unangenehm, liefert das sitzende Rudern dieselbe Rückenarbeit, ohne den Oberkörper zu neigen.',
+  },
+  bandSeatedRow: {
+    slug: 'sitzendes-rudern-mit-band',
+    muscles: { primary: 'Latissimus, Rhomboiden, mittlerer Trapezmuskel', secondary: 'Bizeps, hintere Deltamuskulatur' },
+    steps: [
+      'Setz dich mit gestreckten Beinen auf den Boden und lege die Mitte des Bandes um die Fußsohlen.',
+      'Nimm je ein Ende in jede Hand, Arme gestreckt, Oberkörper aufrecht und knapp hinter der Senkrechten.',
+      'Mach dich lang: Brust offen, Schultern tief, unterer Rücken weder rund noch im Hohlkreuz.',
+      'Zieh die Hände zum Bauch und führe die Ellbogen am Körper entlang, bis sich die Schulterblätter annähern.',
+      'Lass die Arme langsam wieder strecken, ohne dass der Oberkörper nach hinten kippt oder nach vorn rund wird.',
+    ],
+    mistakes: [
+      'Den Oberkörper beim Ziehen nach hinten und beim Zurückführen nach vorn schwingen: aus der Bewegung wird ein Pendeln des Rumpfes, kein Rudern.',
+      'Beim Zurückführen den oberen Rücken rund machen und sich zu den Füßen ziehen lassen.',
+      'Die Schultern zu den Ohren hochziehen: der obere Trapezmuskel übernimmt die Rolle des mittleren.',
+    ],
+    sensation:
+      'Die Arbeit ist zwischen den Schulterblättern und an den Rückenseiten zu spüren, nie im Nacken. Brennt der Nacken oder der obere Trapezmuskel, steigen die Schultern hoch, statt tief zu bleiben.',
+    rangeOfMotion:
+      'Zieh, bis die Hände den Unterbauch berühren und die Ellbogen hinter die Linie des Oberkörpers kommen. Kehre zu gestreckten Armen zurück, halte das Band aber unter Spannung: lässt man es ganz locker, startet jede Wiederholung mit einem Ruck.',
+    tempo:
+      'Eine Sekunde für den Zug, zwei bis drei zurück. Beim Ziehen ausatmen, beim Zurückführen einatmen. Der Oberkörper bewegt sich nicht: braucht das Tempo einen Schwung aus dem Rücken, ist die Spannung zu hoch.',
+    anatomy:
+      'Dieselben Motoren wie beim vorgebeugten Rudern — Latissimus, Rhomboiden, mittlerer Trapezmuskel, unterstützt von hinterer Deltamuskulatur und Bizeps. Der Unterschied liegt woanders: im Sitzen hält die Position selbst den Oberkörper, nicht die Rückenstrecker und die ischiocrurale Muskulatur, die in der vorgebeugten Variante isometrisch arbeiteten. Die gesamte Anstrengung konzentriert sich also auf den Zug.',
+    mechanics:
+      'Horizontaler Zug in der Sagittalebene: Schulterstreckung, Schulterblattretraktion, Ellbogenbeugung. Das Sitzen nimmt die zu haltende Hüftbeuge weg, was diese Variante zum einfachsten Einstieg ins horizontale Ziehen macht — und zur richtigen Wahl, solange der untere Rücken einen geneigten Oberkörper noch nicht trägt. Wie bei jedem Band wächst der Widerstand mit der Dehnung: das Ende des Zuges ist der schwerste Punkt.',
+    benefits: [
+      'Liefert die Rückenarbeit des Ruderns, ohne einen geneigten Oberkörper halten zu müssen: vom ersten Tag an zugänglich und beim Wiedereinstieg nützlich.',
+      'Lehrt, die Bewegung der Schulterblätter von der der Arme zu trennen, was jeden anderen Zug wirksamer macht.',
+      'Wird am Boden ausgeführt, ohne Verankerung und ohne Bank: ein Band und zwei Quadratmeter genügen.',
+    ],
+    progression: {
+      easier: 'Beuge die Knie leicht und fasse das Band weiter außen, um die Spannung zu verringern.',
+      harder: 'Verkürze den Griff, nimm ein stärkeres Band oder halte am Ende des Zuges zwei Sekunden.',
+      readyWhen: 'Wenn drei Sätze zu fünfzehn gelingen, ohne dass der Oberkörper nach hinten kippt: das vorgebeugte Rudern mit Band ist dann der nächste Schritt.',
+    },
+    precautions:
+      'Zieht die ischiocrurale Muskulatur und zwingt den unteren Rücken rund zu werden, setz dich auf ein Kissen oder beuge die Knie leicht — ein runder Rücken unter Spannung ist genau das, was hier vermieden werden soll.',
+  },
+  bandExternalRotation: {
+    slug: 'aussenrotation-schulter-mit-band',
+    muscles: { primary: 'Infraspinatus, Teres minor', secondary: 'Hintere Deltamuskulatur, Rhomboiden' },
+    steps: [
+      'Befestige das Band auf Ellbogenhöhe an einem Pfosten, einem Türrahmen oder einem Griff.',
+      'Stell dich seitlich zum Ankerpunkt und nimm das Band in die weiter entfernte Hand, sodass es vor dem Bauch verläuft.',
+      'Lege den Ellbogen an die Rippen und beuge ihn auf 90°, Unterarm waagerecht, Hand vor dem Nabel.',
+      'Geh so weit vom Ankerpunkt weg, bis das Band in dieser Ausgangsposition bereits leicht gespannt ist.',
+      'Öffne den Unterarm nach außen, vom Ankerpunkt weg, ohne dass der Ellbogen die Seite verlässt, und verharre kurz.',
+      'Führe die Hand langsam und gegen den Zug des Bandes vor den Bauch zurück. Beende den Satz und wechsle dann die Seite.',
+    ],
+    mistakes: [
+      'Den Ellbogen vom Körper lösen: die Schulter geht in Abduktion und die Bewegung ist keine Rotation mehr.',
+      'Den Oberkörper mitdrehen, um mehr Weg zu gewinnen: dann arbeitet der Rumpf, nicht die Schulter.',
+      'Ein zu starkes Band nehmen: die Rotatorenmanschette besteht aus kleinen Muskeln, zu viel Spannung lässt Trapezmuskel und Latissimus übernehmen.',
+      'Zu weit vom Ankerpunkt entfernt stehen: das Band zieht den Arm dann nach vorn und hebt den Ellbogen schon vor dem Start von den Rippen.',
+    ],
+    sensation:
+      'Die Arbeit ist tief an der Rückseite der arbeitenden Schulter und entlang des äußeren Schulterblattrands zu spüren. Es ist eine unauffällige Anstrengung: zieht es stark im Trapezmuskel, im Nacken oder vorn an der Schulter, ist die Spannung zu hoch oder der Ellbogen hat die Rippen verlassen.',
+    rangeOfMotion:
+      'Öffne so weit, wie der Ellbogen am Körper bleibt, der Oberkörper frontal bleibt und das Handgelenk in Verlängerung des Unterarms steht — bei den meisten sind das 30 bis 45° nach außen. Der nützliche Bewegungsweg ist von Natur aus kurz: weiter zu gehen fordert die Manschette nicht mehr, es dreht nur den Oberkörper mit.',
+    tempo:
+      'Zwei Sekunden zum Öffnen, zwei bis drei zurück, ohne Ruck und ohne Schwung. Durchgehend weiteratmen. Das ist eine Kontrollübung: die Langsamkeit macht die ganze Arbeit, Tempo hebt sie auf.',
+    anatomy:
+      'Infraspinatus und Teres minor sind die beiden Außenrotatoren der Manschette: sie drehen den Oberarmkopf nach außen und halten ihn dabei in seiner Pfanne zentriert, während der Deltamuskel den Arm hebt. Der Subscapularis, ihr Gegenspieler, übernimmt die Innenrotation. Rhomboiden und mittlerer Trapezmuskel stabilisieren das Schulterblatt, damit die Drehung im Schultergelenk stattfindet und nicht über ein Verschieben des Schulterblatts.',
+    mechanics:
+      'Außenrotation des Glenohumeralgelenks in der Transversalebene, der Ellbogen auf 90° fixiert und der Oberarm am Rumpf gehalten. Das Öffnen ist eine konzentrische Kontraktion der Außenrotatoren, das gebremste Zurückführen eine exzentrische. Auf Ellbogenhöhe an einem festen Punkt verankert, zieht das Band über den ganzen Weg in der Achse der Drehung, und seine Spannung wächst mit der Dehnung: der größte Widerstand fällt ans Ende der Öffnung, genau dorthin, wo diese Muskeln am kürzesten sind. Eine Seite nach der anderen zu arbeiten hält den Oberkörper frontal zum Ankerpunkt, wodurch jedes Ausweichen über eine Rumpfdrehung sofort sichtbar wird.',
+    benefits: [
+      'Kräftigt die Außenrotatoren, die bei allen, die mehr drücken als ziehen, fast immer schwächer sind als die Innenrotatoren.',
+      'Erhält die Zentrierung des Oberarmkopfs, was Bewegungen über Kopf angenehmer macht.',
+      'Ein Arm nach dem anderen zeigt einen Kraftunterschied zwischen beiden Schultern und erlaubt es, ihn auf der schwächeren Seite aufzuholen.',
+      'Passt gleichermaßen ins Aufwärmen vor Drücken oder Liegestützen wie ans Ende der Einheit als Ausgleichsarbeit.',
+    ],
+    progression: {
+      easier: 'Geh näher an den Ankerpunkt heran, um die Spannung zu verringern, oder verringere den Öffnungsweg.',
+      harder: 'Geh weiter vom Ankerpunkt weg, nimm ein stärkeres Band oder halte bei jeder Wiederholung drei Sekunden in der geöffneten Position.',
+      readyWhen: 'Wenn drei Sätze zu fünfzehn je Arm gelingen, ohne dass der Ellbogen die Rippen verlässt und ohne dass sich der Oberkörper mitdreht.',
+    },
+    precautions:
+      'Manschettenarbeit wird leicht und langsam ausgeführt: ein scharfer Schmerz vorn oder oben an der Schulter ist ein Stoppsignal, nichts, was man durchzieht. Ein zusammengerolltes Handtuch zwischen Ellbogen und Rippen hilft, den Ellbogen an Ort und Stelle zu halten. Prüfe vor jedem Satz die Verankerung: ein Band, das sich unter Spannung löst, schnellt ins Gesicht.',
   },
 
   dumbbellShoulderPress: {

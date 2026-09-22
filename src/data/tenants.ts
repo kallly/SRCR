@@ -8,7 +8,7 @@ import type { TenantPreset } from './presets';
  * le meme deploiement que cirkali.fr.
  *
  * Rien n'est fork, rien n'est reconstruit : c'est le MEME `index.html`, le meme
- * bundle et les memes 310 fiches qui repondent sur `<salle>.cirkali.fr`. Seules
+ * bundle et les memes 325 fiches qui repondent sur `<salle>.cirkali.fr`. Seules
  * changent des DONNEES, resolues au demarrage depuis l'hote (`main.ts`) :
  * quelques exercices en plus dans la bibliotheque, et eventuellement d'autres
  * seances toutes faites.

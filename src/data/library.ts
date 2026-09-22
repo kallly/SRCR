@@ -33,10 +33,15 @@ export interface LibraryEntry {
    *
    * Drapeau explicite et non deduit de `category`, pour la meme raison qui a
    * fait naitre `motion` : la categorie ne sait pas repondre a cette
-   * question. Un elastique n'est pas du poids du corps mais n'a pas de kg —
-   * il a une couleur ; et `machine` range le tapis de course, le velo et le
-   * rameur avec la presse a cuisses, alors que ces trois-la se reglent en
-   * vitesse, en niveau ou en frein.
+   * question. `machine` range le tapis de course, le velo et le rameur avec
+   * la presse a cuisses, alors que ces trois-la se reglent en vitesse, en
+   * niveau ou en frein — une categorie entiere ne tranche donc rien.
+   *
+   * Les elastiques, eux, en portent un : les fabricants les vendent notes en
+   * kilogrammes, et c'est la seule facon d'ecrire dans une seance QUEL
+   * elastique on a pris. Ce que le champ enregistre est ce reglage-la, pas
+   * une mesure de force instantanee — la tension reelle d'une bande monte
+   * avec l'etirement, comme la note du fabricant le suppose deja.
    *
    * Metadonnee de catalogue comme `category` et `motion` : jamais recopiee
    * dans un `ExerciseItem` persiste. Ce qui est stocke, c'est la charge
@@ -96,8 +101,8 @@ export const LIBRARY: readonly LibraryEntry[] = [
   { key: 'buttKickMarch', group: 'cardio', category: 'warmup', mode: 'time', motion: 'move', sets: 2, reps: 10, seconds: 45, rest: 30 },
 
   // elastique / halteres / machine / etirements — voir CategoryId
-  { key: 'bandPullApart', group: 'back', category: 'band', mode: 'reps', motion: 'move', sets: 3, reps: 12, seconds: 30, rest: 60 },
-  { key: 'bandSquat', group: 'legs', category: 'band', mode: 'reps', motion: 'move', sets: 3, reps: 10, seconds: 30, rest: 90 },
+  { key: 'bandPullApart', group: 'back', category: 'band', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 12, seconds: 30, rest: 60 },
+  { key: 'bandSquat', group: 'legs', category: 'band', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 10, seconds: 30, rest: 90 },
   { key: 'dumbbellGobletSquat', group: 'legs', category: 'dumbbell', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 10, seconds: 30, rest: 90 },
   { key: 'dumbbellRow', group: 'back', category: 'dumbbell', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 10, seconds: 30, rest: 90 },
   { key: 'legPressMachine', group: 'legs', category: 'machine', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 10, seconds: 30, rest: 90 },
@@ -124,10 +129,13 @@ export const LIBRARY: readonly LibraryEntry[] = [
   { key: 'tricepsStretch', group: 'arms', category: 'stretching', mode: 'time', motion: 'hold', sets: 3, reps: 10, seconds: 30, rest: 20 },
 
   // elastique
-  { key: 'bandChestPress', group: 'push', category: 'band', mode: 'reps', motion: 'move', sets: 3, reps: 12, seconds: 30, rest: 60 },
-  { key: 'bandLateralRaise', group: 'shoulders', category: 'band', mode: 'reps', motion: 'move', sets: 3, reps: 12, seconds: 30, rest: 60 },
-  { key: 'bandLateralWalk', group: 'glutes', category: 'band', mode: 'reps', motion: 'move', sets: 3, reps: 12, seconds: 30, rest: 60 },
-  { key: 'bandCurl', group: 'arms', category: 'band', mode: 'reps', motion: 'move', sets: 3, reps: 12, seconds: 30, rest: 60 },
+  { key: 'bandChestPress', group: 'push', category: 'band', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 12, seconds: 30, rest: 60 },
+  { key: 'bandLateralRaise', group: 'shoulders', category: 'band', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 12, seconds: 30, rest: 60 },
+  { key: 'bandLateralWalk', group: 'glutes', category: 'band', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 12, seconds: 30, rest: 60 },
+  { key: 'bandCurl', group: 'arms', category: 'band', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 12, seconds: 30, rest: 60 },
+  { key: 'bandRow', group: 'back', category: 'band', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 12, seconds: 30, rest: 60 },
+  { key: 'bandSeatedRow', group: 'back', category: 'band', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 12, seconds: 30, rest: 60 },
+  { key: 'bandExternalRotation', group: 'shoulders', category: 'band', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 12, seconds: 30, rest: 60 },
 
   // halteres. Charniere de hanche -> glutes (RDL) ; flexion/extension de
   // genou -> legs. Regle ecrite ici pour qu'on ne la « corrige » pas plus tard.

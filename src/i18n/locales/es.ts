@@ -608,6 +608,18 @@ export const es: Translations = {
       name: 'Curl de bíceps con banda',
       cue: 'Banda bajo los pies, codos pegados al cuerpo, sube las manos hacia los hombros.',
     },
+    bandRow: {
+      name: 'Remo con banda elástica',
+      cue: 'Banda bajo los pies, torso inclinado a 45°, tira de las manos hacia el ombligo juntando las escápulas.',
+    },
+    bandSeatedRow: {
+      name: 'Remo horizontal con banda',
+      cue: 'Sentado con las piernas estiradas, banda alrededor de los pies, tira hacia el vientre sin redondear la espalda.',
+    },
+    bandExternalRotation: {
+      name: 'Rotación externa de hombro con banda',
+      cue: 'Banda anclada a un poste a la altura del codo, codo pegado a las costillas, abre el antebrazo hacia fuera. Un brazo cada vez.',
+    },
     dumbbellShoulderPress: {
       name: 'Press militar con mancuernas',
       cue: 'Mancuernas a la altura de los hombros, empuja por encima de la cabeza sin arquear la zona lumbar.',

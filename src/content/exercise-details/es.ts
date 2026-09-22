@@ -1129,40 +1129,42 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
 
   bandSquat: {
     slug: 'sentadilla-con-banda',
-    muscles: { primary: 'Cuádriceps, glúteos', secondary: 'Glúteo medio, isquiotibiales' },
+    muscles: { primary: 'Cuádriceps, glúteos', secondary: 'Isquiotibiales, core, hombros' },
     steps: [
-      'Coloca la banda justo por encima de las rodillas, pies separados al ancho de las caderas.',
-      'Empuja las caderas hacia atrás y baja como en una sentadilla normal, las rodillas empujando la banda hacia afuera.',
-      'Baja hasta que los muslos queden cerca de la horizontal, peso sobre los talones.',
-      'Sube empujando con los talones hasta la extensión completa, sin dejar que las rodillas se cierren hacia adentro.',
+      'Pisa el centro de la banda con ambos pies, separados a la anchura de las caderas, con la banda bajo el arco de cada pie.',
+      'Sube los extremos y sujétalos a la altura de los hombros, codos hacia delante, con la banda ya algo tensa de pie.',
+      'Lleva las caderas atrás y baja como en una sentadilla normal, torso erguido y peso repartido en todo el pie.',
+      'Baja hasta que los muslos queden cerca de la horizontal, con las rodillas alineadas con los pies.',
+      'Empuja contra el suelo hasta la extensión completa, sin dejar que la banda te lleve el torso hacia delante.',
     ],
     mistakes: [
-      'Dejar que las rodillas se cierren hacia adentro en lugar de empujar la banda hacia afuera.',
-      'Bajar sin control, dejando que la banda arrastre las rodillas de golpe hacia adentro.',
-      'Inclinar demasiado el torso hacia adelante.',
+      'Dejar que las manos bajen durante la subida: la banda se destensa y la resistencia desaparece justo donde debería ser máxima.',
+      'Inclinarse hacia delante para compensar la tracción de la banda sobre los hombros.',
+      'Usar una banda tan fuerte que impida alcanzar la profundidad habitual de la sentadilla.',
+      'Pisar la banda con la punta del pie en lugar del arco: se desliza a mitad de la serie.',
     ],
     sensation:
-      'El trabajo se siente en la parte delantera de los muslos y en el lateral de los glúteos, que deben empujar activamente la banda. Una tensión en la rodilla indica que no se mantiene la alineación rodilla-pie.',
+      'El esfuerzo se concentra en la parte delantera de los muslos y en los glúteos, con una tensión constante en los hombros que sujetan la banda. Si arde la parte alta de la espalda o los brazos antes que las piernas, el agarre es demasiado corto o la banda demasiado fuerte.',
     rangeOfMotion:
-      'Baja hasta que los muslos queden cerca de la horizontal, sin sobrepasar lo que permite una movilidad de cadera cómoda.',
+      'Baja hasta que los muslos queden cerca de la horizontal, o hasta donde la espalda siga recta y los talones apoyados. Arriba, extiende las caderas por completo sin arquear la zona lumbar.',
     tempo:
-      'Tres segundos para bajar, uno o dos para subir. Inhala al bajar, exhala al empujar con los talones.',
+      'Dos o tres segundos para bajar, uno o dos para subir. Inspira al bajar, espira al empujar. La banda ayuda abajo y resiste arriba: lo que hay que sostener es el final de la subida, no el arranque.',
     anatomy:
-      'El cuádriceps y el glúteo mayor siguen siendo los motores principales de la sentadilla; la banda añade una resistencia lateral que el glúteo medio debe contrarrestar continuamente para evitar que la rodilla se cierre, algo que una sentadilla sin banda no exige de la misma forma.',
+      'El cuádriceps extiende la rodilla; el glúteo mayor y los isquiotibiales extienden la cadera. El transverso del abdomen y los erectores espinales bloquean el tronco contra la tracción de la banda hacia delante, mientras los deltoides y la parte alta de la espalda mantienen las manos a la altura de los hombros durante toda la serie: un trabajo de resistencia discreto que una sentadilla con el peso corporal no exige.',
     mechanics:
-      'Doble flexión y luego doble extensión de cadera y rodilla en el plano sagital, combinada con una resistencia a la abducción de cadera impuesta por la banda en el plano frontal.',
+      'Doble flexión y luego doble extensión de cadera y rodilla en el plano sagital. Lo particular está en la curva de resistencia: la tensión de la banda crece con su estiramiento, así que es baja abajo de la sentadilla —donde el movimiento ya es mecánicamente más difícil— y máxima arriba, donde las piernas son más fuertes. Es lo contrario de una barra o una mancuerna, cuya carga no varía, y hace que el final de la subida sea claramente más exigente.',
     benefits: [
-      'Refuerza la sentadilla clásica añadiendo trabajo activo del glúteo medio, útil para la estabilidad de la rodilla al caminar y correr.',
-      'Da una señal táctil inmediata sobre la alineación de la rodilla: si la banda se afloja, la rodilla se ha cerrado.',
-      'Equipo ligero y económico, fácil de llevar a cualquier parte.',
+      'Añade resistencia real a la sentadilla con el peso corporal sin material pesado ni voluminoso.',
+      'Carga el final de la subida, la parte que la sentadilla con el peso corporal deja demasiado fácil.',
+      'Se ajusta con precisión: separar los pies, acortar el agarre o cambiar de banda basta para cambiar de dificultad.',
     ],
     progression: {
-      easier: 'Usa una banda menos resistente, o reduce la profundidad de bajada.',
-      harder: 'Usa una banda más resistente, o añade una pausa de dos segundos abajo.',
-      readyWhen: 'Cuando completes tres series de quince sin que la banda se afloje en ningún momento.',
+      easier: 'Junta un poco los pies sobre la banda para reducir su tensión, o sujeta los extremos más abajo, a la altura de las caderas.',
+      harder: 'Usa una banda más resistente, acorta el agarre o añade dos segundos de pausa abajo.',
+      readyWhen: 'Cuando tres series de quince salgan sin que las manos bajen de los hombros ni el torso se incline.',
     },
     precautions:
-      'Elige una resistencia que te permita mantener las rodillas alineadas durante toda la serie: una banda demasiado fuerte que las obligue a cerrarse es contraproducente.',
+      'Comprueba antes de cada serie que la banda esté centrada bajo ambos pies y no esté cortada ni desgastada: una banda que se escapa bajo tensión sale disparada hacia la cara. Sube la resistencia poco a poco; la tensión al final del movimiento sorprende la primera vez.',
   },
 
   dumbbellGobletSquat: {
@@ -1918,6 +1920,124 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     },
     precautions:
       'Un dolor en el pliegue del codo no es el ardor buscado: reduce la resistencia y comprueba que la bajada se frena en lugar de soltarse.',
+  },
+  bandRow: {
+    slug: 'remo-con-banda-elastica',
+    muscles: { primary: 'Dorsal ancho, romboides, trapecio medio', secondary: 'Bíceps, deltoides posterior, erectores espinales' },
+    steps: [
+      'De pie, pies separados a la anchura de las caderas, pisa el centro de la banda con el arco de cada pie y sujeta un extremo en cada mano.',
+      'Lleva las caderas atrás e inclina el torso unos 45°, espalda plana y rodillas ligeramente flexionadas.',
+      'Deja los brazos colgando hacia el suelo con la banda ya algo tensa: esa es la posición de partida.',
+      'Tira de las manos hacia el ombligo manteniendo los codos cerca del cuerpo, hasta juntar las escápulas.',
+      'Haz una pausa breve arriba y deja bajar los brazos frenando la banda.',
+    ],
+    mistakes: [
+      'Redondear la zona lumbar: la inclinación sale de la bisagra de cadera, no de la columna.',
+      'Tirar solo con los bíceps y los codos abiertos: las escápulas dejan de moverse y la espalda no trabaja.',
+      'Incorporarse un poco en cada repetición para ayudar al tirón: el torso debe quedarse a la misma altura del principio al final de la serie.',
+      'Dejar que la banda devuelva los brazos sin frenarlos: se pierde la mitad útil del movimiento.',
+    ],
+    sensation:
+      'El esfuerzo se siente entre las escápulas y en los laterales de la espalda. Si arden sobre todo los bíceps o los antebrazos, los codos se abren demasiado o las manos aprietan en exceso. Una tensión en la zona lumbar indica que ya no se mantiene la posición del torso.',
+    rangeOfMotion:
+      'Tira hasta que las manos lleguen a las costillas bajas o al ombligo y los codos pasen por detrás de la línea del torso. No hace falta ir más lejos: más allá es el hombro el que se enrolla hacia delante, no la escápula la que retrocede. Baja hasta brazos estirados sin destensar del todo la banda.',
+    tempo:
+      'Un segundo para tirar, dos o tres para dejar volver. Espira al tirar, inspira en la vuelta. La vuelta es la fase que la banda hace más fácil de descuidar, así que es la que más hay que frenar.',
+    anatomy:
+      'El dorsal ancho lleva el brazo hacia atrás y pegado al tronco; los romboides y el trapecio medio acercan las escápulas a la columna, que es el verdadero trabajo del ejercicio. El deltoides posterior asiste la extensión de hombro, y el bíceps braquial y el braquial flexionan el codo. De fondo, los erectores espinales y los isquiotibiales sostienen el torso inclinado para que la columna no se redondee: trabajan en isometría durante toda la serie.',
+    mechanics:
+      'Tirón horizontal en el plano sagital, que combina extensión de hombro, retracción escapular y flexión de codo. La particularidad de la banda: su resistencia crece con el estiramiento, así que el punto más duro está al final del tirón, donde las escápulas están más juntas, al revés que en un remo con mancuerna, donde la carga es constante y el punto duro está en el despegue.',
+    benefits: [
+      'Construye el tirón horizontal, el movimiento que equilibra todos los empujes —flexiones, press— y que una sesión sin material cubre mal.',
+      'Refuerza los músculos que mantienen las escápulas atrás, y con ello la postura de la parte alta de la espalda tras un día sentado.',
+      'La resistencia creciente de la banda es suave al inicio del movimiento, donde un hombro sensible está más expuesto.',
+    ],
+    progression: {
+      easier: 'Separa más los pies sobre la banda para reducir su tensión, o inclina algo menos el torso.',
+      harder: 'Junta los pies, usa una banda más resistente o haz dos segundos de pausa al final del tirón.',
+      readyWhen: 'Cuando tres series de quince salgan sin que el torso se incorpore en las últimas repeticiones.',
+    },
+    precautions:
+      'Comprueba antes de cada serie que la banda esté centrada bajo los pies y no esté cortada ni desgastada: una banda que se escapa o se rompe bajo tensión sale hacia la cara. Si la bisagra de cadera resulta incómoda, el remo horizontal sentado da el mismo trabajo de espalda sin inclinar el torso.',
+  },
+  bandSeatedRow: {
+    slug: 'remo-horizontal-con-banda',
+    muscles: { primary: 'Dorsal ancho, romboides, trapecio medio', secondary: 'Bíceps, deltoides posterior' },
+    steps: [
+      'Siéntate en el suelo con las piernas estiradas delante y pasa el centro de la banda alrededor de las plantas de los pies.',
+      'Sujeta un extremo en cada mano, brazos estirados, torso erguido y algo más allá de la vertical.',
+      'Crece hacia arriba: pecho abierto, hombros bajos, zona lumbar ni redondeada ni arqueada.',
+      'Tira de las manos hacia el vientre llevando los codos pegados al cuerpo, hasta juntar las escápulas.',
+      'Deja que los brazos se estiren despacio, sin que el torso caiga hacia atrás ni se redondee hacia delante.',
+    ],
+    mistakes: [
+      'Balancear el torso hacia atrás al tirar y hacia delante al volver: el movimiento se convierte en un vaivén del tronco, no en un remo.',
+      'Redondear la parte alta de la espalda en la vuelta, dejándose arrastrar hacia los pies.',
+      'Encoger los hombros hacia las orejas: el trapecio superior ocupa el lugar del trapecio medio.',
+    ],
+    sensation:
+      'El trabajo se siente entre las escápulas y en los laterales de la espalda, nunca en el cuello. Si arde la nuca o la parte alta de los trapecios, los hombros suben en lugar de quedarse bajos.',
+    rangeOfMotion:
+      'Tira hasta que las manos toquen la parte baja del vientre y los codos pasen por detrás de la línea del torso. Vuelve a brazos estirados, pero mantén la banda en tensión: soltarla del todo hace que cada repetición arranque con un tirón brusco.',
+    tempo:
+      'Un segundo para tirar, dos o tres para volver. Espira al tirar, inspira al volver. El torso no se mueve: si el tempo exige un golpe de riñones, la tensión es excesiva.',
+    anatomy:
+      'Los mismos motores que en el remo inclinado —dorsal ancho, romboides, trapecio medio, con ayuda del deltoides posterior y del bíceps—. La diferencia está en otro sitio: sentado, el torso lo sostiene la propia posición y no los erectores espinales ni los isquiotibiales, que trabajaban en isometría en la versión inclinada. Todo el esfuerzo se concentra en el tirón.',
+    mechanics:
+      'Tirón horizontal en el plano sagital: extensión de hombro, retracción escapular y flexión de codo. Sentarse elimina la bisagra de cadera que había que sostener, lo que lo convierte en la entrada más sencilla al tirón horizontal, y en la versión a elegir mientras la zona lumbar no aguante un torso inclinado. Como con cualquier banda, la resistencia crece con el estiramiento: el final del tirón es el punto más duro.',
+    benefits: [
+      'Da el trabajo de espalda del remo sin pedir que se sostenga un torso inclinado: accesible desde el primer día y útil al retomar el entrenamiento.',
+      'Enseña a separar el movimiento de las escápulas del de los brazos, lo que hace más eficaz cualquier otro tirón.',
+      'Se hace en el suelo, sin anclaje ni banco: bastan una banda y dos metros cuadrados.',
+    ],
+    progression: {
+      easier: 'Flexiona ligeramente las rodillas y separa las manos sobre la banda para reducir la tensión.',
+      harder: 'Acorta el agarre, usa una banda más resistente o mantén dos segundos al final del tirón.',
+      readyWhen: 'Cuando tres series de quince salgan sin que el torso caiga hacia atrás: el remo con banda inclinado es el paso siguiente.',
+    },
+    precautions:
+      'Si los isquiotibiales tiran y obligan a la zona lumbar a redondearse, siéntate sobre un cojín o flexiona un poco las rodillas: una espalda redondeada bajo tensión es justo lo que aquí se quiere evitar.',
+  },
+  bandExternalRotation: {
+    slug: 'rotacion-externa-de-hombro-con-banda',
+    muscles: { primary: 'Infraespinoso, redondo menor', secondary: 'Deltoides posterior, romboides' },
+    steps: [
+      'Ancla la banda a un poste, al marco de una puerta o a un tirador, a la altura del codo.',
+      'Colócate de pie de lado respecto al anclaje y agarra la banda con la mano más alejada, haciéndola pasar por delante del vientre.',
+      'Pega el codo a las costillas y flexiónalo a 90°, antebrazo horizontal y mano delante del ombligo.',
+      'Aléjate del anclaje hasta que la banda esté ya ligeramente tensa en esa posición de partida.',
+      'Sin despegar el codo, abre el antebrazo hacia fuera, en sentido opuesto al anclaje, y haz una pausa.',
+      'Lleva la mano despacio de vuelta delante del vientre frenando la banda. Termina la serie y cambia de lado.',
+    ],
+    mistakes: [
+      'Despegar el codo del cuerpo: el hombro se va a abducción y el movimiento deja de ser una rotación.',
+      'Girar el torso hacia fuera para ganar recorrido: trabaja el tronco, no el hombro.',
+      'Usar una banda demasiado resistente: el manguito de los rotadores lo forman músculos pequeños, y un exceso de tensión hace que compensen el trapecio y el dorsal ancho.',
+      'Situarse demasiado lejos del anclaje: la banda tira entonces del brazo hacia delante y despega el codo antes incluso de empezar.',
+    ],
+    sensation:
+      'El trabajo se siente en profundidad en la parte posterior del hombro que trabaja y a lo largo del borde externo de la escápula. Es un esfuerzo discreto: si tira con fuerza en el trapecio, en el cuello o en la parte delantera del hombro, la tensión es excesiva o el codo ha abandonado las costillas.',
+    rangeOfMotion:
+      'Abre hasta donde el codo siga pegado al cuerpo, el torso siga de frente y la muñeca quede alineada con el antebrazo: para la mayoría, entre 30 y 45° hacia fuera. El recorrido útil es corto por naturaleza; ir más lejos no recluta más el manguito, solo hace girar el torso.',
+    tempo:
+      'Dos segundos para abrir, dos o tres para volver, sin tirones ni impulso. Respiración continua. Es un ejercicio de control: la lentitud hace todo el trabajo, la velocidad lo elimina.',
+    anatomy:
+      'El infraespinoso y el redondo menor son los dos rotadores externos del manguito: hacen girar la cabeza del húmero hacia fuera y, al hacerlo, la mantienen centrada en su cavidad mientras el deltoides eleva el brazo. El subescapular, su antagonista, se encarga de la rotación interna. Los romboides y el trapecio medio estabilizan la escápula para que la rotación ocurra en el hombro y no por un desplazamiento de la escápula.',
+    mechanics:
+      'Rotación externa de la articulación glenohumeral en el plano transversal, con el codo fijo a 90° y el brazo pegado al tronco. La apertura es una contracción concéntrica de los rotadores externos y la vuelta frenada una contracción excéntrica. Anclada a la altura del codo en un punto fijo, la banda tira en el eje de la rotación durante todo el recorrido, y su tensión crece con el estiramiento: la resistencia máxima cae al final de la apertura, justo donde estos músculos están más cortos. Trabajar un lado cada vez deja el torso de frente al anclaje, lo que hace inmediatamente visible cualquier compensación girando el tronco.',
+    benefits: [
+      'Refuerza los rotadores externos, casi siempre más débiles que los internos en quien empuja más de lo que tira.',
+      'Mantiene el centrado de la cabeza del húmero, lo que hace más cómodos los movimientos por encima de la cabeza.',
+      'Un brazo cada vez revela una diferencia de fuerza entre los dos hombros y permite corregirla en el lado débil.',
+      'Encaja igual de bien en el calentamiento, antes de un press o de unas flexiones, que al final de la sesión como trabajo de recuperación del retraso.',
+    ],
+    progression: {
+      easier: 'Acércate al anclaje para reducir la tensión, o reduce el recorrido de apertura.',
+      harder: 'Aléjate del anclaje, usa una banda más resistente, o mantén tres segundos en posición abierta en cada repetición.',
+      readyWhen: 'Cuando tres series de quince por brazo salgan sin que el codo abandone las costillas ni gire el torso.',
+    },
+    precautions:
+      'El trabajo de manguito se hace ligero y lento: un dolor agudo en la parte delantera o superior del hombro es una señal de parada, no algo que atravesar. Una toalla enrollada entre el codo y las costillas ayuda a mantener el codo en su sitio. Comprueba el anclaje antes de cada serie: una banda que se suelta bajo tensión sale disparada hacia la cara.',
   },
 
   dumbbellShoulderPress: {
