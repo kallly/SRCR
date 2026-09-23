@@ -544,7 +544,7 @@ retirés par `stripWebOnly()` (`vite.config.ts`) quand `CIRKALI_TARGET=app`, et
 les assertions de `scripts/build-app.ts` — qui vérifie ce qu'il a produit,
 comme `check-build.ts`, parce que la CI ne construit pas l'application.
 
-**`dist-app/` n'est pas `dist/`.** Les 337 pages générées, le sitemap,
+**`dist-app/` n'est pas `dist/`.** Les 347 pages générées, le sitemap,
 `llms.txt` et les fichiers de l'hébergeur n'ont pas d'usage dans un binaire :
 ce sont des surfaces d'indexation, elles vivent sur cirkali.fr et
 l'application y renvoie par des liens absolus.
@@ -620,7 +620,7 @@ l'assertion de `check-build.ts` qui interdit l'ancienne origine dans `dist/`.
 sert `dist/exercises/fr/pompes.html` à l'adresse `/exercises/fr/pompes` et
 redirige la forme longue vers elle (307) ; GitHub Pages et `vite preview` font
 de même. Tant que les balises déclaraient le `.html`, chaque canonical, chaque
-hreflang et les 337 entrées du sitemap désignaient une URL qui redirige pendant
+hreflang et les 347 entrées du sitemap désignaient une URL qui redirige pendant
 que Google indexait l'autre — de quoi laisser durablement des pages en
 « Détectée, actuellement non indexée ». Toute URL écrite dans une balise, un
 lien ou le sitemap s'écrit donc **sans extension** ; seuls les `writeFileSync()`
@@ -692,7 +692,7 @@ deux raisons — un `display: none` masquerait un encart déjà demandé, ce qui
 compte une impression jamais vue et que la politique AdSense interdit ; et le
 visiteur mobile paierait quand même les ~100 Ko du script, annulant le travail
 des deux lots PageSpeed précédents. `check-build.ts` vérifie les deux moitiés
-de cette promesse sur les 337 pages livrées : le portillon présent partout,
+de cette promesse sur les 347 pages livrées : le portillon présent partout,
 aucune balise `<ins>` ni `<script src>` publicitaire en statique.
 
 Une seule source pour les trois surfaces (`src/content/ad-rails.ts`), posée
@@ -723,11 +723,30 @@ fasse autorité) et `public/robots.txt` ne doit pas le bloquer. La diffusion dan
 l'EEE exige en plus un CMP certifié TCF v2.2, activé dans la console AdSense —
 sans lui Google cesse simplement de servir des annonces, sans erreur visible.
 
-`dist/confidentialite/<locale>.html` (5 pages, générées) est la politique de
-confidentialité : obligatoire pour AdSense, et de toute façon due depuis
-l'ajout de Google Analytics. `CONTACT_EMAIL` (`cirkali@proton.me`) y est publié :
-c'est par là qu'arrive une demande d'accès ou de suppression, la boîte doit
-rester relevée tant que la page est en ligne.
+**Trois pages institutionnelles, 15 fichiers, un seul gabarit.**
+`confidentialite/`, `mentions-legales/` et `contact/` (5 langues chacune) sont
+générées par `renderStaticPage()` — ne pas en recopier le gabarit pour une
+quatrième : c'est toujours la copie oubliée qui finit par déclarer un
+canonical faux. Elles sont nées du refus AdSense « faible valeur ajoutée »,
+mais aucune n'est un décor : la LCEN impose des mentions légales à tout
+éditeur, et annoncer des droits RGPD sans donner d'adresse où les exercer
+serait une promesse creuse.
+
+**L'éditeur est un particulier non professionnel, et la page ne nomme
+personne.** C'est licite — art. 6 III-2 de la LCEN : l'éditeur non
+professionnel peut taire ses coordonnées dès lors que l'hébergeur les détient.
+Le jour d'une immatriculation (auto-entrepreneur, société), cette tolérance
+tombe et `legal.editorText` doit publier nom, adresse, SIREN et forme
+juridique. Le commentaire au-dessus de `legal` (`i18n/locales/fr.ts`) le
+rappelle. À savoir : le dépôt GitHub étant public, le `LICENSE` nomme déjà le
+titulaire des droits — l'anonymat ne vaut que pour le site.
+
+`CONTACT_EMAIL` (`cirkali@proton.me`) est publié sur les trois : c'est par là
+qu'arrive une demande d'accès ou de suppression, la boîte doit rester relevée
+tant que les pages sont en ligne. Le pied de page des 330 fiches et le bloc
+« À propos » de l'accueil mènent aux trois, et `check-build.ts` le vérifie —
+un examinateur AdSense ouvre une page au hasard, il ne remonte pas jusqu'à
+l'accueil.
 
 **`dist/404.html` doit exister.** Sans lui, Cloudflare Pages retombe sur
 `index.html` avec un code **200** pour toute adresse inconnue : un lien cassé

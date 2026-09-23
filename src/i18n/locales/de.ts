@@ -135,6 +135,46 @@ export const de: Translations = {
     contactTitle: 'Kontakt',
     contactText: 'Bei Fragen zu diesen Daten: {email}',
   },
+  legal: {
+    title: 'Impressum',
+    lead: 'Rechtliche Angaben zur Website cirkali.fr, zu ihrem Betreiber und zu ihrem Hoster.',
+    editorTitle: 'Betreiber der Website',
+    editorText:
+      'CIRKALI (cirkali.fr) wird privat von einer nicht gewerblich handelnden Person betrieben. Nach Artikel 6 III-2 des französischen Gesetzes über das Vertrauen in die digitale Wirtschaft darf ein nicht gewerblicher Betreiber seine Kontaktdaten der Öffentlichkeit vorenthalten: sie liegen beim Hoster, der sie auf Anforderung der Justizbehörde herausgibt. Jede Anfrage, Beschwerden eingeschlossen, läuft über die Kontaktadresse der Website: {email}.',
+    directorTitle: 'Verantwortlich für den Inhalt',
+    directorText:
+      'Verantwortlich für den Inhalt ist der Betreiber der Website, erreichbar unter {email}.',
+    hostTitle: 'Hoster',
+    hostText:
+      'Die Website wird gehostet von Cloudflare, Inc., 101 Townsend Street, San Francisco, CA 94107, USA (cloudflare.com).',
+    ipTitle: 'Urheberrecht',
+    ipText:
+      'Quellcode, Texte der Übungsseiten, Figuren und visuelle Gestaltung von CIRKALI sind urheberrechtlich geschützt, alle Rechte vorbehalten. Vervielfältigung, Bearbeitung, Übersetzung oder Weiterverbreitung sind ohne vorherige schriftliche Zustimmung nicht gestattet. Die von dir zusammengestellten Einheiten bleiben deine: sie verlassen dein Gerät nur, wenn du die Online-Sicherung einschaltest.',
+    contentTitle: 'Trainingsinhalte',
+    contentText:
+      'Die Seiten beschreiben Bewegungen und ihre Anatomie als allgemeine Information. Sie sind weder ärztlicher Rat noch Diagnose noch ein persönlicher Trainingsplan und ersetzen weder eine medizinische Fachkraft noch eine qualifizierte Trainerin oder einen Trainer. Das Training erfolgt auf eigene Verantwortung; bei Schmerzen, bekannten Erkrankungen, in der Schwangerschaft oder beim Wiedereinstieg nach einer Verletzung hole vorher Rat ein.',
+    availabilityTitle: 'Verfügbarkeit und externe Links',
+    availabilityText:
+      'Die Website wird ohne Gewähr für Verfügbarkeit oder Fehlerfreiheit bereitgestellt. Sie verweist auf Dienste Dritter — Google für Anmeldung, Reichweitenmessung und Werbung, Cloudflare für das Hosting —, deren Inhalte und Praktiken nicht dem Betreiber unterliegen.',
+    lawTitle: 'Anwendbares Recht',
+    lawText:
+      'Für die Website gilt französisches Recht. Kommt keine gütliche Einigung zustande, sind die französischen Gerichte zuständig.',
+  },
+  contact: {
+    title: 'Kontakt',
+    lead: 'CIRKALI wird von einer einzigen Person entwickelt und gepflegt. Es gibt keinen Support-Schalter, aber Nachrichten werden gelesen und beantwortet.',
+    writeTitle: 'Schreiben',
+    writeText: 'Eine Adresse für alles: {email}.',
+    usefulTitle: 'Was eine schnellere Antwort bringt',
+    usefulText:
+      'Ein Fehler lässt sich weit schneller beheben, wenn die Nachricht sagt, was du gerade getan hast, was du erwartet hast, was stattdessen passiert ist und in welchem Browser oder auf welchem Telefon. Ein Screenshot ersetzt oft einen ganzen Absatz. Bei einer fehlenden Übung oder einem Fehler auf einer Seite genügen der Name der Übung und die Sprache der Seite.',
+    dataTitle: 'Personenbezogene Daten',
+    dataText:
+      'Für Auskunft, Berichtigung oder Löschung deiner Daten schreibe an dieselbe Adresse mit „DSGVO“ im Betreff. Die Datenschutzseite führt auf, was gespeichert wird und wo.',
+    delayTitle: 'Antwortzeit',
+    delayText:
+      'Rechne mit einigen Tagen. Anfragen zu personenbezogenen Daten werden vorrangig und innerhalb von höchstens einem Monat bearbeitet, wie es die DSGVO verlangt.',
+  },
 
   aiPlan: {
     title: 'Eine Einheit mit einer KI erstellen',

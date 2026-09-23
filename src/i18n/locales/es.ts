@@ -135,6 +135,46 @@ export const es: Translations = {
     contactTitle: 'Contacto',
     contactText: 'Para cualquier pregunta sobre estos datos: {email}',
   },
+  legal: {
+    title: 'Aviso legal',
+    lead: 'Información legal sobre el sitio cirkali.fr, su editor y su alojamiento.',
+    editorTitle: 'Editor del sitio',
+    editorText:
+      'CIRKALI (cirkali.fr) lo edita a título personal un particular no profesional. Conforme al artículo 6 III-2 de la ley francesa para la confianza en la economía digital, un editor no profesional puede no hacer públicos sus datos de contacto: los conserva el proveedor de alojamiento, que los comunica a requerimiento de la autoridad judicial. Cualquier solicitud, reclamaciones incluidas, pasa por la dirección de contacto del sitio: {email}.',
+    directorTitle: 'Director de la publicación',
+    directorText:
+      'La dirección de la publicación corresponde al editor del sitio, localizable en {email}.',
+    hostTitle: 'Alojamiento',
+    hostText:
+      'El sitio está alojado por Cloudflare, Inc., 101 Townsend Street, San Francisco, CA 94107, Estados Unidos (cloudflare.com).',
+    ipTitle: 'Propiedad intelectual',
+    ipText:
+      'El código fuente, los textos de las fichas de ejercicio, las figuras y la identidad visual de CIRKALI están protegidos por derechos de autor, todos los derechos reservados. No se autoriza ninguna reproducción, adaptación, traducción ni redifusión sin acuerdo previo por escrito. Las sesiones que compones siguen siendo tuyas: solo salen de tu dispositivo si activas la copia en línea.',
+    contentTitle: 'Contenido de entrenamiento',
+    contentText:
+      'Las fichas describen gestos y su anatomía a título informativo general. No constituyen un consejo médico, un diagnóstico ni un programa personalizado, y no sustituyen la opinión de un profesional sanitario ni de un educador deportivo. Cada cual practica bajo su propia responsabilidad; en caso de dolor, patología conocida, embarazo o vuelta tras una lesión, pide consejo antes de usarlas.',
+    availabilityTitle: 'Disponibilidad y enlaces externos',
+    availabilityText:
+      'El sitio se ofrece tal cual, sin garantía de disponibilidad ni de ausencia de errores. Enlaza a servicios de terceros —Google para el inicio de sesión, la medición de audiencia y la publicidad, Cloudflare para el alojamiento— cuyos contenidos y prácticas escapan al control del editor.',
+    lawTitle: 'Derecho aplicable',
+    lawText:
+      'El sitio se rige por el derecho francés. A falta de resolución amistosa, cualquier litigio es competencia de los tribunales franceses.',
+  },
+  contact: {
+    title: 'Contacto',
+    lead: 'CIRKALI lo desarrolla y mantiene una sola persona. No hay servicio de asistencia, pero los mensajes se leen y se responden.',
+    writeTitle: 'Escribir',
+    writeText: 'Una sola dirección, para todo: {email}.',
+    usefulTitle: 'Lo que ayuda a responder antes',
+    usefulText:
+      'Un fallo se corrige mucho más rápido si el mensaje dice qué hacías, qué esperabas, qué ocurrió en su lugar y en qué navegador o teléfono. Una captura de pantalla vale a menudo un párrafo. Para un ejercicio que falta o un error en una ficha, basta el nombre del ejercicio y el idioma de la página.',
+    dataTitle: 'Datos personales',
+    dataText:
+      'Para solicitar el acceso, la rectificación o la supresión de tus datos, escribe a la misma dirección indicando «RGPD» en el asunto. La página de Confidencialidad detalla qué se guarda y dónde.',
+    delayTitle: 'Plazo de respuesta',
+    delayText:
+      'Cuenta con unos días. Las solicitudes sobre datos personales se tratan con prioridad, en un plazo máximo de un mes, como exige el RGPD.',
+  },
 
   aiPlan: {
     title: 'Crear una sesión con una IA',

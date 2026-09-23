@@ -529,11 +529,18 @@ export function createApp(state: State): { render: () => void } {
     const { config } = ctx.activePlan();
 
     applyStaticTranslations();
-    // La page de confidentialite est generee en cinq fichiers, un par langue :
-    // le libelle du lien suit la langue via `data-i18n`, mais pas sa cible.
-    // Meme motif que l'index des fiches (`ui/guides-index.ts`), en plus simple
-    // — ici il n'y a qu'une URL a recomposer, sans slug traduit.
-    byId('privacyLink').setAttribute('href', siteHref(`confidentialite/${getLocale()}`));
+    // Les trois pages institutionnelles sont generees en cinq fichiers, un
+    // par langue : le HTML livre pointe le francais pour le crawler, on
+    // rebranche ici sur la langue active. `siteHref()` et pas un chemin
+    // relatif — dans le WebView natif, `location.origin` vaut
+    // https://localhost et le lien ne menerait nulle part.
+    for (const [id, dir] of [
+      ['privacyLink', 'confidentialite'],
+      ['legalLink', 'mentions-legales'],
+      ['contactLink', 'contact'],
+    ] as const) {
+      byId(id).setAttribute('href', siteHref(`${dir}/${getLocale()}`));
+    }
     byId('modeClassic').classList.toggle('on', config.mode === 'classic');
     byId('modeCircuit').classList.toggle('on', config.mode === 'circuit');
     settings.classList.toggle('on', config.mode === 'circuit');

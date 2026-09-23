@@ -171,6 +171,55 @@ export const fr = {
     contactTitle: 'Contact',
     contactText: 'Pour toute question sur ces données : {email}',
   },
+  /*
+    Mentions legales. L'editeur est un PARTICULIER NON PROFESSIONNEL : l'art.
+    6 III-2 de la LCEN l'autorise a ne pas publier ses coordonnees, des lors
+    que l'hebergeur les detient et les communique sur requisition judiciaire.
+    D'ou une page qui ne nomme personne — c'est un choix licite, pas un
+    oubli. Le jour d'une immatriculation (auto-entrepreneur, societe), cette
+    tolerance tombe : il faudra alors publier nom, adresse, SIREN et forme
+    juridique dans `editorText`.
+  */
+  legal: {
+    title: 'Mentions légales',
+    lead: 'Informations légales relatives au site cirkali.fr, à son éditeur et à son hébergeur.',
+    editorTitle: 'Éditeur du site',
+    editorText:
+      'CIRKALI (cirkali.fr) est édité à titre personnel par un particulier non professionnel. Conformément à l’article 6 III-2 de la loi pour la confiance dans l’économie numérique, un éditeur non professionnel peut ne pas rendre publiques ses coordonnées : celles-ci sont détenues par l’hébergeur, qui les communique sur réquisition de l’autorité judiciaire. Toute demande, réclamation comprise, passe par l’adresse de contact du site : {email}.',
+    directorTitle: 'Directeur de la publication',
+    directorText:
+      'La direction de la publication est assurée par l’éditeur du site, joignable à {email}.',
+    hostTitle: 'Hébergeur',
+    hostText:
+      'Le site est hébergé par Cloudflare, Inc., 101 Townsend Street, San Francisco, CA 94107, États-Unis (cloudflare.com).',
+    ipTitle: 'Propriété intellectuelle',
+    ipText:
+      'Le code source, les textes des fiches d’exercice, les figures et l’identité visuelle de CIRKALI sont protégés par le droit d’auteur, tous droits réservés. Aucune reproduction, adaptation, traduction ou rediffusion n’est autorisée sans accord écrit préalable. Les séances que vous composez restent les vôtres : elles ne quittent votre appareil que si vous activez la sauvegarde en ligne.',
+    contentTitle: 'Contenu d’entraînement',
+    contentText:
+      'Les fiches décrivent des gestes et leur anatomie à titre d’information générale. Elles ne constituent ni un avis médical, ni un diagnostic, ni un programme personnalisé, et ne remplacent pas l’avis d’un professionnel de santé ou d’un éducateur sportif. Chacun pratique sous sa propre responsabilité ; en cas de douleur, de pathologie connue, de grossesse ou de reprise après blessure, demandez un avis avant de vous en servir.',
+    availabilityTitle: 'Disponibilité et liens externes',
+    availabilityText:
+      'Le site est fourni en l’état, sans garantie de disponibilité ni d’absence d’erreur. Il renvoie vers des services tiers — Google pour la connexion, la mesure d’audience et la publicité, Cloudflare pour l’hébergement — dont les contenus et les pratiques ne relèvent pas de l’éditeur.',
+    lawTitle: 'Droit applicable',
+    lawText:
+      'Le site est soumis au droit français. À défaut de résolution amiable, tout litige relève de la compétence des juridictions françaises.',
+  },
+  contact: {
+    title: 'Contact',
+    lead: 'CIRKALI est développé et maintenu par une seule personne. Il n’y a pas de service d’assistance, mais les messages sont lus et reçoivent une réponse.',
+    writeTitle: 'Écrire',
+    writeText: 'Une seule adresse, pour tout : {email}.',
+    usefulTitle: 'Ce qui aide à répondre vite',
+    usefulText:
+      'Un défaut se corrige beaucoup plus vite si le message dit ce que vous faisiez, ce que vous attendiez, ce qui s’est passé à la place, et sur quel navigateur ou quel téléphone. Une capture d’écran vaut souvent un paragraphe. Pour un exercice manquant ou une erreur dans une fiche, le nom de l’exercice et la langue de la page suffisent.',
+    dataTitle: 'Données personnelles',
+    dataText:
+      'Pour demander l’accès, la rectification ou la suppression de vos données, écrivez à la même adresse en indiquant « RGPD » dans l’objet. La page Confidentialité détaille ce qui est enregistré et où.',
+    delayTitle: 'Délai de réponse',
+    delayText:
+      'Comptez quelques jours. Les demandes relatives aux données personnelles sont traitées en priorité, dans un délai d’un mois au plus, comme le prévoit le RGPD.',
+  },
 
   aiPlan: {
     title: 'Créer une séance avec une IA',

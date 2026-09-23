@@ -335,17 +335,43 @@ check(
   index.includes(`content="${AD_CLIENT}"`),
 );
 
-// AdSense refuse un site sans politique de confidentialite accessible, et le
-// manque etait de toute facon deja reel (GA, connexion Google).
-for (const locale of Object.keys(DICTIONARIES) as Locale[]) {
-  // Le FICHIER garde son extension, l'URL publiee ne l'a pas : c'est
-  // exactement la distinction que le sitemap avait perdue.
-  check(
-    `confidentialite/${locale} existe et est au sitemap`,
-    existsSync(join(DIST, `confidentialite/${locale}.html`)) &&
-      sitemap.includes(`/confidentialite/${locale}</loc>`),
-  );
+// AdSense refuse un site sans politique de confidentialite, sans mentions
+// legales et sans moyen de contact — c'est la moitie verifiable du refus
+// « faible valeur ajoutee ». Aucune des trois n'est pour autant un decor : la
+// LCEN impose les mentions legales a tout editeur, et annoncer des droits
+// RGPD sans donner d'adresse ou les exercer serait une promesse creuse.
+const INFO_PAGES = ['confidentialite', 'mentions-legales', 'contact'] as const;
+for (const dir of INFO_PAGES) {
+  for (const locale of Object.keys(DICTIONARIES) as Locale[]) {
+    // Le FICHIER garde son extension, l'URL publiee ne l'a pas : c'est
+    // exactement la distinction que le sitemap avait perdue.
+    const file = join(DIST, `${dir}/${locale}.html`);
+    check(
+      `${dir}/${locale} existe, est rempli et est au sitemap`,
+      existsSync(file) &&
+        readFileSync(file, 'utf8').length > 2000 &&
+        sitemap.includes(`/${dir}/${locale}</loc>`),
+    );
+  }
 }
+
+// Le pied de page des pages generees doit mener aux trois, dans les cinq
+// langues : un examinateur AdSense ouvre une page au hasard et y cherche ces
+// liens, il ne remonte pas jusqu'a l'accueil. Sans cette assertion, un
+// gabarit retouche pourrait les perdre sans que rien ne le dise.
+const sampleSheet = join(DIST, 'exercises/fr/pompes-inclinees.html');
+const sampleHtml = existsSync(sampleSheet) ? readFileSync(sampleSheet, 'utf8') : '';
+check(
+  'une fiche mene aux trois pages institutionnelles',
+  INFO_PAGES.every((dir) => sampleHtml.includes(`https://cirkali.fr/${dir}/fr"`)),
+);
+
+// L'accueil aussi : les trois liens vivent dans le bloc « A propos », et leur
+// texte est injecte au build depuis fr.ts comme tout `data-i18n`.
+check(
+  'l\'accueil mene aux trois pages institutionnelles',
+  ['privacyLink', 'legalLink', 'contactLink'].every((id) => index.includes(`id="${id}"`)),
+);
 
 // Cloudflare Pages redirige `/page.html` vers `/page` : une URL publiee avec
 // extension est donc une URL qui redirige. Declarer celle-la en canonical, en

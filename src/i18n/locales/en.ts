@@ -135,6 +135,45 @@ export const en: Translations = {
     contactTitle: 'Contact',
     contactText: 'For any question about this data: {email}',
   },
+  legal: {
+    title: 'Legal notice',
+    lead: 'Legal information about the cirkali.fr website, its publisher and its host.',
+    editorTitle: 'Site publisher',
+    editorText:
+      'CIRKALI (cirkali.fr) is published in a personal capacity by a non-professional individual. Under article 6 III-2 of the French Act on Confidence in the Digital Economy, a non-professional publisher may withhold their contact details from the public: those details are held by the host, who discloses them at the request of the judicial authority. Any enquiry, complaints included, goes through the site contact address: {email}.',
+    directorTitle: 'Publication director',
+    directorText: 'Publication is directed by the site publisher, reachable at {email}.',
+    hostTitle: 'Host',
+    hostText:
+      'The site is hosted by Cloudflare, Inc., 101 Townsend Street, San Francisco, CA 94107, United States (cloudflare.com).',
+    ipTitle: 'Intellectual property',
+    ipText:
+      'The source code, the exercise sheet texts, the figures and the visual identity of CIRKALI are protected by copyright, all rights reserved. No reproduction, adaptation, translation or redistribution is permitted without prior written consent. The sessions you build remain yours: they leave your device only if you turn on online backup.',
+    contentTitle: 'Training content',
+    contentText:
+      'The sheets describe movements and their anatomy as general information. They are not medical advice, a diagnosis or a personalised programme, and they do not replace a healthcare professional or a qualified coach. You train at your own responsibility; in case of pain, a known condition, pregnancy or a return after injury, seek advice before using them.',
+    availabilityTitle: 'Availability and external links',
+    availabilityText:
+      'The site is provided as is, with no guarantee of availability or of freedom from error. It links to third-party services — Google for sign-in, analytics and advertising, Cloudflare for hosting — whose content and practices are outside the publisher’s control.',
+    lawTitle: 'Governing law',
+    lawText:
+      'The site is governed by French law. Failing an amicable settlement, any dispute falls under the jurisdiction of the French courts.',
+  },
+  contact: {
+    title: 'Contact',
+    lead: 'CIRKALI is built and maintained by one person. There is no support desk, but messages are read and answered.',
+    writeTitle: 'Write in',
+    writeText: 'One address, for everything: {email}.',
+    usefulTitle: 'What gets a faster answer',
+    usefulText:
+      'A fault is fixed far quicker when the message says what you were doing, what you expected, what happened instead, and on which browser or phone. A screenshot is often worth a paragraph. For a missing exercise or an error in a sheet, the exercise name and the page language are enough.',
+    dataTitle: 'Personal data',
+    dataText:
+      'To request access to, correction of or deletion of your data, write to the same address with “GDPR” in the subject line. The Privacy page sets out what is stored and where.',
+    delayTitle: 'Response time',
+    delayText:
+      'Allow a few days. Requests about personal data are handled first, within one month at most, as the GDPR requires.',
+  },
 
   aiPlan: {
     title: 'Create a session with an AI',

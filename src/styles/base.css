@@ -417,6 +417,24 @@ h2::after {
 }
 
 /*
+  Les trois liens institutionnels (confidentialite, mentions legales,
+  contact) sur une seule ligne, avec retour a la ligne sur ecran etroit.
+  Le point mediant est decoratif : `::before` plutot qu'un caractere dans le
+  HTML, sinon un lecteur d'ecran l'annonce entre chaque lien.
+*/
+.about-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+}
+
+.about-links a + a::before {
+  content: '\00b7';
+  margin-right: 14px;
+  opacity: 0.5;
+}
+
+/*
   Encarts d'installation et de soutien : `.about` pour tout le reste, et
   `.callout` UNIQUEMENT pour la couleur de leurs liens. Meme rapport que
   `.guides` a `.about` — le modificateur n'ajoute que ce que son contenu

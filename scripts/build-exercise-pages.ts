@@ -68,7 +68,7 @@ const OG_LOCALES: Record<Locale, string> = {
  * REDIRIGE `/exercises/fr/pompes.html` vers elle, en 307.
  *
  * Tant que les balises declaraient la forme avec extension, chaque canonical,
- * chaque hreflang et les 337 entrees du sitemap designaient une URL qui
+ * chaque hreflang et les 347 entrees du sitemap designaient une URL qui
  * redirige, pendant que Google indexait l'autre — l'incoherence exacte qui
  * laisse une page en « Detectee, actuellement non indexee ». Rien ne cassait,
  * donc rien ne le signalait.
@@ -97,6 +97,33 @@ const GA_MEASUREMENT_ID = 'G-QVCTZFCKBL';
 
 /** Slug du repertoire des pages de confidentialite, une page par langue. */
 const PRIVACY_DIR = 'confidentialite';
+
+/**
+ * Pages institutionnelles servies sur le meme modele que la confidentialite :
+ * mentions legales et contact, une page par langue.
+ *
+ * Elles existent d'abord parce qu'AdSense a refuse le site pour « faible
+ * valeur ajoutee », mais aucune n'est un decor : la LCEN impose des mentions
+ * legales a tout editeur, et un site qui annonce des droits RGPD sans donner
+ * d'adresse ou les exercer ne tient pas sa propre promesse.
+ */
+const LEGAL_DIR = 'mentions-legales';
+const CONTACT_DIR = 'contact';
+
+/**
+ * Le pied de page des pages generees mene aux trois. C'est aussi ce que
+ * regarde un examinateur AdSense : il ouvre une page au hasard et y cherche
+ * ces liens, il ne remonte pas jusqu'a l'accueil.
+ */
+function siteFooterLinks(dict: Translations, locale: Locale): string {
+  const link = (dir: string, label: string): string =>
+    `        \u00b7 <a href="${SITE_URL}/${dir}/${locale}">${esc(label)}</a>`;
+  return [
+    link(PRIVACY_DIR, dict.privacy.title),
+    link(LEGAL_DIR, dict.legal.title),
+    link(CONTACT_DIR, dict.contact.title),
+  ].join('\n');
+}
 
 function esc(s: string): string {
   return s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
@@ -366,7 +393,7 @@ ${renderProgression(detail, dict)}${renderPrecautions(detail, dict)}
         <p class="disclaimer">${esc(dict.page.disclaimer)}</p>
         <p class="ads-note">${esc(dict.ads.none)}</p>
         <a href="${SITE_URL}/">CIRKALI</a> — ${esc(dict.page.tagline)}
-        · <a href="${SITE_URL}/${PRIVACY_DIR}/${locale}">${esc(dict.privacy.title)}</a>
+${siteFooterLinks(dict, locale)}
       </footer>
     </main>
     ${adRailsScript(AD_SLOTS.pageLeft, AD_SLOTS.pageRight, dict.ads.label)}
@@ -760,7 +787,7 @@ ${aiGroupsTable(dict)}
         <p class="disclaimer">${esc(dict.page.disclaimer)}</p>
         <p class="ads-note">${esc(dict.ads.none)}</p>
         <a href="${SITE_URL}/">CIRKALI</a> — ${esc(dict.page.tagline)}
-        · <a href="${SITE_URL}/${PRIVACY_DIR}/${SOURCE_LOCALE}">${esc(dict.privacy.title)}</a>
+${siteFooterLinks(dict, SOURCE_LOCALE)}
       </footer>
     </main>
     ${adRailsScript(AD_SLOTS.pageLeft, AD_SLOTS.pageRight, dict.ads.label)}
@@ -770,59 +797,84 @@ ${aiGroupsTable(dict)}
 }
 
 /**
- * Page de confidentialite, une par langue, a `/confidentialite/<locale>`.
+ * Gabarit des pages institutionnelles : confidentialite, mentions legales,
+ * contact. Une page par langue, a `/<dir>/<locale>`.
  *
- * Elle existe d'abord parce qu'AdSense refuse un site qui n'en a pas, mais le
- * manque etait deja reel : Google Analytics tourne depuis plusieurs semaines
- * et la connexion Google enregistre des donnees chez un tiers, sans que rien
- * ne le dise nulle part.
+ * UN seul gabarit pour les trois, delibere. Le premier jet en copiait un par
+ * page : trois en-tetes, trois blocs hreflang, trois JSON-LD a garder
+ * d'accord entre eux, et c'est toujours la copie oubliee qui finit par
+ * declarer un canonical faux. Le texte vient des dictionnaires, comme
+ * partout ailleurs — donc traduit une fois, jamais recopie.
  *
- * Le texte vient des dictionnaires, comme le reste — donc traduit une fois et
- * jamais recopie. Les marqueurs {date}, {ga} et {email} sont remplaces ici :
- * ce ne sont pas des pluriels, `t()` n'a rien a faire dans un script de build.
+ * Les marqueurs sont remplaces ici et pas par `t()` : ce ne sont pas des
+ * pluriels, un script de build n'a pas besoin du moteur i18n. {date} et {ga}
+ * sont du texte, {email} devient un lien `mailto:` — l'adresse ne sert a rien
+ * si elle n'est pas cliquable sur un telephone.
  */
-function renderPrivacyPage(locale: Locale, dict: Translations): string {
-  const url = `${SITE_URL}/${PRIVACY_DIR}/${locale}`;
-  const title = `${dict.privacy.title} | CIRKALI`;
+interface StaticSection {
+  heading: string;
+  paragraphs: string[];
+}
+
+function renderStaticPage(
+  dir: string,
+  locale: Locale,
+  dict: Translations,
+  title: string,
+  lead: string,
+  sections: StaticSection[],
+): string {
+  const url = `${SITE_URL}/${dir}/${locale}`;
   const today = new Date().toISOString().slice(0, 10);
 
-  const fill = (text: string): string =>
-    text
-      .replace('{date}', today)
-      .replace('{ga}', GA_MEASUREMENT_ID)
-      .replace('{email}', CONTACT_EMAIL);
+  /** Texte brut : marqueurs remplaces, aucun HTML. Pour les balises meta. */
+  const plain = (text: string): string =>
+    text.replace('{date}', today).replace('{ga}', GA_MEASUREMENT_ID).replace('{email}', CONTACT_EMAIL);
+
+  /**
+   * Corps de page : on echappe AVANT de poser le lien, sans quoi l'ancre
+   * ressortirait en texte visible. Les accolades ne sont pas des caracteres
+   * a echapper, le marqueur survit donc intact a `esc()`.
+   */
+  const rich = (text: string): string =>
+    esc(text.replace('{date}', today).replace('{ga}', GA_MEASUREMENT_ID)).replace(
+      '{email}',
+      `<a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>`,
+    );
 
   const hreflang = (Object.keys(DICTIONARIES) as Locale[])
-    .map(
-      (l) =>
-        `    <link rel="alternate" hreflang="${l}" href="${SITE_URL}/${PRIVACY_DIR}/${l}" />`,
-    )
+    .map((l) => `    <link rel="alternate" hreflang="${l}" href="${SITE_URL}/${dir}/${l}" />`)
     .concat(
-      `    <link rel="alternate" hreflang="x-default" href="${SITE_URL}/${PRIVACY_DIR}/${SOURCE_LOCALE}" />`,
+      `    <link rel="alternate" hreflang="x-default" href="${SITE_URL}/${dir}/${SOURCE_LOCALE}" />`,
     )
     .join('\n');
 
-  const section = (heading: string, body: string): string =>
-    `      <h2>${esc(heading)}</h2>\n      <p>${esc(fill(body))}</p>\n`;
+  const body = sections
+    .map(
+      (section) =>
+        `      <h2>${esc(section.heading)}</h2>\n` +
+        section.paragraphs.map((text) => `      <p>${rich(text)}</p>`).join('\n'),
+    )
+    .join('\n');
 
   return `<!doctype html>
 <html lang="${locale}">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="description" content="${esc(fill(dict.privacy.lead))}" />
+    <meta name="description" content="${esc(plain(lead))}" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#0e1210" />
-    <title>${esc(title)}</title>
+    <title>${esc(title)} | CIRKALI</title>
     <link rel="canonical" href="${url}" />
 ${hreflang}
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="../favicon.ico" sizes="16x16 32x32 48x48" />
 
-    <meta property="og:title" content="${esc(dict.privacy.title)}" />
+    <meta property="og:title" content="${esc(title)}" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="${url}" />
-    <meta property="og:description" content="${esc(fill(dict.privacy.lead))}" />
+    <meta property="og:description" content="${esc(plain(lead))}" />
     <meta property="og:site_name" content="CIRKALI" />
     <meta property="og:locale" content="${OG_LOCALES[locale]}" />
     <meta property="og:image" content="${SITE_URL}/og-image.png" />
@@ -832,8 +884,8 @@ ${hreflang}
         {
           '@context': 'https://schema.org',
           '@type': 'WebPage',
-          name: dict.privacy.title,
-          description: fill(dict.privacy.lead),
+          name: title,
+          description: plain(lead),
           url,
           inLanguage: locale,
           isPartOf: { '@type': 'WebApplication', name: 'CIRKALI', url: `${SITE_URL}/` },
@@ -844,7 +896,7 @@ ${hreflang}
     <!--
       Polices servies par le site : @font-face dans exercise-page.css. Le
       preload les sort du bout de la chaine (HTML -> feuille -> police) ;
-      L'attribut crossorigin est obligatoire meme en meme origine, une requete
+      l'attribut crossorigin est obligatoire meme en meme origine, une requete
       de police partant toujours en mode CORS. Voir index.html pour le detail.
     -->
     <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/archivo-latin.woff2" />
@@ -855,40 +907,64 @@ ${hreflang}
     <main class="wrap">
       <nav class="back" aria-label="${esc(dict.page.breadcrumb)}">
         <a href="${SITE_URL}/">${esc(dict.page.back)}</a>
-        <span aria-hidden="true">›</span>
-        <span aria-current="page">${esc(dict.privacy.title)}</span>
+        <span aria-hidden="true">\u203a</span>
+        <span aria-current="page">${esc(title)}</span>
       </nav>
 
-      <h1>${esc(dict.privacy.title)}</h1>
-      <p>${esc(fill(dict.privacy.lead))}</p>
-      <p class="page-meta">${esc(fill(dict.privacy.updated))}</p>
+      <h1>${esc(title)}</h1>
+      <p>${rich(lead)}</p>
+      <p class="page-meta">${esc(plain(dict.privacy.updated))}</p>
 
-${section(dict.privacy.localTitle, dict.privacy.localText)}${section(
-    dict.privacy.libraryTitle,
-    dict.privacy.libraryText,
-  )}${section(dict.privacy.accountTitle, dict.privacy.accountText)}${section(
-    dict.privacy.analyticsTitle,
-    dict.privacy.analyticsText,
-  )}      <h2>${esc(
-    dict.privacy.adsTitle,
-  )}</h2>
-      <p>${esc(fill(dict.privacy.adsText))}</p>
-      <p>${esc(fill(dict.privacy.adsOptOut))}</p>
-${section(dict.privacy.rightsTitle, dict.privacy.rightsText)}      <h2>${esc(
-    dict.privacy.contactTitle,
-  )}</h2>
-      <p>${esc(dict.privacy.contactText.split('{email}')[0] ?? '')}<a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>${esc(
-    dict.privacy.contactText.split('{email}')[1] ?? '',
-  )}</p>
+${body}
 
       <footer>
-        <a href="${SITE_URL}/">CIRKALI</a> — ${esc(dict.page.tagline)}
+        <a href="${SITE_URL}/">CIRKALI</a> \u2014 ${esc(dict.page.tagline)}
+${siteFooterLinks(dict, locale)}
       </footer>
     </main>
     ${adRailsScript(AD_SLOTS.pageLeft, AD_SLOTS.pageRight, dict.ads.label)}
   </body>
 </html>
 `;
+}
+
+/** Confidentialite. Seule des trois a porter deux paragraphes sous « Publicite ». */
+function renderPrivacyPage(locale: Locale, dict: Translations): string {
+  const p = dict.privacy;
+  return renderStaticPage(PRIVACY_DIR, locale, dict, p.title, p.lead, [
+    { heading: p.localTitle, paragraphs: [p.localText] },
+    { heading: p.libraryTitle, paragraphs: [p.libraryText] },
+    { heading: p.accountTitle, paragraphs: [p.accountText] },
+    { heading: p.analyticsTitle, paragraphs: [p.analyticsText] },
+    { heading: p.adsTitle, paragraphs: [p.adsText, p.adsOptOut] },
+    { heading: p.rightsTitle, paragraphs: [p.rightsText] },
+    { heading: p.contactTitle, paragraphs: [p.contactText] },
+  ]);
+}
+
+/** Mentions legales. Editeur non professionnel : voir le commentaire de `legal` (i18n). */
+function renderLegalPage(locale: Locale, dict: Translations): string {
+  const l = dict.legal;
+  return renderStaticPage(LEGAL_DIR, locale, dict, l.title, l.lead, [
+    { heading: l.editorTitle, paragraphs: [l.editorText] },
+    { heading: l.directorTitle, paragraphs: [l.directorText] },
+    { heading: l.hostTitle, paragraphs: [l.hostText] },
+    { heading: l.ipTitle, paragraphs: [l.ipText] },
+    { heading: l.contentTitle, paragraphs: [l.contentText] },
+    { heading: l.availabilityTitle, paragraphs: [l.availabilityText] },
+    { heading: l.lawTitle, paragraphs: [l.lawText] },
+  ]);
+}
+
+/** Contact. */
+function renderContactPage(locale: Locale, dict: Translations): string {
+  const c = dict.contact;
+  return renderStaticPage(CONTACT_DIR, locale, dict, c.title, c.lead, [
+    { heading: c.writeTitle, paragraphs: [c.writeText] },
+    { heading: c.usefulTitle, paragraphs: [c.usefulText] },
+    { heading: c.dataTitle, paragraphs: [c.dataText] },
+    { heading: c.delayTitle, paragraphs: [c.delayText] },
+  ]);
 }
 
 /**
@@ -1175,19 +1251,22 @@ function main(): void {
   writeFileSync(join(DIST, 'llms.txt'), renderLlmsTxt(sourceDict), 'utf8');
   console.log(`${AI_PAGE_SLUG}.html + llms.txt generes.`);
 
-  // Confidentialite : une page par langue. Avant le sitemap, comme la page de
-  // spec — chacune doit pouvoir y pousser son URL.
-  const privacyDir = join(DIST, PRIVACY_DIR);
-  mkdirSync(privacyDir, { recursive: true });
-  for (const locale of Object.keys(DICTIONARIES) as Locale[]) {
-    writeFileSync(
-      join(privacyDir, `${locale}.html`),
-      renderPrivacyPage(locale, DICTIONARIES[locale]),
-      'utf8',
-    );
-    sitemapUrls.push(`${SITE_URL}/${PRIVACY_DIR}/${locale}`);
+  // Pages institutionnelles : confidentialite, mentions legales, contact —
+  // une page par langue chacune. Avant le sitemap, comme la page de spec :
+  // chacune doit pouvoir y pousser son URL.
+  for (const [dir, render] of [
+    [PRIVACY_DIR, renderPrivacyPage],
+    [LEGAL_DIR, renderLegalPage],
+    [CONTACT_DIR, renderContactPage],
+  ] as const) {
+    const outDir = join(DIST, dir);
+    mkdirSync(outDir, { recursive: true });
+    for (const locale of Object.keys(DICTIONARIES) as Locale[]) {
+      writeFileSync(join(outDir, `${locale}.html`), render(locale, DICTIONARIES[locale]), 'utf8');
+      sitemapUrls.push(`${SITE_URL}/${dir}/${locale}`);
+    }
+    console.log(`${dir}/ : ${Object.keys(DICTIONARIES).length} page(s) generee(s).`);
   }
-  console.log(`${PRIVACY_DIR}/ : ${Object.keys(DICTIONARIES).length} page(s) generee(s).`);
 
   // 404 : jamais au sitemap, elle porte d'ailleurs `noindex`.
   writeFileSync(join(DIST, '404.html'), renderNotFoundPage(), 'utf8');
