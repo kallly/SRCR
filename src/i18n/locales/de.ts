@@ -621,6 +621,10 @@ export const de: Translations = {
       name: 'Außenrotation der Schulter mit Band',
       cue: 'Band auf Ellbogenhöhe an einem Pfosten fixiert, Ellbogen an den Rippen, den Unterarm nach außen öffnen. Ein Arm nach dem anderen.',
     },
+    bandInternalRotation: {
+      name: 'Innenrotation der Schulter mit Band',
+      cue: 'Band auf Ellbogenhöhe an einem Pfosten fixiert, Ellbogen an den Rippen, den Unterarm zum Bauch führen. Ein Arm nach dem anderen.',
+    },
     dumbbellShoulderPress: {
       name: 'Schulterdrücken mit Kurzhanteln',
       cue: 'Kurzhanteln auf Schulterhöhe, über den Kopf drücken ohne im unteren Rücken ins Hohlkreuz zu gehen.',

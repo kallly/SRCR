@@ -15,7 +15,7 @@
  *    non — pour lui, seule la Search Console fait bouger les choses. Ne pas
  *    lancer cette commande en esperant un effet sur Google.
  * 2. **Le protocole attend les URL *modifiees*, pas le catalogue entier.**
- *    Renvoyer les 332 a chaque deploiement est tolere mais mal vu, et dilue le
+ *    Renvoyer les 337 a chaque deploiement est tolere mais mal vu, et dilue le
  *    signal. D'ou une commande manuelle plutot qu'une etape de `npm run build` :
  *    a lancer apres un vrai changement de contenu, pas apres une virgule.
  *

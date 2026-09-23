@@ -94,6 +94,7 @@ export type ExerciseKey =
   | 'bandRow'
   | 'bandSeatedRow'
   | 'bandExternalRotation'
+  | 'bandInternalRotation'
   | 'dumbbellShoulderPress'
   | 'dumbbellFloorPress'
   | 'dumbbellRomanianDeadlift'

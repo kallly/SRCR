@@ -2039,6 +2039,47 @@ export const de: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     precautions:
       'Manschettenarbeit wird leicht und langsam ausgeführt: ein scharfer Schmerz vorn oder oben an der Schulter ist ein Stoppsignal, nichts, was man durchzieht. Ein zusammengerolltes Handtuch zwischen Ellbogen und Rippen hilft, den Ellbogen an Ort und Stelle zu halten. Prüfe vor jedem Satz die Verankerung: ein Band, das sich unter Spannung löst, schnellt ins Gesicht.',
   },
+  bandInternalRotation: {
+    slug: 'innenrotation-schulter-mit-band',
+    muscles: { primary: 'Subscapularis', secondary: 'Großer Brustmuskel, Latissimus, Teres major' },
+    steps: [
+      'Befestige das Band auf Ellbogenhöhe an einem Pfosten, einem Türrahmen oder einem Griff.',
+      'Stell dich seitlich hin, die arbeitende Schulter auf der Seite des Ankerpunkts, und nimm das Band in diese Hand.',
+      'Lege den Ellbogen an die Rippen und beuge ihn auf 90°, Unterarm waagerecht, Hand nach außen geöffnet.',
+      'Geh so weit vom Ankerpunkt weg, bis das Band in dieser Ausgangsposition bereits leicht gespannt ist.',
+      'Führe den Unterarm zum Bauch, ohne dass der Ellbogen die Seite verlässt, und verharre kurz.',
+      'Lass die Hand langsam und gegen den Zug des Bandes wieder nach außen wandern. Beende den Satz und wechsle dann die Seite.',
+    ],
+    mistakes: [
+      'Den Ellbogen vom Körper lösen: die Schulter geht in Abduktion und die Bewegung ist keine Rotation mehr.',
+      'Den Oberkörper zum Ankerpunkt hin mitdrehen: dann arbeitet der Rumpf, nicht die Schulter.',
+      'Den Ellbogen vor den Bauch führen, statt ihn an den Rippen zu halten: der Arm wandert nach vorn und die Drehung geht verloren.',
+      'Ein zu starkes Band nehmen: der Subscapularis ist ein kleiner, tief liegender Muskel, zu viel Spannung übergibt die Arbeit an den großen Brustmuskel und den Latissimus.',
+    ],
+    sensation:
+      'Die Arbeit ist tief vorn an der Schulter zu spüren, unter dem Deltamuskel, und nicht in der Brust. Übernimmt der Brustmuskel alles oder löst sich der Ellbogen von den Rippen, ist die Spannung zu hoch.',
+    rangeOfMotion:
+      'Führe den Unterarm so weit, bis die Hand den Bauch berührt, der Ellbogen dabei immer an den Rippen. Am anderen Ende lass die Hand nur so weit nach außen wandern, wie der Ellbogen hält: eine erzwungene Außenrotation am Ende des Rückwegs ist nicht Sinn dieser Übung.',
+    tempo:
+      'Zwei Sekunden nach innen, zwei bis drei zurück nach außen, ohne Ruck und ohne Schwung. Durchgehend weiteratmen. Der gebremste Rückweg zählt genauso viel wie der Hinweg: dort arbeitet der Muskel, während er länger wird.',
+    anatomy:
+      'Der Subscapularis ist der einzige Muskel der Rotatorenmanschette auf der Vorderfläche des Schulterblatts: er dreht den Oberarmkopf nach innen und hält ihn, wie die drei anderen, in seiner Pfanne zentriert. Großer Brustmuskel, Latissimus und Teres major drehen den Arm in dieselbe Richtung, aber von außen und mit weit mehr Hebel — deshalb sind der an die Rippen gelegte Ellbogen und ein maßvoller Widerstand genau das, was die Arbeit beim Subscapularis lässt statt bei ihnen. Infraspinatus und Teres minor sind die Gegenspieler der Bewegung.',
+    mechanics:
+      'Innenrotation des Glenohumeralgelenks in der Transversalebene, der Ellbogen auf 90° fixiert und der Oberarm am Rumpf gehalten. Der Hinweg ist eine konzentrische Kontraktion der Innenrotatoren, der gebremste Rückweg eine exzentrische. Auf Ellbogenhöhe an einem festen Punkt verankert, zieht das Band über den ganzen Weg in der Achse der Drehung, und seine Spannung wächst mit der Dehnung: der größte Widerstand fällt auf die nach außen geöffnete Hand, also an den Beginn des Hinwegs — genau umgekehrt zur Außenrotation, wo er ans Ende der Öffnung fällt.',
+    benefits: [
+      'Ergänzt die Außenrotation: alle vier Manschettenmuskeln tragen zur Zentrierung des Oberarmkopfs bei, und der Subscapularis ist der einzige, der das von vorn tut.',
+      'Trainiert ihn isoliert und leicht, wo er sonst bei Druckbewegungen nur im Hintergrund mitarbeitet.',
+      'Ein Arm nach dem anderen zeigt einen Kraftunterschied zwischen beiden Schultern und erlaubt es, ihn auf der schwächeren Seite aufzuholen.',
+      'Braucht nur ein Band und einen festen Punkt: eine Türklinke genügt.',
+    ],
+    progression: {
+      easier: 'Geh näher an den Ankerpunkt heran, um die Spannung zu verringern, oder verringere den Bewegungsweg.',
+      harder: 'Geh weiter vom Ankerpunkt weg, nimm ein stärkeres Band oder halte bei jeder Wiederholung drei Sekunden mit der Hand am Bauch.',
+      readyWhen: 'Wenn drei Sätze zu fünfzehn je Arm gelingen, ohne dass der Ellbogen die Rippen verlässt und ohne dass sich der Oberkörper mitdreht.',
+    },
+    precautions:
+      'Manschettenarbeit wird leicht und langsam ausgeführt: ein scharfer Schmerz vorn an der Schulter ist ein Stoppsignal, nichts, was man durchzieht. Ein zusammengerolltes Handtuch zwischen Ellbogen und Rippen hilft, den Ellbogen an Ort und Stelle zu halten, und die Verankerung wird vor jedem Satz geprüft — ein Band, das sich unter Spannung löst, schnellt ins Gesicht. Muss man sich für eine der beiden entscheiden, kommt üblicherweise die Außenrotation zuerst: die Innenrotatoren sind bei allen, die mehr drücken als ziehen, ohnehin die stärkere Seite.',
+  },
 
   dumbbellShoulderPress: {
     slug: 'schulterdruecken-mit-kurzhanteln',

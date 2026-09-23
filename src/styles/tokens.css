@@ -16,7 +16,7 @@
 
   Les fichiers vivent dans public/fonts/, sous un nom stable et une adresse
   ABSOLUE — seule exception au `base: './'` de vite.config.ts. La raison : les
-  325 fiches d'exercice n'utilisent pas ce bundle mais `exercise-page.css`,
+  330 fiches d'exercice n'utilisent pas ce bundle mais `exercise-page.css`,
   recopie tel quel dans dist/exercises/. Un chemin hache par Vite ne serait
   connu que du bundle ; un chemin relatif ne pourrait pas etre juste depuis deux
   profondeurs a la fois. Consequence assumee : une copie servie ailleurs qu'a la

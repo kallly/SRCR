@@ -87,7 +87,7 @@ export const MAX_WEIGHT = 999;
 
 /**
  * Lignes retenues d'un deroule. Tres au-dessus de ce qu'une seance reelle
- * contient (la bibliotheque n'a que 65 exercices) : ce plafond ne doit JAMAIS
+ * contient (la bibliotheque n'a que 66 exercices) : ce plafond ne doit JAMAIS
  * tronquer la seance de quelqu'un au rechargement, il ne vise que le lien
  * forge — `?s=` acceptait 20 000 lignes, chacune rendue en carte.
  *
@@ -201,7 +201,7 @@ function humanizeUnknownKey(key: string): string {
  * `catCow`) est **deja livre**, en attributs `data-key`/`data-slug-<langue>`
  * sur l'index des fiches de l'accueil (`injectExerciseIndex()`,
  * vite.config.ts). Le lire dans le DOM ne coute donc pas un octet de plus, la
- * ou embarquer les 325 slugs dans le bundle en aurait coute quelques milliers
+ * ou embarquer les 330 slugs dans le bundle en aurait coute quelques milliers
  * pour un chemin de secours — et ne peut pas diverger de `LIBRARY`, puisque
  * c'est la meme injection qui sert les liens. D'ou ce point d'accroche plutot
  * qu'un import : `core/` ne touche pas au DOM (voir CLAUDE.md), c'est

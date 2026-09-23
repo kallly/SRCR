@@ -674,6 +674,10 @@ export const fr = {
       name: 'Rotation externe d’épaule élastique',
       cue: 'Élastique fixé à un poteau à hauteur de coude, coude collé aux côtes, ouvre l’avant-bras vers l’extérieur. Un bras à la fois.',
     },
+    bandInternalRotation: {
+      name: 'Rotation interne d’épaule élastique',
+      cue: 'Élastique fixé à un poteau à hauteur de coude, coude collé aux côtes, ramène l’avant-bras vers le ventre. Un bras à la fois.',
+    },
     dumbbellShoulderPress: {
       name: 'Développé militaire haltères',
       cue: 'Haltères à hauteur d’épaules, pousse au-dessus de la tête sans cambrer le bas du dos.',

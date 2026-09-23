@@ -2039,6 +2039,47 @@ export const es: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     precautions:
       'El trabajo de manguito se hace ligero y lento: un dolor agudo en la parte delantera o superior del hombro es una señal de parada, no algo que atravesar. Una toalla enrollada entre el codo y las costillas ayuda a mantener el codo en su sitio. Comprueba el anclaje antes de cada serie: una banda que se suelta bajo tensión sale disparada hacia la cara.',
   },
+  bandInternalRotation: {
+    slug: 'rotacion-interna-de-hombro-con-banda',
+    muscles: { primary: 'Subescapular', secondary: 'Pectoral mayor, dorsal ancho, redondo mayor' },
+    steps: [
+      'Ancla la banda a un poste, al marco de una puerta o a un tirador, a la altura del codo.',
+      'Colócate de pie de lado, con el hombro que trabaja del lado del anclaje, y agarra la banda con esa mano.',
+      'Pega el codo a las costillas y flexiónalo a 90°, antebrazo horizontal y mano abierta hacia fuera.',
+      'Aléjate del anclaje hasta que la banda esté ya ligeramente tensa en esa posición de partida.',
+      'Sin despegar el codo, lleva el antebrazo hacia el vientre y haz una pausa.',
+      'Deja que la mano vuelva despacio hacia fuera frenando la banda. Termina la serie y cambia de lado.',
+    ],
+    mistakes: [
+      'Despegar el codo del cuerpo: el hombro se va a abducción y el movimiento deja de ser una rotación.',
+      'Girar el torso hacia el anclaje para acompañar el gesto: trabaja el tronco, no el hombro.',
+      'Llevar el codo por delante del vientre en lugar de mantenerlo contra las costillas: el brazo avanza y se pierde la rotación.',
+      'Usar una banda demasiado resistente: el subescapular es un músculo pequeño y profundo, y un exceso de tensión pasa el trabajo al pectoral mayor y al dorsal ancho.',
+    ],
+    sensation:
+      'El trabajo se siente en profundidad en la parte delantera del hombro, bajo el deltoides, y no en el pecho. Si el pectoral se lo lleva todo o el codo se separa de las costillas, la tensión es excesiva.',
+    rangeOfMotion:
+      'Lleva el antebrazo hasta que la mano toque el vientre, con el codo siempre en las costillas. En el otro extremo, deja que la mano salga solo hasta donde el codo aguante: buscar una rotación externa forzada al final de la vuelta no es el objetivo de este ejercicio.',
+    tempo:
+      'Dos segundos para llevar, dos o tres para dejar volver, sin tirones ni impulso. Respiración continua. La vuelta frenada cuenta tanto como la ida: es ahí donde el músculo trabaja alargándose.',
+    anatomy:
+      'El subescapular es el único músculo del manguito de los rotadores situado en la cara anterior de la escápula: hace girar la cabeza del húmero hacia dentro y, como los otros tres, la mantiene centrada en su cavidad. El pectoral mayor, el dorsal ancho y el redondo mayor giran el brazo en el mismo sentido, pero desde fuera y con mucho más brazo de palanca; por eso el codo pegado a las costillas y una resistencia moderada son lo que deja el trabajo al subescapular y no a ellos. El infraespinoso y el redondo menor son los antagonistas del movimiento.',
+    mechanics:
+      'Rotación interna de la articulación glenohumeral en el plano transversal, con el codo fijo a 90° y el brazo pegado al tronco. La ida es una contracción concéntrica de los rotadores internos y la vuelta frenada una contracción excéntrica. Anclada a la altura del codo en un punto fijo, la banda tira en el eje de la rotación durante todo el recorrido, y su tensión crece con el estiramiento: la resistencia máxima cae con la mano abierta hacia fuera, es decir al inicio de la ida, justo al revés que en la rotación externa, donde cae al final de la apertura.',
+    benefits: [
+      'Completa la rotación externa: los cuatro músculos del manguito participan en el centrado de la cabeza humeral, y el subescapular es el único que lo hace por delante.',
+      'Lo trabaja aislado y ligero, cuando por lo demás solo interviene en segundo plano en los movimientos de empuje.',
+      'Un brazo cada vez revela una diferencia de fuerza entre los dos hombros y permite corregirla en el lado débil.',
+      'Solo necesita una banda y un punto fijo: basta un tirador de puerta.',
+    ],
+    progression: {
+      easier: 'Acércate al anclaje para reducir la tensión, o reduce el recorrido.',
+      harder: 'Aléjate del anclaje, usa una banda más resistente, o mantén tres segundos con la mano en el vientre en cada repetición.',
+      readyWhen: 'Cuando tres series de quince por brazo salgan sin que el codo abandone las costillas ni gire el torso.',
+    },
+    precautions:
+      'El trabajo de manguito se hace ligero y lento: un dolor agudo en la parte delantera del hombro es una señal de parada, no algo que atravesar. Una toalla enrollada entre el codo y las costillas ayuda a mantener el codo en su sitio, y el anclaje se comprueba antes de cada serie: una banda que se suelta bajo tensión sale disparada hacia la cara. Si hay que elegir entre los dos, la rotación externa suele ir primero: los rotadores internos ya son el lado más fuerte en quien empuja más de lo que tira.',
+  },
 
   dumbbellShoulderPress: {
     slug: 'press-militar-con-mancuernas',

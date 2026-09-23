@@ -336,6 +336,12 @@ Flat minimalist illustration, solid very dark green background (#0e1210), simpli
 
 Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing side-on to a vertical post, a resistance band anchored to it at elbow height and running across the front of the body to one hand, that elbow pinned to the ribs and bent at 90 degrees, forearm rotated outward away from the anchor, front view.
 
+## Rotation interne d’épaule élastique
+
+*Rotation interne d’épaule élastique · Band internal shoulder rotation · Rotación interna de hombro con banda · Innenrotation der Schulter mit Band · Rotazione interna della spalla con elastico*
+
+Flat minimalist illustration, solid very dark green background (#0e1210), simplified human silhouette in off-white (#f2f0e8), a single lime-green accent (#d7ff3f) on the primary muscle worked, thick clean linework, no text, no logo, square crop. Person standing side-on to a vertical post, a resistance band anchored to it at elbow height and running to the near hand, that elbow pinned to the ribs and bent at 90 degrees, forearm rotating inward across the belly against the band, front view.
+
 ## Développé militaire haltères
 
 *Développé militaire haltères · Dumbbell shoulder press · Press militar con mancuernas · Schulterdrücken mit Kurzhanteln · Lento avanti con manubri*

@@ -131,6 +131,8 @@ const SCENES: Record<ExerciseKey, string> = {
     'Person seated on the floor with legs extended, a resistance band looped around the feet, pulling both hands toward the belly with an upright torso, side view.',
   bandExternalRotation:
     'Person standing side-on to a vertical post, a resistance band anchored to it at elbow height and running across the front of the body to one hand, that elbow pinned to the ribs and bent at 90 degrees, forearm rotated outward away from the anchor, front view.',
+  bandInternalRotation:
+    'Person standing side-on to a vertical post, a resistance band anchored to it at elbow height and running to the near hand, that elbow pinned to the ribs and bent at 90 degrees, forearm rotating inward across the belly against the band, front view.',
   dumbbellShoulderPress:
     'Person pressing two dumbbells overhead from shoulder height, torso upright, front view.',
   dumbbellFloorPress:

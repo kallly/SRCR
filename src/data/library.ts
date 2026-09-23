@@ -136,6 +136,7 @@ export const LIBRARY: readonly LibraryEntry[] = [
   { key: 'bandRow', group: 'back', category: 'band', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 12, seconds: 30, rest: 60 },
   { key: 'bandSeatedRow', group: 'back', category: 'band', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 12, seconds: 30, rest: 60 },
   { key: 'bandExternalRotation', group: 'shoulders', category: 'band', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 12, seconds: 30, rest: 60 },
+  { key: 'bandInternalRotation', group: 'shoulders', category: 'band', mode: 'reps', motion: 'move', load: true, sets: 3, reps: 12, seconds: 30, rest: 60 },
 
   // halteres. Charniere de hanche -> glutes (RDL) ; flexion/extension de
   // genou -> legs. Regle ecrite ici pour qu'on ne la « corrige » pas plus tard.

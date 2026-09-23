@@ -144,7 +144,7 @@ la même contrainte que pour `robots.txt` et le sitemap. Le choix retenu est
 donc une **page HTML crawlable maillée depuis l'accueil**
 (`dist/creer-une-seance-par-lien.html`, générée par
 `scripts/build-exercise-pages.ts`, inscrite au sitemap) : la doctrine déjà
-assumée pour les 325 fiches, du contenu qu'on trouve en suivant un lien.
+assumée pour les 330 fiches, du contenu qu'on trouve en suivant un lien.
 Trois surfaces secondaires l'accompagnent : `potentialAction`/`EntryPoint`
 dans le JSON-LD de l'accueil (le seul vocabulaire normé pour déclarer une
 URL-gabarit ; Google n'en fait aucun résultat enrichi, et beaucoup de
@@ -152,7 +152,7 @@ convertisseurs HTML→markdown suppriment les `<script type="application/ld+json
 — c'est une ceinture, pas la fonction), `dist/llms.txt`, et WebMCP.
 
 **`data-key`/`data-group` sur l'index des fiches** (`injectExerciseIndex()`,
-`vite.config.ts`) : la liste des 65 clés lisible par une IA existe **une
+`vite.config.ts`) : la liste des 66 clés lisible par une IA existe **une
 seule fois**, injectée depuis `LIBRARY`. Ne jamais écrire une seconde liste à
 la main dans `index.html` — ce serait le problème `public/sitemap.xml` à
 nouveau. La section `#aiPlan` porte la phrase qui fait le lien (« la valeur

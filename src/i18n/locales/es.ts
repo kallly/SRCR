@@ -620,6 +620,10 @@ export const es: Translations = {
       name: 'Rotación externa de hombro con banda',
       cue: 'Banda anclada a un poste a la altura del codo, codo pegado a las costillas, abre el antebrazo hacia fuera. Un brazo cada vez.',
     },
+    bandInternalRotation: {
+      name: 'Rotación interna de hombro con banda',
+      cue: 'Banda anclada a un poste a la altura del codo, codo pegado a las costillas, lleva el antebrazo hacia el vientre. Un brazo cada vez.',
+    },
     dumbbellShoulderPress: {
       name: 'Press militar con mancuernas',
       cue: 'Mancuernas a la altura de los hombros, empuja por encima de la cabeza sin arquear la zona lumbar.',

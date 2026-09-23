@@ -33,7 +33,7 @@ function normalize(s: string): string {
 /**
  * Une carte de la grille, mise a plat.
  *
- * Deux origines s'y melangent : les 65 exercices de `LIBRARY`, dont le nom se
+ * Deux origines s'y melangent : les 66 exercices de `LIBRARY`, dont le nom se
  * resout par `t()`, et ceux d'une salle (`data/tenants.ts`), dont le nom est du
  * texte deja ecrit. La carte, elle, est la meme — d'ou cette forme commune,
  * calculee a chaque rendu pour suivre la langue active.

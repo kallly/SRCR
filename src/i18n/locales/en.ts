@@ -619,6 +619,10 @@ export const en: Translations = {
       name: 'Band external shoulder rotation',
       cue: 'Band anchored to a post at elbow height, elbow pinned to the ribs, rotate the forearm outward. One arm at a time.',
     },
+    bandInternalRotation: {
+      name: 'Band internal shoulder rotation',
+      cue: 'Band anchored to a post at elbow height, elbow pinned to the ribs, bring the forearm in toward the belly. One arm at a time.',
+    },
     dumbbellShoulderPress: {
       name: 'Dumbbell shoulder press',
       cue: 'Dumbbells at shoulder height, press overhead without arching the lower back.',

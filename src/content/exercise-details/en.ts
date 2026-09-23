@@ -2030,6 +2030,47 @@ export const en: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     precautions:
       'Cuff work is done light and slow: a sharp pain at the front or on top of the shoulder is a stop signal, not something to push through. A rolled towel between the elbow and the ribs helps keep the elbow in place. Check the anchor before every set: a band that comes loose under tension flies toward your face.',
   },
+  bandInternalRotation: {
+    slug: 'band-internal-shoulder-rotation',
+    muscles: { primary: 'Subscapularis', secondary: 'Pectoralis major, latissimus dorsi, teres major' },
+    steps: [
+      'Anchor the band to a post, a door frame or a handle, at elbow height.',
+      'Stand side-on with the working shoulder on the anchor side, and take the band in that hand.',
+      'Pin your elbow against your ribs and bend it to 90°, forearm horizontal, hand open to the outside.',
+      'Step away from the anchor until the band is already under slight tension in that starting position.',
+      'Without letting the elbow leave your side, bring the forearm in toward your belly and pause there.',
+      'Let the hand travel slowly back out, resisting the band. Finish the set, then switch sides.',
+    ],
+    mistakes: [
+      'Letting the elbow leave the body: the shoulder drifts into abduction and the movement stops being a rotation.',
+      'Turning the torso toward the anchor to help the movement: that is the trunk working, not the shoulder.',
+      'Bringing the elbow in front of the belly instead of keeping it against the ribs: the arm travels forward and the rotation is lost.',
+      'Using too strong a band: the subscapularis is a small deep muscle, and excess tension hands the job to the pectoralis major and the latissimus.',
+    ],
+    sensation:
+      'The work is felt deep at the front of the shoulder, underneath the deltoid, and not in the chest. If the pec takes over or the elbow drifts off the ribs, the tension is too high.',
+    rangeOfMotion:
+      'Bring the forearm in until the hand touches the belly, elbow still on the ribs. At the other end, let the hand travel out only as far as the elbow holds: chasing a forced external rotation at the end of the return is not the point of this exercise.',
+    tempo:
+      'Two seconds in, two to three to let it back out, with no jerk and no swing. Keep breathing throughout. The resisted return matters as much as the way in: that is where the muscle works while lengthening.',
+    anatomy:
+      'The subscapularis is the only rotator cuff muscle on the front face of the shoulder blade: it turns the head of the humerus inward and, like the other three, keeps it centred in its socket. The pectoralis major, latissimus dorsi and teres major turn the arm the same way, but from the outside and with far more leverage — which is why an elbow pinned to the ribs and a moderate resistance are what leave the work to the subscapularis rather than to them. The infraspinatus and teres minor are the antagonists of the movement.',
+    mechanics:
+      'Internal rotation of the glenohumeral joint in the transverse plane, elbow fixed at 90° and the upper arm kept along the trunk. The way in is a concentric contraction of the internal rotators, the resisted return an eccentric one. Anchored at elbow height on a fixed point, the band pulls along the axis of the rotation through the whole range, and its tension grows with stretch: peak resistance lands with the hand open to the outside, so at the start of the way in — the exact opposite of external rotation, where it lands at the end of the opening.',
+    benefits: [
+      'Completes external rotation: all four cuff muscles contribute to centring the humeral head, and the subscapularis is the only one doing it from the front.',
+      'Trains it isolated and light, where it otherwise only plays a background part in pressing movements.',
+      'One arm at a time exposes a strength gap between the two shoulders, and lets you close it on the weaker side.',
+      'Needs only a band and a fixed point: a door handle is enough.',
+    ],
+    progression: {
+      easier: 'Step closer to the anchor to reduce the tension, or reduce the range.',
+      harder: 'Step further from the anchor, use a stronger band, or hold three seconds with the hand on the belly on every rep.',
+      readyWhen: 'When three sets of fifteen per arm go by without the elbow leaving the ribs and without the torso turning.',
+    },
+    precautions:
+      'Cuff work is done light and slow: a sharp pain at the front of the shoulder is a stop signal, not something to push through. A rolled towel between the elbow and the ribs helps keep the elbow in place, and the anchor gets checked before every set — a band that comes loose under tension flies toward your face. If you have to pick one of the two, external rotation usually comes first: the internal rotators are already the stronger side in anyone who pushes more than they pull.',
+  },
 
   dumbbellShoulderPress: {
     slug: 'dumbbell-shoulder-press',

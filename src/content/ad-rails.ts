@@ -3,7 +3,7 @@
 /**
  * Les encarts publicitaires, en une seule source pour les trois surfaces.
  *
- * `index.html` (via le plugin `injectAdRails()` de vite.config.ts), les 325
+ * `index.html` (via le plugin `injectAdRails()` de vite.config.ts), les 330
  * fiches et la page de spec (via scripts/build-exercise-pages.ts) partagent ce
  * meme bloc. Recopier ce script a la main dans chaque gabarit aurait marche
  * aussi, mais trois copies d'une regle de conformite derivent tot ou tard, et

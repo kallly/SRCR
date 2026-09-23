@@ -30,8 +30,8 @@ progression + bip).
 `npm run typecheck` est ce qui tient le projet : il vérifie le code **et** le fait
 que les cinq langues exposent exactement les mêmes clés. `npm run check` couvre
 l'autre moitié, celle qu'aucun type ne peut voir : le texte français bien présent
-pour les robots sans JS, les 65 clés d'exercice lisibles par une IA, le JSON-LD
-valide, l'exemple `?s=` de la page de spec réellement décodable, et les 325 fiches
+pour les robots sans JS, les 66 clés d'exercice lisibles par une IA, le JSON-LD
+valide, l'exemple `?s=` de la page de spec réellement décodable, et les 330 fiches
 non vides et inscrites au sitemap.
 
 ## Architecture
@@ -54,7 +54,7 @@ src/
   data/            donnees sans texte
     tenants.ts     variantes par sous-domaine (salles de sport) — vide pour l'instant
     groups.ts      l'arbre des 12 groupes musculaires : ids, parents, couleurs
-    library.ts     65 exercices : reglages seulement
+    library.ts     66 exercices : reglages seulement
     presets.ts     les 6 seances CIRKALI toutes faites (jamais persistees)
     categories.ts  ids des categories d'equipement (filtre bibliotheque)
     figures.ts     figures SVG
@@ -425,11 +425,11 @@ et la repousse au nuage sans les charges, `updatedAt` faisant foi) existe
 pas pour un ajout que les deux côtés savent ignorer.
 
 **Qui expose le champ.** Un drapeau explicite `load` sur `LibraryEntry`
-(`data/library.ts`, 21 exercices), et pas une déduction depuis `category` —
+(`data/library.ts`, 22 exercices), et pas une déduction depuis `category` —
 pour la raison qui a fait naître `motion` : la catégorie ne sait pas répondre.
 `machine` range le tapis, le vélo et le rameur avec la presse à cuisses, alors
 que ces trois-là se règlent en vitesse, en niveau ou en frein : une catégorie
-entière ne tranche donc rien. Les 9 élastiques, eux, portent le drapeau — les
+entière ne tranche donc rien. Les 10 élastiques, eux, portent le drapeau — les
 fabricants les vendent notés en kilogrammes, et c'est la seule façon d'écrire
 dans une séance **quel** élastique on a pris. Ce que le champ enregistre est ce
 réglage-là, pas une mesure de force instantanée : la tension réelle d'une bande
@@ -544,7 +544,7 @@ retirés par `stripWebOnly()` (`vite.config.ts`) quand `CIRKALI_TARGET=app`, et
 les assertions de `scripts/build-app.ts` — qui vérifie ce qu'il a produit,
 comme `check-build.ts`, parce que la CI ne construit pas l'application.
 
-**`dist-app/` n'est pas `dist/`.** Les 332 pages générées, le sitemap,
+**`dist-app/` n'est pas `dist/`.** Les 337 pages générées, le sitemap,
 `llms.txt` et les fichiers de l'hébergeur n'ont pas d'usage dans un binaire :
 ce sont des surfaces d'indexation, elles vivent sur cirkali.fr et
 l'application y renvoie par des liens absolus.
@@ -620,7 +620,7 @@ l'assertion de `check-build.ts` qui interdit l'ancienne origine dans `dist/`.
 sert `dist/exercises/fr/pompes.html` à l'adresse `/exercises/fr/pompes` et
 redirige la forme longue vers elle (307) ; GitHub Pages et `vite preview` font
 de même. Tant que les balises déclaraient le `.html`, chaque canonical, chaque
-hreflang et les 332 entrées du sitemap désignaient une URL qui redirige pendant
+hreflang et les 337 entrées du sitemap désignaient une URL qui redirige pendant
 que Google indexait l'autre — de quoi laisser durablement des pages en
 « Détectée, actuellement non indexée ». Toute URL écrite dans une balise, un
 lien ou le sitemap s'écrit donc **sans extension** ; seuls les `writeFileSync()`
@@ -692,7 +692,7 @@ deux raisons — un `display: none` masquerait un encart déjà demandé, ce qui
 compte une impression jamais vue et que la politique AdSense interdit ; et le
 visiteur mobile paierait quand même les ~100 Ko du script, annulant le travail
 des deux lots PageSpeed précédents. `check-build.ts` vérifie les deux moitiés
-de cette promesse sur les 332 pages livrées : le portillon présent partout,
+de cette promesse sur les 337 pages livrées : le portillon présent partout,
 aucune balise `<ins>` ni `<script src>` publicitaire en statique.
 
 Une seule source pour les trois surfaces (`src/content/ad-rails.ts`), posée

@@ -2088,6 +2088,47 @@ export const fr: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     precautions:
       'Un exercice de coiffe se fait léger et lent : une douleur vive à l’avant ou sur le dessus de l’épaule est un signal d’arrêt, pas quelque chose à traverser. Une serviette roulée entre le coude et les côtes aide à garder le coude en place. Vérifie l’ancrage avant chaque série : un élastique qui se décroche sous tension part vers le visage.',
   },
+  bandInternalRotation: {
+    slug: 'rotation-interne-epaule-elastique',
+    muscles: { primary: 'Subscapulaire', secondary: 'Grand pectoral, grand dorsal, grand rond' },
+    steps: [
+      'Fixe l’élastique à un poteau, un montant de porte ou une poignée, à hauteur de coude.',
+      'Place-toi debout de côté, l’épaule qui travaille du côté de l’ancrage, et saisis l’élastique de cette main.',
+      'Colle le coude contre les côtes et plie-le à 90°, avant-bras horizontal, main ouverte vers l’extérieur.',
+      'Éloigne-toi de l’ancrage jusqu’à ce que l’élastique soit déjà légèrement tendu dans cette position de départ.',
+      'Sans décoller le coude, ramène l’avant-bras vers le ventre et marque un temps d’arrêt.',
+      'Laisse lentement la main repartir vers l’extérieur en retenant l’élastique. Finis la série, puis change de côté.',
+    ],
+    mistakes: [
+      'Décoller le coude du corps : l’épaule part en abduction et le mouvement cesse d’être une rotation.',
+      'Faire pivoter le buste vers l’ancrage pour accompagner le geste : c’est le tronc qui travaille, plus l’épaule.',
+      'Amener le coude devant le ventre au lieu de le garder contre les côtes : le bras avance et la rotation se perd.',
+      'Prendre un élastique trop résistant : le subscapulaire est un petit muscle profond, une tension excessive fait prendre le relais au grand pectoral et au grand dorsal.',
+    ],
+    sensation:
+      'Le travail se sent en profondeur à l’avant de l’épaule, sous le deltoïde, et non dans la poitrine. Si le pectoral prend tout ou si le coude s’écarte des côtes, la tension est trop forte.',
+    rangeOfMotion:
+      'Ramène l’avant-bras jusqu’à ce que la main touche le ventre, coude toujours aux côtes. À l’autre bout, ne laisse repartir la main que jusqu’où le coude tient : aller chercher une rotation externe forcée en fin de retour n’est pas le but de cet exercice.',
+    tempo:
+      'Deux secondes pour ramener, deux à trois pour laisser repartir, sans à-coup ni élan. Respiration continue. Le retour retenu compte autant que l’aller : c’est là que le muscle travaille en s’allongeant.',
+    anatomy:
+      'Le subscapulaire est le seul muscle de la coiffe des rotateurs situé sur la face avant de l’omoplate : il fait tourner la tête humérale vers l’intérieur et, comme les trois autres, la maintient centrée dans sa cavité. Le grand pectoral, le grand dorsal et le grand rond tournent le bras dans le même sens, mais de l’extérieur et avec beaucoup plus de bras de levier — c’est pourquoi le coude collé aux côtes et une résistance modérée sont ce qui laisse le travail au subscapulaire plutôt qu’à eux. L’infra-épineux et le petit rond sont les antagonistes du mouvement.',
+    mechanics:
+      'Rotation interne de l’articulation gléno-humérale dans le plan transversal, coude fixé à 90° et bras maintenu le long du tronc. L’aller est une contraction concentrique des rotateurs internes, le retour retenu une contraction excentrique. Ancré à hauteur de coude sur un point fixe, l’élastique tire dans l’axe de la rotation sur toute l’amplitude, et sa tension croît avec l’étirement : le maximum de résistance tombe main ouverte vers l’extérieur, donc au départ de l’aller — l’inverse exact de la rotation externe, où il tombe en fin d’ouverture.',
+    benefits: [
+      'Complète la rotation externe : les quatre muscles de la coiffe participent au centrage de la tête humérale, et le subscapulaire est le seul à le faire par l’avant.',
+      'Le travaille isolé et léger, alors qu’il n’intervient qu’en second plan dans les mouvements de poussée.',
+      'Un bras à la fois révèle un écart de force entre les deux épaules, et permet de le rattraper côté faible.',
+      'Ne demande qu’un élastique et un point fixe : une poignée de porte suffit.',
+    ],
+    progression: {
+      easier: 'Rapproche-toi de l’ancrage pour réduire la tension, ou réduis l’amplitude.',
+      harder: 'Éloigne-toi de l’ancrage, prends un élastique plus résistant, ou tiens trois secondes main au ventre à chaque répétition.',
+      readyWhen: 'Quand trois séries de quinze par bras passent sans que le coude ne quitte les côtes ni que le buste ne pivote.',
+    },
+    precautions:
+      'Un exercice de coiffe se fait léger et lent : une douleur vive à l’avant de l’épaule est un signal d’arrêt, pas quelque chose à traverser. Une serviette roulée entre le coude et les côtes aide à garder le coude en place, et l’ancrage se vérifie avant chaque série — un élastique qui se décroche sous tension part vers le visage. S’il faut choisir entre les deux, la rotation externe passe d’ordinaire en premier : les rotateurs internes sont déjà les plus forts chez qui pousse plus qu’il ne tire.',
+  },
 
   dumbbellShoulderPress: {
     slug: 'developpe-militaire-halteres',

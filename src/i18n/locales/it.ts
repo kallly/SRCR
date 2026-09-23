@@ -620,6 +620,10 @@ export const it: Translations = {
       name: 'Rotazione esterna della spalla con elastico',
       cue: 'Elastico fissato a un palo all’altezza del gomito, gomito aderente alle costole, apri l’avambraccio verso l’esterno. Un braccio alla volta.',
     },
+    bandInternalRotation: {
+      name: 'Rotazione interna della spalla con elastico',
+      cue: 'Elastico fissato a un palo all’altezza del gomito, gomito aderente alle costole, porta l’avambraccio verso la pancia. Un braccio alla volta.',
+    },
     dumbbellShoulderPress: {
       name: 'Lento avanti con manubri',
       cue: 'Manubri all’altezza delle spalle, spingi sopra la testa senza inarcare la zona lombare.',

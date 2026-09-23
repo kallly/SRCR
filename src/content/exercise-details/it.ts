@@ -2039,6 +2039,47 @@ export const it: Partial<Record<ExerciseKey, ExerciseDetail>> = {
     precautions:
       'Il lavoro di cuffia si fa leggero e lento: un dolore acuto davanti o sopra la spalla è un segnale di stop, non qualcosa da attraversare. Un asciugamano arrotolato tra gomito e costole aiuta a tenere il gomito al suo posto. Controlla l’ancoraggio prima di ogni serie: un elastico che si sgancia sotto tensione parte verso il viso.',
   },
+  bandInternalRotation: {
+    slug: 'rotazione-interna-spalla-con-elastico',
+    muscles: { primary: 'Sottoscapolare', secondary: 'Grande pettorale, gran dorsale, grande rotondo' },
+    steps: [
+      'Fissa l’elastico a un palo, allo stipite di una porta o a una maniglia, all’altezza del gomito.',
+      'Mettiti in piedi di lato, con la spalla che lavora dal lato dell’ancoraggio, e afferra l’elastico con quella mano.',
+      'Appoggia il gomito alle costole e piegalo a 90°, avambraccio orizzontale e mano aperta verso l’esterno.',
+      'Allontanati dall’ancoraggio finché l’elastico è già leggermente in tensione in questa posizione di partenza.',
+      'Senza staccare il gomito, porta l’avambraccio verso la pancia e fai una pausa.',
+      'Lascia che la mano torni lentamente verso l’esterno frenando l’elastico. Finisci la serie, poi cambia lato.',
+    ],
+    mistakes: [
+      'Staccare il gomito dal corpo: la spalla va in abduzione e il movimento smette di essere una rotazione.',
+      'Ruotare il busto verso l’ancoraggio per accompagnare il gesto: lavora il tronco, non la spalla.',
+      'Portare il gomito davanti alla pancia invece di tenerlo contro le costole: il braccio avanza e la rotazione si perde.',
+      'Usare un elastico troppo resistente: il sottoscapolare è un piccolo muscolo profondo, e una tensione eccessiva passa il lavoro al grande pettorale e al gran dorsale.',
+    ],
+    sensation:
+      'Il lavoro si sente in profondità nella parte anteriore della spalla, sotto il deltoide, e non nel petto. Se il pettorale prende tutto o il gomito si stacca dalle costole, la tensione è eccessiva.',
+    rangeOfMotion:
+      'Porta l’avambraccio finché la mano tocca la pancia, con il gomito sempre alle costole. All’altro estremo, lascia uscire la mano solo fin dove il gomito tiene: cercare una rotazione esterna forzata a fine ritorno non è lo scopo di questo esercizio.',
+    tempo:
+      'Due secondi per portare dentro, due o tre per lasciar tornare fuori, senza strappi né slancio. Respirazione continua. Il ritorno frenato conta quanto l’andata: è lì che il muscolo lavora allungandosi.',
+    anatomy:
+      'Il sottoscapolare è l’unico muscolo della cuffia dei rotatori situato sulla faccia anteriore della scapola: fa ruotare la testa dell’omero verso l’interno e, come gli altri tre, la mantiene centrata nella sua cavità. Il grande pettorale, il gran dorsale e il grande rotondo ruotano il braccio nello stesso senso, ma dall’esterno e con molto più braccio di leva: per questo il gomito aderente alle costole e una resistenza moderata sono ciò che lascia il lavoro al sottoscapolare e non a loro. L’infraspinato e il piccolo rotondo sono gli antagonisti del movimento.',
+    mechanics:
+      'Rotazione interna dell’articolazione gleno-omerale sul piano trasversale, gomito fisso a 90° e braccio mantenuto lungo il tronco. L’andata è una contrazione concentrica dei rotatori interni, il ritorno frenato una contrazione eccentrica. Ancorato all’altezza del gomito a un punto fisso, l’elastico tira nell’asse della rotazione su tutta l’ampiezza, e la sua tensione cresce con l’allungamento: la resistenza massima cade con la mano aperta verso l’esterno, cioè all’inizio dell’andata — esattamente il contrario della rotazione esterna, dove cade a fine apertura.',
+    benefits: [
+      'Completa la rotazione esterna: tutti e quattro i muscoli della cuffia partecipano al centraggio della testa omerale, e il sottoscapolare è l’unico a farlo dal davanti.',
+      'Lo allena isolato e leggero, mentre altrove interviene solo in secondo piano nei movimenti di spinta.',
+      'Un braccio alla volta rivela una differenza di forza tra le due spalle e permette di colmarla sul lato debole.',
+      'Richiede solo un elastico e un punto fisso: basta una maniglia di porta.',
+    ],
+    progression: {
+      easier: 'Avvicinati all’ancoraggio per ridurre la tensione, o riduci l’ampiezza.',
+      harder: 'Allontanati dall’ancoraggio, usa un elastico più resistente, o tieni tre secondi con la mano sulla pancia a ogni ripetizione.',
+      readyWhen: 'Quando tre serie da quindici per braccio passano senza che il gomito lasci le costole né che il busto ruoti.',
+    },
+    precautions:
+      'Il lavoro di cuffia si fa leggero e lento: un dolore acuto davanti alla spalla è un segnale di stop, non qualcosa da attraversare. Un asciugamano arrotolato tra gomito e costole aiuta a tenere il gomito al suo posto, e l’ancoraggio va controllato prima di ogni serie: un elastico che si sgancia sotto tensione parte verso il viso. Se si deve scegliere tra le due, la rotazione esterna viene di solito prima: i rotatori interni sono già il lato più forte in chi spinge più di quanto tiri.',
+  },
 
   dumbbellShoulderPress: {
     slug: 'lento-avanti-con-manubri',
