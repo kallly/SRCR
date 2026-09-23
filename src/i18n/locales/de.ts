@@ -175,6 +175,34 @@ export const de: Translations = {
     delayText:
       'Rechne mit einigen Tagen. Anfragen zu personenbezogenen Daten werden vorrangig und innerhalb von höchstens einem Monat bearbeitet, wie es die DSGVO verlangt.',
   },
+  guides: {
+    title: 'Ratgeber',
+    lead: 'Von Hand geschriebene Antworten auf die immer wiederkehrenden Fragen: wie viele Sätze, wie eine Einheit aufgebaut wird, welches Material, in welcher Reihenfolge.',
+    related: 'Erwähnte Übungsseiten',
+    readOn: 'Die anderen Ratgeber',
+  },
+  method: {
+    title: 'Über die Website und Methode',
+    lead: 'Wer CIRKALI schreibt, wie die Inhalte entstehen und was die Website sich zu schreiben verbietet.',
+    whoTitle: 'Wer CIRKALI macht',
+    whoText:
+      'CIRKALI wird von einer einzigen Person gestaltet, geschrieben und gepflegt, ohne externe Redaktion und ohne gekaufte Inhalte. Die {count} Übungsseiten, die Ratgeber und die Figuren sind für diese Website entstanden und existieren nirgendwo sonst. Der Anlass war schlicht: eine Einheit planen und stoppen, ohne Konto und ohne dass Daten irgendwohin abfließen.',
+    ruleTitle: 'Die Schreibregel',
+    ruleText:
+      'Eine einzige Regel bestimmt alle Trainingsinhalte dieser Website: nur schreiben, was überprüfbar und beständig ist. Anatomie — Muskelnamen und ihre Aufgaben —, Biomechanik — Gelenkbewegungen, Bewegungsebenen, Kontraktionsarten — und gesicherte Trainingsprinzipien. Sonst nichts.',
+    noFakeTitle: 'Was die Website sich verbietet',
+    noFakeText:
+      'Nie eine zitierte Studie, nie ein Prozentwert zur Muskelaktivierung, nie eine falsch genaue Zahl. Diese drei Dinge klingen wissenschaftlich und sind meist erfunden, und sie stehen überall in Fitness-Inhalten im Netz. Ein Text, der behauptet, eine Übung „rekrutiert 63 % des großen Gesäßmuskels“, sagt nichts Überprüfbares: er borgt sich das Aussehen eines Belegs. Wiederholungsbereiche werden als dokumentierte Praxis dargestellt, nicht als Gesetze.',
+    medicalTitle: 'Was das nicht ist',
+    medicalText:
+      'Die Seiten und Ratgeber sind allgemeine Information. Sie sind weder ärztlicher Rat noch Diagnose noch ein persönlicher Trainingsplan, und sie ersetzen weder eine medizinische Fachkraft noch eine qualifizierte Trainerin oder einen Trainer. Die Vorsichtshinweise auf den Seiten sind praktisch — wohin der Ellbogen gehört, wann man aufhört — nie Diagnosen.',
+    updatesTitle: 'Korrekturen und Aktualisierungen',
+    updatesText:
+      'Ein Fehler auf einer Seite wird behoben: melde ihn über die Kontaktseite und nenne Übung und Sprache. Die Seiten werden bei jeder Veröffentlichung aus einer einzigen Quelle neu erzeugt, eine Korrektur wirkt also in allen fünf Sprachen zugleich.',
+    freeTitle: 'Wie die Website finanziert wird',
+    freeText:
+      'CIRKALI ist kostenlos und bleibt es. Werbung erscheint nur auf großen Bildschirmen: unter 1200 Pixel Breite wird überhaupt kein Werbecode geladen, die Nutzung auf dem Telefon bleibt damit vollständig werbefrei. Kein Inhalt ist gesponsert, und keine Übung wird gegen Bezahlung hervorgehoben.',
+  },
 
   aiPlan: {
     title: 'Eine Einheit mit einer KI erstellen',

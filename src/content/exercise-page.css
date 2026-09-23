@@ -514,3 +514,23 @@ footer a {
 .ads-note {
   margin: 10px 0 14px;
 }
+
+/*
+  Listes des guides : sommaire de l'index, fiches citees et renvois entre
+  guides. Meme motif que les listes des fiches, avec l'intitule du lien
+  detache de sa description.
+*/
+.guide-list {
+  margin: 12px 0 0;
+  padding-left: 20px;
+  max-width: 62ch;
+}
+
+.guide-list li {
+  margin-bottom: 8px;
+  line-height: 1.55;
+}
+
+.guide-list a {
+  font-weight: 600;
+}

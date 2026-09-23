@@ -24,6 +24,7 @@ import { groupColor } from '../src/data/groups';
 import type { ExerciseKey, GroupId, Locale } from '../src/core/types';
 import { DICTIONARIES, type Translations } from '../src/i18n';
 import { DETAILS_BY_LOCALE, type ExerciseDetail } from '../src/content/exercise-details';
+import { GUIDES_BY_LOCALE, GUIDE_KEYS, type GuideKey } from '../src/content/guides';
 import { imagePrompt } from '../src/content/image-prompts';
 import { AD_SLOTS, adRailsScript } from '../src/content/ad-rails';
 
@@ -68,7 +69,7 @@ const OG_LOCALES: Record<Locale, string> = {
  * REDIRIGE `/exercises/fr/pompes.html` vers elle, en 307.
  *
  * Tant que les balises declaraient la forme avec extension, chaque canonical,
- * chaque hreflang et les 347 entrees du sitemap designaient une URL qui
+ * chaque hreflang et les 377 entrees du sitemap designaient une URL qui
  * redirige, pendant que Google indexait l'autre — l'incoherence exacte qui
  * laisse une page en « Detectee, actuellement non indexee ». Rien ne cassait,
  * donc rien ne le signalait.
@@ -108,6 +109,8 @@ const PRIVACY_DIR = 'confidentialite';
  * d'adresse ou les exercer ne tient pas sa propre promesse.
  */
 const LEGAL_DIR = 'mentions-legales';
+const METHOD_DIR = 'a-propos';
+const GUIDES_DIR = 'guides';
 const CONTACT_DIR = 'contact';
 
 /**
@@ -119,6 +122,8 @@ function siteFooterLinks(dict: Translations, locale: Locale): string {
   const link = (dir: string, label: string): string =>
     `        \u00b7 <a href="${SITE_URL}/${dir}/${locale}">${esc(label)}</a>`;
   return [
+    link(GUIDES_DIR, dict.guides.title),
+    link(METHOD_DIR, dict.method.title),
     link(PRIVACY_DIR, dict.privacy.title),
     link(LEGAL_DIR, dict.legal.title),
     link(CONTACT_DIR, dict.contact.title),
@@ -816,15 +821,25 @@ interface StaticSection {
   paragraphs: string[];
 }
 
-function renderStaticPage(
-  dir: string,
-  locale: Locale,
-  dict: Translations,
-  title: string,
-  lead: string,
-  sections: StaticSection[],
-): string {
-  const url = `${SITE_URL}/${dir}/${locale}`;
+interface StaticPageOptions {
+  /** URL canonique publiee, sans extension. */
+  url: string;
+  /** Bloc <link rel="alternate"> deja construit : les guides et les pages
+      institutionnelles ne calculent pas leurs alternatives de la meme facon. */
+  hreflang: string;
+  /** `../` depuis `<dir>/<locale>.html`, `../../` depuis `guides/<locale>/`. */
+  up: string;
+  locale: Locale;
+  dict: Translations;
+  title: string;
+  lead: string;
+  sections: StaticSection[];
+  /** Pose sous la derniere section : le maillage vers les fiches, pour un guide. */
+  tail?: string;
+}
+
+function renderStaticPage(options: StaticPageOptions): string {
+  const { url, hreflang, up, locale, dict, title, lead, sections, tail } = options;
   const today = new Date().toISOString().slice(0, 10);
 
   /** Texte brut : marqueurs remplaces, aucun HTML. Pour les balises meta. */
@@ -841,13 +856,6 @@ function renderStaticPage(
       '{email}',
       `<a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>`,
     );
-
-  const hreflang = (Object.keys(DICTIONARIES) as Locale[])
-    .map((l) => `    <link rel="alternate" hreflang="${l}" href="${SITE_URL}/${dir}/${l}" />`)
-    .concat(
-      `    <link rel="alternate" hreflang="x-default" href="${SITE_URL}/${dir}/${SOURCE_LOCALE}" />`,
-    )
-    .join('\n');
 
   const body = sections
     .map(
@@ -868,8 +876,8 @@ function renderStaticPage(
     <title>${esc(title)} | CIRKALI</title>
     <link rel="canonical" href="${url}" />
 ${hreflang}
-    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="../favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" href="${up}favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="${up}favicon.ico" sizes="16x16 32x32 48x48" />
 
     <meta property="og:title" content="${esc(title)}" />
     <meta property="og:type" content="article" />
@@ -901,7 +909,7 @@ ${hreflang}
     -->
     <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/archivo-latin.woff2" />
     <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/manrope-latin.woff2" />
-    <link rel="stylesheet" href="../exercises/style.css" />
+    <link rel="stylesheet" href="${up}exercises/style.css" />
   </head>
   <body>
     <main class="wrap">
@@ -915,7 +923,7 @@ ${hreflang}
       <p>${rich(lead)}</p>
       <p class="page-meta">${esc(plain(dict.privacy.updated))}</p>
 
-${body}
+${body}${tail ?? ''}
 
       <footer>
         <a href="${SITE_URL}/">CIRKALI</a> \u2014 ${esc(dict.page.tagline)}
@@ -928,10 +936,39 @@ ${siteFooterLinks(dict, locale)}
 `;
 }
 
+/** Pages institutionnelles : `<dir>/<locale>`, une langue par fichier. */
+function renderInfoPage(
+  dir: string,
+  locale: Locale,
+  dict: Translations,
+  title: string,
+  lead: string,
+  sections: StaticSection[],
+): string {
+  return renderStaticPage({
+    url: `${SITE_URL}/${dir}/${locale}`,
+    hreflang: localeAlternates((l) => `${SITE_URL}/${dir}/${l}`),
+    up: '../',
+    locale,
+    dict,
+    title,
+    lead,
+    sections,
+  });
+}
+
+/** Les cinq `hreflang` plus le `x-default`, l'URL etant calculee par langue. */
+function localeAlternates(href: (locale: Locale) => string): string {
+  return (Object.keys(DICTIONARIES) as Locale[])
+    .map((l) => `    <link rel="alternate" hreflang="${l}" href="${href(l)}" />`)
+    .concat(`    <link rel="alternate" hreflang="x-default" href="${href(SOURCE_LOCALE)}" />`)
+    .join('\n');
+}
+
 /** Confidentialite. Seule des trois a porter deux paragraphes sous « Publicite ». */
 function renderPrivacyPage(locale: Locale, dict: Translations): string {
   const p = dict.privacy;
-  return renderStaticPage(PRIVACY_DIR, locale, dict, p.title, p.lead, [
+  return renderInfoPage(PRIVACY_DIR, locale, dict, p.title, p.lead, [
     { heading: p.localTitle, paragraphs: [p.localText] },
     { heading: p.libraryTitle, paragraphs: [p.libraryText] },
     { heading: p.accountTitle, paragraphs: [p.accountText] },
@@ -945,7 +982,7 @@ function renderPrivacyPage(locale: Locale, dict: Translations): string {
 /** Mentions legales. Editeur non professionnel : voir le commentaire de `legal` (i18n). */
 function renderLegalPage(locale: Locale, dict: Translations): string {
   const l = dict.legal;
-  return renderStaticPage(LEGAL_DIR, locale, dict, l.title, l.lead, [
+  return renderInfoPage(LEGAL_DIR, locale, dict, l.title, l.lead, [
     { heading: l.editorTitle, paragraphs: [l.editorText] },
     { heading: l.directorTitle, paragraphs: [l.directorText] },
     { heading: l.hostTitle, paragraphs: [l.hostText] },
@@ -959,12 +996,106 @@ function renderLegalPage(locale: Locale, dict: Translations): string {
 /** Contact. */
 function renderContactPage(locale: Locale, dict: Translations): string {
   const c = dict.contact;
-  return renderStaticPage(CONTACT_DIR, locale, dict, c.title, c.lead, [
+  return renderInfoPage(CONTACT_DIR, locale, dict, c.title, c.lead, [
     { heading: c.writeTitle, paragraphs: [c.writeText] },
     { heading: c.usefulTitle, paragraphs: [c.usefulText] },
     { heading: c.dataTitle, paragraphs: [c.dataText] },
     { heading: c.delayTitle, paragraphs: [c.delayText] },
   ]);
+}
+
+/** A propos et methode : d'ou vient le contenu et ce que le site s'interdit. */
+function renderMethodPage(locale: Locale, dict: Translations): string {
+  const m = dict.method;
+  const count = String(LIBRARY.length * (Object.keys(DICTIONARIES) as Locale[]).length);
+  return renderInfoPage(METHOD_DIR, locale, dict, m.title, m.lead, [
+    { heading: m.whoTitle, paragraphs: [m.whoText.replace('{count}', count)] },
+    { heading: m.ruleTitle, paragraphs: [m.ruleText] },
+    { heading: m.noFakeTitle, paragraphs: [m.noFakeText] },
+    { heading: m.medicalTitle, paragraphs: [m.medicalText] },
+    { heading: m.updatesTitle, paragraphs: [m.updatesText] },
+    { heading: m.freeTitle, paragraphs: [m.freeText] },
+  ]);
+}
+
+/**
+ * Index des guides, a `guides/<locale>`. Le FICHIER est `guides/<locale>.html`
+ * et les guides eux-memes vivent dans `guides/<locale>/` : un fichier et un
+ * repertoire de meme nom de base cohabitent sans conflit.
+ */
+function renderGuidesIndex(locale: Locale, dict: Translations): string {
+  const guides = GUIDES_BY_LOCALE[locale];
+  const items = GUIDE_KEYS.map((key) => {
+    const guide = guides[key];
+    return (
+      `        <li><a href="${SITE_URL}/${GUIDES_DIR}/${locale}/${guide.slug}">${esc(guide.title)}</a>` +
+      ` \u2014 ${esc(guide.lead)}</li>`
+    );
+  }).join('\n');
+
+  return renderStaticPage({
+    url: `${SITE_URL}/${GUIDES_DIR}/${locale}`,
+    hreflang: localeAlternates((l) => `${SITE_URL}/${GUIDES_DIR}/${l}`),
+    up: '../',
+    locale,
+    dict,
+    title: dict.guides.title,
+    lead: dict.guides.lead,
+    sections: [],
+    tail: `      <ul class="guide-list">\n${items}\n      </ul>`,
+  });
+}
+
+/**
+ * Un guide, a `guides/<locale>/<slug>`. Le slug est TRADUIT par langue, comme
+ * celui des fiches : une adresse francaise sous `guides/en/` serait
+ * incoherente pour un lecteur anglophone et saperait l'indexation par langue,
+ * qui est toute la raison d'etre de ces pages.
+ */
+function renderGuidePage(locale: Locale, dict: Translations, key: GuideKey): string {
+  const guide = GUIDES_BY_LOCALE[locale][key];
+
+  const related = guide.related
+    .map((exerciseKey) => {
+      // Repli sur le francais : le contrat de `ExerciseDetail` est `Partial`
+      // par construction, donc une fiche peut legitimement manquer dans une
+      // langue. Sans fiche du tout, le lien n'existe pas — mieux qu'un 404.
+      const detail = DETAILS_BY_LOCALE[locale]?.[exerciseKey] ?? DETAILS_BY_LOCALE.fr?.[exerciseKey];
+      if (!detail) return null;
+      return `        <li><a href="${SITE_URL}/exercises/${locale}/${detail.slug}">${esc(
+        dict.exercise[exerciseKey].name,
+      )}</a></li>`;
+    })
+    .filter((line): line is string => line !== null)
+    .join('\n');
+
+  const others = GUIDE_KEYS.filter((k) => k !== key)
+    .map((k) => {
+      const other = GUIDES_BY_LOCALE[locale][k];
+      return `        <li><a href="${SITE_URL}/${GUIDES_DIR}/${locale}/${other.slug}">${esc(
+        other.title,
+      )}</a></li>`;
+    })
+    .join('\n');
+
+  return renderStaticPage({
+    url: `${SITE_URL}/${GUIDES_DIR}/${locale}/${guide.slug}`,
+    hreflang: localeAlternates(
+      (l) => `${SITE_URL}/${GUIDES_DIR}/${l}/${GUIDES_BY_LOCALE[l][key].slug}`,
+    ),
+    up: '../../',
+    locale,
+    dict,
+    title: guide.title,
+    lead: guide.lead,
+    sections: guide.sections,
+    tail:
+      `\n      <h2>${esc(dict.guides.related)}</h2>\n` +
+      `      <ul class="guide-list">\n${related}\n      </ul>\n` +
+      `      <h2>${esc(dict.guides.readOn)}</h2>\n` +
+      `      <ul class="guide-list">\n${others}\n      </ul>\n` +
+      `      <p class="disclaimer">${esc(dict.page.disclaimer)}</p>`,
+  });
 }
 
 /**
@@ -1258,6 +1389,8 @@ function main(): void {
     [PRIVACY_DIR, renderPrivacyPage],
     [LEGAL_DIR, renderLegalPage],
     [CONTACT_DIR, renderContactPage],
+    [METHOD_DIR, renderMethodPage],
+    [GUIDES_DIR, renderGuidesIndex],
   ] as const) {
     const outDir = join(DIST, dir);
     mkdirSync(outDir, { recursive: true });
@@ -1267,6 +1400,25 @@ function main(): void {
     }
     console.log(`${dir}/ : ${Object.keys(DICTIONARIES).length} page(s) generee(s).`);
   }
+
+  // Les guides eux-memes : `guides/<locale>/<slug>.html`, a cote du fichier
+  // `guides/<locale>.html` qui leur sert d'index.
+  for (const locale of Object.keys(DICTIONARIES) as Locale[]) {
+    const outDir = join(DIST, GUIDES_DIR, locale);
+    mkdirSync(outDir, { recursive: true });
+    for (const key of GUIDE_KEYS) {
+      const guide = GUIDES_BY_LOCALE[locale][key];
+      writeFileSync(
+        join(outDir, `${guide.slug}.html`),
+        renderGuidePage(locale, DICTIONARIES[locale], key),
+        'utf8',
+      );
+      sitemapUrls.push(`${SITE_URL}/${GUIDES_DIR}/${locale}/${guide.slug}`);
+    }
+  }
+  console.log(
+    `${GUIDES_DIR}/ : ${GUIDE_KEYS.length * Object.keys(DICTIONARIES).length} guide(s) genere(s).`,
+  );
 
   // 404 : jamais au sitemap, elle porte d'ailleurs `noindex`.
   writeFileSync(join(DIST, '404.html'), renderNotFoundPage(), 'utf8');

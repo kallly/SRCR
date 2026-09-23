@@ -535,6 +535,8 @@ export function createApp(state: State): { render: () => void } {
     // relatif — dans le WebView natif, `location.origin` vaut
     // https://localhost et le lien ne menerait nulle part.
     for (const [id, dir] of [
+      ['guidesLink', 'guides'],
+      ['methodLink', 'a-propos'],
       ['privacyLink', 'confidentialite'],
       ['legalLink', 'mentions-legales'],
       ['contactLink', 'contact'],

@@ -31,6 +31,7 @@ import { figureSvg } from '../src/data/figures';
 import { DETAILS_BY_LOCALE } from '../src/content/exercise-details';
 import { AD_CLIENT, AD_MIN_WIDTH } from '../src/content/ad-rails';
 import { DICTIONARIES } from '../src/i18n';
+import { GUIDES_BY_LOCALE, GUIDE_KEYS } from '../src/content/guides';
 import { SITE_URL } from '../src/data/site';
 import type { Locale } from '../src/core/types';
 
@@ -340,7 +341,7 @@ check(
 // « faible valeur ajoutee ». Aucune des trois n'est pour autant un decor : la
 // LCEN impose les mentions legales a tout editeur, et annoncer des droits
 // RGPD sans donner d'adresse ou les exercer serait une promesse creuse.
-const INFO_PAGES = ['confidentialite', 'mentions-legales', 'contact'] as const;
+const INFO_PAGES = ['confidentialite', 'mentions-legales', 'contact', 'a-propos', 'guides'] as const;
 for (const dir of INFO_PAGES) {
   for (const locale of Object.keys(DICTIONARIES) as Locale[]) {
     // Le FICHIER garde son extension, l'URL publiee ne l'a pas : c'est
@@ -369,9 +370,36 @@ check(
 // L'accueil aussi : les trois liens vivent dans le bloc « A propos », et leur
 // texte est injecte au build depuis fr.ts comme tout `data-i18n`.
 check(
-  'l\'accueil mene aux trois pages institutionnelles',
-  ['privacyLink', 'legalLink', 'contactLink'].every((id) => index.includes(`id="${id}"`)),
+  'l\'accueil mene aux cinq pages institutionnelles',
+  ['privacyLink', 'legalLink', 'contactLink', 'methodLink', 'guidesLink'].every((id) =>
+    index.includes(`id="${id}"`),
+  ),
 );
+
+// Les guides sont la seule reponse au motif du refus AdSense (« faible valeur
+// ajoutee ») : le reste du site sort d'un gabarit, eux sont ecrits a la main.
+// On verifie qu'ils sont livres remplis, au sitemap, et qu'ils pointent bien
+// vers des fiches qui existent — un guide qui renvoie a un 404 vaudrait moins
+// que pas de maillage du tout.
+for (const locale of Object.keys(DICTIONARIES) as Locale[]) {
+  for (const key of GUIDE_KEYS) {
+    const guide = GUIDES_BY_LOCALE[locale][key];
+    const file = join(DIST, `guides/${locale}/${guide.slug}.html`);
+    const html = existsSync(file) ? readFileSync(file, 'utf8') : '';
+    const links = [...html.matchAll(/href="https:\/\/cirkali\.fr\/exercises\/[a-z]{2}\/([^"]+)"/g)];
+    const broken = links.filter(
+      (m) => !existsSync(join(DIST, `exercises/${locale}/${m[1]}.html`)),
+    );
+    check(
+      `guides/${locale}/${guide.slug} est livre, au sitemap, et ses renvois existent`,
+      html.length > 4000 &&
+        sitemap.includes(`/guides/${locale}/${guide.slug}</loc>`) &&
+        links.length > 0 &&
+        broken.length === 0,
+      broken.map((m) => m[1]).join(', '),
+    );
+  }
+}
 
 // Cloudflare Pages redirige `/page.html` vers `/page` : une URL publiee avec
 // extension est donc une URL qui redirige. Declarer celle-la en canonical, en

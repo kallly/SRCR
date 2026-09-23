@@ -175,6 +175,34 @@ export const it: Translations = {
     delayText:
       'Conta qualche giorno. Le richieste sui dati personali sono trattate in via prioritaria, entro un mese al massimo, come prevede il GDPR.',
   },
+  guides: {
+    title: 'Guide',
+    lead: 'Risposte scritte a mano alle domande che tornano sempre: quante serie, come costruire una seduta, quale attrezzatura, in che ordine.',
+    related: 'Schede di esercizio citate',
+    readOn: 'Le altre guide',
+  },
+  method: {
+    title: 'Chi siamo e metodo',
+    lead: 'Chi scrive CIRKALI, come vengono redatti i contenuti e cosa il sito si vieta di scrivere.',
+    whoTitle: 'Chi fa CIRKALI',
+    whoText:
+      'CIRKALI è progettato, scritto e mantenuto da una sola persona, senza redazione esterna né contenuti acquistati. Le {count} schede di esercizio, le guide e le figure sono state prodotte per questo sito e non esistono altrove. Il progetto nasce da un bisogno semplice: pianificare una seduta e cronometrarla, senza account da creare e senza che i dati finiscano da qualche parte.',
+    ruleTitle: 'La regola di redazione',
+    ruleText:
+      'Una sola regola governa tutti i contenuti di allenamento del sito: scrivere soltanto ciò che è verificabile e stabile. L’anatomia — il nome dei muscoli e il loro ruolo —, la biomeccanica — azioni articolari, piani di movimento, tipi di contrazione — e i principi di allenamento consolidati. Nient’altro.',
+    noFakeTitle: 'Cosa il sito si vieta',
+    noFakeText:
+      'Mai uno studio citato, mai una percentuale di attivazione muscolare, mai una cifra di falsa precisione. Queste tre cose suonano scientifiche pur essendo quasi sempre inventate, e sono ovunque nei contenuti di fitness online. Un testo che afferma che un esercizio «recluta il 63 % del grande gluteo» non dice nulla di verificabile: prende in prestito l’aspetto di una prova. Gli intervalli di ripetizioni sono presentati come usi documentati, non come leggi.',
+    medicalTitle: 'Cosa non è',
+    medicalText:
+      'Le schede e le guide sono informazioni generali. Non sono un parere medico, una diagnosi o un programma personalizzato, e non sostituiscono né un professionista sanitario né un preparatore qualificato. Le precauzioni scritte sulle schede sono pratiche — dove tenere un gomito, quando fermarsi — mai diagnosi.',
+    updatesTitle: 'Correzioni e aggiornamenti',
+    updatesText:
+      'Un errore in una scheda si corregge: segnalalo dalla pagina dei contatti indicando l’esercizio e la lingua. Le schede vengono rigenerate a ogni pubblicazione da un’unica fonte, quindi una correzione si propaga alle cinque lingue in una volta sola.',
+    freeTitle: 'Come è finanziato il sito',
+    freeText:
+      'CIRKALI è gratuito e resta tale. Il sito mostra annunci solo su schermi grandi: sotto i 1200 pixel di larghezza non viene scaricato alcun codice pubblicitario, il che lascia l’uso su telefono completamente privo di pubblicità. Nessun contenuto è sponsorizzato e nessun esercizio è messo in evidenza dietro compenso.',
+  },
 
   aiPlan: {
     title: 'Creare una seduta con un’IA',

@@ -174,6 +174,34 @@ export const en: Translations = {
     delayText:
       'Allow a few days. Requests about personal data are handled first, within one month at most, as the GDPR requires.',
   },
+  guides: {
+    title: 'Guides',
+    lead: 'Hand-written answers to the questions that keep coming back: how many sets, how to build a session, which equipment, how to sequence it.',
+    related: 'Exercise sheets referenced',
+    readOn: 'The other guides',
+  },
+  method: {
+    title: 'About and method',
+    lead: 'Who writes CIRKALI, how the content is produced, and what the site refuses to write.',
+    whoTitle: 'Who makes CIRKALI',
+    whoText:
+      'CIRKALI is designed, written and maintained by one person, with no outside writers and no bought content. The {count} exercise sheets, the guides and the figures were produced for this site and exist nowhere else. The project started from a simple need: plan a session and time it, with no account to create and nothing leaving the device.',
+    ruleTitle: 'The writing rule',
+    ruleText:
+      'One rule governs all the training content on this site: write only what is verifiable and stable. Anatomy — muscle names and their roles —, biomechanics — joint actions, planes of movement, types of contraction — and established training principles. Nothing else.',
+    noFakeTitle: 'What the site refuses to do',
+    noFakeText:
+      'Never a cited study, never a muscle activation percentage, never a falsely precise figure. Those three things sound scientific while usually being invented, and they are everywhere in online fitness content. A text claiming an exercise “recruits 63% of the gluteus maximus” says nothing verifiable: it borrows the look of evidence. Repetition ranges are presented as documented practice, not as laws.',
+    medicalTitle: 'What this is not',
+    medicalText:
+      'The sheets and guides are general information. They are not medical advice, a diagnosis or a personalised programme, and they replace neither a healthcare professional nor a qualified coach. The precautions written on the sheets are practical — where to place an elbow, when to stop — never diagnoses.',
+    updatesTitle: 'Corrections and updates',
+    updatesText:
+      'An error in a sheet gets fixed: report it through the contact page, naming the exercise and the language. Sheets are regenerated on every release from a single source, so one correction propagates to all five languages at once.',
+    freeTitle: 'How the site is funded',
+    freeText:
+      'CIRKALI is free and stays free. The site shows ads on large screens only: below 1200 pixels wide, no advertising code is downloaded at all, which leaves phone use entirely ad-free. No content is sponsored and no exercise is promoted in exchange for payment.',
+  },
 
   aiPlan: {
     title: 'Create a session with an AI',

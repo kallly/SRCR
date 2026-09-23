@@ -14,7 +14,7 @@ dans l'app) vit dans `CLAUDE.md`, section « Le portage mobile ».
 
 - `capacitor.config.ts`, et les projets natifs `android/` et `ios/` générés.
 - `npm run build:app` → `dist-app/`, le bundle embarqué : ni publicité, ni
-  analytique web, ni les 347 pages générées. Le script échoue s'il en trouve.
+  analytique web, ni les 377 pages générées. Le script échoue s'il en trouve.
 - Icônes et écrans de lancement dans les deux projets, dérivés de
   `resources/icon.png` et `resources/splash.png`.
 - Les liens de partage, les liens vers les fiches et le lien de

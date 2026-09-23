@@ -61,6 +61,8 @@ src/
   content/
     exercise-details/     contenu long par langue (fr, en, es, de, it) :
                           etapes, muscles, anatomie — skill seance-fiches-generees
+    guides/               4 guides editoriaux ecrits a la main, 5 langues,
+                          contrat STRICT : la reponse au « faible valeur ajoutee »
     image-prompts.ts      prompts d'illustration — UNE source pour les 5 langues
     exercise-page.css     styles des pages d'exercice statiques
   i18n/
@@ -544,7 +546,7 @@ retirés par `stripWebOnly()` (`vite.config.ts`) quand `CIRKALI_TARGET=app`, et
 les assertions de `scripts/build-app.ts` — qui vérifie ce qu'il a produit,
 comme `check-build.ts`, parce que la CI ne construit pas l'application.
 
-**`dist-app/` n'est pas `dist/`.** Les 347 pages générées, le sitemap,
+**`dist-app/` n'est pas `dist/`.** Les 377 pages générées, le sitemap,
 `llms.txt` et les fichiers de l'hébergeur n'ont pas d'usage dans un binaire :
 ce sont des surfaces d'indexation, elles vivent sur cirkali.fr et
 l'application y renvoie par des liens absolus.
@@ -620,7 +622,7 @@ l'assertion de `check-build.ts` qui interdit l'ancienne origine dans `dist/`.
 sert `dist/exercises/fr/pompes.html` à l'adresse `/exercises/fr/pompes` et
 redirige la forme longue vers elle (307) ; GitHub Pages et `vite preview` font
 de même. Tant que les balises déclaraient le `.html`, chaque canonical, chaque
-hreflang et les 347 entrées du sitemap désignaient une URL qui redirige pendant
+hreflang et les 377 entrées du sitemap désignaient une URL qui redirige pendant
 que Google indexait l'autre — de quoi laisser durablement des pages en
 « Détectée, actuellement non indexée ». Toute URL écrite dans une balise, un
 lien ou le sitemap s'écrit donc **sans extension** ; seuls les `writeFileSync()`
@@ -692,7 +694,7 @@ deux raisons — un `display: none` masquerait un encart déjà demandé, ce qui
 compte une impression jamais vue et que la politique AdSense interdit ; et le
 visiteur mobile paierait quand même les ~100 Ko du script, annulant le travail
 des deux lots PageSpeed précédents. `check-build.ts` vérifie les deux moitiés
-de cette promesse sur les 347 pages livrées : le portillon présent partout,
+de cette promesse sur les 377 pages livrées : le portillon présent partout,
 aucune balise `<ins>` ni `<script src>` publicitaire en statique.
 
 Une seule source pour les trois surfaces (`src/content/ad-rails.ts`), posée
@@ -723,11 +725,26 @@ fasse autorité) et `public/robots.txt` ne doit pas le bloquer. La diffusion dan
 l'EEE exige en plus un CMP certifié TCF v2.2, activé dans la console AdSense —
 sans lui Google cesse simplement de servir des annonces, sans erreur visible.
 
-**Trois pages institutionnelles, 15 fichiers, un seul gabarit.**
-`confidentialite/`, `mentions-legales/` et `contact/` (5 langues chacune) sont
-générées par `renderStaticPage()` — ne pas en recopier le gabarit pour une
-quatrième : c'est toujours la copie oubliée qui finit par déclarer un
-canonical faux. Elles sont nées du refus AdSense « faible valeur ajoutée »,
+**Cinq pages institutionnelles plus les guides, un seul gabarit.**
+`confidentialite/`, `mentions-legales/`, `contact/`, `a-propos/` et l'index
+`guides/` (5 langues chacune) passent toutes par `renderStaticPage()`, les
+quatre premières via l'adaptateur `renderInfoPage()`. Ne pas recopier ce
+gabarit pour une page de plus : c'est toujours la copie oubliée qui finit par
+déclarer un canonical faux.
+
+**Les guides sont la seule réponse au refus AdSense « faible valeur
+ajoutée ».** Tout le reste du contenu sort d'un gabarit — 330 fiches, les
+mêmes onze sections, générées depuis `exercise-details/` —, et c'est
+exactement ce qu'un examinateur lit comme « contenu programmatique ». Un guide
+n'est pas générable : il répond à une question qu'on tape dans un moteur, son
+plan lui appartient, et il est écrit à la main dans les 5 langues
+(`src/content/guides/`). Leur contrat est **strict** (`Record`), contrairement
+à `ExerciseDetail` qui est `Partial` : ce dernier l'est parce que la
+traduction des fiches a été phasée dans le temps, les guides partent à cinq
+langues d'un coup. Même règle de rédaction que les fiches — rien qui ne soit
+vérifiable et stable. Le slug est **traduit par langue**, comme celui des
+fiches, et le fichier `guides/<locale>.html` (l'index) cohabite avec le
+répertoire `guides/<locale>/` (les guides) sans conflit. Elles sont nées du refus AdSense « faible valeur ajoutée »,
 mais aucune n'est un décor : la LCEN impose des mentions légales à tout
 éditeur, et annoncer des droits RGPD sans donner d'adresse où les exercer
 serait une promesse creuse.

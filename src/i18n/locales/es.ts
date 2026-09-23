@@ -175,6 +175,34 @@ export const es: Translations = {
     delayText:
       'Cuenta con unos días. Las solicitudes sobre datos personales se tratan con prioridad, en un plazo máximo de un mes, como exige el RGPD.',
   },
+  guides: {
+    title: 'Guías',
+    lead: 'Respuestas escritas a mano a las preguntas que vuelven siempre: cuántas series, cómo montar una sesión, qué material, cómo encadenar.',
+    related: 'Fichas de ejercicio citadas',
+    readOn: 'Las demás guías',
+  },
+  method: {
+    title: 'Sobre el sitio y método',
+    lead: 'Quién escribe CIRKALI, cómo se redacta el contenido y qué se prohíbe escribir el sitio.',
+    whoTitle: 'Quién hace CIRKALI',
+    whoText:
+      'CIRKALI lo diseña, escribe y mantiene una sola persona, sin redacción externa ni contenido comprado. Las {count} fichas de ejercicio, las guías y las figuras se han producido para este sitio y no existen en ningún otro lugar. El proyecto nació de una necesidad simple: planificar una sesión y cronometrarla, sin cuenta que crear y sin que los datos salgan a ninguna parte.',
+    ruleTitle: 'La regla de redacción',
+    ruleText:
+      'Una sola regla gobierna todo el contenido de entrenamiento del sitio: escribir únicamente lo verificable y lo estable. La anatomía —el nombre de los músculos y su función—, la biomecánica —acciones articulares, planos de movimiento, tipos de contracción— y los principios de entrenamiento establecidos. Nada más.',
+    noFakeTitle: 'Lo que el sitio se prohíbe',
+    noFakeText:
+      'Nunca un estudio citado, nunca un porcentaje de activación muscular, nunca una cifra de falsa precisión. Esas tres cosas suenan científicas siendo casi siempre inventadas, y están por todas partes en el contenido de fitness en línea. Un texto que afirma que un ejercicio «recluta el 63 % del glúteo mayor» no dice nada verificable: toma prestada la apariencia de una prueba. Los rangos de repeticiones se presentan como usos documentados, no como leyes.',
+    medicalTitle: 'Lo que esto no es',
+    medicalText:
+      'Las fichas y las guías son información general. No son un consejo médico, un diagnóstico ni un programa personalizado, y no sustituyen ni a un profesional sanitario ni a un educador deportivo. Las precauciones escritas en las fichas son prácticas —dónde colocar un codo, cuándo parar— nunca diagnósticos.',
+    updatesTitle: 'Correcciones y actualizaciones',
+    updatesText:
+      'Un error en una ficha se corrige: comunícalo por la página de contacto indicando el ejercicio y el idioma. Las fichas se regeneran en cada publicación desde una fuente única, así que una corrección se propaga a los cinco idiomas de una vez.',
+    freeTitle: 'Cómo se financia el sitio',
+    freeText:
+      'CIRKALI es gratuito y seguirá siéndolo. El sitio muestra anuncios solo en pantallas grandes: por debajo de 1200 píxeles de ancho no se descarga ningún código publicitario, lo que deja el uso en el teléfono enteramente libre de publicidad. Ningún contenido está patrocinado y ningún ejercicio se destaca a cambio de una remuneración.',
+  },
 
   aiPlan: {
     title: 'Crear una sesión con una IA',

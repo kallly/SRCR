@@ -5,7 +5,7 @@
  *
  *     npm run build:app
  *
- * Pourquoi un dossier distinct de `dist/`. Le build du site produit 347 pages
+ * Pourquoi un dossier distinct de `dist/`. Le build du site produit 377 pages
  * — 330 fiches d'exercice, la page de specification, les cinq politiques de
  * confidentialite, la 404 — plus un sitemap, un llms.txt, un robots.txt et les
  * en-tetes de l'hebergeur. Rien de tout cela n'a de sens dans un binaire : ce
