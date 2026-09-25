@@ -441,6 +441,17 @@ export const en: Translations = {
     finished: 'Session complete',
     finishedCue: 'Note how you feel tomorrow morning: the stiffness should be back to normal.',
     close: 'Close',
+    pause: 'Take a break',
+    pauseLabel: 'Free break',
+    pauseCue: 'Off the plan: the workout picks up where you left it.',
+    resume: 'Resume',
+  },
+
+  pausePicker: {
+    title: 'Take a break',
+    hint: 'It isn’t added to the workout. When it ends, the interrupted exercise starts over; a rest in progress is replaced by the break.',
+    custom: 'Other duration (seconds)',
+    start: 'Start break',
   },
 
 

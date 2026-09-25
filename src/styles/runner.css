@@ -82,11 +82,15 @@
   Rangee reelle dans la colonne flex, et non un bouton pose en absolu sur
   `.rbody` : `.rbody` defile (`overflow-y: auto`) des que le contenu depasse,
   et un coin en absolu s'en irait avec lui ou passerait sous le texte.
+
+  Le bouton chrono de la pause libre (`#runPause`) en occupe le coin gauche.
+  `space-between` et non `flex-end` + une marge : l'info est masquee pendant
+  un repos, et le chrono doit rester a gauche quand il est seul.
 */
 .ractions {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 12px 20px 0;
 }
 
@@ -98,7 +102,8 @@
   non `var(--surface)` : l'ecran du lecteur est sombre dans les deux themes,
   une surface claire y ferait une pastille brillante.
 */
-.ractions .info-btn {
+.ractions .info-btn,
+.ractions .pause-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,7 +118,8 @@
   line-height: 1;
 }
 
-.ractions .info-btn:hover {
+.ractions .info-btn:hover,
+.ractions .pause-btn:hover {
   border-color: var(--lime);
   color: var(--lime);
 }
@@ -124,8 +130,64 @@
   sans ce garde, le bouton d'info resterait affiche pendant un repos. Meme
   piege que celui deja documente dans planner.css.
 */
-.ractions .info-btn[hidden] {
+.ractions .info-btn[hidden],
+.ractions .pause-btn[hidden] {
   display: none;
+}
+
+/*
+  Le chrono est un trace (index.html), pas un glyphe : `fill: none` n'y est
+  pas cosmetique, un <circle> sans fill serait peint en noir — meme piege que
+  la fleche du bouton « precedent » juste en dessous.
+*/
+.ractions .pause-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/*
+  Modale de la pause libre (#pausePicker, ui/pause-picker.ts). Les durees
+  toutes faites sur quatre colonnes : huit cibles de 44px qui tiennent sur
+  deux lignes jusqu'a 320px de large.
+*/
+.pause-hint {
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--paper-dim);
+}
+
+.pause-presets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.pause-presets .ghost {
+  min-height: 44px;
+  padding: 8px 4px;
+  font-variant-numeric: tabular-nums;
+  font-size: 15px;
+}
+
+/* Champ libre et bouton sur une rangee, alignes par le bas : l'etiquette
+   `.f` est empilee au-dessus du champ, pas a cote du bouton. */
+.pause-custom {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.pause-custom .go {
+  min-height: 44px;
+  padding: 10px 16px;
 }
 
 .rbody {
@@ -429,7 +491,8 @@
 
   /* Meme raison que le reste du palier : la hauteur manque avant la largeur.
      On retombe sur le gabarit 32px du reste de l'app. */
-  .ractions .info-btn {
+  .ractions .info-btn,
+  .ractions .pause-btn {
     width: 32px;
     height: 32px;
     font-size: 15px;

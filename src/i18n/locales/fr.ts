@@ -506,6 +506,19 @@ export const fr = {
     finishedCue:
       'Note comment tu te sens demain matin : la raideur doit être revenue à la normale.',
     close: 'Fermer',
+    /** Bouton chrono du lecteur (aria-label) : une pause hors du deroule. */
+    pause: 'Faire une pause',
+    pauseLabel: 'Pause libre',
+    pauseCue: 'Hors du déroulé : la séance reprend là où tu l’as laissée.',
+    resume: 'Reprendre',
+  },
+
+  /** Choix de la duree d'une pause libre (`ui/pause-picker.ts`). */
+  pausePicker: {
+    title: 'Faire une pause',
+    hint: 'Elle ne s’inscrit pas dans la séance. À la fin, l’exercice interrompu recommence ; un repos en cours est remplacé par la pause.',
+    custom: 'Autre durée (secondes)',
+    start: 'Lancer la pause',
   },
 
 

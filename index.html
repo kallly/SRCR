@@ -740,6 +740,29 @@ https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsIn
       </div>
     </dialog>
 
+    <!--
+      Pause libre, ouverte par #runPause dans le lecteur. Un <dialog> natif
+      comme les autres : il passe par-dessus le lecteur (top layer), et le
+      gestionnaire clavier du lecteur se tait tant qu'un dialogue est ouvert.
+      Les durees toutes faites sont construites par ui/pause-picker.ts —
+      un chrono `m:ss`, le meme affichage que l'anneau, sans rien a traduire.
+    -->
+    <dialog class="info" id="pausePicker" aria-labelledby="pausePickerTitle">
+      <div class="info-head">
+        <h3 id="pausePickerTitle" data-i18n="pausePicker.title"></h3>
+        <button class="info-close" type="button" id="pausePickerClose" data-i18n="exerciseInfo.close"></button>
+      </div>
+      <p class="pause-hint" data-i18n="pausePicker.hint"></p>
+      <div class="pause-presets" id="pausePresets"></div>
+      <form id="pausePickerForm" class="pause-custom" method="dialog">
+        <div class="f">
+          <label for="pauseSeconds" data-i18n="pausePicker.custom"></label>
+          <input type="number" id="pauseSeconds" min="5" max="3600" step="5" inputmode="numeric" />
+        </div>
+        <button class="go" type="submit" data-i18n="pausePicker.start"></button>
+      </form>
+    </dialog>
+
     <div class="bar">
       <div class="meta"><b id="barTitle"></b><span id="barSub"></span></div>
       <button class="go" type="button" id="start" disabled data-i18n="bar.start"></button>
@@ -752,6 +775,27 @@ https://cirkali.fr/?s=eyJ2IjoxLCJuIjoiSGF1dCBkdSBjb3JwcyIsIm0iOiJ4IiwicCI6NjAsIn
       </div>
       <div class="prog"><i id="runProgress" style="width: 0"></i></div>
       <div class="ractions">
+        <!--
+          Pause libre (ui/pause-picker.ts) : au coin haut GAUCHE, a l'oppose du
+          bouton d'info. Un trace plutot qu'un glyphe (« ⏱ » s'affiche en emoji
+          couleur sur la plupart des systemes) : il suit `currentColor`, comme
+          la fleche du bouton « precedent ». Masque sur l'ecran de fin.
+        -->
+        <button
+          class="pause-btn"
+          type="button"
+          id="runPause"
+          aria-label=""
+          data-i18n-aria-label="runner.pause"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="13.5" r="7.5" />
+            <path d="M12 13.5V9.5" />
+            <path d="M10 2.5h4" />
+            <path d="M12 2.5V6" />
+            <path d="m18.5 6.5 1.5-1.5" />
+          </svg>
+        </button>
         <button
           class="info-btn"
           type="button"

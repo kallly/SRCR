@@ -443,6 +443,17 @@ export const it: Translations = {
     finishedCue:
       'Osserva come ti senti domani mattina: la rigidità deve essere tornata alla normalità.',
     close: 'Chiudi',
+    pause: 'Fai una pausa',
+    pauseLabel: 'Pausa libera',
+    pauseCue: 'Fuori dal piano: la sessione riprende da dove l’hai lasciata.',
+    resume: 'Riprendi',
+  },
+
+  pausePicker: {
+    title: 'Fai una pausa',
+    hint: 'Non viene aggiunta alla sessione. Alla fine l’esercizio interrotto ricomincia; un recupero in corso viene sostituito dalla pausa.',
+    custom: 'Altra durata (secondi)',
+    start: 'Avvia la pausa',
   },
 
 

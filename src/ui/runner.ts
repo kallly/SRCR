@@ -12,6 +12,7 @@ import { acquireWakeLock, releaseWakeLock } from '../platform/wakelock';
 import { byId, dot, el } from './dom';
 import { clock } from './format';
 import type { Context } from './app';
+import { createPausePicker } from './pause-picker';
 
 const RING_RADIUS = 100;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
@@ -50,8 +51,13 @@ const BACK_ARROW =
  * Phase courante du lecteur. Elle determine a la fois l'affichage et l'action
  * des deux boutons du bas, ce qui permet de repeindre l'ecran a tout moment
  * (changement de langue) sans toucher au chrono en cours.
+ *
+ * `pause` est la pause libre du bouton chrono (`#runPause`) : elle ne vient
+ * pas de la file et n'y entre pas. `index` reste pointe sur l'etape
+ * interrompue pendant toute sa duree — compteur d'etapes et barre de
+ * progression ne bougent donc pas, et l'historique n'en sait rien.
  */
-type Phase = 'rest' | 'ready' | 'countdown' | 'timing' | 'reps' | 'done';
+type Phase = 'rest' | 'ready' | 'countdown' | 'timing' | 'reps' | 'pause' | 'done';
 
 const REST_LABELS: Record<RestStep['reason'], Parameters<typeof t>[0]> = {
   manual: 'rest.manual',
@@ -92,6 +98,8 @@ export function createRunner(ctx: Context): Runner {
   const secondary = byId<HTMLButtonElement>('runSecondary');
   const primary = byId<HTMLButtonElement>('runPrimary');
   const infoBtn = byId<HTMLButtonElement>('runInfo');
+  const pauseBtn = byId<HTMLButtonElement>('runPause');
+  const pausePicker = createPausePicker(startPause);
 
   ringFill.setAttribute('stroke-dasharray', String(RING_CIRCUMFERENCE));
 
@@ -107,6 +115,12 @@ export function createRunner(ctx: Context): Runner {
   let warned = false;
   /** Cle de l'exercice affichable dans la modal d'info, ou null si le bouton doit rester cache. */
   let infoKey: ExerciseKey | null = null;
+  /**
+   * Vrai quand la pause libre en cours a interrompu un repos : a la reprise,
+   * on passe alors a l'etape suivante au lieu de refaire ce repos — la pause
+   * en a tenu lieu, la personne s'est deja reposee.
+   */
+  let pauseReplacesRest = false;
 
   function clearTimer(): void {
     if (timer !== null) window.clearInterval(timer);
@@ -290,6 +304,39 @@ export function createRunner(ctx: Context): Runner {
           : t('runner.done');
   }
 
+  /**
+   * Ce qu'on retrouvera a la reprise : l'exercice interrompu, ou celui
+   * qu'annoncait le repos interrompu.
+   */
+  function resumedItem(): ExerciseItem | null {
+    const step = currentStep();
+    if (!step) return null;
+    return step.kind === 'work' ? step.item : step.next;
+  }
+
+  /**
+   * Meme habillage qu'un repos (fond, anneau et icone mint) : c'en est un,
+   * simplement hors du deroule. Le secondaire garde « +15 s », comme pendant
+   * n'importe quel repos.
+   */
+  function paintPause(): void {
+    paintInfoButton(null);
+    label.replaceChildren(restIcon(), document.createTextNode(t('runner.pauseLabel')));
+    const item = resumedItem();
+    name.textContent = item ? t('runner.then', { name: exerciseName(item) }) : t('runner.recover');
+    setLine.textContent = '';
+    paintLoad(item);
+    figure.replaceChildren();
+    cue.textContent = t('runner.pauseCue');
+    // « Puis … » dit deja ce qui vient : l'annonce du bas ferait doublon, ou
+    // pire, nommerait l'effort d'APRES celui qu'on va reprendre.
+    upNext.textContent = '';
+    secondary.disabled = false;
+    secondary.removeAttribute('aria-label');
+    secondary.textContent = t('runner.addTime');
+    primary.textContent = t('runner.resume');
+  }
+
   function paintDone(): void {
     paintInfoButton(null);
     label.replaceChildren();
@@ -324,7 +371,8 @@ export function createRunner(ctx: Context): Runner {
       ? t('runner.next', { name: exerciseName(next.item) })
       : t('runner.lastEffort');
 
-    if (step.kind === 'rest') paintRest(step);
+    if (phase === 'pause') paintPause();
+    else if (step.kind === 'rest') paintRest(step);
     else paintWork(step);
   }
 
@@ -346,6 +394,7 @@ export function createRunner(ctx: Context): Runner {
     screen.classList.remove('done-state', 'ready', 'countdown');
     hint.classList.remove('on');
     secondary.style.display = '';
+    pauseBtn.hidden = false;
     progress.style.width = `${(index / queue.length) * 100}%`;
 
     const timed = step.kind === 'rest' || step.item.mode === 'time';
@@ -408,8 +457,38 @@ export function createRunner(ctx: Context): Runner {
     enterStep();
   }
 
+  /**
+   * Lance (ou relance, avec une autre duree) une pause libre. Tout ce qui
+   * tournait s'arrete — chrono d'effort, mise en place, repos —, et c'est
+   * voulu : la pause interrompt, elle ne se glisse pas a cote.
+   */
+  function startPause(seconds: number): void {
+    if (!active || phase === 'done') return;
+    // Une pause relancee depuis une pause garde la cible de la premiere.
+    if (phase !== 'pause') pauseReplacesRest = currentStep()?.kind === 'rest';
+    phase = 'pause';
+    screen.classList.remove('ready', 'countdown');
+    screen.classList.add('resting');
+    hint.classList.remove('on');
+    ring.classList.add('on');
+    reps.classList.remove('on');
+    render();
+    startCountdown(seconds, resumeAfterPause);
+  }
+
+  /**
+   * Fin de la pause, spontanee ou par « Reprendre ». L'effort interrompu
+   * recommence depuis son debut : `enterStep()` rearme un exercice chronometre
+   * (« Demarrer le chrono ») plutot que de le relancer dans le dos de
+   * quelqu'un qui n'est peut-etre pas encore en position.
+   */
+  function resumeAfterPause(): void {
+    if (pauseReplacesRest) next();
+    else enterStep();
+  }
+
   function addTime(seconds: number): void {
-    if (phase !== 'rest') return;
+    if (phase !== 'rest' && phase !== 'pause') return;
     duration += seconds;
     endsAt += seconds * 1000;
     remaining = Math.max(0, Math.round((endsAt - Date.now()) / 1000));
@@ -429,6 +508,7 @@ export function createRunner(ctx: Context): Runner {
     reps.classList.add('on');
     progress.style.width = '100%';
     secondary.style.display = 'none';
+    pauseBtn.hidden = true;
     render();
   }
 
@@ -468,15 +548,18 @@ export function createRunner(ctx: Context): Runner {
       beep();
       startTimer();
     }
+    else if (phase === 'pause') resumeAfterPause();
     else next();
   });
 
   secondary.addEventListener('click', () => {
-    if (phase === 'rest') addTime(EXTRA_SECONDS);
+    if (phase === 'rest' || phase === 'pause') addTime(EXTRA_SECONDS);
     else goPrevious();
   });
 
   byId('runQuit').addEventListener('click', stop);
+
+  pauseBtn.addEventListener('click', () => pausePicker.open());
 
   infoBtn.addEventListener('click', () => {
     if (infoKey) ctx.showExerciseInfo(infoKey);

@@ -444,6 +444,17 @@ export const de: Translations = {
     finishedCue:
       'Achte darauf, wie du dich morgen früh fühlst: Die Steifheit sollte wieder normal sein.',
     close: 'Schließen',
+    pause: 'Pause machen',
+    pauseLabel: 'Freie Pause',
+    pauseCue: 'Außerhalb des Plans: Das Training geht dort weiter, wo du aufgehört hast.',
+    resume: 'Weiter',
+  },
+
+  pausePicker: {
+    title: 'Pause machen',
+    hint: 'Sie wird nicht ins Training eingetragen. Danach beginnt die unterbrochene Übung von vorn; eine laufende Erholung wird durch die Pause ersetzt.',
+    custom: 'Andere Dauer (Sekunden)',
+    start: 'Pause starten',
   },
 
 
